@@ -1,0 +1,84 @@
+table,column,dtype,description
+companies,company_id,string,Stable short identifier (kebab-case).
+companies,name,string,Company display name.
+companies,ticker,string,Stock ticker symbol as used by yfinance / Yahoo Finance.
+companies,exchange,string,"Listing exchange (NYSE, NASDAQ, NSE, LSE, etc.)."
+companies,reporting_currency,string,ISO 4217 currency in which prices and financials are reported.
+companies,country_code,string,ISO 3166-1 alpha-2 country code of primary operations.
+companies,region,string,Geographic region grouping used in this dataset.
+companies,segment,string,"Business-line segment label (e.g., Marketplace, Fashion, Payments)."
+companies,wikipedia_title,string,Wikipedia page title used to fetch metadata.
+companies,wikidata_qid,string,Wikidata QID (link via https://www.wikidata.org/wiki/<qid>).
+companies,wiki_title_canonical,string,Canonical Wikipedia title after redirect resolution.
+companies,founded_date,string,Inception date (YYYY-MM-DD; partial dates use 00 for unknown month/day).
+companies,headquarters,string,Headquarters city / locality (Wikidata P159 label).
+companies,founders,string,"Founders, semicolon-separated."
+companies,industry,string,Primary industry label (Wikidata P452).
+companies,employees,int,Most recent reported employee headcount (Wikidata P1128).
+companies,employees_year,int,Year of the employee headcount.
+companies,website,string,Official website URL.
+companies,wiki_extract,string,Short text summary from Wikipedia REST API.
+companies,wiki_url,string,Canonical Wikipedia URL.
+companies,wiki_thumbnail,string,Thumbnail image URL (logo / lead image).
+prices_daily,company_id,string,Foreign key to companies.company_id.
+prices_daily,ticker,string,Stock ticker (denormalized for convenience).
+prices_daily,date,date,Trading day in YYYY-MM-DD (exchange-local).
+prices_daily,open,float,Opening price in the listing currency.
+prices_daily,high,float,Intraday high.
+prices_daily,low,float,Intraday low.
+prices_daily,close,float,Closing price (unadjusted).
+prices_daily,adj_close,float,Split/dividend-adjusted close (use this for returns).
+prices_daily,volume,int,Daily share volume.
+financials_annual,company_id,string,Foreign key to companies.company_id.
+financials_annual,ticker,string,Stock ticker.
+financials_annual,fiscal_year,int,Fiscal year (calendar year of fiscal-year end).
+financials_annual,total_revenue,float,"Total revenue / net sales, reporting currency."
+financials_annual,gross_profit,float,Gross profit.
+financials_annual,operating_income,float,Operating income / EBIT.
+financials_annual,net_income,float,Net income attributable to common shareholders.
+financials_annual,ebitda,float,EBITDA (normalized where provided).
+financials_annual,research_dev,float,R&D expense (null when not separately disclosed).
+financials_annual,total_assets,float,Total assets.
+financials_annual,total_liabilities,float,Total liabilities (net of minority interest where applicable).
+financials_annual,cash_and_equivalents,float,Cash & equivalents (may include short-term investments).
+financials_annual,total_equity,float,Stockholders' equity.
+financials_annual,operating_cash_flow,float,Cash from operating activities.
+financials_annual,capex,float,Capital expenditure (typically reported as negative).
+financials_annual,free_cash_flow,float,Free cash flow.
+macro_indicators,country_code,string,ISO 3166-1 alpha-2 country code.
+macro_indicators,year,int,Calendar year.
+macro_indicators,indicator_id,string,World Bank indicator code.
+macro_indicators,indicator_name,string,Friendly indicator name used in this dataset.
+macro_indicators,value,float,Observed value (units depend on indicator).
+company_metrics,company_id,string,Foreign key.
+company_metrics,ticker,string,Stock ticker.
+company_metrics,country_code,string,ISO country code.
+company_metrics,region,string,Region grouping.
+company_metrics,segment,string,Business segment.
+company_metrics,history_start,date,First trading day in this dataset.
+company_metrics,history_end,date,Last trading day in this dataset.
+company_metrics,trading_days,int,Number of trading-day observations.
+company_metrics,first_close,float,Adjusted close on history_start.
+company_metrics,last_close,float,Adjusted close on history_end.
+company_metrics,cumulative_return,float,(last_close / first_close) - 1.
+company_metrics,cagr,float,Compound annual growth rate of adjusted price.
+company_metrics,annualized_volatility,float,Stdev of daily log returns × √252.
+company_metrics,max_drawdown,float,Largest peak-to-trough drop in adjusted price.
+company_metrics,all_time_high,float,Highest adjusted close observed.
+company_metrics,all_time_high_date,date,Date of all-time high.
+company_metrics,return_90d,float,Return over the last 90 trading days.
+company_metrics,return_1y,float,Return over the last 252 trading days.
+company_metrics,latest_fiscal_year,int,Most recent fiscal year with reported financials.
+company_metrics,total_revenue,float,Revenue in latest fiscal year.
+company_metrics,net_income,float,Net income in latest fiscal year.
+company_metrics,operating_income,float,Operating income in latest fiscal year.
+company_metrics,total_assets,float,Total assets in latest fiscal year.
+company_metrics,free_cash_flow,float,Free cash flow in latest fiscal year.
+company_metrics,net_margin,float,net_income / total_revenue.
+company_metrics,operating_margin,float,operating_income / total_revenue.
+company_metrics,revenue_cagr,float,Revenue CAGR across available fiscal years.
+company_metrics,revenue_cagr_years,int,Window length (years) used for revenue_cagr.
+ecommerce_index,date,date,Trading day.
+ecommerce_index,constituents,int,Number of tickers contributing on that day.
+ecommerce_index,daily_return,float,Daily simple return of the index.
+ecommerce_index,index_level,float,"Equal-weighted index level, rebased to 100 at start."
