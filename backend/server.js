@@ -23,7 +23,6 @@ app.use("/companies", companyRoutes);
 app.use("/stock-prices", stockPriceRoutes);
 
 
-
 app.get("/", (req, res) => {
     res.json({
         message: "InvestIQ Backend is running"

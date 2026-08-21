@@ -1,89 +1,85 @@
 const db = require("../config/db");
 
-
-// GET /api/companies
-// GET /api/companies?sector=solar-energy
-
 const getCompanies = async (req, res) => {
     try {
-        const { sector } = req.query;
+        const {
+            search,
+            segment,
+            sector,
+            industry
+        } = req.query;
 
         let query = `
             SELECT
-                companies.id,
-                companies.name,
-                companies.symbol,
-                companies.industry,
-                companies.description,
-                sectors.name AS sector
-            FROM companies
-            JOIN sectors
-                ON companies.sector_id = sectors.id
+                c.id,
+                c.name,
+                c.symbol,
+                c.isin,
+                c.exchange,
+                c.market_segment,
+                c.listing_date,
+                c.series,
+                s.name AS sector,
+                i.name AS industry
+            FROM companies c
+            LEFT JOIN sectors s
+                ON c.sector_id = s.id
+            LEFT JOIN industries i
+                ON c.industry_id = i.id
+            WHERE 1 = 1
         `;
 
-        const values = [];
+        const params = [];
 
-        if (sector) {
-            query += ` WHERE sectors.slug = ?`;
-            values.push(sector);
+        if (search) {
+            query += `
+                AND (
+                    c.name LIKE ?
+                    OR c.symbol LIKE ?
+                )
+            `;
+
+            params.push(
+                `%${search}%`,
+                `%${search}%`
+            );
         }
 
-        const [rows] = await db.query(query, values);
+        if (segment) {
+            query += ` AND c.market_segment = ?`;
+            params.push(segment);
+        }
 
-        res.json(rows);
+        if (sector) {
+            query += ` AND s.name = ?`;
+            params.push(sector);
+        }
+
+        if (industry) {
+            query += ` AND i.name = ?`;
+            params.push(industry);
+        }
+
+        query += ` ORDER BY c.name ASC`;
+
+        const [companies] = await db.query(query, params);
+
+        res.status(200).json({
+            success: true,
+            count: companies.length,
+            data: companies
+        });
 
     } catch (error) {
         console.error(error);
 
         res.status(500).json({
+            success: false,
             message: "Failed to fetch companies"
         });
     }
 };
 
-
-// GET /api/companies/:id
-
-const getCompanyById = async (req, res) => {
-    try {
-        const { id } = req.params;
-
-        const [rows] = await db.query(
-            `
-            SELECT
-                companies.id,
-                companies.name,
-                companies.symbol,
-                companies.industry,
-                companies.description,
-                sectors.name AS sector
-            FROM companies
-            JOIN sectors
-                ON companies.sector_id = sectors.id
-            WHERE companies.id = ?
-            `,
-            [id]
-        );
-
-        if (rows.length === 0) {
-            return res.status(404).json({
-                message: "Company not found"
-            });
-        }
-
-        res.json(rows[0]);
-
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            message: "Failed to fetch company"
-        });
-    }
-};
-
-
 module.exports = {
-    getCompanies,
-    getCompanyById
+    getCompanies
 };
