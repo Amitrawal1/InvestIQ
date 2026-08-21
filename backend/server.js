@@ -3,9 +3,10 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
+const db = require("./config/db");
 const sectorRoutes = require("./routes/sectorRoutes");
 const companyRoutes = require("./routes/companyRoutes");
-const db = require("./config/db");
+const stockPriceRoutes = require("./routes/stockPriceRoutes");
 
 db.query("SELECT 1")
     .then(() => {
@@ -19,6 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/sectors", sectorRoutes);
 app.use("/companies", companyRoutes);
+app.use("/stock-prices", stockPriceRoutes);
 
 
 
