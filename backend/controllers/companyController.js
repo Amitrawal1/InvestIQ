@@ -1,59 +1,87 @@
-const companies = [
-    {
-        id: 1,
-        name: "Tata Power",
-        sector: "solar-energy",
-        symbol: "TATAPOWER"
-    },
-    {
-        id: 2,
-        name: "Adani Green Energy",
-        sector: "solar-energy",
-        symbol: "ADANIGREEN"
-    },
-    {
-        id: 3,
-        name: "Waaree Energies",
-        sector: "solar-energy",
-        symbol: "WAAREEENER"
-    },
-    {
-        id: 4,
-        name: "Reliance Industries",
-        sector: "artificial-intelligence",
-        symbol: "RELIANCE"
-    }
-];
+const db = require("../config/db");
 
-const getCompanies = (req, res) => {
-    const { sector } = req.query;
 
-    if (!sector) {
-        return res.json(companies);
-    }
+// GET /api/companies
+// GET /api/companies?sector=solar-energy
 
-    const filteredCompanies = companies.filter(
-        company => company.sector === sector
-    );
+const getCompanies = async (req, res) => {
+    try {
+        const { sector } = req.query;
 
-    res.json(filteredCompanies);
-};
+        let query = `
+            SELECT
+                companies.id,
+                companies.name,
+                companies.symbol,
+                companies.industry,
+                companies.description,
+                sectors.name AS sector
+            FROM companies
+            JOIN sectors
+                ON companies.sector_id = sectors.id
+        `;
 
-const getCompanyById = (req, res) => {
-    const { id } = req.params;
+        const values = [];
 
-    const company = companies.find(
-        company => company.id === Number(id)
-    );
+        if (sector) {
+            query += ` WHERE sectors.slug = ?`;
+            values.push(sector);
+        }
 
-    if (!company) {
-        return res.status(404).json({
-            message: "Company not found"
+        const [rows] = await db.query(query, values);
+
+        res.json(rows);
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: "Failed to fetch companies"
         });
     }
-
-    res.json(company);
 };
+
+
+// GET /api/companies/:id
+
+const getCompanyById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const [rows] = await db.query(
+            `
+            SELECT
+                companies.id,
+                companies.name,
+                companies.symbol,
+                companies.industry,
+                companies.description,
+                sectors.name AS sector
+            FROM companies
+            JOIN sectors
+                ON companies.sector_id = sectors.id
+            WHERE companies.id = ?
+            `,
+            [id]
+        );
+
+        if (rows.length === 0) {
+            return res.status(404).json({
+                message: "Company not found"
+            });
+        }
+
+        res.json(rows[0]);
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: "Failed to fetch company"
+        });
+    }
+};
+
 
 module.exports = {
     getCompanies,

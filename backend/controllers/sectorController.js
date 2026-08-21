@@ -1,28 +1,19 @@
-const getSectors = (req, res) => {
-    const sectors = [
-        {
-            id: 1,
-            name: "Artificial Intelligence",
-            slug: "artificial-intelligence"
-        },
-        {
-            id: 2,
-            name: "Solar Energy",
-            slug: "solar-energy"
-        },
-        {
-            id: 3,
-            name: "Banking",
-            slug: "banking"
-        },
-        {
-            id: 4,
-            name: "Pharmaceuticals",
-            slug: "pharmaceuticals"
-        }
-    ];
+const db = require("../config/db");
 
-    res.json(sectors);
+const getSectors = async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            "SELECT id, name, slug FROM sectors"
+        );
+
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: "Failed to fetch sectors"
+        });
+    }
 };
 
 module.exports = {
