@@ -1,26 +1,13 @@
-const db = require("../config/db");
+const {getStockPricesByCompany} = require("../services/stockPriceService");
+
 
 const getStockPrices = async (req, res) => {
     try {
         const { companyId } = req.params;
 
-        const [rows] = await db.query(
-            `
-            SELECT
-                price_date,
-                open_price,
-                high_price,
-                low_price,
-                close_price,
-                volume
-            FROM stock_prices
-            WHERE company_id = ?
-            ORDER BY price_date ASC
-            `,
-            [companyId]
-        );
+        const prices = await getStockPricesByCompany(companyId);
 
-        res.json(rows);
+        res.json(prices);
 
     } catch (error) {
         console.error(error);
@@ -31,6 +18,7 @@ const getStockPrices = async (req, res) => {
     }
 };
 
+
 module.exports = {
-    getStockPrices
+    getStockPrices,
 };
