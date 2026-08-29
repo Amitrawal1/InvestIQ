@@ -7,6 +7,7 @@ const db = require("./config/db");
 const sectorRoutes = require("./routes/sectorRoutes");
 const companyRoutes = require("./routes/companyRoutes");
 const stockPriceRoutes = require("./routes/stockPriceRoutes");
+const newsRoutes = require("./routes/newsRoutes");
 
 db.query("SELECT 1")
     .then(() => {
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use("/sectors", sectorRoutes);
 app.use("/companies", companyRoutes);
 app.use("/stock-prices", stockPriceRoutes);
+app.use("/news", newsRoutes);
 
 
 app.get("/", (req, res) => {
