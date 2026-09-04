@@ -4,6 +4,7 @@ import mysql.connector
 from dotenv import load_dotenv
 from datetime import datetime
 from pathlib import Path
+import time
 
 
 # =========================================================
@@ -47,7 +48,7 @@ def get_access_token():
 # API
 # =========================================================
 
-def fetch_fundamental(endpoint, isin, params=None):
+def fetch_fundamental(endpoint, isin, params=None, retries=3):
 
     access_token = get_access_token()
 
@@ -58,44 +59,79 @@ def fetch_fundamental(endpoint, isin, params=None):
         "Authorization": f"Bearer {access_token}"
     }
 
-    response = requests.get(
-        url,
-        headers=headers,
-        params=params,
-        timeout=30
+    for attempt in range(1, retries + 1):
+
+        try:
+
+            response = requests.get(
+                url,
+                headers=headers,
+                params=params,
+                timeout=30
+            )
+
+            print(
+                f"{endpoint}: HTTP {response.status_code}"
+                f" (attempt {attempt}/{retries})"
+            )
+
+            if response.status_code == 200:
+
+                data = response.json()
+
+                if data.get("status") == "success":
+                    return data.get("data")
+
+                print("API returned unsuccessful status.")
+
+            else:
+                print(response.text[:300])
+
+        except requests.exceptions.Timeout:
+
+            print(
+                f"{endpoint}: request timed out."
+            )
+
+        except requests.exceptions.RequestException as e:
+
+            print(
+                f"{endpoint}: request error - {e}"
+            )
+
+        if attempt < retries:
+
+            import time
+
+            wait_time = attempt * 2
+
+            print(
+                f"Retrying in {wait_time} seconds..."
+            )
+
+            time.sleep(wait_time)
+
+    print(
+        f"{endpoint}: failed after {retries} attempts."
     )
 
-    print(f"{endpoint}: HTTP {response.status_code}")
-
-    if response.status_code != 200:
-        print(response.text)
-        return None
-
-    data = response.json()
-
-    if data.get("status") != "success":
-        print("API returned unsuccessful status")
-        return None
-
-    return data.get("data")
+    return None
 
 
 # =========================================================
 # HELPERS
 # =========================================================
 
-def get_history_value(history, name, period):
+def get_history_value(full_statement, particular, period):
 
-    if not history:
-        return None
+    for item in full_statement:
 
-    for item in history:
+        if item.get("particular") == particular:
 
-        if (
-            item.get("name") == name
-            and item.get("period") == period
-        ):
-            return item.get("value")
+            for history_item in item.get("history", []):
+
+                if history_item.get("period") == period:
+                    return history_item.get("value")
 
     return None
 
@@ -203,16 +239,13 @@ def ingest_company(company_id, isin):
     )
 
     if not income_data:
-        print("Income statement data unavailable.")
-        return
+        raise Exception("Income statement data unavailable")
 
     if not balance_data:
-        print("Balance sheet data unavailable.")
-        return
+        raise Exception("Balance sheet data unavailable")
 
     if not cashflow_data:
-        print("Cash flow data unavailable.")
-        return
+        raise Exception("Cash flow data unavailable")
 
     print("\nAPI data fetched successfully.")
 
@@ -257,17 +290,20 @@ def ingest_company(company_id, isin):
 
     yearly_periods = set()
 
-    for item in income_full:
-        if item.get("period"):
-            yearly_periods.add(item.get("period"))
+    for statement in [
+        income_full,
+        balance_full,
+        cashflow_full
+    ]:
 
-    for item in balance_full:
-        if item.get("period"):
-            yearly_periods.add(item.get("period"))
+        for item in statement:
 
-    for item in cashflow_full:
-        if item.get("period"):
-            yearly_periods.add(item.get("period"))
+            for history_item in item.get("history", []):
+
+                if history_item.get("period"):
+                    yearly_periods.add(
+                        history_item.get("period")
+                    )
 
     processed_yearly = 0
 
@@ -313,7 +349,7 @@ def ingest_company(company_id, isin):
 
         profit_after_tax = get_history_value(
             income_full,
-            "PAT",
+            "Profit After Tax",
             period
         )
 
@@ -565,10 +601,90 @@ def ingest_company(company_id, isin):
 # TEST COMPANY
 # =========================================================
 
+# =========================================================
+# BATCH INGESTION
+# =========================================================
+
+def ingest_companies(limit=10):
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    query = """
+        SELECT
+            id,
+            name,
+            symbol,
+            isin
+        FROM companies
+        WHERE isin IS NOT NULL
+          AND isin != ''
+        ORDER BY id
+        LIMIT %s
+    """
+
+    cursor.execute(query, (limit,))
+
+    companies = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    print("\n========================================")
+    print("Batch Financial Ingestion")
+    print("Companies selected :", len(companies))
+    print("========================================")
+
+    successful = 0
+    failed = 0
+
+    for index, company in enumerate(companies, start=1):
+
+        print("\n")
+        print("----------------------------------------")
+        print(
+            f"[{index}/{len(companies)}] "
+            f"{company['symbol']} - "
+            f"{company['name']}"
+        )
+        print("----------------------------------------")
+
+        try:
+
+            ingest_company(
+                company_id=company["id"],
+                isin=company["isin"]
+            )
+
+            successful += 1
+            time.sleep(1)
+
+        except Exception as e:
+
+            failed += 1
+
+            print("\nERROR:")
+            print(e)
+
+            print(
+                f"Skipping {company['symbol']} "
+                "and continuing..."
+            )
+            time.sleep(1)
+
+    print("\n========================================")
+    print("BATCH INGESTION SUMMARY")
+    print("========================================")
+    print("Total companies :", len(companies))
+    print("Successful      :", successful)
+    print("Failed          :", failed)
+    print("========================================")
+
+
+# =========================================================
+# MAIN
+# =========================================================
+
 if __name__ == "__main__":
 
-    # Reliance Industries
-    ingest_company(
-        company_id=1844,
-        isin="INE002A01018"
-    )
+    ingest_companies(limit=10)
