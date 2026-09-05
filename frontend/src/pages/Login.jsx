@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+// import { useAuth } from '../context/AuthContext';
 import { Brain, Lock, Mail, User, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,28 +10,28 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [validationError, setValidationError] = useState('');
 
-  const { login, register, error } = useAuth();
+  // const { login, register, error } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
-    setValidationError('');
+    navigate('/dashboard');
 
-    if (!email || !password || (isRegister && !username)) {
-      setValidationError('All fields are required');
-      return;
-    }
+    // if (!email || !password || (isRegister && !username)) {
+    //   setValidationError('All fields are required');
+    //   return;
+    // }
 
-    let success = false;
-    if (isRegister) {
-      success = await register(username, email, password);
-    } else {
-      success = await login(email, password);
-    }
+    // let success = false;
+    // if (isRegister) {
+    //   success = await register(username, email, password);
+    // } else {
+    //   success = await login(email, password);
+    // }
 
-    if (success) {
-      navigate('/dashboard');
-    }
+    // if (success) {
+    //   navigate('/dashboard');
+    // }
   };
 
   return (
@@ -97,21 +97,6 @@ const Login = () => {
         </p>
 
         {/* Error Messages */}
-        {(error || validationError) && (
-          <div style={{
-            background: 'rgba(255, 23, 68, 0.1)',
-            border: '1px solid var(--danger)',
-            color: 'var(--danger)',
-            padding: '12px',
-            borderRadius: '8px',
-            fontSize: '13px',
-            textAlign: 'left',
-            marginBottom: '20px',
-            fontWeight: 500
-          }}>
-            {error || validationError}
-          </div>
-        )}
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {isRegister && (

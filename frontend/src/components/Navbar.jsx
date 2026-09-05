@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Search, Bell, TrendingUp, ShieldAlert, LogOut } from 'lucide-react';
+import { Search, Bell, TrendingUp, LogOut } from 'lucide-react';
 
 const Navbar = ({ onSearch }) => {
   const { user, logout } = useAuth();
@@ -12,123 +12,81 @@ const Navbar = ({ onSearch }) => {
   };
 
   return (
-    <nav style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '16px 24px',
-      background: 'rgba(13, 20, 35, 0.4)',
-      backdropFilter: 'blur(20px)',
-      borderBottom: '1px solid var(--border-color)',
-      position: 'sticky',
-      top: 0,
-      zIndex: 10,
-      borderRadius: '0 0 16px 16px'
-    }}>
-      {/* Search Bar */}
-      <div style={{ position: 'relative', width: '320px' }}>
-        <input 
-          type="text" 
-          placeholder="Search NSE stocks (e.g., RELIANCE, TCS)..." 
+    <nav className="w-full sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-[#050011]">
+      {/* Left - Market Info */}
+      <div className="flex items-center gap-5 text-[13px]">
+        <div className=" items-center gap-1.5">
+          <span className="text-[var(--text-muted)]">NIFTY 50:</span>
+          <span className="flex items-center gap-0.5 text-[var(--success)]">
+            22,957.10 (+0.82%)
+            <TrendingUp size={14} />
+          </span>
+        </div>
+
+        <div className=" items-center gap-1.5">
+          <span className="text-[var(--text-muted)]">SENSEX:</span>
+          <span className="flex items-center gap-0.5 text-[var(--success)]">
+            75,410.35 (+0.78%)
+            <TrendingUp size={14} />
+          </span>
+        </div>
+      </div>
+
+
+      {/* Center - Search */}
+      <div className="relative w-[420px]">
+        <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
+
+        <input
+          type="text"
+          placeholder="Search NSE stocks (e.g., RELIANCE, TCS)..."
           onChange={handleSearchChange}
-          className="input-field"
-          style={{ paddingLeft: '40px', borderRadius: '20px' }}
+          className="w-full pl-10 pr-4 py-2.5 rounded-[20px] bg-[#0d1423] text-white text-sm outline-none border-none placeholder:text-[var(--text-muted)]"
         />
-        <Search size={18} style={{
-          position: 'absolute',
-          left: '14px',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          color: 'var(--text-muted)'
-        }} />
       </div>
 
-      {/* Center Market Info */}
-      <div style={{ display: 'flex', gap: '20px', fontSize: '13px', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span style={{ color: 'var(--text-muted)' }}>NIFTY 50:</span>
-          <span className="trend-up" style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-            22,957.10 (+0.82%) <TrendingUp size={14} />
-          </span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span style={{ color: 'var(--text-muted)' }}>SENSEX:</span>
-          <span className="trend-up" style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-            75,410.35 (+0.78%) <TrendingUp size={14} />
-          </span>
-        </div>
-        <div style={{
-          background: 'rgba(0, 230, 118, 0.1)',
-          border: '1px solid var(--success)',
-          padding: '2px 8px',
-          borderRadius: '20px',
-          color: 'var(--success)',
-          fontSize: '11px',
-          fontWeight: 600,
-          letterSpacing: '0.05em'
-        }}>
-          MARKET OPEN
-        </div>
-      </div>
 
-      {/* User Information */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <button style={{
-          background: 'none',
-          border: 'none',
-          color: 'var(--text-secondary)',
-          cursor: 'pointer',
-          position: 'relative'
-        }}>
+      {/* Right - User */}
+      <div className="flex items-center gap-4">
+
+        {/* Notification */}
+        <button className="relative flex items-center justify-center bg-transparent border-none text-[var(--text-secondary)] cursor-pointer">
           <Bell size={20} />
-          <span style={{
-            position: 'absolute',
-            top: '-2px',
-            right: '-2px',
-            background: 'var(--primary)',
-            width: '8px',
-            height: '8px',
-            borderRadius: '50%'
-          }} className="pulse-glow" />
+
+          <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[var(--primary)] pulse-glow" />
         </button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{
-            width: '36px',
-            height: '36px',
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, var(--accent-purple) 0%, var(--primary) 100%)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: 700,
-            color: '#fff'
-          }}>
+
+        {/* User */}
+        <div className="flex items-center gap-2.5">
+
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--accent-purple)] to-[var(--primary)] flex items-center justify-center text-sm font-bold text-white">
             {user?.username ? user.username[0].toUpperCase() : 'U'}
           </div>
-          <div style={{ textAlign: 'left' }}>
-            <div style={{ fontSize: '14px', fontWeight: 600 }}>{user?.username || 'Demo User'}</div>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Trader Profile</div>
+
+          <div className="text-left">
+            <div className="text-sm font-semibold text-white">
+              {user?.username || 'Demo User'}
+            </div>
+
+            <div className="text-[11px] text-[var(--text-muted)]">
+              Trader Profile
+            </div>
           </div>
-          
-          <button 
+
+          {/* Logout */}
+          <button
             onClick={logout}
             title="Log out"
-            style={{
-              background: 'none',
-              border: 'none',
-              color: 'var(--danger)',
-              cursor: 'pointer',
-              marginLeft: '8px',
-              display: 'flex',
-              alignItems: 'center'
-            }}
+            className="ml-2 flex items-center bg-transparent border-none text-[var(--danger)] cursor-pointer"
           >
             <LogOut size={18} />
           </button>
+
         </div>
+
       </div>
+
     </nav>
   );
 };

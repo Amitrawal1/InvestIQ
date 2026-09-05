@@ -1,19 +1,9 @@
 import React, { useState, useEffect, useRef, useId } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, usePresence } from "motion/react";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Newspaper,
-  LineChart,
-  TrendingUp,
-  Cpu,
-  MonitorPlay,
-  X
-} from "lucide-react";
-
-// GLOBE COMPONENT KO YAHAN IMPORT KIYA HAI
+import {ArrowRight,ArrowUpRight,Newspaper,LineChart,TrendingUp,Cpu,MonitorPlay,X} from "lucide-react";
 import IntroGlobe from "../components/IntroGlobe";
-
+import Home from "./Home";
 // --- DATA ---
 const chaptersData = [
   { name: "Information Technology", image: "/InformationTechnology.jpg" },
@@ -125,6 +115,7 @@ function SandTransitionImage({ src, alt }) {
 
 // --- MAIN APP COMPONENT ---
 export default function Intro() {
+  const navigate = useNavigate();
   const [activeChapter, setActiveChapter] = useState(2); 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeFeature, setActiveFeature] = useState(null); // New state for feature description
@@ -146,7 +137,7 @@ export default function Intro() {
   };
 
   return (
-    <div className="font-sans text-[#111] bg-[#fcfcfc] overflow-x-hidden selection:bg-black selection:text-white">
+    <div className="font-sans text-[#111] bg-[#050011] overflow-x-hidden selection:bg-black selection:text-white">
       
       {/* SECTION 1: HERO - Bg set to #050011 immediately to prevent white flash */}
       <section className="relative w-full h-screen min-h-[800px] flex flex-col bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat overflow-hidden ">
@@ -165,7 +156,7 @@ export default function Intro() {
             className="w-full"
           >
             <svg viewBox="0 0 850 100" className="w-full fill-white pointer-events-auto font-sans font-black">
-              {"BULLSTACK".split("").map((letter, index) => (
+              {"INVEST IQ".split("").map((letter, index) => (
                 <motion.text
                   key={index}
                   x={index * 90} 
@@ -255,6 +246,7 @@ export default function Intro() {
 
           <motion.button 
             variants={fadeUp}
+            onClick={() => navigate("/Home")}
             className="pointer-events-auto group relative overflow-hidden bg-[#1a1a1a] px-6 py-3.5 border border-[#1a1a1a] rounded-md shadow-sm transition-transform hover:-translate-y-[0.5px] hover:shadow-[3px_3px_0px_rgba(17,17,17,0.5)] active:translate-y-0 active:shadow-sm flex items-center gap-3"
           >
             <div className="absolute inset-0 bg-[#fcfcfc] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-0" />

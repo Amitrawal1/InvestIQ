@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import Predictor from './pages/Predictor';
 import Landing from './pages/Landing';
 import Intro from './pages/Intro';
+import Home from './pages/Home';
 
 
 // Protect private views from unauthenticated requests
@@ -14,33 +15,11 @@ const PrivateRoute = ({ children }) => {
 
   if (loading) {
     return (
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        background: '#090d16',
-        color: '#fff',
-        fontFamily: 'sans-serif'
-      }}>
-        <div style={{
-          border: '4px solid rgba(0, 242, 254, 0.1)',
-          borderTop: '4px solid #00f2fe',
-          borderRadius: '50%',
-          width: '40px',
-          height: '40px',
-          animation: 'spin 1s linear infinite'
-        }} />
-        <style>{`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        `}</style>
+      <div className="flex min-h-screen items-center justify-center bg-[#090d16] text-white font-sans">
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-[rgba(0,242,254,0.1)] border-t-[#00f2fe]" />
       </div>
     );
   }
-
   return user ? children : <Navigate to="/login" replace />;
 };
 
@@ -50,9 +29,11 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="" element={<Intro />} />
+          <Route path="login" element={<Login />} />
+          <Route path="home" element={<Home />} />
+          <Route path="dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+          <Route path="predictor" element={<PrivateRoute><Predictor /></PrivateRoute>} />
           <Route path="landing/" element={<Landing />} />
-          
-          
           {/* Fallback paths redirect */}
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
