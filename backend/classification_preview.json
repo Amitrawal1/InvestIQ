@@ -1,0 +1,122 @@
+[
+  {
+    "id": 5,
+    "name": "20 Microns Limited",
+    "symbol": "20MICRONS",
+    "isin": "INE144J01027",
+    "nse_sector": null,
+    "nse_industry": null,
+    "nse_basic_industry": null,
+    "investiq_sector": null,
+    "investiq_industry": null,
+    "status": "NSE_FAILED"
+  },
+  {
+    "id": 6,
+    "name": "21st Century Management Services Limited",
+    "symbol": "21STCENMGM",
+    "isin": "INE253B01015",
+    "nse_sector": null,
+    "nse_industry": null,
+    "nse_basic_industry": null,
+    "investiq_sector": null,
+    "investiq_industry": null,
+    "status": "NSE_FAILED"
+  },
+  {
+    "id": 7,
+    "name": "360 ONE WAM LIMITED",
+    "symbol": "360ONE",
+    "isin": "INE466L01038",
+    "nse_sector": null,
+    "nse_industry": null,
+    "nse_basic_industry": null,
+    "investiq_sector": null,
+    "investiq_industry": null,
+    "status": "NSE_FAILED"
+  },
+  {
+    "id": 8,
+    "name": "3B Blackbio Dx Limited",
+    "symbol": "3BBLACKBIO",
+    "isin": "INE994E01018",
+    "nse_sector": null,
+    "nse_industry": null,
+    "nse_basic_industry": null,
+    "investiq_sector": null,
+    "investiq_industry": null,
+    "status": "NSE_FAILED"
+  },
+  {
+    "id": 9,
+    "name": "3i Infotech Limited",
+    "symbol": "3IINFOLTD",
+    "isin": "INE748C01038",
+    "nse_sector": null,
+    "nse_industry": null,
+    "nse_basic_industry": null,
+    "investiq_sector": null,
+    "investiq_industry": null,
+    "status": "NSE_FAILED"
+  },
+  {
+    "id": 10,
+    "name": "3M India Limited",
+    "symbol": "3MINDIA",
+    "isin": "INE470A01017",
+    "nse_sector": null,
+    "nse_industry": null,
+    "nse_basic_industry": null,
+    "investiq_sector": null,
+    "investiq_industry": null,
+    "status": "NSE_FAILED"
+  },
+  {
+    "id": 11,
+    "name": "3P Land Holdings Limited",
+    "symbol": "3PLAND",
+    "isin": "INE105C01023",
+    "nse_sector": null,
+    "nse_industry": null,
+    "nse_basic_industry": null,
+    "investiq_sector": null,
+    "investiq_industry": null,
+    "status": "NSE_FAILED"
+  },
+  {
+    "id": 12,
+    "name": "5Paisa Capital Limited",
+    "symbol": "5PAISA",
+    "isin": "INE618L01018",
+    "nse_sector": null,
+    "nse_industry": null,
+    "nse_basic_industry": null,
+    "investiq_sector": null,
+    "investiq_industry": null,
+    "status": "NSE_FAILED"
+  },
+  {
+    "id": 13,
+    "name": "63 moons technologies limited",
+    "symbol": "63MOONS",
+    "isin": "INE111B01023",
+    "nse_sector": null,
+    "nse_industry": null,
+    "nse_basic_industry": null,
+    "investiq_sector": null,
+    "investiq_industry": null,
+    "status": "NSE_FAILED"
+  },
+  {
+    "id": 14,
+    "name": "A2Z Infra Engineering Limited",
+    "symbol": "A2ZINFRA",
+    "isin": "INE619I01012",
+    "nse_sector": null,
+    "nse_industry": null,
+    "nse_basic_industry": null,
+    "investiq_sector": null,
+    "investiq_industry": null,
+    "status": "NSE_FAILED"
+  }
+]

@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar"
 import Logo from "../components/Logo"
 import Category from "../components/Category"
+import MarketTicker from "../components/MarketTicker"
 
 export default function Home() {
     return(
@@ -10,6 +11,8 @@ export default function Home() {
                 <Logo/>
                 <Navbar/>
                 <Category/>
+
+                <MarketTicker/>
             </div>
         </div>
         </>
