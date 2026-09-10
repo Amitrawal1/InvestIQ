@@ -1,452 +1,287 @@
-Haan. Agar tum **GitHub README ko visually designed/professional** dikhana chahte ho, to Markdown ke saath HTML tags use kar sakte ho. Neeche **complete `README.md` code** hai — direct copy-paste.
+````markdown
+# InvestIQ
 
-````html
-<div align="center">
+InvestIQ is an AI-powered financial intelligence platform designed to help users understand companies, markets, sectors, industries, financial data, and investment-related information in one place.
 
-# 🚀 InvestIQ
-
-### AI-Powered Financial Intelligence Platform
-
-<p>
-  <strong>Market Data • Financial Analysis • Machine Learning • AI Insights</strong>
-</p>
-
-</div>
+The project combines financial data, machine learning, backend APIs, and a modern web interface to build a complete investment research platform.
 
 ---
 
-## 📌 About InvestIQ
+## What We Are Building
 
-**InvestIQ** is an AI-powered financial intelligence platform that brings company data, market data, financial fundamentals, news, machine learning, and AI analysis together in one place.
+InvestIQ aims to provide:
 
-The goal is to help users understand companies and make better data-driven investment decisions.
-
----
-
-## 🎯 What We Are Building
-
-<table>
-<tr>
-<td>🏢 <strong>Company Intelligence</strong></td>
-<td>Company profiles, business information and financial data</td>
-</tr>
-
-<tr>
-<td>📊 <strong>Market Data</strong></td>
-<td>Stock prices and historical market data</td>
-</tr>
-
-<tr>
-<td>💰 <strong>Financial Analysis</strong></td>
-<td>Financial fundamentals and company performance</td>
-</tr>
-
-<tr>
-<td>📰 <strong>News Analysis</strong></td>
-<td>Company and market-related news</td>
-</tr>
-
-<tr>
-<td>🤖 <strong>Machine Learning</strong></td>
-<td>ML-based financial analysis and scoring</td>
-</tr>
-
-<tr>
-<td>🧠 <strong>AI Insights</strong></td>
-<td>AI-assisted financial research and insights</td>
-</tr>
-
-<tr>
-<td>🔎 <strong>Company Discovery</strong></td>
-<td>Explore companies by sector and industry</td>
-</tr>
-</table>
+- Company search and company profiles
+- Sector and industry-wise company discovery
+- Stock prices and historical market data
+- Financial fundamentals
+- Company and market news
+- AI/ML-based financial analysis
+- Investment insights
+- Company comparison
 
 ---
 
-## 🏗️ System Architecture
-
-<div align="center">
+## System Overview
 
 ```text
-                         INVESTIQ
-                            │
-          ┌─────────────────┼─────────────────┐
-          │                 │                 │
-          ▼                 ▼                 ▼
-        DATA               ML           APPLICATION
-          │                 │                 │
-          ▼                 ▼                 ▼
-    Market Data       Classification      Frontend
-    Fundamentals      ML Models           Backend API
-    Company Data      AI Analysis         Database
-    News              Predictions
-          │                 │                 │
-          └─────────────────┼─────────────────┘
-                            │
-                            ▼
-                    INVESTMENT INSIGHTS
+                    INVESTIQ
+                       │
+        ┌──────────────┼──────────────┐
+        ↓              ↓              ↓
+      DATA             ML        APPLICATION
+        │              │              │
+        ↓              ↓              ↓
+   Market Data    Classification    Frontend
+   Fundamentals   ML Models         Backend API
+   Company Data   AI Analysis       Database
+   News           Predictions
+        │              │              │
+        └──────────────┼──────────────┘
+                       ↓
+                Investment Insights
 ````
 
-</div>
+---
+
+## Technology Stack
+
+### Frontend
+
+* React.js
+* Tailwind CSS
+* JavaScript
+
+### Backend
+
+* Node.js
+* Express.js
+* REST APIs
+
+### Database
+
+* MySQL
+
+### Machine Learning
+
+* Python
+* Pandas
+* NumPy
+* Scikit-learn
+* NLP
+* Generative AI / LLMs
+
+### Financial Data
+
+* NSE data
+* Upstox API
+* Company fundamentals
+* Historical stock prices
+* Financial and market news
 
 ---
 
-## 🛠️ Technology Stack
+## Database Structure
 
-<table>
-<tr>
-<th>Layer</th>
-<th>Technology</th>
-</tr>
-
-<tr>
-<td>Frontend</td>
-<td>React.js, Tailwind CSS, JavaScript</td>
-</tr>
-
-<tr>
-<td>Backend</td>
-<td>Node.js, Express.js, REST APIs</td>
-</tr>
-
-<tr>
-<td>Database</td>
-<td>MySQL</td>
-</tr>
-
-<tr>
-<td>Machine Learning</td>
-<td>Python, Pandas, NumPy, Scikit-learn</td>
-</tr>
-
-<tr>
-<td>AI / NLP</td>
-<td>NLP, Generative AI, LLMs</td>
-</tr>
-
-<tr>
-<td>Financial Data</td>
-<td>NSE Data, Upstox API</td>
-</tr>
-</table>
-
----
-
-## 🗄️ Database Structure
-
-InvestIQ organizes companies using a **Sector → Industry → Company** hierarchy.
+The database is mainly organized around companies, sectors, and industries.
 
 ```text
-                         SECTORS
-                            │
-                            │ 1 : N
-                            ▼
-                        INDUSTRIES
-                            │
-                            │ 1 : N
-                            ▼
-                         COMPANIES
+                    sectors
+                       │
+                       │ 1 : N
+                       ↓
+                  industries
+                       │
+                       │ 1 : N
+                       ↓
+                   companies
 ```
 
-### Database Relationship
+### Sectors
 
-```text
-┌──────────────────┐
-│     sectors      │
-├──────────────────┤
-│ id               │
-│ name             │
-│ description      │
-└────────┬─────────┘
-         │
-         │ 1 : N
-         ▼
-┌──────────────────┐
-│    industries    │
-├──────────────────┤
-│ id               │
-│ name             │
-│ sector_id        │
-│ description      │
-└────────┬─────────┘
-         │
-         │ 1 : N
-         ▼
-┌──────────────────┐
-│     companies    │
-├──────────────────┤
-│ id               │
-│ name             │
-│ symbol           │
-│ industry_id      │
-│ sector_id        │
-│ industry         │
-│ isin             │
-│ exchange         │
-│ ...              │
-└──────────────────┘
-```
+InvestIQ uses 10 major sectors:
+
+1. Financial Services
+2. Technology
+3. Healthcare & Pharmaceuticals
+4. Energy & Utilities
+5. Automobile & Mobility
+6. Consumer & FMCG
+7. Industrials & Infrastructure
+8. Metals, Mining & Chemicals
+9. Real Estate & Construction
+10. Services & Others
+
+### Industries
+
+Companies are classified into 45 industries, including:
+
+* IT Services
+* Software
+* Artificial Intelligence
+* Semiconductor
+* Hardware
+* Solar Energy
+* Renewable Energy
+* Power
+* Oil & Gas
+* Banking
+* Insurance
+* NBFC
+* Asset Management
+* Pharmaceuticals
+* Hospitals
+* Diagnostics
+* Medical Devices
+* Automobiles
+* Auto Components
+* Electric Vehicles
+* Mobility Services
+* FMCG
+* Food & Beverages
+* Retail
+* Consumer Durables
+* Consumer Services
+* Capital Goods
+* Engineering
+* Construction
+* Infrastructure
+* Manufacturing
+* Metals & Mining
+* Cement
+* Chemicals
+* Specialty Chemicals
+* Real Estate
+* Real Estate Development
+* Building Materials
+* Telecom
+* Logistics
+* Aviation
+* Hotels & Hospitality
+* Media & Entertainment
+* Education
+* Other Services
 
 ---
 
-## 🏢 Company Classification
+## Company Classification
 
 A major part of InvestIQ is automatically classifying companies into the correct industry.
 
 ```text
-                    COMPANY DATA
-                         │
-                         ▼
-                  DATA CLEANING
-                         │
-                         ▼
-                 DATA VALIDATION
-                         │
-                         ▼
-              COMPANY INFORMATION
-                         │
-                         ▼
-            CLASSIFICATION LOGIC
-                         │
-              ┌──────────┴──────────┐
-              ▼                     ▼
-         Rules / Signals        ML / AI
-              │                     │
-              └──────────┬──────────┘
-                         ▼
-                  45 INDUSTRIES
-                         │
-                         ▼
-                   10 SECTORS
-                         │
-                         ▼
-                    DATABASE
+Company Data
+     ↓
+Data Cleaning
+     ↓
+Company Profile / Business Information
+     ↓
+Classification Rules + ML
+     ↓
+45 Industries
+     ↓
+10 Sectors
+     ↓
+MySQL Database
 ```
 
-The classification system uses company information and business data to determine the most suitable industry.
+The classification system uses company information, business descriptions, financial data, and external company data to determine the most suitable industry.
 
-Confidence levels are also used to identify classifications that may require further review.
-
----
-
-## 🏷️ Sector Classification
-
-InvestIQ currently uses **10 major sectors**:
-
-<table>
-<tr>
-<td>1️⃣ Financial Services</td>
-<td>2️⃣ Technology</td>
-</tr>
-
-<tr>
-<td>3️⃣ Healthcare & Pharmaceuticals</td>
-<td>4️⃣ Energy & Utilities</td>
-</tr>
-
-<tr>
-<td>5️⃣ Automobile & Mobility</td>
-<td>6️⃣ Consumer & FMCG</td>
-</tr>
-
-<tr>
-<td>7️⃣ Industrials & Infrastructure</td>
-<td>8️⃣ Metals, Mining & Chemicals</td>
-</tr>
-
-<tr>
-<td>9️⃣ Real Estate & Construction</td>
-<td>🔟 Services & Others</td>
-</tr>
-</table>
+Confidence levels are also used so that uncertain classifications can be reviewed manually.
 
 ---
 
-## 🏷️ Industry Classification
+## Current Database
 
-Companies are classified into **45 industries**, including:
+The current company universe contains **3,117 NSE companies**.
 
-<table>
-<tr>
-<td>IT Services</td>
-<td>Software</td>
-<td>Artificial Intelligence</td>
-</tr>
+Current classification status:
 
-<tr>
-<td>Semiconductor</td>
-<td>Hardware</td>
-<td>Solar Energy</td>
-</tr>
+```text
+Total Companies       : 3,117
+Classified Companies  : 2,801
+Unclassified          : 316
+Industry/Sector Error : 0
+```
 
-<tr>
-<td>Renewable Energy</td>
-<td>Power</td>
-<td>Oil & Gas</td>
-</tr>
-
-<tr>
-<td>Banking</td>
-<td>Insurance</td>
-<td>NBFC</td>
-</tr>
-
-<tr>
-<td>Asset Management</td>
-<td>Pharmaceuticals</td>
-<td>Hospitals</td>
-</tr>
-
-<tr>
-<td>Diagnostics</td>
-<td>Medical Devices</td>
-<td>Automobiles</td>
-</tr>
-
-<tr>
-<td>Auto Components</td>
-<td>Electric Vehicles</td>
-<td>Mobility Services</td>
-</tr>
-
-<tr>
-<td>FMCG</td>
-<td>Food & Beverages</td>
-<td>Retail</td>
-</tr>
-
-<tr>
-<td>Consumer Durables</td>
-<td>Consumer Services</td>
-<td>Capital Goods</td>
-</tr>
-
-<tr>
-<td>Engineering</td>
-<td>Construction</td>
-<td>Infrastructure</td>
-</tr>
-
-<tr>
-<td>Manufacturing</td>
-<td>Metals & Mining</td>
-<td>Cement</td>
-</tr>
-
-<tr>
-<td>Chemicals</td>
-<td>Specialty Chemicals</td>
-<td>Real Estate</td>
-</tr>
-
-<tr>
-<td>Real Estate Development</td>
-<td>Building Materials</td>
-<td>Telecom</td>
-</tr>
-
-<tr>
-<td>Logistics</td>
-<td>Aviation</td>
-<td>Hotels & Hospitality</td>
-</tr>
-
-<tr>
-<td>Media & Entertainment</td>
-<td>Education</td>
-<td>Other Services</td>
-</tr>
-</table>
+The remaining companies are being processed using additional fallback classification methods.
 
 ---
 
-## 🔄 Data Pipeline
+## Data Pipeline
 
 InvestIQ follows a structured data pipeline:
 
 ```text
-                       RAW DATA
-                           │
-                           ▼
-                  DATA CLEANING
-                           │
-                           ▼
-                 DATA VALIDATION
-                           │
-                           ▼
-              FEATURE ENGINEERING
-                           │
-                           ▼
-                    ML / AI MODELS
-                           │
-                           ▼
-                    MODEL RESULTS
-                           │
-                           ▼
-                    BACKEND / API
-                           │
-                           ▼
-                       FRONTEND
+                    RAW DATA
+                       ↓
+              Data Cleaning
+                       ↓
+             Data Validation
+                       ↓
+           Feature Engineering
+                       ↓
+              ML / AI Models
+                       ↓
+              Model Results
+                       ↓
+              Backend / API
+                       ↓
+                  Frontend
 ```
 
-The pipeline is designed to be improved continuously as data quality and model performance improve.
+The pipeline is designed to be improved continuously as more data becomes available.
 
 ---
 
-## 🤖 Machine Learning
+## Machine Learning
 
 The ML layer is being developed to analyze financial and market data.
 
+The planned workflow includes:
+
 ```text
-       Historical Market Data
-                  +
-       Financial Fundamentals
-                  +
-        Company Information
-                  │
-                  ▼
-        Feature Engineering
-                  │
-                  ▼
-             ML Models
-          ┌───────┼───────┐
-          ▼       ▼       ▼
-        Model   Model   Model
-          └───────┼───────┘
-                  ▼
-          Scores / Analysis
-                  │
-                  ▼
-           AI Financial Insights
+Historical Market Data
+          +
+Financial Fundamentals
+          +
+Company Information
+          ↓
+   Feature Engineering
+          ↓
+      ML Models
+     ┌────┼────┐
+     ↓    ↓    ↓
+   Model Model Model
+     └────┼────┘
+          ↓
+   Predictions / Scores
+          ↓
+   Investment Insights
 ```
 
-The ML system will be improved iteratively as more reliable data and better features become available.
+The ML system will be improved iteratively as data quality and feature engineering become better.
 
 ---
 
-## ⚙️ Backend Architecture
+## Backend Architecture
+
+The backend provides APIs for the frontend and handles financial data.
 
 ```text
-                    FRONTEND
-                       │
-                       ▼
-                EXPRESS REST API
-                       │
-                       ▼
-                  CONTROLLERS
-                       │
-                       ▼
-                   SERVICES
-                       │
-                       ▼
-                  MYSQL DATABASE
-                       │
-                       ▼
-              FINANCIAL DATA SOURCES
+Frontend
+   ↓
+Express REST API
+   ↓
+Controllers
+   ↓
+Services
+   ↓
+MySQL Database
+   ↓
+Financial Data Providers
 ```
 
-### Main Backend Components
+Main backend areas include:
 
 * Company APIs
 * Sector APIs
@@ -454,11 +289,10 @@ The ML system will be improved iteratively as more reliable data and better feat
 * News APIs
 * Market Data Services
 * Company Classification
-* Financial Data Processing
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 InvestIQ/
@@ -483,112 +317,76 @@ InvestIQ/
 
 ---
 
-## 📊 Current Progress
-
-<div align="center">
-
-| Metric                     | Current Status |
-| -------------------------- | -------------: |
-| NSE Companies              |      **3,117** |
-| Classified Companies       |      **2,801** |
-| Remaining Companies        |        **316** |
-| Industries                 |         **45** |
-| Major Sectors              |         **10** |
-| Industry/Sector Mismatches |          **0** |
-
-</div>
-
-The remaining companies are being processed using additional fallback classification methods.
-
----
-
-## 🛣️ Development Roadmap
+## Development Roadmap
 
 ### Phase 1 — Data Infrastructure
 
-* [x] Company database
-* [x] Company data cleaning
-* [x] Historical stock price infrastructure
-* [x] Financial fundamentals integration
-* [x] Sector and industry structure
+* Collect company data
+* Clean and validate data
+* Build company database
+* Add historical stock prices
+* Add financial fundamentals
 
 ### Phase 2 — Company Classification
 
-* [x] Industry taxonomy
-* [x] Automated classification
-* [x] Confidence-based classification
-* [x] Manual review system
-* [ ] Complete remaining companies
+* Create sector and industry taxonomy
+* Classify companies
+* Add confidence scoring
+* Handle uncertain companies using fallback methods
 
 ### Phase 3 — Machine Learning
 
-* [ ] Feature engineering
-* [ ] ML model development
-* [ ] Model training
-* [ ] Model evaluation
-* [ ] Company scoring
+* Feature engineering
+* Build ML models
+* Train and evaluate models
+* Generate company-level scores
 
 ### Phase 4 — AI Financial Intelligence
 
-* [ ] Financial text analysis
-* [ ] News analysis
-* [ ] AI-generated company insights
-* [ ] AI-assisted investment research
+* Financial text analysis
+* Company insights
+* News analysis
+* AI-assisted investment research
 
 ### Phase 5 — Product
 
-* [ ] Company dashboard
-* [ ] Sector exploration
-* [ ] Industry exploration
-* [ ] Stock analysis
-* [ ] Company comparison
-* [ ] AI insights dashboard
+* Company dashboard
+* Sector and industry exploration
+* Stock analysis
+* AI insights
+* Investment research interface
 
 ---
 
-## 🔮 Vision
+## Goal
 
-The long-term goal is to create a complete financial intelligence system:
+The goal of InvestIQ is to build a complete financial intelligence platform where users can move from:
 
 ```text
-                    COMPANY
-                       │
-                       ▼
-                FINANCIAL DATA
-                       │
-                       ▼
-                  MARKET DATA
-                       │
-                       ▼
-                SECTOR / INDUSTRY
-                       │
-                       ▼
-                  ML ANALYSIS
-                       │
-                       ▼
-                   AI INSIGHTS
-                       │
-                       ▼
-             INVESTMENT RESEARCH
+Company
+   ↓
+Financial Data
+   ↓
+Market Data
+   ↓
+Industry & Sector
+   ↓
+ML Analysis
+   ↓
+AI Insights
+   ↓
+Investment Decision Support
 ```
 
-InvestIQ brings these layers together into a single platform for data-driven financial research.
+InvestIQ is being built as a data-driven system where the data pipeline, machine learning models, backend, database, and frontend work together.
 
 ---
 
-## 🚧 Project Status
+## Project Status
 
-**InvestIQ is currently under active development.**
+🚧 **InvestIQ is currently under active development.**
 
-The data infrastructure, company database, financial data pipeline, and company classification system are currently being developed. The machine learning and AI layers are being built on top of this foundation.
+The data infrastructure, company database, financial data pipeline, and company classification system are currently being developed. The machine learning and AI layers will be expanded as the underlying data becomes more complete and reliable.
 
----
-
-<div align="center">
-
-### InvestIQ
-
-**Smarter Investing. Better Decisions.**
-
-</div>
+```
 ```
