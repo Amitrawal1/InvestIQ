@@ -2,9 +2,24 @@ const db = require("../config/db");
 
 const getSectors = async (req, res) => {
     try {
-        const [rows] = await db.query(
-            "SELECT id, name, slug FROM sectors"
-        );
+        const [rows] = await db.query(`
+            SELECT
+                s.id,
+                s.name,
+                s.slug,
+                (
+                    SELECT COUNT(*)
+                    FROM companies c
+                    WHERE c.sector_id = s.id
+                ) AS company_count,
+                (
+                    SELECT COUNT(*)
+                    FROM industries i
+                    WHERE i.sector_id = s.id
+                ) AS industry_count
+            FROM sectors s
+            ORDER BY s.id
+        `);
 
         res.json(rows);
     } catch (error) {

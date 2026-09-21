@@ -1,6 +1,7 @@
-import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 import { motion } from "motion/react"
-import { ArrowRight, Cpu, LayoutDashboard, LineChart, Newspaper, TrendingUp } from "lucide-react"
+import { ArrowRight, Cpu, LineChart, Newspaper, TrendingUp } from "lucide-react"
 import Navbar from "../components/Navbar"
 import Category from "../components/Category"
 import MarketTicker from "../components/MarketTicker"
@@ -16,6 +17,12 @@ const highlights = [
 
 export default function Home() {
     const navigate = useNavigate()
+    const { hash } = useLocation()
+
+    // Support links like /home#sectors
+    useEffect(() => {
+        if (hash) document.getElementById(hash.slice(1))?.scrollIntoView()
+    }, [hash])
 
     return (
         <div className="bg-[#050011] w-full text-white min-h-screen font-sans overflow-x-hidden">
@@ -50,7 +57,7 @@ export default function Home() {
                             </p>
                         </div>
                         <div className="flex flex-wrap gap-3">
-                            <PrimaryButton icon={LayoutDashboard} onClick={() => navigate("/dashboard")}>
+                            <PrimaryButton onClick={() => navigate("/dashboard")}>
                                 Open Dashboard
                             </PrimaryButton>
                             <Pill icon={Cpu} onClick={() => navigate("/predictor")} className="py-3.5">

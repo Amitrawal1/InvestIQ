@@ -34,38 +34,60 @@ export function MonoLabel({ children, className = "" }) {
   );
 }
 
-// Rounded pill, same states as the Intro feature pills
+// Exact copy of the Intro feature pills (NEWS ALERTS, STOCK SIGNALS, ...)
+const pillClass = (active, className) =>
+  `flex items-center gap-2 px-4 py-2 rounded-full border text-[11px] font-medium uppercase tracking-wider transition-all duration-300
+  ${active
+    ? "bg-white text-black border-white"
+    : "border-gray-300 bg-white/10 backdrop-blur-sm text-gray-300 hover:border-white hover:bg-white/20 hover:text-white"}
+  ${className}`;
+
 export function Pill({ active = false, icon: Icon, children, className = "", ...props }) {
   return (
-    <button
-      type="button"
-      className={`flex items-center gap-2 px-4 py-2 rounded-full border text-[11px] font-medium uppercase tracking-wider transition-all duration-300 cursor-pointer
-        ${active
-          ? "bg-white text-black border-white"
-          : "border-gray-600 bg-white/5 backdrop-blur-sm text-gray-300 hover:border-white hover:bg-white/20 hover:text-white"}
-        ${className}`}
-      {...props}
-    >
+    <button type="button" className={`${pillClass(active, className)} cursor-pointer`} {...props}>
       {Icon && <Icon size={14} strokeWidth={2} />}
       {children}
     </button>
   );
 }
 
-// Dark button with the white slide-in fill from the Intro "Explore Now" CTA
+// Same look as Pill, for non-interactive tags
+export function PillTag({ icon: Icon, children, className = "", ...props }) {
+  return (
+    <span className={`${pillClass(false, className)} cursor-default`} {...props}>
+      {Icon && <Icon size={14} strokeWidth={2} />}
+      {children}
+    </span>
+  );
+}
+
+// The star from the Intro "Explore Now" button
+export const StarIcon = ({ className = "" }) => (
+  <svg viewBox="0 0 24 24" className={`w-4 h-4 fill-white group-hover:fill-[#111] ${className}`}>
+    <path d="M12 2L15 10H22L16 15L18 22L12 18L6 22L8 15L2 10H9L12 2Z" />
+  </svg>
+);
+
+// Exact copy of the Intro "Explore Now" button: dark block, white slide-in fill,
+// star icon that tilts on hover. Pass `icon` to swap the star for a lucide icon.
 export function PrimaryButton({ children, icon: Icon, className = "", ...props }) {
+  const iconMotion = "transition-all duration-300 group-hover:scale-110 group-hover:-rotate-12 group-hover:-translate-y-1";
+
   return (
     <button
-      className={`group relative overflow-hidden bg-[#1a1a1a] px-6 py-3.5 border border-gray-700 rounded-md shadow-sm transition-transform hover:-translate-y-[0.5px] hover:shadow-[3px_3px_0px_rgba(255,255,255,0.15)] active:translate-y-0 disabled:opacity-60 disabled:pointer-events-none flex items-center justify-center gap-3 cursor-pointer ${className}`}
+      className={`group relative overflow-hidden bg-[#1a1a1a] px-6 py-3.5 border border-[#1a1a1a] rounded-md shadow-sm transition-transform hover:-translate-y-[0.5px] hover:shadow-[3px_3px_0px_rgba(17,17,17,0.5)] active:translate-y-0 active:shadow-sm disabled:opacity-60 disabled:pointer-events-none flex items-center justify-center gap-3 cursor-pointer ${className}`}
       {...props}
     >
       <div className="absolute inset-0 bg-[#fcfcfc] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-0" />
-      <span className="relative z-10 flex items-center gap-2 text-[15px] font-medium text-white group-hover:text-[#111] transition-colors duration-300">
-        {Icon && (
-          <Icon size={16} className="transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-12" />
-        )}
-        {children}
-      </span>
+
+      <div className="relative z-10 flex items-center gap-2">
+        {Icon
+          ? <Icon size={16} className={`text-white group-hover:text-[#111] ${iconMotion}`} />
+          : <StarIcon className={iconMotion} />}
+        <span className="text-[15px] font-medium text-white group-hover:text-[#111] transition-colors duration-300">
+          {children}
+        </span>
+      </div>
     </button>
   );
 }

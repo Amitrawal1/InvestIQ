@@ -19,8 +19,10 @@ const Navbar = ({ onSearch }) => {
   const { user, logout } = useAuth();
 
   return (
-    <nav className="w-full sticky top-0 z-40 bg-[#050011]/85 backdrop-blur-md border-b border-gray-800">
-      <div className="flex items-center justify-between gap-6 px-6 md:px-16 py-4">
+    <>
+    {/* Fixed (not sticky) so it stays pinned even inside overflow-hidden page wrappers */}
+    <nav className="fixed top-0 inset-x-0 z-50 bg-[#050011]/85 backdrop-blur-md border-b border-gray-800">
+      <div className="h-[72px] flex items-center justify-between gap-6 px-6 md:px-16">
         {/* Left - Brand + links */}
         <div className="flex items-center gap-8">
           <Logo />
@@ -92,6 +94,9 @@ const Navbar = ({ onSearch }) => {
         </div>
       </div>
     </nav>
+    {/* Spacer so page content starts below the fixed bar */}
+    <div aria-hidden="true" className="h-[73px]" />
+    </>
   );
 };
 
