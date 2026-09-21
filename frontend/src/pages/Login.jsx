@@ -1,7 +1,24 @@
 import React, { useState } from 'react';
-// import { useAuth } from '../context/AuthContext';
-import { Brain, Lock, Mail, User, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import Logo from '../components/Logo';
+import { fadeUp, stagger, SectionLabel, PrimaryButton, Panel } from '../components/ui';
+
+const Field = ({ label, type = 'text', value, onChange, placeholder, autoComplete }) => (
+  <label className="block">
+    <span className="block text-[10px] font-mono tracking-widest uppercase text-gray-500 mb-2">{label}</span>
+    <input
+      type={type}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholder}
+      autoComplete={autoComplete}
+      className="w-full bg-transparent border-b border-gray-700 pb-3 text-white text-[15px] outline-none placeholder:text-gray-600 focus:border-white transition-colors"
+    />
+  </label>
+);
 
 const Login = () => {
   const [isRegister, setIsRegister] = useState(false);
@@ -9,179 +26,138 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validationError, setValidationError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
-  // const { login, register, error } = useAuth();
+  const { login, register, error } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit =  (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/dashboard');
+    setValidationError('');
 
-    // if (!email || !password || (isRegister && !username)) {
-    //   setValidationError('All fields are required');
-    //   return;
-    // }
+    if (!email || !password || (isRegister && !username)) {
+      setValidationError('All fields are required');
+      return;
+    }
 
-    // let success = false;
-    // if (isRegister) {
-    //   success = await register(username, email, password);
-    // } else {
-    //   success = await login(email, password);
-    // }
+    setSubmitting(true);
+    const success = isRegister
+      ? await register(username, email, password)
+      : await login(email, password);
+    setSubmitting(false);
 
-    // if (success) {
-    //   navigate('/dashboard');
-    // }
+    if (success) {
+      navigate('/dashboard');
+    }
   };
 
+  const message = validationError || error;
+
   return (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: '100vh',
-      width: '100vw',
-      background: 'radial-gradient(circle at center, #111827 0%, #030712 100%)',
-      padding: '20px'
-    }}>
-      {/* Background Glows */}
-      <div style={{
-        position: 'absolute',
-        width: '300px',
-        height: '300px',
-        background: 'rgba(0, 242, 254, 0.15)',
-        filter: 'blur(100px)',
-        top: '20%',
-        left: '30%',
-        pointerEvents: 'none'
-      }} />
-      <div style={{
-        position: 'absolute',
-        width: '350px',
-        height: '350px',
-        background: 'rgba(138, 43, 226, 0.12)',
-        filter: 'blur(120px)',
-        bottom: '20%',
-        right: '30%',
-        pointerEvents: 'none'
-      }} />
+    <div className="min-h-screen w-full bg-[#050011] text-white font-sans flex flex-col lg:flex-row">
+      {/* LEFT - editorial panel */}
+      <section className="relative lg:w-[55%] flex flex-col justify-between px-6 md:px-16 py-8 lg:py-10 border-b lg:border-b-0 lg:border-r border-gray-800 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/bg.png')] bg-cover bg-center opacity-40 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050011]/40 via-[#050011]/60 to-[#050011] pointer-events-none" />
 
-      <div className="glass-panel" style={{
-        width: '100%',
-        maxWidth: '440px',
-        padding: '40px',
-        textAlign: 'center',
-        background: 'rgba(22, 33, 58, 0.45)',
-        border: '1px solid rgba(255, 255, 255, 0.08)'
-      }}>
-        {/* Brand Icon */}
-        <div style={{
-          display: 'inline-flex',
-          background: 'linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%)',
-          width: '56px',
-          height: '56px',
-          borderRadius: '16px',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: '24px',
-          boxShadow: '0 0 25px rgba(0, 242, 254, 0.35)'
-        }}>
-          <Brain size={30} color="#000" />
-        </div>
-
-        <h1 style={{ fontSize: '28px', fontFamily: 'var(--font-display)', fontWeight: 800, marginBottom: '8px' }}>
-          {isRegister ? 'Create Account' : 'Welcome Back'}
-        </h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '32px' }}>
-          {isRegister ? 'Join the AI-powered quantitative trading platform' : 'Access your predictive terminal and Zerodha dashboard'}
-        </p>
-
-        {/* Error Messages */}
-
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          {isRegister && (
-            <div style={{ position: 'relative' }}>
-              <input 
-                type="text" 
-                placeholder="Username" 
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="input-field"
-                style={{ paddingLeft: '44px' }}
-              />
-              <User size={18} style={{
-                position: 'absolute',
-                left: '16px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                color: 'var(--text-muted)'
-              }} />
-            </div>
-          )}
-
-          <div style={{ position: 'relative' }}>
-            <input 
-              type="email" 
-              placeholder="Email Address" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="input-field"
-              style={{ paddingLeft: '44px' }}
-            />
-            <Mail size={18} style={{
-              position: 'absolute',
-              left: '16px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              color: 'var(--text-muted)'
-            }} />
-          </div>
-
-          <div style={{ position: 'relative' }}>
-            <input 
-              type="password" 
-              placeholder="Secure Password" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="input-field"
-              style={{ paddingLeft: '44px' }}
-            />
-            <Lock size={18} style={{
-              position: 'absolute',
-              left: '16px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              color: 'var(--text-muted)'
-            }} />
-          </div>
-
-          <button type="submit" className="btn-primary" style={{ width: '100%', marginTop: '8px' }}>
-            {isRegister ? 'Sign Up' : 'Sign In'} <ArrowRight size={18} />
-          </button>
-        </form>
-
-        <div style={{ marginTop: '24px', fontSize: '13px' }}>
-          <span style={{ color: 'var(--text-muted)' }}>
-            {isRegister ? 'Already have an account? ' : 'New to BullStack? '}
-          </span>
-          <button 
-            onClick={() => {
-              setIsRegister(!isRegister);
-              setValidationError('');
-            }}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: 'var(--primary)',
-              cursor: 'pointer',
-              fontWeight: 600,
-              textDecoration: 'underline'
-            }}
+        <div className="relative z-10 flex items-center justify-between">
+          <Logo className="text-xl" />
+          <button
+            onClick={() => navigate('/home')}
+            className="flex items-center gap-2 text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400 hover:text-white transition-colors cursor-pointer"
           >
-            {isRegister ? 'Sign In' : 'Create an account'}
+            Explore first <ArrowUpRight size={14} strokeWidth={1} />
           </button>
         </div>
-      </div>
+
+        <motion.div
+          initial="initial"
+          animate="animate"
+          variants={stagger(0.2, 0.15)}
+          className="relative z-10 py-20 lg:py-0"
+        >
+          <motion.div variants={fadeUp}>
+            <SectionLabel index={isRegister ? '02' : '01'} className="mb-6">
+              {isRegister ? 'New account' : 'Sign in'}
+            </SectionLabel>
+          </motion.div>
+          <motion.h1
+            variants={fadeUp}
+            className="text-[3.2rem] md:text-[5rem] font-normal tracking-tight leading-[1]"
+          >
+            {isRegister ? <>START<br />INVESTING<br />SMARTER</> : <>WELCOME<br />BACK</>}
+          </motion.h1>
+          <motion.p variants={fadeUp} className="mt-8 text-[14px] text-gray-300 max-w-[320px] leading-[1.6]">
+            Decode financial news signals, track your watchlist and run AI forecasts on Indian equities.
+          </motion.p>
+        </motion.div>
+
+        <div className="relative z-10 hidden lg:flex items-center gap-4 text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400">
+          <span>Stock</span><ArrowRight size={12} strokeWidth={1} />
+          <span>News</span><ArrowRight size={12} strokeWidth={1} />
+          <span>Trends</span>
+        </div>
+      </section>
+
+      {/* RIGHT - form */}
+      <section className="lg:w-[45%] flex items-center justify-center px-6 md:px-16 py-16">
+        <Panel glow className="w-full max-w-[440px] p-8 md:p-10">
+          <div className="flex justify-between items-start mb-10">
+            <h2 className="text-xl md:text-2xl font-medium tracking-tight flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+              {isRegister ? 'Create an account' : 'Sign in to InvestIQ'}
+            </h2>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <AnimatePresence initial={false}>
+              {isRegister && (
+                <motion.div
+                  key="username"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Field label="Username" value={username} onChange={setUsername} placeholder="yourname" autoComplete="username" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <Field label="Email" type="email" value={email} onChange={setEmail} placeholder="you@example.com" autoComplete="email" />
+            <Field
+              label="Password"
+              type="password"
+              value={password}
+              onChange={setPassword}
+              placeholder="••••••••"
+              autoComplete={isRegister ? 'new-password' : 'current-password'}
+            />
+
+            {message && (
+              <p className="text-[11px] font-mono tracking-wider uppercase text-red-400">{message}</p>
+            )}
+
+            <PrimaryButton type="submit" icon={ArrowRight} disabled={submitting} className="w-full">
+              {submitting ? 'Please wait…' : isRegister ? 'Create account' : 'Sign in'}
+            </PrimaryButton>
+          </form>
+
+          <div className="mt-10 pt-6 border-t border-gray-800 flex justify-between items-center text-[10px] font-mono tracking-widest uppercase text-gray-500">
+            <span>{isRegister ? 'Already have an account?' : "Don't have an account?"}</span>
+            <button
+              type="button"
+              onClick={() => {
+                setIsRegister(!isRegister);
+                setValidationError('');
+              }}
+              className="text-white hover:underline cursor-pointer"
+            >
+              {isRegister ? 'Sign in' : 'Create one'}
+            </button>
+          </div>
+        </Panel>
+      </section>
     </div>
   );
 };

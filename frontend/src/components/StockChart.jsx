@@ -1,201 +1,185 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
-  Title,
   Tooltip,
   Legend,
   Filler
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, Filler);
 
-const StockChart = ({ ticker, historicalData, predictions }) => {
-  const chartRef = useRef(null);
+const HISTORY_COLOR = '#f5f5f5';
+const FORECAST_COLOR = '#d942ff'; // Intro globe accent
+const MUTED = '#9ca3af';
 
-  // Generate labels and datasets
-  const historyCount = historicalData ? historicalData.length : 15;
+const fmtDate = (d) => d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+
+// Build history + forecast series. Falls back to a simulated walk when no data is passed.
+function buildSeries(ticker, historicalData, predictions) {
   const labels = [];
   const historyPrices = [];
   const predictionPrices = [];
 
-  // Generate Mock historical data if not provided
   if (!historicalData || historicalData.length === 0) {
     const basePrice = ticker === 'RELIANCE' ? 2450 : ticker === 'TCS' ? 3850 : ticker === 'INFY' ? 1420 : ticker === 'HDFCBANK' ? 1550 : 500;
     for (let i = 15; i >= 0; i--) {
       const d = new Date();
       d.setDate(d.getDate() - i);
-      labels.push(d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }));
-      
-      // Simulate random walk
+      labels.push(fmtDate(d));
+
       const fluctuation = (Math.random() - 0.45) * (basePrice * 0.015);
-      const price = parseFloat((basePrice + (15 - i) * (basePrice * 0.002) + fluctuation).toFixed(2));
-      historyPrices.push(price);
-      predictionPrices.push(null); // No prediction for historical dates
+      historyPrices.push(parseFloat((basePrice + (15 - i) * (basePrice * 0.002) + fluctuation).toFixed(2)));
+      predictionPrices.push(null);
     }
   } else {
     historicalData.forEach(item => {
-      labels.push(new Date(item.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }));
+      labels.push(fmtDate(new Date(item.date)));
       historyPrices.push(item.close);
       predictionPrices.push(null);
     });
   }
 
-  // Setup predictive part
+  // Anchor the forecast line to the last historical point
   const lastHistoricalPrice = historyPrices[historyPrices.length - 1];
-  predictionPrices[predictionPrices.length - 1] = lastHistoricalPrice; // Anchor prediction to last historical point
+  predictionPrices[predictionPrices.length - 1] = lastHistoricalPrice;
 
-  const predCount = predictions ? predictions.length : 5;
-  if (!predictions || predictions.length === 0) {
-    // Generate simulated forecast walk
+  const forecast = predictions && predictions.length > 0 ? predictions : null;
+
+  if (!forecast) {
     let currentPred = lastHistoricalPrice;
-    const trendDir = ticker === 'RELIANCE' ? 1.008 : ticker === 'TCS' ? 1.005 : ticker === 'INFY' ? 0.992 : 1.002; // Reliance/TCS bullish, Infy slightly bearish
-    
-    for (let i = 1; i <= predCount; i++) {
+    const trendDir = ticker === 'RELIANCE' ? 1.008 : ticker === 'TCS' ? 1.005 : ticker === 'INFY' ? 0.992 : 1.002;
+
+    for (let i = 1; i <= 5; i++) {
       const d = new Date();
       d.setDate(d.getDate() + i);
-      labels.push(d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }) + ' (F)');
-      
-      const nextVal = currentPred * trendDir + (Math.random() - 0.5) * (currentPred * 0.01);
-      currentPred = parseFloat(nextVal.toFixed(2));
+      labels.push(fmtDate(d) + ' (F)');
+
+      currentPred = parseFloat((currentPred * trendDir + (Math.random() - 0.5) * (currentPred * 0.01)).toFixed(2));
       predictionPrices.push(currentPred);
-      historyPrices.push(null); // No historical price here
+      historyPrices.push(null);
     }
   } else {
-    predictions.forEach((val, index) => {
+    forecast.forEach((val, index) => {
       const d = new Date();
       d.setDate(d.getDate() + index + 1);
-      labels.push(d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }) + ' (F)');
+      labels.push(fmtDate(d) + ' (F)');
       predictionPrices.push(val);
       historyPrices.push(null);
     });
   }
 
+  return { labels, historyPrices, predictionPrices };
+}
+
+const areaFill = (rgb) => (context) => {
+  const { ctx, chartArea } = context.chart;
+  if (!chartArea) return null;
+  const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+  gradient.addColorStop(0, `rgba(${rgb}, 0.18)`);
+  gradient.addColorStop(1, `rgba(${rgb}, 0)`);
+  return gradient;
+};
+
+const StockChart = ({ ticker, historicalData, predictions, height = 350 }) => {
+  // Memoised so unrelated re-renders (e.g. typing in search) don't regenerate the series
+  const { labels, historyPrices, predictionPrices } = useMemo(
+    () => buildSeries(ticker, historicalData, predictions),
+    [ticker, historicalData, predictions]
+  );
+
   const data = {
     labels,
     datasets: [
       {
-        label: 'Historical Close Price (INR)',
+        label: 'Close price',
         data: historyPrices,
-        borderColor: '#00f2fe',
-        borderWidth: 3,
-        pointBackgroundColor: '#00f2fe',
-        pointHoverRadius: 7,
-        tension: 0.2,
+        borderColor: HISTORY_COLOR,
+        borderWidth: 2,
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: HISTORY_COLOR,
+        tension: 0.25,
         spanGaps: true,
         fill: 'start',
-        backgroundColor: (context) => {
-          const chart = context.chart;
-          const { ctx, chartArea } = chart;
-          if (!chartArea) return null;
-          const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-          gradient.addColorStop(0, 'rgba(0, 242, 254, 0.25)');
-          gradient.addColorStop(1, 'rgba(0, 242, 254, 0.0)');
-          return gradient;
-        }
+        backgroundColor: areaFill('245, 245, 245'),
       },
       {
-        label: 'AI Forecasted Trend (INR)',
+        label: 'AI forecast',
         data: predictionPrices,
-        borderColor: '#8a2be2',
-        borderWidth: 3,
-        borderDash: [5, 5],
-        pointBackgroundColor: '#8a2be2',
-        pointHoverRadius: 7,
-        tension: 0.2,
+        borderColor: FORECAST_COLOR,
+        borderWidth: 2,
+        borderDash: [6, 5],
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: FORECAST_COLOR,
+        tension: 0.25,
         spanGaps: true,
         fill: 'start',
-        backgroundColor: (context) => {
-          const chart = context.chart;
-          const { ctx, chartArea } = chart;
-          if (!chartArea) return null;
-          const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-          gradient.addColorStop(0, 'rgba(138, 43, 226, 0.25)');
-          gradient.addColorStop(1, 'rgba(138, 43, 226, 0.0)');
-          return gradient;
-        }
+        backgroundColor: areaFill('217, 66, 255'),
       }
     ]
   };
 
+  const mono = { family: 'ui-monospace, SFMono-Regular, Menlo, monospace', size: 10 };
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
     plugins: {
       legend: {
         position: 'top',
+        align: 'end',
         labels: {
-          color: '#90a0c7',
-          font: {
-            family: 'Outfit',
-            size: 12
-          }
+          color: MUTED,
+          font: mono,
+          usePointStyle: true,
+          pointStyle: 'line',
+          boxWidth: 24,
         }
       },
       tooltip: {
-        backgroundColor: 'rgba(13, 20, 35, 0.95)',
+        backgroundColor: '#0a0a0a',
         titleColor: '#fff',
-        bodyColor: '#90a0c7',
-        borderColor: 'rgba(255, 255, 255, 0.1)',
+        bodyColor: '#d1d5db',
+        borderColor: '#1f2937',
         borderWidth: 1,
-        titleFont: {
-          family: 'Outfit',
-          weight: 'bold'
-        },
-        bodyFont: {
-          family: 'Inter'
-        },
+        titleFont: { family: 'Inter', weight: '500' },
+        bodyFont: { family: 'Inter' },
         padding: 12,
-        displayColors: true
+        callbacks: {
+          label: (ctx) => ctx.parsed.y == null
+            ? null
+            : `${ctx.dataset.label}: ₹${ctx.parsed.y.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`,
+        }
       }
     },
     scales: {
       x: {
-        grid: {
-          color: 'rgba(255, 255, 255, 0.03)'
-        },
-        ticks: {
-          color: '#90a0c7',
-          font: {
-            family: 'Inter',
-            size: 11
-          }
-        }
+        grid: { display: false },
+        border: { color: '#1f2937' },
+        ticks: { color: MUTED, font: mono, maxRotation: 0, autoSkipPadding: 16 }
       },
       y: {
-        grid: {
-          color: 'rgba(255, 255, 255, 0.03)'
-        },
+        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+        border: { display: false },
         ticks: {
-          color: '#90a0c7',
-          font: {
-            family: 'Inter',
-            size: 11
-          },
-          callback: function(value) {
-            return '₹' + value.toLocaleString('en-IN');
-          }
+          color: MUTED,
+          font: mono,
+          callback: (value) => '₹' + value.toLocaleString('en-IN')
         }
       }
     }
   };
 
   return (
-    <div style={{ height: '350px', position: 'relative', width: '100%' }}>
-      <Line ref={chartRef} data={data} options={options} />
+    <div style={{ height, position: 'relative', width: '100%' }}>
+      <Line data={data} options={options} />
     </div>
   );
 };

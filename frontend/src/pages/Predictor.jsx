@@ -1,41 +1,53 @@
 import React, { useState } from 'react';
-import Sidebar from '../components/Sidebar';
-import Navbar from '../components/Navbar';
 import axios from 'axios';
-import { Brain, Calendar, Percent, Sparkles, ChevronRight, Activity, Cpu } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import { Calendar, Cpu, Sparkles } from 'lucide-react';
+import Navbar from '../components/Navbar';
+import StockChart from '../components/StockChart';
+import { PageHeading, MonoLabel, Panel, PrimaryButton, Pill } from '../components/ui';
+
+const securities = [
+  { value: 'RELIANCE', label: 'Reliance Industries' },
+  { value: 'TCS', label: 'Tata Consultancy Services' },
+  { value: 'INFY', label: 'Infosys Limited' },
+  { value: 'HDFCBANK', label: 'HDFC Bank' },
+];
+
+const horizons = [3, 5, 7];
 
 const Predictor = () => {
   const [ticker, setTicker] = useState('RELIANCE');
   const [days, setDays] = useState(5);
   const [loading, setLoading] = useState(false);
   const [forecastResults, setForecastResults] = useState(null);
+  const [simulated, setSimulated] = useState(false);
 
   const triggerInference = async () => {
     setLoading(true);
     setForecastResults(null);
+    setSimulated(false);
 
     try {
-      // Direct call to Express which proxies to FastAPI
+      // Direct call to Express which proxies to the model service
       const response = await axios.post('/api/ai/predict', { ticker, days });
       setForecastResults(response.data);
     } catch (err) {
-      console.warn('Backend proxy offline, triggering simulated sandbox neural network inference.', err);
-      // Premium Sandbox simulation if server is offline
+      console.warn('Prediction API offline, using simulated sandbox inference.', err);
       await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate computational load
-      
+
       const basePrice = ticker === 'RELIANCE' ? 2460.50 : ticker === 'TCS' ? 3855.20 : ticker === 'INFY' ? 1412.10 : 1548.80;
       const trend = ticker === 'RELIANCE' || ticker === 'TCS' ? 0.008 : ticker === 'INFY' ? -0.005 : 0.003;
-      
+
       const predictionsList = [];
       let currentVal = basePrice;
       for (let i = 1; i <= days; i++) {
         const date = new Date();
         date.setDate(date.getDate() + i);
-        
+
         // Random walk with predefined drift
         const fluctuation = (Math.random() - 0.48) * (currentVal * 0.015);
         currentVal = parseFloat((currentVal * (1 + trend) + fluctuation).toFixed(2));
-        
+
         predictionsList.push({
           day: i,
           date: date.toLocaleDateString('en-IN', { weekday: 'long', day: '2-digit', month: 'short' }),
@@ -45,9 +57,10 @@ const Predictor = () => {
         });
       }
 
+      setSimulated(true);
       setForecastResults({
         ticker,
-        model_version: "v3.1.2-ScikitLearn",
+        model_version: "sandbox-simulation",
         average_confidence: parseFloat((85 + Math.random() * 10).toFixed(1)),
         rsi_metric: parseFloat((45 + Math.random() * 30).toFixed(2)),
         predictions: predictionsList
@@ -57,207 +70,188 @@ const Predictor = () => {
     }
   };
 
+  const selectClass =
+    "w-full appearance-none bg-transparent border-b border-gray-700 pb-3 text-white text-[15px] outline-none focus:border-white transition-colors cursor-pointer [&>option]:bg-[#0a0a0a]";
+
   return (
-    <div className="app-container">
-      <Sidebar />
-      <div className="main-content">
-        <Navbar />
+    <div className="min-h-screen w-full bg-[#050011] text-white font-sans">
+      <Navbar />
 
-        {/* Page title */}
-        <div style={{ marginTop: '24px' }}>
-          <span style={{ fontSize: '11px', color: 'var(--primary)', letterSpacing: '0.15em', fontWeight: 700 }}>
-            DEEP ANALYTICS MODULE
-          </span>
-          <h1 style={{ fontSize: '28px', color: '#fff', marginTop: '4px', marginBottom: '24px' }}>
-            AI Forecast Workstation
-          </h1>
-        </div>
+      <div className="px-6 md:px-16 pt-12 md:pt-16 pb-12">
+        <PageHeading index="03" label="Deep analytics" title="AI FORECAST">
+          <p className="text-[10px] font-mono tracking-widest uppercase text-gray-400 leading-relaxed lg:text-right">
+            Pick a security and a horizon.<br className="hidden lg:block" /> The model estimates the next move.
+          </p>
+        </PageHeading>
+      </div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 2fr',
-          gap: '24px'
-        }}>
-          {/* Settings Panel */}
-          <div className="glass-panel" style={{ padding: '24px', height: 'fit-content' }}>
-            <h2 style={{ fontSize: '18px', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
-              <Cpu size={20} color="var(--primary)" /> Inference Settings
-            </h2>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <div>
-                <label style={{ display: 'block', fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '8px', fontWeight: 500 }}>
-                  Select Equity Security
-                </label>
-                <select 
-                  value={ticker} 
-                  onChange={(e) => setTicker(e.target.value)}
-                  className="input-field"
-                  style={{ width: '100%', background: '#0d1423' }}
-                >
-                  <option value="RELIANCE">RELIANCE (Reliance Industries)</option>
-                  <option value="TCS">TCS (Tata Consultancy Services)</option>
-                  <option value="INFY">INFY (Infosys Limited)</option>
-                  <option value="HDFCBANK">HDFCBANK (HDFC Bank)</option>
-                </select>
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '8px', fontWeight: 500 }}>
-                  Forecast Horizon
-                </label>
-                <select 
-                  value={days} 
-                  onChange={(e) => setDays(parseInt(e.target.value))}
-                  className="input-field"
-                  style={{ width: '100%', background: '#0d1423' }}
-                >
-                  <option value="3">3 Days Prediction Range</option>
-                  <option value="5">5 Days Prediction Range</option>
-                  <option value="7">7 Days Prediction Range</option>
-                </select>
-              </div>
-
-              <div className="glass-panel" style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px' }}>
-                <h4 style={{ fontSize: '12px', color: '#fff', marginBottom: '8px', fontWeight: 600 }}>Active Model Info</h4>
-                <div style={{ fontSize: '12px', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <div>Model type: scikit-learn LinearRegression</div>
-                  <div>Features: 15-day rolling average, RSI, Volatility</div>
-                  <div>Retrained: Daily 08:30 AM IST</div>
-                </div>
-              </div>
-
-              <button 
-                onClick={triggerInference}
-                disabled={loading}
-                className="btn-primary" 
-                style={{ width: '100%', justifyContent: 'center', padding: '14px' }}
-              >
-                {loading ? (
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Activity size={18} className="pulse-glow" style={{ animation: 'spin 2s linear infinite' }} /> Processing Math...
-                  </span>
-                ) : (
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Sparkles size={18} /> Run Neural Inference
-                  </span>
-                )}
-              </button>
-            </div>
+      <section className="w-full flex flex-col lg:flex-row border-y border-gray-800 bg-[#0a0a0a]">
+        {/* SETTINGS */}
+        <div className="w-full lg:w-[35%] border-b lg:border-b-0 lg:border-r border-gray-800 flex flex-col">
+          <div className="border-b border-gray-800 px-6 md:px-8 py-5 flex justify-between items-center text-[10px] font-mono text-gray-400 tracking-widest uppercase">
+            <span className="flex items-center gap-2"><Cpu size={13} /> Inference settings</span>
+            <span>01</span>
           </div>
 
-          {/* Results Panel */}
-          <div className="glass-panel" style={{ padding: '24px', minHeight: '400px', display: 'flex', flexDirection: 'column' }}>
-            <h2 style={{ fontSize: '18px', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
-              <Brain size={20} color="var(--accent-purple)" /> Inference Outputs
-            </h2>
+          <div className="px-6 md:px-8 py-8 flex flex-col gap-10">
+            <label className="block">
+              <span className="block text-[10px] font-mono tracking-widest uppercase text-gray-500 mb-2">Equity security</span>
+              <select value={ticker} onChange={(e) => setTicker(e.target.value)} className={selectClass}>
+                {securities.map(s => (
+                  <option key={s.value} value={s.value}>{s.value} — {s.label}</option>
+                ))}
+              </select>
+            </label>
 
-            {loading && (
-              <div style={{ display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)', gap: '16px' }}>
-                <div style={{
-                  border: '4px solid rgba(0, 242, 254, 0.1)',
-                  borderTop: '4px solid var(--primary)',
-                  borderRadius: '50%',
-                  width: '50px',
-                  height: '50px',
-                  animation: 'pulseGlow 1.5s infinite ease-in-out'
-                }} />
-                <div style={{ textAlign: 'center' }}>
-                  <p style={{ fontWeight: 600, color: '#fff' }}>Connecting to Python AI Engine...</p>
-                  <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '4px' }}>Fitting rolling standard deviations and estimating drift coefficients</p>
-                </div>
+            <div>
+              <span className="block text-[10px] font-mono tracking-widest uppercase text-gray-500 mb-3">Forecast horizon</span>
+              <div className="flex flex-wrap gap-2">
+                {horizons.map(h => (
+                  <Pill key={h} active={days === h} onClick={() => setDays(h)}>
+                    {h} days
+                  </Pill>
+                ))}
               </div>
+            </div>
+
+            <Panel className="p-5 bg-white/[0.02]">
+              <MonoLabel className="block mb-3 text-white">Active model</MonoLabel>
+              <ul className="space-y-2 text-[12px] text-gray-400">
+                <li>Model: XGBoost baseline (in development)</li>
+                <li>Features: returns, moving averages, volatility, volume, fundamentals</li>
+                <li>Data: Upstox prices + financial statements</li>
+              </ul>
+            </Panel>
+
+            <PrimaryButton onClick={triggerInference} disabled={loading} icon={Sparkles} className="w-full">
+              {loading ? 'Running inference…' : 'Run inference'}
+            </PrimaryButton>
+          </div>
+        </div>
+
+        {/* RESULTS */}
+        <div className="w-full lg:w-[65%] flex flex-col min-h-[520px]">
+          <div className="border-b border-gray-800 px-6 md:px-8 py-5 flex justify-between items-center text-[10px] font-mono text-gray-400 tracking-widest uppercase">
+            <span>Inference outputs</span>
+            <span>{forecastResults ? forecastResults.ticker : '02'}</span>
+          </div>
+
+          <AnimatePresence mode="wait">
+            {loading && (
+              <motion.div
+                key="loading"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="flex flex-1 flex-col items-center justify-center gap-6 px-8 py-16 text-center"
+              >
+                <div className="h-12 w-12 animate-spin rounded-full border-2 border-gray-800 border-t-[#d942ff]" />
+                <div>
+                  <p className="text-lg font-medium tracking-tight">Connecting to the AI engine…</p>
+                  <p className="mt-2 text-[10px] font-mono tracking-widest uppercase text-gray-500">
+                    Computing features and scoring the model
+                  </p>
+                </div>
+              </motion.div>
             )}
 
             {!loading && !forecastResults && (
-              <div style={{ display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', textAlign: 'center', padding: '40px' }}>
-                <Brain size={48} style={{ opacity: 0.15, marginBottom: '16px' }} />
-                <h3 style={{ fontSize: '16px', color: 'var(--text-secondary)', marginBottom: '6px' }}>No Active Inference</h3>
-                <p style={{ fontSize: '13px', maxWidth: '320px' }}>Select an equity instrument and click the button to trigger scikit-learn neural network forecast models.</p>
-              </div>
+              <motion.div
+                key="empty"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="flex flex-1 flex-col items-center justify-center px-8 py-16 text-center"
+              >
+                <span className="text-gray-600 text-xl tracking-[0.3em] mb-6">***</span>
+                <h3 className="text-2xl md:text-[2rem] font-medium tracking-tight text-[#555]">No active inference</h3>
+                <p className="mt-3 max-w-[340px] text-sm text-gray-500 font-light">
+                  Select an equity and a horizon, then run inference to see the forecast.
+                </p>
+              </motion.div>
             )}
 
             {!loading && forecastResults && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                {/* Header Summary */}
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr 1fr',
-                  gap: '16px',
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '12px',
-                  padding: '16px'
-                }}>
-                  <div>
-                    <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>MODEL IDENTITY</span>
-                    <span style={{ fontSize: '14px', fontWeight: 600, color: '#fff' }}>{forecastResults.model_version}</span>
+              <motion.div
+                key="results"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4 }}
+                className="flex flex-col"
+              >
+                {simulated && (
+                  <div className="border-b border-gray-800 px-6 md:px-8 py-3 text-[10px] font-mono tracking-widest uppercase text-yellow-500/90">
+                    Prediction API not connected — showing simulated output
                   </div>
-                  <div>
-                    <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>AVG CONFIDENCE</span>
-                    <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--success)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <Percent size={14} /> {forecastResults.average_confidence}%
-                    </span>
-                  </div>
-                  <div>
-                    <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>RSI INDEX (14D)</span>
-                    <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--primary)' }}>{forecastResults.rsi_metric}</span>
-                  </div>
+                )}
+
+                {/* Summary cells */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-gray-800 border-b border-gray-800">
+                  {[
+                    { label: 'Model', value: forecastResults.model_version },
+                    { label: 'Avg confidence', value: `${forecastResults.average_confidence}%` },
+                    { label: 'RSI (14D)', value: forecastResults.rsi_metric },
+                  ].map(cell => (
+                    <div key={cell.label} className="bg-[#0a0a0a] px-6 md:px-8 py-6">
+                      <MonoLabel className="block mb-3">{cell.label}</MonoLabel>
+                      <span className="text-xl font-normal tracking-tight">{cell.value}</span>
+                    </div>
+                  ))}
                 </div>
 
-                {/* Table of Predictions */}
-                <div>
-                  <h4 style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '12px', fontWeight: 600 }}>Forecast Grid</h4>
-                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
+                <div className="px-4 md:px-6 py-6 border-b border-gray-800">
+                  <StockChart
+                    ticker={forecastResults.ticker}
+                    predictions={forecastResults.predictions.map(p => p.predicted_price)}
+                    height={260}
+                  />
+                </div>
+
+                {/* Forecast grid */}
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
                     <thead>
-                      <tr style={{ borderBottom: '1px solid var(--border-color)', textAlign: 'left' }}>
-                        <th style={{ padding: '12px', color: 'var(--text-muted)', fontWeight: 600 }}>Date Range</th>
-                        <th style={{ padding: '12px', color: 'var(--text-muted)', fontWeight: 600 }}>Horizon</th>
-                        <th style={{ padding: '12px', color: 'var(--text-muted)', fontWeight: 600 }}>Predicted Price</th>
-                        <th style={{ padding: '12px', color: 'var(--text-muted)', fontWeight: 600 }}>Trend</th>
-                        <th style={{ padding: '12px', color: 'var(--text-muted)', fontWeight: 600 }}>Confidence</th>
+                      <tr className="border-b border-gray-800 text-left">
+                        {['Date', 'Horizon', 'Predicted price', 'Trend', 'Confidence'].map(h => (
+                          <th key={h} className="px-6 md:px-8 py-4 text-[10px] font-mono font-normal tracking-widest uppercase text-gray-500">
+                            {h}
+                          </th>
+                        ))}
                       </tr>
                     </thead>
                     <tbody>
                       {forecastResults.predictions.map((pred) => (
-                        <tr key={pred.day} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
-                          <td style={{ padding: '14px 12px', fontWeight: 500 }}>{pred.date}</td>
-                          <td style={{ padding: '14px 12px', color: 'var(--text-secondary)' }}>T+{pred.day} Days</td>
-                          <td style={{ padding: '14px 12px', fontWeight: 700 }}>₹{pred.predicted_price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                          <td style={{ padding: '14px 12px' }}>
-                            <span style={{
-                              padding: '2px 8px',
-                              borderRadius: '20px',
-                              fontSize: '11px',
-                              fontWeight: 600,
-                              background: pred.direction === 'BULLISH' ? 'rgba(0, 230, 118, 0.1)' : 'rgba(255, 23, 68, 0.1)',
-                              color: pred.direction === 'BULLISH' ? 'var(--success)' : 'var(--danger)'
-                            }}>
+                        <tr key={pred.day} className="border-b border-gray-800/60 hover:bg-white/[0.02] transition-colors">
+                          <td className="px-6 md:px-8 py-4 text-gray-200">{pred.date}</td>
+                          <td className="px-6 md:px-8 py-4 font-mono text-gray-400">T+{pred.day}</td>
+                          <td className="px-6 md:px-8 py-4 font-mono text-white">
+                            ₹{pred.predicted_price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                          </td>
+                          <td className="px-6 md:px-8 py-4">
+                            <span className={`px-3 py-1 rounded-full border text-[10px] font-medium tracking-wider
+                              ${pred.direction === 'BULLISH' ? 'border-green-500/40 text-green-500' : 'border-red-400/40 text-red-400'}`}>
                               {pred.direction}
                             </span>
                           </td>
-                          <td style={{ padding: '14px 12px', color: 'var(--text-secondary)' }}>{pred.confidence}%</td>
+                          <td className="px-6 md:px-8 py-4 font-mono text-gray-400">{pred.confidence}%</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
 
-                <div style={{
-                  fontSize: '12px',
-                  color: 'var(--text-muted)',
-                  borderTop: '1px solid var(--border-color)',
-                  paddingTop: '16px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
-                }}>
-                  <Calendar size={14} /> Predictions are updated daily based on mathematical models and historical daily metrics. Use at your own discretion.
+                <div className="px-6 md:px-8 py-5 flex items-center gap-2 text-[10px] font-mono tracking-widest uppercase text-gray-500">
+                  <Calendar size={13} /> Forecasts are model estimates, not investment advice.
                 </div>
-              </div>
+              </motion.div>
             )}
-          </div>
+          </AnimatePresence>
         </div>
+      </section>
+
+      <div className="px-6 md:px-16 py-8 text-[10px] font-mono tracking-widest text-gray-500 uppercase">
+        Quantifying the impact of global financial news
       </div>
     </div>
   );

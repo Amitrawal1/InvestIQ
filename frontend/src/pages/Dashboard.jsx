@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
+import { ArrowUpRight, Plus, X } from 'lucide-react';
 import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
 import StockChart from '../components/StockChart';
-import { DollarSign, Percent, Eye, Play, Plus, Trash2, ArrowUpRight, ArrowDownRight, Activity } from 'lucide-react';
+import { PageHeading, MonoLabel, LiveDot, Change } from '../components/ui';
+
+const insights = {
+  RELIANCE: "Reliance has established a solid base support at 2430. Model suggests bullish continuation over the next 5 days.",
+  TCS: "TCS displays strong resistance around 3900. A short-term consolidation is expected before the next breakout.",
+  INFY: "Infosys is exhibiting slight downward momentum due to global tech adjustments. Model forecasts a short consolidation near 1400.",
+  HDFCBANK: "HDFC Bank exhibits a stable accumulation phase. Safe risk-adjusted entry profile.",
+};
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTicker, setSelectedTicker] = useState('RELIANCE');
-  
+
   // High-fidelity Mock Stocks
   const [watchlist, setWatchlist] = useState([
     { ticker: 'RELIANCE', name: 'Reliance Industries Ltd.', price: 2460.50, change: 1.45 },
@@ -26,10 +34,6 @@ const Dashboard = () => {
     { ticker: 'SBIN', name: 'State Bank of India', price: 830.60, change: 1.80 }
   ]);
 
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-  };
-
   const addToWatchlist = (stock) => {
     if (!watchlist.find(item => item.ticker === stock.ticker)) {
       setWatchlist([...watchlist, stock]);
@@ -42,268 +46,196 @@ const Dashboard = () => {
   };
 
   // Filter available stocks based on search query
-  const filteredStocks = availableStocks.filter(stock => 
+  const filteredStocks = availableStocks.filter(stock =>
     stock.ticker.toLowerCase().includes(searchTerm.toLowerCase()) ||
     stock.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const selectedStockData = availableStocks.find(s => s.ticker === selectedTicker) || availableStocks[0];
 
+  const metrics = [
+    { label: 'Portfolio Value', value: '₹12,45,210.00', sub: <><Change value={1.48} /> <span className="text-gray-500">+₹18,240</span></> },
+    { label: "Today's Return", value: '+₹8,452.20', sub: <Change value={0.68} /> },
+    { label: 'Watchlist Size', value: `${watchlist.length} Assets`, sub: <span className="text-gray-500">Monitoring custom listings</span> },
+    { label: 'Model Status', value: 'ACTIVE', sub: <span className="text-gray-500">Prediction service ready</span>, live: true },
+  ];
+
   return (
-    <div className="app-container">
-      <Sidebar />
-      <div className="main-content">
-        <Navbar onSearch={handleSearch} />
+    <div className="min-h-screen w-full bg-[#050011] text-white font-sans">
+      <Navbar onSearch={setSearchTerm} />
 
-        {/* Dashboard Title & Overview */}
-        <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
-            <h1 style={{ fontSize: '28px', color: '#fff', marginBottom: '4px' }}>Trading Terminal</h1>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
-              Real-time analytics and predictive indices powered by Python scikit-learn models.
+      <div className="px-6 md:px-16 pt-12 md:pt-16 pb-12">
+        <PageHeading index="02" label="Terminal" title="TRADING TERMINAL">
+          <div className="flex flex-col lg:items-end gap-4">
+            <p className="text-[10px] font-mono tracking-widest uppercase text-gray-400 leading-relaxed lg:text-right">
+              Real-time analytics and<br className="hidden lg:block" /> predictive signals on NSE equities.
             </p>
-          </div>
-          <div style={{ display: 'flex', gap: '12px' }}>
-            <span style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              background: 'rgba(255,255,255,0.03)',
-              padding: '8px 16px',
-              borderRadius: '20px',
-              border: '1px solid var(--border-color)',
-              fontSize: '12px',
-              color: 'var(--text-secondary)'
-            }}>
-              <Activity size={14} className="pulse-glow" style={{ color: 'var(--primary)' }} /> Live Data
+            <span className="flex items-center gap-2 w-fit px-4 py-2 rounded-full border border-gray-600 bg-white/5 text-[11px] font-medium uppercase tracking-wider text-gray-300">
+              <LiveDot /> Live data
             </span>
           </div>
-        </div>
+        </PageHeading>
+      </div>
 
-        {/* Metrics Grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '20px',
-          marginTop: '24px'
-        }}>
-          <div className="glass-panel" style={{ padding: '20px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '8px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 600 }}>Portfolio Value</span>
-              <DollarSign size={18} color="var(--primary)" />
+      {/* METRICS - hairline grid */}
+      <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-px bg-gray-800 border-y border-gray-800">
+        {metrics.map((m, i) => (
+          <motion.div
+            key={m.label}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 + i * 0.08 }}
+            className="bg-[#0a0a0a] px-6 md:px-8 py-8"
+          >
+            <div className="flex justify-between items-center mb-6">
+              <MonoLabel>{m.label}</MonoLabel>
+              <span className="text-[10px] font-mono text-gray-600">0{i + 1}</span>
             </div>
-            <h3 style={{ fontSize: '24px', color: '#fff' }}>₹12,45,210.00</h3>
-            <span className="trend-up" style={{ fontSize: '12px', display: 'flex', alignItems: 'center', marginTop: '4px' }}>
-              <ArrowUpRight size={14} /> +₹18,240 (1.48%)
-            </span>
-          </div>
-
-          <div className="glass-panel" style={{ padding: '20px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '8px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 600 }}>Today's Return</span>
-              <Percent size={18} color="var(--accent-purple)" />
+            <div className="text-[1.8rem] md:text-[2.2rem] font-normal tracking-tight leading-none flex items-center gap-3">
+              {m.live && <LiveDot className="w-2 h-2" />}
+              {m.value}
             </div>
-            <h3 style={{ fontSize: '24px', color: '#fff' }}>+₹8,452.20</h3>
-            <span className="trend-up" style={{ fontSize: '12px', display: 'flex', alignItems: 'center', marginTop: '4px' }}>
-              <ArrowUpRight size={14} /> +0.68%
-            </span>
+            <div className="mt-3 text-xs">{m.sub}</div>
+          </motion.div>
+        ))}
+      </section>
+
+      {/* WORKSTATION - two-column panel */}
+      <section className="w-full flex flex-col lg:flex-row bg-[#0a0a0a] border-b border-gray-800">
+        {/* Chart column */}
+        <div className="w-full lg:w-[65%] border-b lg:border-b-0 lg:border-r border-gray-800 flex flex-col">
+          <div className="border-b border-gray-800 px-6 md:px-8 py-5 flex justify-between items-center text-[10px] font-mono text-gray-400 tracking-widest uppercase">
+            <span>Analytics chart</span>
+            <span>{selectedStockData.ticker}</span>
           </div>
 
-          <div className="glass-panel" style={{ padding: '20px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '8px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 600 }}>Watchlist Size</span>
-              <Eye size={18} color="var(--secondary)" />
+          <div className="px-6 md:px-8 pt-8 flex flex-col sm:flex-row justify-between sm:items-end gap-4">
+            <div>
+              <h2 className="text-[2rem] md:text-[2.6rem] font-medium tracking-tight leading-none">
+                {selectedStockData.ticker}
+              </h2>
+              <p className="mt-2 text-sm text-gray-400">{selectedStockData.name}</p>
             </div>
-            <h3 style={{ fontSize: '24px', color: '#fff' }}>{watchlist.length} Assets</h3>
-            <span style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px', display: 'block' }}>
-              Monitoring custom listings
-            </span>
-          </div>
-
-          <div className="glass-panel" style={{ padding: '20px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '8px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 600 }}>Model Inference Status</span>
-              <Play size={18} color="var(--accent-neon)" />
-            </div>
-            <h3 style={{ fontSize: '24px', color: 'var(--accent-neon)' }}>ACTIVE</h3>
-            <span style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px', display: 'block' }}>
-              FastAPI prediction listener OK
-            </span>
-          </div>
-        </div>
-
-        {/* Dashboard Workstation Grid */}
-        <div className="dashboard-grid">
-          {/* Main Chart Card */}
-          <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <span style={{ fontSize: '12px', color: 'var(--primary)', fontWeight: 600, letterSpacing: '0.05em' }}>
-                  ANALYTICS CHART
-                </span>
-                <h2 style={{ fontSize: '22px', color: '#fff', marginTop: '4px' }}>
-                  {selectedStockData.ticker} - {selectedStockData.name}
-                </h2>
+            <div className="sm:text-right">
+              <div className="text-[1.8rem] font-normal tracking-tight leading-none">
+                ₹{selectedStockData.price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
               </div>
-              <div style={{ textAlign: 'right' }}>
-                <span style={{ fontSize: '22px', fontWeight: 700, color: '#fff' }}>
-                  ₹{selectedStockData.price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
-                </span>
-                <div style={{ display: 'flex', gap: '6px', alignItems: 'center', justifyContent: 'flex-end', marginTop: '2px' }}>
-                  {selectedStockData.change >= 0 ? (
-                    <span className="trend-up" style={{ fontSize: '13px', display: 'flex', alignItems: 'center' }}>
-                      <ArrowUpRight size={14} /> +{selectedStockData.change}%
-                    </span>
-                  ) : (
-                    <span className="trend-down" style={{ fontSize: '13px', display: 'flex', alignItems: 'center' }}>
-                      <ArrowDownRight size={14} /> {selectedStockData.change}%
-                    </span>
-                  )}
-                </div>
-              </div>
+              <Change value={selectedStockData.change} className="text-sm mt-2 inline-block" />
             </div>
+          </div>
 
-            {/* Custom Interactive Stock Chart */}
-            <StockChart ticker={selectedTicker} />
+          <div className="px-4 md:px-6 py-6">
+            <StockChart ticker={selectedTicker} height={440} />
+          </div>
 
-            <div style={{
-              display: 'flex',
-              gap: '12px',
-              background: 'rgba(0, 242, 254, 0.05)',
-              border: '1px solid rgba(0, 242, 254, 0.15)',
-              padding: '12px 16px',
-              borderRadius: '12px',
-              fontSize: '13px',
-              color: 'var(--text-secondary)'
-            }}>
-              <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>AI Insight:</span>
-              <span>
-                {selectedTicker === 'RELIANCE' && "Reliance has established a solid base support at 2430. Model suggests bullish continuation over the next 5 days."}
-                {selectedTicker === 'TCS' && "TCS displays strong resistance around 3900. Short-term console pattern expected followed by breakdown breakout."}
-                {selectedTicker === 'INFY' && "Infosys is exhibiting slight downward momentum due to global tech adjustments. Model forecasts a short consolidation near 1400."}
-                {selectedTicker === 'HDFCBANK' && "HDFC Bank exhibits a stable accumulation phase. Safe risk-adjusted entry profile."}
-                {!['RELIANCE', 'TCS', 'INFY', 'HDFCBANK'].includes(selectedTicker) && "Inference pipeline predicts stable trend progression for this asset."}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedTicker}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3 }}
+              className="mt-auto border-t border-gray-800 px-6 md:px-8 py-6 flex flex-col sm:flex-row gap-3 sm:gap-6"
+            >
+              <span className="flex items-center gap-2 shrink-0 text-[10px] font-mono tracking-widest uppercase text-white">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#d942ff]" /> AI Insight
               </span>
-            </div>
+              <p className="text-sm text-gray-400 leading-relaxed font-light">
+                {insights[selectedTicker] || "Inference pipeline predicts stable trend progression for this asset."}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Lists column */}
+        <div className="w-full lg:w-[35%] flex flex-col">
+          {/* Watchlist */}
+          <div className="border-b border-gray-800 px-6 md:px-8 py-5 flex justify-between items-center text-[10px] font-mono text-gray-400 tracking-widest uppercase">
+            <span>My watchlist</span>
+            <span>{String(watchlist.length).padStart(2, '0')}</span>
           </div>
 
-          {/* Sidebar Panel for watchlist/stocks */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            {/* Watchlist Panel */}
-            <div className="glass-panel" style={{ padding: '20px' }}>
-              <h3 style={{ fontSize: '16px', color: '#fff', marginBottom: '16px' }}>My Watchlist</h3>
-              {watchlist.length === 0 ? (
-                <div style={{ textAlign: 'center', padding: '24px 0', color: 'var(--text-muted)', fontSize: '13px' }}>
-                  No stocks added yet. Use search below.
-                </div>
-              ) : (
-                watchlist.map(stock => (
-                  <div 
-                    key={stock.ticker}
-                    onClick={() => setSelectedTicker(stock.ticker)}
-                    className="stock-card"
-                    style={{
-                      borderColor: selectedTicker === stock.ticker ? 'var(--primary)' : 'var(--border-color)',
-                      boxShadow: selectedTicker === stock.ticker ? '0 0 10px rgba(0, 242, 254, 0.1)' : 'none'
-                    }}
-                  >
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: '14px' }}>{stock.ticker}</div>
-                      <div style={{ fontSize: '11px', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '120px' }}>
-                        {stock.name}
-                      </div>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: '13px', fontWeight: 600 }}>₹{stock.price.toFixed(2)}</div>
-                        <div style={{ fontSize: '11px' }} className={stock.change >= 0 ? 'trend-up' : 'trend-down'}>
-                          {stock.change >= 0 ? '+' : ''}{stock.change}%
-                        </div>
-                      </div>
-                      <button 
-                        onClick={(e) => removeFromWatchlist(stock.ticker, e)}
-                        style={{
-                          background: 'rgba(255, 23, 68, 0.1)',
-                          border: 'none',
-                          borderRadius: '6px',
-                          color: 'var(--danger)',
-                          padding: '6px',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
-                  </div>
-                ))
-              )}
+          {watchlist.length === 0 ? (
+            <div className="px-8 py-12 text-center text-[10px] font-mono tracking-widest uppercase text-gray-500">
+              No stocks added yet. Search below.
             </div>
-
-            {/* Quick Listing Search Results */}
-            <div className="glass-panel" style={{ padding: '20px' }}>
-              <h3 style={{ fontSize: '16px', color: '#fff', marginBottom: '12px' }}>Market Securities</h3>
-              <div style={{
-                maxHeight: '220px',
-                overflowY: 'auto',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '8px',
-                paddingRight: '4px'
-              }}>
-                {filteredStocks.map(stock => (
-                  <div 
-                    key={stock.ticker}
-                    onClick={() => setSelectedTicker(stock.ticker)}
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      padding: '10px 12px',
-                      background: 'rgba(255,255,255,0.02)',
-                      border: '1px solid var(--border-color)',
-                      borderRadius: '8px',
-                      cursor: 'pointer',
-                      transition: 'var(--transition-smooth)'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'}
-                    onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border-color)'}
-                  >
-                    <div>
-                      <span style={{ fontWeight: 600, fontSize: '13px' }}>{stock.ticker}</span>
-                      <span style={{ fontSize: '11px', color: 'var(--text-muted)', marginLeft: '8px' }}>
-                        {stock.ticker}
-                      </span>
+          ) : (
+            watchlist.map(stock => {
+              const isActive = selectedTicker === stock.ticker;
+              return (
+                <div
+                  key={stock.ticker}
+                  onClick={() => setSelectedTicker(stock.ticker)}
+                  className={`group border-b border-gray-800/80 px-6 md:px-8 py-5 flex justify-between items-center cursor-pointer transition-colors duration-300 ${isActive ? 'text-white' : 'text-[#555] hover:text-[#aaa]'}`}
+                >
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-xl font-medium tracking-tight">{stock.ticker}</h3>
+                      {isActive && <ArrowUpRight size={16} strokeWidth={1} className="text-gray-400" />}
                     </div>
-                    <button 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        addToWatchlist(stock);
-                      }}
-                      style={{
-                        background: 'rgba(0, 242, 254, 0.1)',
-                        border: 'none',
-                        color: 'var(--primary)',
-                        padding: '4px 8px',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontSize: '11px',
-                        fontWeight: 600,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '2px'
-                      }}
+                    <p className="text-[11px] truncate max-w-[180px] text-gray-500">{stock.name}</p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <div className="text-sm font-mono">₹{stock.price.toFixed(2)}</div>
+                      <Change value={stock.change} className="text-[11px]" />
+                    </div>
+                    <button
+                      onClick={(e) => removeFromWatchlist(stock.ticker, e)}
+                      title="Remove from watchlist"
+                      className="w-7 h-7 flex items-center justify-center rounded-full border border-gray-700 text-gray-500 hover:border-red-400 hover:text-red-400 transition-colors cursor-pointer"
                     >
-                      <Plus size={12} /> Watch
+                      <X size={12} />
                     </button>
                   </div>
-                ))}
+                </div>
+              );
+            })
+          )}
+
+          {/* Market securities */}
+          <div className="border-b border-gray-800 px-6 md:px-8 py-5 flex justify-between items-center text-[10px] font-mono text-gray-400 tracking-widest uppercase">
+            <span>Market securities</span>
+            <span>{searchTerm ? `"${searchTerm}"` : 'All'}</span>
+          </div>
+
+          <div className="max-h-[300px] overflow-y-auto">
+            {filteredStocks.length === 0 && (
+              <div className="px-8 py-10 text-center text-[10px] font-mono tracking-widest uppercase text-gray-500">
+                No matches
               </div>
-            </div>
+            )}
+            {filteredStocks.map(stock => {
+              const watched = watchlist.some(w => w.ticker === stock.ticker);
+              return (
+                <div
+                  key={stock.ticker}
+                  onClick={() => setSelectedTicker(stock.ticker)}
+                  className="border-b border-gray-800/60 px-6 md:px-8 py-3.5 flex justify-between items-center cursor-pointer text-gray-400 hover:text-white hover:bg-white/[0.02] transition-colors"
+                >
+                  <div className="min-w-0">
+                    <span className="text-sm font-medium text-gray-200">{stock.ticker}</span>
+                    <span className="ml-3 text-[11px] text-gray-500 truncate">{stock.name}</span>
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      addToWatchlist(stock);
+                    }}
+                    disabled={watched}
+                    className="shrink-0 flex items-center gap-1 px-3 py-1 rounded-full border border-gray-600 text-[10px] font-medium uppercase tracking-wider text-gray-300 hover:bg-white hover:text-black hover:border-white disabled:opacity-40 disabled:pointer-events-none transition-colors cursor-pointer"
+                  >
+                    {watched ? 'Watching' : <><Plus size={11} /> Watch</>}
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </div>
+      </section>
+
+      <div className="px-6 md:px-16 py-8 text-[10px] font-mono tracking-widest text-gray-500 uppercase">
+        Quantifying the impact of global financial news
       </div>
     </div>
   );

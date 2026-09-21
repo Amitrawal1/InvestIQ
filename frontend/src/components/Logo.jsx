@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 
-export default function Logo() {
-    return (
-        <div className="flex bg-[#050011] items-center gap-2">
-            <span className="text-white h-full font-sans font-black text-lg">INVEST IQ</span>
-        </div>
-    )
+export default function Logo({ className = "" }) {
+  return (
+    <Link to="/" className={`font-sans font-black text-lg tracking-tight text-white ${className}`}>
+      INVEST IQ
+    </Link>
+  );
 }
