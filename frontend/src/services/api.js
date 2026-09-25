@@ -31,3 +31,15 @@ export const getSectors = () =>
 
 export const getCompaniesBySector = (sectorName) =>
   api.get('/api/companies', { params: { sector: sectorName }, timeout: 8000 }).then((res) => res.data.data);
+
+// News + FinBERT sentiment. `params` accepts:
+// limit, offset, symbol, sector, importance, sentiment, confident, search, from, to
+export const getNews = (params = {}) =>
+  api.get('/api/news', { params, timeout: 10000 }).then((res) => res.data);
+
+export const getNewsStats = () =>
+  api.get('/api/news/stats', { timeout: 8000 }).then((res) => res.data.data);
+
+// Live NIFTY / SENSEX / blue-chip quotes from Upstox: [{ name, price, change, changePct }]
+export const getMarketTicker = () =>
+  api.get('/api/market/ticker', { timeout: 10000 }).then((res) => res.data.data);

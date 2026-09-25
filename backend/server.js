@@ -8,6 +8,7 @@ const sectorRoutes = require("./routes/sectorRoutes");
 const companyRoutes = require("./routes/companyRoutes");
 const stockPriceRoutes = require("./routes/stockPriceRoutes");
 const newsRoutes = require("./routes/newsRoutes");
+const marketRoutes = require("./routes/marketRoutes");
 
 db.query("SELECT 1")
     .then(() => {
@@ -23,6 +24,7 @@ app.use("/sectors", sectorRoutes);
 app.use("/companies", companyRoutes);
 app.use("/stock-prices", stockPriceRoutes);
 app.use("/news", newsRoutes);
+app.use("/market", marketRoutes);
 
 
 app.get("/", (req, res) => {

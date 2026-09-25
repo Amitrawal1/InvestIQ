@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import SectorCompanies from "../components/SectorCompanies";
+import SectorNews from "../components/SectorNews";
 import SourcePill from "../components/SourcePill";
 import { PageHeading, MonoLabel, Pill } from "../components/ui";
 import { useSectors, useSectorCompanies } from "../hooks/useSectorData";
@@ -125,6 +126,9 @@ export default function Sector() {
 
           {/* COMPANIES */}
           <SectorCompanies key={sector.id} sector={sector} companies={companies} error={companiesError} />
+
+          {/* LATEST NEWS */}
+          <SectorNews key={`news-${sector.id}`} sector={sector} />
         </>
       )}
 

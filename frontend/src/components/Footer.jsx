@@ -14,7 +14,7 @@ const columns = [
   {
     title: 'Data',
     links: [
-      { label: 'Market News', to: '/home' },
+      { label: 'Market News', to: '/news' },
       { label: 'Stock Signals', to: '/dashboard' },
       { label: 'Sector Trends', to: '/home' },
     ],

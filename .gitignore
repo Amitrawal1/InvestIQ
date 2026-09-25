@@ -1,2 +1,7 @@
 # Raw data
 ml/data/raw/git 
+# News pipeline logs
+ml/logs/
+
+# Generated price files
+ml/data/processed/

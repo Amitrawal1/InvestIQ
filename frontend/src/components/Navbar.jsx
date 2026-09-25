@@ -3,20 +3,21 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Search, LogOut, ArrowRight } from 'lucide-react';
 import Logo from './Logo';
+import useMarketTicker, { formatPrice, formatChangePct } from '../hooks/useMarketTicker';
+
+const INDEX_NAMES = ['NIFTY 50', 'SENSEX'];
 
 const links = [
   { to: '/home', label: 'Home' },
+  { to: '/news', label: 'News' },
   { to: '/dashboard', label: 'Dashboard' },
   { to: '/predictor', label: 'Predictor' },
 ];
 
-const indices = [
-  { name: 'NIFTY 50', value: '22,957.10', change: '+0.82%' },
-  { name: 'SENSEX', value: '75,410.35', change: '+0.78%' },
-];
-
 const Navbar = ({ onSearch }) => {
   const { user, logout } = useAuth();
+  const { quotes } = useMarketTicker();
+  const indices = quotes.filter((q) => INDEX_NAMES.includes(q.name));
 
   return (
     <>
@@ -62,8 +63,10 @@ const Navbar = ({ onSearch }) => {
                 {i > 0 && <ArrowRight size={12} strokeWidth={1} className="text-gray-600" />}
                 <div className="flex gap-2">
                   <span className="text-gray-500">{idx.name}</span>
-                  <span className="text-gray-200">{idx.value}</span>
-                  <span className="text-green-500">{idx.change}</span>
+                  <span className="text-gray-200">{formatPrice(idx.price)}</span>
+                  <span className={idx.changePct == null ? 'text-gray-500' : idx.changePct < 0 ? 'text-red-400' : 'text-green-500'}>
+                    {formatChangePct(idx.changePct)}
+                  </span>
                 </div>
               </React.Fragment>
             ))}
