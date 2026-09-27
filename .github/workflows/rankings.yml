@@ -1,0 +1,44 @@
+# Rebuild the company growth rankings snapshot (company_rankings) on the 1st and 16th of each month.
+# Writes to TiDB Cloud using the DB_* repository secrets (Settings -> Secrets and variables -> Actions).
+name: Company rankings
+
+on:
+  schedule:
+    - cron: "30 2 1,16 * *"   # 02:30 UTC = 08:00 IST
+  workflow_dispatch:          # "Run workflow" button for a manual run
+
+concurrency:
+  group: company-rankings
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: ml
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: ml/rankings/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r rankings/requirements.txt
+
+      - name: Build rankings
+        run: python -m rankings.build
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_SSL: "true"
+          TZ: Asia/Kolkata   # the default snapshot date is "today" in IST
+          PYTHONWARNINGS: ignore

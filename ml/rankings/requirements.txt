@@ -1,0 +1,6 @@
+# Rankings job dependencies (GitHub Actions installs these; versions match the Mac setup)
+pandas==2.2.3
+numpy==2.2.6
+mysql-connector-python==26.7.0
+python-dotenv==1.2.1
+certifi

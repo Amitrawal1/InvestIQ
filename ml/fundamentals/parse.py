@@ -20,7 +20,8 @@ FIELD_MAP = {
     "depreciation": ("re_depr_und_exp",),
     "other_expenses": ("re_oth_exp",),
     "exceptional_items": ("re_excepn_items_new",),
-    "profit_before_tax": ("re_proloss_ord_act",),
+    # re_proloss_ord_act is profit AFTER tax from ordinary activities; PBT is derived below
+    "profit_after_tax_ordinary": ("re_proloss_ord_act",),
     "tax": ("re_tax",),
     "net_profit": ("re_net_profit", "re_con_pro_loss"),
     "reserves": ("re_res_reval",),
@@ -102,6 +103,14 @@ def parse_filing(record, detail):
 
     for column, keys in UNSCALED_MAP.items():
         row[column] = _first(values, keys)
+
+    # Profit before tax = ordinary-activities profit after tax + tax. Checked against the
+    # XBRL "ProfitBeforeTax" of 211 filings: matches 210 (the other is an all-zero NSE record)
+    after_tax = row.pop("profit_after_tax_ordinary")
+    if after_tax is not None and row["tax"] is not None:
+        row["profit_before_tax"] = after_tax + row["tax"]
+    else:
+        row["profit_before_tax"] = None
 
     # Shareholders' funds = reserves + paid-up capital (needed for ROE)
     if row["reserves"] is not None and row["paid_up_capital"] is not None:

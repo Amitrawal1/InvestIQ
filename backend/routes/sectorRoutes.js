@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const { getSectors } = require("../controllers/sectorController");
+const { getSectors, getSectorIndustries } = require("../controllers/sectorController");
 
 router.get("/", getSectors);
+router.get("/:slug/industries", getSectorIndustries);
 
 module.exports = router;

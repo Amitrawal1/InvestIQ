@@ -9,6 +9,7 @@ import Intro from './pages/Intro';
 import Home from './pages/Home';
 import Sector from './pages/Sector';
 import News from './pages/News';
+import Company from './pages/Company';
 
 
 // Protect private views from unauthenticated requests
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="home" element={<Home />} />
           <Route path="sectors/:slug" element={<Sector />} />
           <Route path="news" element={<News />} />
+          <Route path="company/:symbol" element={<Company />} />
           <Route path="dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path="predictor" element={<PrivateRoute><Predictor /></PrivateRoute>} />
           <Route path="landing/" element={<Landing />} />

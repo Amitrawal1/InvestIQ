@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { ArrowLeft } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import SectorCompanies from "../components/SectorCompanies";
+import SectorRankings from "../components/SectorRankings";
 import SectorNews from "../components/SectorNews";
 import SourcePill from "../components/SourcePill";
 import { PageHeading, MonoLabel, Pill } from "../components/ui";
@@ -124,8 +124,8 @@ export default function Sector() {
             </div>
           </section>
 
-          {/* COMPANIES */}
-          <SectorCompanies key={sector.id} sector={sector} companies={companies} error={companiesError} />
+          {/* INDUSTRIES + GROWTH RANKING (?industry=<name>) */}
+          <SectorRankings key={sector.id} sector={sector} companies={companies} companiesError={companiesError} />
 
           {/* LATEST NEWS */}
           <SectorNews key={`news-${sector.id}`} sector={sector} />

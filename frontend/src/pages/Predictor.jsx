@@ -1,260 +1,282 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { AnimatePresence, motion } from 'motion/react';
-import { Calendar, Cpu, Sparkles } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import StockChart from '../components/StockChart';
-import { PageHeading, MonoLabel, Panel, PrimaryButton, Pill } from '../components/ui';
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { AnimatePresence, motion } from "motion/react";
+import { ChevronDown, ChevronLeft, ChevronRight, Search, X } from "lucide-react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import { PageHeading, MonoLabel, Pill } from "../components/ui";
+import { RankingTable, Disclaimer, StatusLine, LABELS, SORTS, selectClass, fmtDate } from "../components/rankings";
+import { getRankings, getRankingsMeta, getSectors, getSectorIndustries } from "../services/api";
+import { fmt } from "../data/sectorMeta";
 
-const securities = [
-  { value: 'RELIANCE', label: 'Reliance Industries' },
-  { value: 'TCS', label: 'Tata Consultancy Services' },
-  { value: 'INFY', label: 'Infosys Limited' },
-  { value: 'HDFCBANK', label: 'HDFC Bank' },
-];
+const PAGE_SIZE = 50;
 
-const horizons = [3, 5, 7];
+// Full growth ranking across every company. Filters live in the URL so a view is shareable.
+export default function Predictor() {
+  const [params, setParams] = useSearchParams();
+  const sector = params.get("sector") || "";
+  const industry = params.get("industry") || "";
+  const label = params.get("label") || "";
+  const sort = params.get("sort") || "rank";
+  const page = Math.max(1, Number(params.get("page")) || 1);
+  const q = params.get("q") || "";
 
-const Predictor = () => {
-  const [ticker, setTicker] = useState('RELIANCE');
-  const [days, setDays] = useState(5);
-  const [loading, setLoading] = useState(false);
-  const [forecastResults, setForecastResults] = useState(null);
-  const [simulated, setSimulated] = useState(false);
+  const [query, setQuery] = useState(q);
+  const [meta, setMeta] = useState(null);
+  const [metaError, setMetaError] = useState(false);
+  const [showMethod, setShowMethod] = useState(false);
+  const [sectors, setSectors] = useState([]);
+  const [industries, setIndustries] = useState([]);
 
-  const triggerInference = async () => {
-    setLoading(true);
-    setForecastResults(null);
-    setSimulated(false);
+  const [res, setRes] = useState(null);
+  const [error, setError] = useState(false);
+  const requestId = useRef(0);
 
-    try {
-      // Direct call to Express which proxies to the model service
-      const response = await axios.post('/api/ai/predict', { ticker, days });
-      setForecastResults(response.data);
-    } catch (err) {
-      console.warn('Prediction API offline, using simulated sandbox inference.', err);
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate computational load
-
-      const basePrice = ticker === 'RELIANCE' ? 2460.50 : ticker === 'TCS' ? 3855.20 : ticker === 'INFY' ? 1412.10 : 1548.80;
-      const trend = ticker === 'RELIANCE' || ticker === 'TCS' ? 0.008 : ticker === 'INFY' ? -0.005 : 0.003;
-
-      const predictionsList = [];
-      let currentVal = basePrice;
-      for (let i = 1; i <= days; i++) {
-        const date = new Date();
-        date.setDate(date.getDate() + i);
-
-        // Random walk with predefined drift
-        const fluctuation = (Math.random() - 0.48) * (currentVal * 0.015);
-        currentVal = parseFloat((currentVal * (1 + trend) + fluctuation).toFixed(2));
-
-        predictionsList.push({
-          day: i,
-          date: date.toLocaleDateString('en-IN', { weekday: 'long', day: '2-digit', month: 'short' }),
-          predicted_price: currentVal,
-          direction: fluctuation >= 0 ? 'BULLISH' : 'BEARISH',
-          confidence: parseFloat((85 + Math.random() * 12).toFixed(1))
-        });
-      }
-
-      setSimulated(true);
-      setForecastResults({
-        ticker,
-        model_version: "sandbox-simulation",
-        average_confidence: parseFloat((85 + Math.random() * 10).toFixed(1)),
-        rsi_metric: parseFloat((45 + Math.random() * 30).toFixed(2)),
-        predictions: predictionsList
-      });
-    } finally {
-      setLoading(false);
-    }
+  // Update query params; any filter change resets to page 1
+  const update = (changes, keepPage = false) => {
+    const next = new URLSearchParams(params);
+    Object.entries(changes).forEach(([k, v]) => (v ? next.set(k, v) : next.delete(k)));
+    if (!keepPage) next.delete("page");
+    setParams(next, { replace: !("page" in changes) });
   };
 
-  const selectClass =
-    "w-full appearance-none bg-transparent border-b border-gray-700 pb-3 text-white text-[15px] outline-none focus:border-white transition-colors cursor-pointer [&>option]:bg-[#0a0a0a]";
+  // Debounced search box -> ?q=
+  useEffect(() => {
+    const id = setTimeout(() => {
+      if (query.trim() !== q) update({ q: query.trim() });
+    }, 350);
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
+
+  useEffect(() => {
+    getRankingsMeta().then(setMeta).catch(() => setMetaError(true));
+    getSectors().then(setSectors).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    setIndustries([]);
+    if (!sector) return;
+    let cancelled = false;
+    getSectorIndustries(sector)
+      .then((rows) => { if (!cancelled && Array.isArray(rows)) setIndustries(rows); })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [sector]);
+
+  const request = useMemo(() => {
+    const p = { sort, page, limit: PAGE_SIZE };
+    if (sector) p.sector = sector;
+    if (industry) p.industry = industry;
+    if (label) p.label = label;
+    if (q) p.search = q;
+    return p;
+  }, [sector, industry, label, sort, page, q]);
+
+  useEffect(() => {
+    const id = ++requestId.current;
+    setError(false);
+    setRes((prev) => (prev ? { ...prev, loading: true } : null));
+    getRankings(request)
+      .then((data) => { if (id === requestId.current) setRes(data); })
+      .catch(() => { if (id === requestId.current) { setError(true); setRes(null); } });
+  }, [request]);
+
+  useEffect(() => { window.scrollTo({ top: 0 }); }, [page]);
+
+  const rows = res?.data || [];
+  const total = res?.total || 0;
+  const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const snapshotDate = meta?.snapshot_date ?? res?.snapshot_date;
+  const notReady = (meta && !meta.snapshot_date) || (res && !res.snapshot_date);
+  const hasFilters = sector || industry || label || q;
 
   return (
-    <div className="min-h-screen w-full bg-[#050011] text-white font-sans">
+    <div className="min-h-screen w-full bg-[#050011] text-white font-sans overflow-x-clip">
       <Navbar />
 
-      <div className="px-6 md:px-16 pt-12 md:pt-16 pb-12">
-        <PageHeading index="03" label="Deep analytics" title="AI FORECAST">
-          <p className="text-[10px] font-mono tracking-widest uppercase text-gray-400 leading-relaxed lg:text-right">
-            Pick a security and a horizon.<br className="hidden lg:block" /> The model estimates the next move.
-          </p>
-        </PageHeading>
-      </div>
-
-      <section className="w-full flex flex-col lg:flex-row border-y border-gray-800 bg-[#0a0a0a]">
-        {/* SETTINGS */}
-        <div className="w-full lg:w-[35%] border-b lg:border-b-0 lg:border-r border-gray-800 flex flex-col">
-          <div className="border-b border-gray-800 px-6 md:px-8 py-5 flex justify-between items-center text-[10px] font-mono text-gray-400 tracking-widest uppercase">
-            <span className="flex items-center gap-2"><Cpu size={13} /> Inference settings</span>
-            <span>01</span>
-          </div>
-
-          <div className="px-6 md:px-8 py-8 flex flex-col gap-10">
-            <label className="block">
-              <span className="block text-[10px] font-mono tracking-widest uppercase text-gray-500 mb-2">Equity security</span>
-              <select value={ticker} onChange={(e) => setTicker(e.target.value)} className={selectClass}>
-                {securities.map(s => (
-                  <option key={s.value} value={s.value}>{s.value} — {s.label}</option>
-                ))}
-              </select>
-            </label>
-
-            <div>
-              <span className="block text-[10px] font-mono tracking-widest uppercase text-gray-500 mb-3">Forecast horizon</span>
-              <div className="flex flex-wrap gap-2">
-                {horizons.map(h => (
-                  <Pill key={h} active={days === h} onClick={() => setDays(h)}>
-                    {h} days
-                  </Pill>
-                ))}
+      {/* HERO */}
+      <section className="border-b border-gray-800 px-6 md:px-16 pt-12 pb-12">
+        <PageHeading index="05" label="Growth ranking" title="PREDICTOR">
+          <div className="flex flex-col lg:items-end gap-3 lg:text-right">
+            <p className="text-[10px] font-mono tracking-widest uppercase text-gray-400 leading-relaxed max-w-[360px]">
+              Every listed company ranked by estimated growth potential from financial, market and news signals.
+            </p>
+            {metaError ? (
+              <MonoLabel className="text-red-400">Ranking status unavailable</MonoLabel>
+            ) : meta ? (
+              <div className="flex flex-col lg:items-end gap-1">
+                <MonoLabel className="text-white">
+                  {snapshotDate ? `Snapshot ${fmtDate(snapshotDate)} · ${meta.model_version || "—"}` : "Rankings are being prepared"}
+                </MonoLabel>
+                <MonoLabel className="text-gray-500">
+                  Rankings refresh every 15 days{meta.next_update ? ` (next: ${fmtDate(meta.next_update)})` : ""}
+                </MonoLabel>
+                {snapshotDate && (
+                  <MonoLabel className="text-gray-500">
+                    {fmt(meta.ranked)} ranked · {fmt(meta.unranked)} with insufficient data
+                  </MonoLabel>
+                )}
               </div>
-            </div>
-
-            <Panel className="p-5 bg-white/[0.02]">
-              <MonoLabel className="block mb-3 text-white">Active model</MonoLabel>
-              <ul className="space-y-2 text-[12px] text-gray-400">
-                <li>Model: XGBoost baseline (in development)</li>
-                <li>Features: returns, moving averages, volatility, volume, fundamentals</li>
-                <li>Data: Upstox prices + financial statements</li>
-              </ul>
-            </Panel>
-
-            <PrimaryButton onClick={triggerInference} disabled={loading} icon={Sparkles} className="w-full">
-              {loading ? 'Running inference…' : 'Run inference'}
-            </PrimaryButton>
+            ) : (
+              <MonoLabel className="text-gray-600">Loading status…</MonoLabel>
+            )}
           </div>
+        </PageHeading>
+
+        {meta?.method && (
+          <div className="mt-10 border border-gray-800 rounded-xl bg-[#0a0a0a]">
+            <button
+              type="button"
+              onClick={() => setShowMethod((v) => !v)}
+              className="w-full flex items-center justify-between px-5 py-4 cursor-pointer"
+              aria-expanded={showMethod}
+            >
+              <MonoLabel className="text-gray-300">How the score works</MonoLabel>
+              <ChevronDown size={16} strokeWidth={1.5} className={`text-gray-400 transition-transform ${showMethod ? "rotate-180" : ""}`} />
+            </button>
+            <AnimatePresence initial={false}>
+              {showMethod && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  className="overflow-hidden"
+                >
+                  <p className="px-5 pb-5 text-[14px] leading-relaxed text-gray-400 max-w-[900px]">{meta.method}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
+
+        <Disclaimer className="mt-6" />
+      </section>
+
+      {/* FILTERS */}
+      <section className="px-6 md:px-16 py-8 flex flex-col gap-5 border-b border-gray-800">
+        <div className="flex flex-col lg:flex-row gap-3">
+          <div className="relative w-full lg:w-[340px] shrink-0">
+            <Search size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search company or symbol"
+              className="w-full pl-10 pr-4 py-2.5 rounded-full bg-white/5 border border-gray-700 text-white text-sm outline-none placeholder:text-gray-500 focus:border-white transition-colors"
+            />
+          </div>
+          <div className="relative min-w-0">
+            <select value={sector} onChange={(e) => update({ sector: e.target.value, industry: "" })} className={`${selectClass} w-full lg:w-auto`}>
+              <option value="">All sectors</option>
+              {sectors.map((s) => <option key={s.id} value={s.slug}>{s.name}</option>)}
+            </select>
+            <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+          </div>
+          <div className="relative min-w-0">
+            <select
+              value={industry}
+              onChange={(e) => update({ industry: e.target.value })}
+              disabled={!sector}
+              className={`${selectClass} w-full lg:w-auto disabled:opacity-40 disabled:cursor-not-allowed`}
+            >
+              <option value="">{sector ? "All industries" : "Pick a sector first"}</option>
+              {industries.map((i) => (
+                <option key={i.industry} value={i.industry}>{i.industry} ({i.company_count})</option>
+              ))}
+            </select>
+            <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+          </div>
+          {hasFilters && (
+            <button
+              type="button"
+              onClick={() => { setQuery(""); setParams(new URLSearchParams(sort !== "rank" ? { sort } : {}), { replace: true }); }}
+              className="inline-flex items-center gap-1.5 text-[10px] font-mono tracking-widest uppercase text-gray-400 hover:text-white cursor-pointer lg:ml-auto self-start lg:self-center"
+            >
+              <X size={12} /> Clear filters
+            </button>
+          )}
         </div>
 
-        {/* RESULTS */}
-        <div className="w-full lg:w-[65%] flex flex-col min-h-[520px]">
-          <div className="border-b border-gray-800 px-6 md:px-8 py-5 flex justify-between items-center text-[10px] font-mono text-gray-400 tracking-widest uppercase">
-            <span>Inference outputs</span>
-            <span>{forecastResults ? forecastResults.ticker : '02'}</span>
+        <div className="flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-8">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+            <MonoLabel className="shrink-0 mr-2 text-gray-500">Label</MonoLabel>
+            <Pill active={!label} onClick={() => update({ label: "" })} className="shrink-0">All</Pill>
+            {LABELS.map((l) => (
+              <Pill key={l} active={label === l} onClick={() => update({ label: l })} className="shrink-0">{l}</Pill>
+            ))}
           </div>
-
-          <AnimatePresence mode="wait">
-            {loading && (
-              <motion.div
-                key="loading"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex flex-1 flex-col items-center justify-center gap-6 px-8 py-16 text-center"
-              >
-                <div className="h-12 w-12 animate-spin rounded-full border-2 border-gray-800 border-t-[#d942ff]" />
-                <div>
-                  <p className="text-lg font-medium tracking-tight">Connecting to the AI engine…</p>
-                  <p className="mt-2 text-[10px] font-mono tracking-widest uppercase text-gray-500">
-                    Computing features and scoring the model
-                  </p>
-                </div>
-              </motion.div>
-            )}
-
-            {!loading && !forecastResults && (
-              <motion.div
-                key="empty"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex flex-1 flex-col items-center justify-center px-8 py-16 text-center"
-              >
-                <span className="text-gray-600 text-xl tracking-[0.3em] mb-6">***</span>
-                <h3 className="text-2xl md:text-[2rem] font-medium tracking-tight text-[#555]">No active inference</h3>
-                <p className="mt-3 max-w-[340px] text-sm text-gray-500 font-light">
-                  Select an equity and a horizon, then run inference to see the forecast.
-                </p>
-              </motion.div>
-            )}
-
-            {!loading && forecastResults && (
-              <motion.div
-                key="results"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4 }}
-                className="flex flex-col"
-              >
-                {simulated && (
-                  <div className="border-b border-gray-800 px-6 md:px-8 py-3 text-[10px] font-mono tracking-widest uppercase text-yellow-500/90">
-                    Prediction API not connected — showing simulated output
-                  </div>
-                )}
-
-                {/* Summary cells */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-gray-800 border-b border-gray-800">
-                  {[
-                    { label: 'Model', value: forecastResults.model_version },
-                    { label: 'Avg confidence', value: `${forecastResults.average_confidence}%` },
-                    { label: 'RSI (14D)', value: forecastResults.rsi_metric },
-                  ].map(cell => (
-                    <div key={cell.label} className="bg-[#0a0a0a] px-6 md:px-8 py-6">
-                      <MonoLabel className="block mb-3">{cell.label}</MonoLabel>
-                      <span className="text-xl font-normal tracking-tight">{cell.value}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="px-4 md:px-6 py-6 border-b border-gray-800">
-                  <StockChart
-                    ticker={forecastResults.ticker}
-                    predictions={forecastResults.predictions.map(p => p.predicted_price)}
-                    height={260}
-                  />
-                </div>
-
-                {/* Forecast grid */}
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-gray-800 text-left">
-                        {['Date', 'Horizon', 'Predicted price', 'Trend', 'Confidence'].map(h => (
-                          <th key={h} className="px-6 md:px-8 py-4 text-[10px] font-mono font-normal tracking-widest uppercase text-gray-500">
-                            {h}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {forecastResults.predictions.map((pred) => (
-                        <tr key={pred.day} className="border-b border-gray-800/60 hover:bg-white/[0.02] transition-colors">
-                          <td className="px-6 md:px-8 py-4 text-gray-200">{pred.date}</td>
-                          <td className="px-6 md:px-8 py-4 font-mono text-gray-400">T+{pred.day}</td>
-                          <td className="px-6 md:px-8 py-4 font-mono text-white">
-                            ₹{pred.predicted_price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
-                          </td>
-                          <td className="px-6 md:px-8 py-4">
-                            <span className={`px-3 py-1 rounded-full border text-[10px] font-medium tracking-wider
-                              ${pred.direction === 'BULLISH' ? 'border-green-500/40 text-green-500' : 'border-red-400/40 text-red-400'}`}>
-                              {pred.direction}
-                            </span>
-                          </td>
-                          <td className="px-6 md:px-8 py-4 font-mono text-gray-400">{pred.confidence}%</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="px-6 md:px-8 py-5 flex items-center gap-2 text-[10px] font-mono tracking-widest uppercase text-gray-500">
-                  <Calendar size={13} /> Forecasts are model estimates, not investment advice.
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+            <MonoLabel className="shrink-0 mr-2 text-gray-500">Sort</MonoLabel>
+            {SORTS.map((s) => (
+              <Pill key={s.value} active={sort === s.value} onClick={() => update({ sort: s.value === "rank" ? "" : s.value })} className="shrink-0">
+                {s.label}
+              </Pill>
+            ))}
+          </div>
         </div>
       </section>
 
-      <div className="px-6 md:px-16 py-8 text-[10px] font-mono tracking-widest text-gray-500 uppercase">
-        Quantifying the impact of global financial news
-      </div>
+      {/* LIST */}
+      <section className={res?.loading ? "opacity-50 transition-opacity" : "transition-opacity"}>
+        {error ? (
+          <StatusLine tone="error">Couldn't load rankings. Is the backend running? (cd backend &amp;&amp; npm run dev)</StatusLine>
+        ) : !res ? (
+          <StatusLine>Loading rankings…</StatusLine>
+        ) : notReady ? (
+          <StatusLine>Rankings are being prepared. The first snapshot will appear here once it's built.</StatusLine>
+        ) : rows.length === 0 ? (
+          <StatusLine>No companies match these filters.</StatusLine>
+        ) : (
+          <>
+            <div className="px-6 md:px-16 py-4">
+              <MonoLabel className="text-gray-500">
+                {fmt(total)} companies · page {page} of {fmt(pages)}
+              </MonoLabel>
+            </div>
+            <RankingTable
+              rows={rows}
+              rankKey={industry ? "rank_in_industry" : sector ? "rank_in_sector" : "rank_overall"}
+              sort={sort}
+              onSort={(s) => update({ sort: s === "rank" ? "" : s })}
+              showSector={!sector}
+            />
+            <Pagination page={page} pages={pages} onPage={(p) => update({ page: p > 1 ? String(p) : "" }, true)} />
+          </>
+        )}
+      </section>
+
+      <Footer />
     </div>
   );
-};
+}
 
-export default Predictor;
+function Pagination({ page, pages, onPage }) {
+  if (pages <= 1) return null;
+  const nums = [...new Set([1, page - 1, page, page + 1, pages].filter((n) => n >= 1 && n <= pages))].sort((a, b) => a - b);
+  const btn = "h-9 min-w-9 px-3 rounded-full border text-[11px] font-mono transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed";
+
+  return (
+    <div className="px-6 md:px-16 py-8 flex items-center justify-center gap-2 flex-wrap">
+      <button type="button" className={`${btn} border-gray-700 text-gray-300 hover:border-white`} disabled={page <= 1} onClick={() => onPage(page - 1)} aria-label="Previous page">
+        <ChevronLeft size={14} />
+      </button>
+      {nums.map((n, i) => (
+        <React.Fragment key={n}>
+          {i > 0 && n - nums[i - 1] > 1 && <span className="text-gray-600 font-mono text-[11px]">…</span>}
+          <button
+            type="button"
+            onClick={() => onPage(n)}
+            className={`${btn} ${n === page ? "bg-white text-black border-white" : "border-gray-700 text-gray-300 hover:border-white"}`}
+          >
+            {n}
+          </button>
+        </React.Fragment>
+      ))}
+      <button type="button" className={`${btn} border-gray-700 text-gray-300 hover:border-white`} disabled={page >= pages} onClick={() => onPage(page + 1)} aria-label="Next page">
+        <ChevronRight size={14} />
+      </button>
+    </div>
+  );
+}
