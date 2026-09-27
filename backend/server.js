@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
     });
 });
 
-// On Vercel the app is exported and wrapped as a serverless function (api/index.js);
+// On Vercel the exported app is served directly (Express is auto-detected);
 // locally (`npm run dev` / `npm start`) it listens on a port as usual
 if (require.main === module) {
     const PORT = process.env.PORT || 5500;
