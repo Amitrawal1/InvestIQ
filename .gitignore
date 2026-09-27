@@ -5,3 +5,16 @@ ml/logs/
 
 # Generated price files
 ml/data/processed/
+
+# Secrets: set these as environment variables on Render / Vercel instead
+.env
+.env.*
+!.env.example
+ml/upstox_access_token.txt
+
+# Dependencies and generated files
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+dist/

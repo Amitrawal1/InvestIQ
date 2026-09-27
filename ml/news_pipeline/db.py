@@ -74,12 +74,22 @@ ON DUPLICATE KEY UPDATE
 def get_connection():
     load_dotenv(ENV_FILE, override=True)
 
+    # Cloud MySQL (TiDB Cloud) needs verified TLS: DB_SSL=true in backend/.env
+    ssl = {}
+    if os.getenv("DB_SSL") == "true":
+        import certifi
+        ssl = {"ssl_ca": certifi.where(), "ssl_verify_cert": True, "ssl_verify_identity": True}
+
     return mysql.connector.connect(
         host=os.getenv("DB_HOST"),
+        port=int(os.getenv("DB_PORT") or 3306),
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
         database=os.getenv("DB_NAME"),
         autocommit=False,
+        # Stored DATETIMEs are IST wall-clock times; TiDB Cloud's default is UTC
+        time_zone="+05:30",
+        **ssl,
     )
 
 

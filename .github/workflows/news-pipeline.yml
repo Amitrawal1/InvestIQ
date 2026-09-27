@@ -1,0 +1,53 @@
+# Fetch NSE announcements, score them with FinBERT, and purge old news, every 15 minutes.
+# Writes to TiDB Cloud using the DB_* repository secrets (Settings -> Secrets and variables -> Actions).
+name: News pipeline
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # GitHub may start scheduled runs a few minutes late
+  workflow_dispatch:          # "Run workflow" button for a manual run
+
+# Never run two at once; a queued run waits for the current one
+concurrency:
+  group: news-pipeline
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: ml
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: ml/news_pipeline/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r news_pipeline/requirements.txt
+
+      # FinBERT (~440 MB) is downloaded once, then restored from the cache
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: finbert-${{ hashFiles('ml/news_pipeline/config.py') }}
+          restore-keys: finbert-
+
+      - name: Run pipeline
+        run: python -m news_pipeline.run
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_SSL: "true"
+          TZ: Asia/Kolkata   # run timestamps use datetime.now(), which should be IST like the Mac
+          TOKENIZERS_PARALLELISM: "false"
+          PYTHONWARNINGS: ignore

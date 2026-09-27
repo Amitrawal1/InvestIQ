@@ -9,6 +9,7 @@ const companyRoutes = require("./routes/companyRoutes");
 const stockPriceRoutes = require("./routes/stockPriceRoutes");
 const newsRoutes = require("./routes/newsRoutes");
 const marketRoutes = require("./routes/marketRoutes");
+const upstoxRoutes = require("./routes/upstoxRoutes");
 
 db.query("SELECT 1")
     .then(() => {
@@ -25,6 +26,7 @@ app.use("/companies", companyRoutes);
 app.use("/stock-prices", stockPriceRoutes);
 app.use("/news", newsRoutes);
 app.use("/market", marketRoutes);
+app.use("/upstox", upstoxRoutes);
 
 
 app.get("/", (req, res) => {
@@ -33,8 +35,14 @@ app.get("/", (req, res) => {
     });
 });
 
-const PORT = process.env.PORT || 5500;
+// On Vercel the app is exported and wrapped as a serverless function (api/index.js);
+// locally (`npm run dev` / `npm start`) it listens on a port as usual
+if (require.main === module) {
+    const PORT = process.env.PORT || 5500;
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+module.exports = app;

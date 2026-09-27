@@ -22,6 +22,7 @@ older than that window is therefore removed again at the end of the same run.
 import argparse
 import fcntl
 import logging
+import os
 import sys
 import time
 import traceback
@@ -56,8 +57,9 @@ def setup_logging():
     file_handler.setFormatter(fmt)
     handlers = [file_handler]
 
-    # Echo to the terminal for manual runs; scheduled runs only write the log file
-    if sys.stdout.isatty():
+    # Echo to the terminal for manual runs and to the GitHub Actions log (CI=true);
+    # launchd runs on the Mac only write the log file
+    if sys.stdout.isatty() or os.getenv("CI") == "true":
         stream_handler = logging.StreamHandler(sys.stdout)
         stream_handler.setFormatter(fmt)
         handlers.append(stream_handler)

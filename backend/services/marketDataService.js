@@ -1,9 +1,6 @@
-const fs = require("fs");
-const path = require("path");
 const axios = require("axios");
+const { getAccessToken } = require("./upstoxAuthService");
 
-// Written by ml/upstox_token.py; read on every fetch so a refreshed token works without a restart
-const TOKEN_FILE = path.join(__dirname, "..", "..", "ml", "upstox_access_token.txt");
 const QUOTES_URL = "https://api.upstox.com/v2/market-quote/quotes";
 const CACHE_MS = 15 * 1000;
 
@@ -23,17 +20,10 @@ class UpstoxTokenError extends Error {}
 
 let cache = { at: 0, data: null };
 
-const readToken = () => {
-    try {
-        return fs.readFileSync(TOKEN_FILE, "utf8").trim();
-    } catch {
-        return "";
-    }
-};
-
 const fetchQuotes = async (instrumentKeys) => {
-    const token = readToken();
-    if (!token) throw new UpstoxTokenError("Upstox access token file is missing");
+    // Looked up on every fetch so a fresh login works without a restart
+    const token = await getAccessToken();
+    if (!token) throw new UpstoxTokenError("No Upstox access token yet: log in via /upstox/login");
 
     try {
         const res = await axios.get(QUOTES_URL, {
