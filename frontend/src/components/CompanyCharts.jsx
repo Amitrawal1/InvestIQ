@@ -3,53 +3,51 @@ import {
   Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Tooltip, Legend, Filler,
 } from "chart.js";
 import { Line, Bar } from "react-chartjs-2";
+import useChartTheme from "../hooks/useChartTheme";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Tooltip, Legend, Filler);
 
-// Charts for the Company page, styled like StockChart: white primary line, muted secondary,
-// mono gray ticks, #0a0a0a tooltips, faint gridlines.
+// Charts for the Company page, styled like StockChart: ink primary line, muted secondary,
+// mono gray ticks, surface tooltips, faint gridlines. Colours come from useChartTheme().
 
-const WHITE = "#f5f5f5";
-const GRAY = "#6b7280";
-const MUTED = "#9ca3af";
 const mono = { family: "ui-monospace, SFMono-Regular, Menlo, monospace", size: 10 };
 
-const tooltip = {
-  backgroundColor: "#0a0a0a",
-  titleColor: "#fff",
-  bodyColor: "#d1d5db",
-  borderColor: "#1f2937",
+const tooltipOf = (c) => ({
+  backgroundColor: c.tooltipBg,
+  titleColor: c.tooltipTitle,
+  bodyColor: c.tooltipBody,
+  borderColor: c.tooltipBorder,
   borderWidth: 1,
   titleFont: { family: "Inter", weight: "500" },
   bodyFont: { family: "Inter" },
   padding: 12,
-};
+});
 
-const legend = {
+const legendOf = (c) => ({
   position: "top",
   align: "end",
-  labels: { color: MUTED, font: mono, usePointStyle: true, pointStyle: "line", boxWidth: 24 },
-};
+  labels: { color: c.muted, font: mono, usePointStyle: true, pointStyle: "line", boxWidth: 24 },
+});
 
-const baseScales = (yTick) => ({
+const baseScales = (c, yTick) => ({
   x: {
     grid: { display: false },
-    border: { color: "#1f2937" },
-    ticks: { color: MUTED, font: mono, maxRotation: 0, autoSkipPadding: 20 },
+    border: { color: c.axis },
+    ticks: { color: c.muted, font: mono, maxRotation: 0, autoSkipPadding: 20 },
   },
   y: {
-    grid: { color: "rgba(255, 255, 255, 0.05)" },
+    grid: { color: c.grid },
     border: { display: false },
-    ticks: { color: MUTED, font: mono, callback: yTick },
+    ticks: { color: c.muted, font: mono, callback: yTick },
   },
 });
 
-const areaFill = (context) => {
+const areaFillOf = (rgb) => (context) => {
   const { ctx, chartArea } = context.chart;
   if (!chartArea) return null;
   const g = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-  g.addColorStop(0, "rgba(245, 245, 245, 0.14)");
-  g.addColorStop(1, "rgba(245, 245, 245, 0)");
+  g.addColorStop(0, `rgba(${rgb}, 0.14)`);
+  g.addColorStop(1, `rgba(${rgb}, 0)`);
   return g;
 };
 
@@ -84,7 +82,10 @@ export function CompareChart({ data, benchmark, name, height = 340 }) {
     };
   }, [data, benchmark]);
 
+  const c = useChartTheme();
   if (!series) return null;
+  const tooltip = tooltipOf(c);
+  const legend = legendOf(c);
 
   const chartData = {
     labels: series.labels,
@@ -92,20 +93,20 @@ export function CompareChart({ data, benchmark, name, height = 340 }) {
       {
         label: name || "Stock",
         data: series.stock,
-        borderColor: WHITE,
+        borderColor: c.line,
         borderWidth: 2,
         pointRadius: 0,
         pointHoverRadius: 4,
         tension: 0.2,
         fill: "start",
-        backgroundColor: areaFill,
+        backgroundColor: areaFillOf(c.lineRgb),
         spanGaps: true,
       },
       ...(series.bench.length
         ? [{
             label: benchmark?.name || "Benchmark",
             data: series.bench,
-            borderColor: GRAY,
+            borderColor: c.secondary,
             borderWidth: 1.5,
             borderDash: [5, 4],
             pointRadius: 0,
@@ -134,7 +135,7 @@ export function CompareChart({ data, benchmark, name, height = 340 }) {
         },
       },
     },
-    scales: baseScales((v) => v),
+    scales: baseScales(c, (v) => v),
   };
 
   return (
@@ -146,6 +147,9 @@ export function CompareChart({ data, benchmark, name, height = 340 }) {
 
 // Quarterly revenue (white) and net profit (gray; red when negative), INR crore
 export function QuarterlyChart({ quarterly, height = 300 }) {
+  const c = useChartTheme();
+  const tooltip = tooltipOf(c);
+  const legend = legendOf(c);
   const labels = quarterly.map((q) => shortDate(q.period_end, true));
   const profit = quarterly.map((q) => (q.net_profit == null ? null : Number(q.net_profit)));
 
@@ -155,14 +159,14 @@ export function QuarterlyChart({ quarterly, height = 300 }) {
       {
         label: "Revenue",
         data: quarterly.map((q) => (q.revenue == null ? null : Number(q.revenue))),
-        backgroundColor: "rgba(245, 245, 245, 0.85)",
+        backgroundColor: c.bar,
         borderRadius: 2,
         maxBarThickness: 28,
       },
       {
         label: "Net profit",
         data: profit,
-        backgroundColor: profit.map((v) => (v != null && v < 0 ? "rgba(248, 113, 113, 0.8)" : "rgba(107, 114, 128, 0.9)")),
+        backgroundColor: profit.map((v) => (v != null && v < 0 ? c.negative : c.bar2)),
         borderRadius: 2,
         maxBarThickness: 28,
       },
@@ -182,7 +186,7 @@ export function QuarterlyChart({ quarterly, height = 300 }) {
         },
       },
     },
-    scales: baseScales((v) => `₹${Number(v).toLocaleString("en-IN")}`),
+    scales: baseScales(c, (v) => `₹${Number(v).toLocaleString("en-IN")}`),
   };
 
   return (
@@ -194,15 +198,17 @@ export function QuarterlyChart({ quarterly, height = 300 }) {
 
 // Growth score over snapshots
 export function ScoreHistoryChart({ history, height = 160 }) {
+  const c = useChartTheme();
+  const tooltip = tooltipOf(c);
   const chartData = {
     labels: history.map((h) => shortDate(h.snapshot_date)),
     datasets: [{
       label: "Growth score",
       data: history.map((h) => (h.growth_score == null ? null : Number(h.growth_score))),
-      borderColor: WHITE,
+      borderColor: c.line,
       borderWidth: 2,
       pointRadius: 3,
-      pointBackgroundColor: WHITE,
+      pointBackgroundColor: c.line,
       tension: 0.2,
       spanGaps: true,
     }],
@@ -222,7 +228,7 @@ export function ScoreHistoryChart({ history, height = 160 }) {
         },
       },
     },
-    scales: { ...baseScales((v) => v), y: { ...baseScales((v) => v).y, min: 0, max: 100 } },
+    scales: { ...baseScales(c, (v) => v), y: { ...baseScales(c, (v) => v).y, min: 0, max: 100 } },
   };
   return (
     <div style={{ height, position: "relative", width: "100%" }}>

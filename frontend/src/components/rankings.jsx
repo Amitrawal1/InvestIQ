@@ -101,7 +101,7 @@ export const StatusLine = ({ children, tone = "muted", className = "" }) => (
 );
 
 export const selectClass =
-  "appearance-none bg-white/5 border border-gray-700 rounded-full pl-4 pr-9 py-2.5 text-white text-[12px] font-mono tracking-wider uppercase outline-none focus:border-white transition-colors cursor-pointer [&>option]:bg-[#0a0a0a] [&>option]:normal-case max-w-full";
+  "appearance-none bg-white/5 border border-gray-700 rounded-full pl-4 pr-9 py-2.5 text-white text-[12px] font-mono tracking-wider uppercase outline-none focus:border-white transition-colors cursor-pointer [&>option]:bg-surface [&>option]:normal-case max-w-full";
 
 // Header cell that doubles as a sort toggle when `sortKey` is given
 function Th({ children, sortKey, sort, onSort, className = "" }) {
@@ -133,7 +133,7 @@ export function RankingTable({ rows, rankKey = "rank_overall", sort, onSort, sho
       {/* Desktop / tablet: table scrolls inside its own container, never the page */}
       <div className="hidden md:block overflow-x-auto border-y border-gray-800">
         <table className="w-full min-w-[860px] border-collapse">
-          <thead className="bg-[#0a0a0a] border-b border-gray-800">
+          <thead className="bg-surface border-b border-gray-800">
             <tr>
               <Th sortKey="rank" sort={sort} onSort={onSort} className="pl-6 lg:pl-16 w-[72px]">#</Th>
               <Th sortKey="name" sort={sort} onSort={onSort}>Company</Th>
@@ -149,7 +149,7 @@ export function RankingTable({ rows, rankKey = "rank_overall", sort, onSort, sho
               const km = r.key_metrics || {};
               const rank = rankOf(r, rankKey);
               return (
-                <tr key={r.company_id ?? r.symbol} className="group border-b border-gray-800/70 last:border-b-0 hover:bg-[#0a0a0a] transition-colors">
+                <tr key={r.company_id ?? r.symbol} className="group border-b border-gray-800/70 last:border-b-0 hover:bg-surface transition-colors">
                   <td className="pl-6 lg:pl-16 px-4 py-4 font-mono text-[13px] text-gray-400">{rank ?? "—"}</td>
                   <td className="px-4 py-4 max-w-[320px]">
                     <Link to={`/company/${encodeURIComponent(r.symbol)}`} className="block">
@@ -189,7 +189,7 @@ export function RankingTable({ rows, rankKey = "rank_overall", sort, onSort, sho
             <Link
               key={r.company_id ?? r.symbol}
               to={`/company/${encodeURIComponent(r.symbol)}`}
-              className="bg-[#050011] active:bg-[#0a0a0a] px-6 py-5 flex flex-col gap-3"
+              className="bg-page active:bg-surface px-6 py-5 flex flex-col gap-3"
             >
               <div className="flex items-start gap-4">
                 <span className="font-mono text-[13px] text-gray-500 w-8 shrink-0 pt-0.5">{rank ?? "—"}</span>

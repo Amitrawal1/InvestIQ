@@ -10,12 +10,9 @@ import {
   Filler
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import useChartTheme from '../hooks/useChartTheme';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, Filler);
-
-const HISTORY_COLOR = '#f5f5f5';
-const FORECAST_COLOR = '#d942ff'; // Intro globe accent
-const MUTED = '#9ca3af';
 
 const fmtDate = (d) => d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
 
@@ -92,6 +89,12 @@ const StockChart = ({ ticker, historicalData, predictions, height = 350 }) => {
     [ticker, historicalData, predictions]
   );
 
+  // Colours come from the theme tokens (--chart-*, --accent); the forecast uses the Intro globe accent
+  const c = useChartTheme();
+  const HISTORY_COLOR = c.line;
+  const FORECAST_COLOR = c.accent;
+  const MUTED = c.muted;
+
   const data = {
     labels,
     datasets: [
@@ -106,7 +109,7 @@ const StockChart = ({ ticker, historicalData, predictions, height = 350 }) => {
         tension: 0.25,
         spanGaps: true,
         fill: 'start',
-        backgroundColor: areaFill('245, 245, 245'),
+        backgroundColor: areaFill(c.lineRgb),
       },
       {
         label: 'AI forecast',
@@ -120,7 +123,7 @@ const StockChart = ({ ticker, historicalData, predictions, height = 350 }) => {
         tension: 0.25,
         spanGaps: true,
         fill: 'start',
-        backgroundColor: areaFill('217, 66, 255'),
+        backgroundColor: areaFill(c.accentRgb),
       }
     ]
   };
@@ -144,10 +147,10 @@ const StockChart = ({ ticker, historicalData, predictions, height = 350 }) => {
         }
       },
       tooltip: {
-        backgroundColor: '#0a0a0a',
-        titleColor: '#fff',
-        bodyColor: '#d1d5db',
-        borderColor: '#1f2937',
+        backgroundColor: c.tooltipBg,
+        titleColor: c.tooltipTitle,
+        bodyColor: c.tooltipBody,
+        borderColor: c.tooltipBorder,
         borderWidth: 1,
         titleFont: { family: 'Inter', weight: '500' },
         bodyFont: { family: 'Inter' },
@@ -162,11 +165,11 @@ const StockChart = ({ ticker, historicalData, predictions, height = 350 }) => {
     scales: {
       x: {
         grid: { display: false },
-        border: { color: '#1f2937' },
+        border: { color: c.axis },
         ticks: { color: MUTED, font: mono, maxRotation: 0, autoSkipPadding: 16 }
       },
       y: {
-        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+        grid: { color: c.grid },
         border: { display: false },
         ticks: {
           color: MUTED,

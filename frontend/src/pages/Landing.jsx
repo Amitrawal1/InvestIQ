@@ -32,7 +32,7 @@ export default function Landing() {
   const handleEnterTerminal = () => navigate(user ? '/dashboard' : '/login');
 
   return (
-    <div className="min-h-screen w-full bg-[#050011] text-white font-sans overflow-x-hidden">
+    <div className="min-h-screen w-full bg-page text-white font-sans overflow-x-hidden">
       <Navbar />
 
       <main className="px-6 md:px-16 pt-16 md:pt-28 pb-16">
@@ -65,7 +65,7 @@ export default function Landing() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: i * 0.1 }}
-            className="group bg-[#0a0a0a] p-8 md:p-10"
+            className="group bg-surface p-8 md:p-10"
           >
             <div className="flex justify-between items-start mb-10">
               <span className="text-[10px] font-mono tracking-widest text-gray-500">0{i + 1}</span>

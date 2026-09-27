@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { Search, LogOut, ArrowRight } from 'lucide-react';
+import { Search, ArrowRight } from 'lucide-react';
 import Logo from './Logo';
+import ProfileMenu from './ProfileMenu';
 import useMarketTicker, { formatPrice, formatChangePct } from '../hooks/useMarketTicker';
 
 const INDEX_NAMES = ['NIFTY 50', 'SENSEX'];
@@ -15,14 +15,13 @@ const links = [
 ];
 
 const Navbar = ({ onSearch }) => {
-  const { user, logout } = useAuth();
   const { quotes } = useMarketTicker();
   const indices = quotes.filter((q) => INDEX_NAMES.includes(q.name));
 
   return (
     <>
     {/* Fixed (not sticky) so it stays pinned even inside overflow-hidden page wrappers */}
-    <nav className="fixed top-0 inset-x-0 z-50 bg-[#050011]/85 backdrop-blur-md border-b border-gray-800">
+    <nav className="fixed top-0 inset-x-0 z-50 bg-page/85 backdrop-blur-md border-b border-gray-800">
       <div className="h-[72px] flex items-center justify-between gap-6 px-6 md:px-16">
         {/* Left - Brand + links */}
         <div className="flex items-center gap-8">
@@ -72,28 +71,7 @@ const Navbar = ({ onSearch }) => {
             ))}
           </div>
 
-          {user ? (
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full border border-gray-600 flex items-center justify-center text-xs font-medium text-white">
-                {user.username ? user.username[0].toUpperCase() : 'U'}
-              </div>
-              <span className="hidden sm:block text-sm text-gray-300">{user.username}</span>
-              <button
-                onClick={logout}
-                title="Log out"
-                className="text-gray-500 hover:text-white transition-colors cursor-pointer"
-              >
-                <LogOut size={16} />
-              </button>
-            </div>
-          ) : (
-            <NavLink
-              to="/login"
-              className="px-4 py-2 rounded-full border border-gray-600 text-[11px] font-medium uppercase tracking-wider text-gray-300 hover:bg-white hover:text-black hover:border-white transition-colors"
-            >
-              Sign in
-            </NavLink>
-          )}
+          <ProfileMenu />
         </div>
       </div>
     </nav>

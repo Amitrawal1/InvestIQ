@@ -45,7 +45,7 @@ export default function Sector() {
   }, [sector, companies]);
 
   return (
-    <div className="min-h-screen w-full bg-[#050011] text-white font-sans overflow-x-clip">
+    <div className="min-h-screen w-full bg-page text-white font-sans overflow-x-clip">
       <Navbar />
 
       {/* HERO */}
@@ -58,7 +58,7 @@ export default function Sector() {
             className="absolute inset-0 w-full h-full object-cover grayscale opacity-25 pointer-events-none"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050011]/60 via-[#050011]/80 to-[#050011] pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-page/60 via-page/80 to-page pointer-events-none" />
 
         <div className="relative z-10 px-6 md:px-16 pt-10 pb-14 md:pb-20">
           <BackLink />
@@ -96,7 +96,7 @@ export default function Sector() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 + i * 0.08 }}
-                className="bg-[#0a0a0a] px-6 md:px-8 py-7"
+                className="bg-surface px-6 md:px-8 py-7"
               >
                 <div className="flex justify-between items-center mb-5">
                   <MonoLabel>{s.label}</MonoLabel>

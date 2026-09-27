@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Predictor from './pages/Predictor';
@@ -10,6 +11,7 @@ import Home from './pages/Home';
 import Sector from './pages/Sector';
 import News from './pages/News';
 import Company from './pages/Company';
+import Settings from './pages/Settings';
 
 
 // Protect private views from unauthenticated requests
@@ -18,8 +20,8 @@ const PrivateRoute = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#050011] text-white font-sans">
-        <div className="h-10 w-10 animate-spin rounded-full border-2 border-gray-800 border-t-[#d942ff]" />
+      <div className="flex min-h-screen items-center justify-center bg-page text-white font-sans">
+        <div className="h-10 w-10 animate-spin rounded-full border-2 border-gray-800 border-t-accent" />
       </div>
     );
   }
@@ -28,10 +30,12 @@ const PrivateRoute = ({ children }) => {
 
 const App = () => {
   return (
+    <ThemeProvider>
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="" element={<Intro />} />
+          {/* Intro is the design reference and always renders dark: .theme-dark restores the dark tokens for its subtree */}
+          <Route path="" element={<div className="theme-dark"><Intro /></div>} />
           <Route path="login" element={<Login />} />
           <Route path="home" element={<Home />} />
           <Route path="sectors/:slug" element={<Sector />} />
@@ -39,12 +43,14 @@ const App = () => {
           <Route path="company/:symbol" element={<Company />} />
           <Route path="dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path="predictor" element={<PrivateRoute><Predictor /></PrivateRoute>} />
+          <Route path="settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
           <Route path="landing/" element={<Landing />} />
           {/* Fallback paths redirect */}
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </Router>
     </AuthProvider>
+    </ThemeProvider>
   );
 };
 

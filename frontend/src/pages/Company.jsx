@@ -67,7 +67,7 @@ const Empty = ({ children }) => (
 );
 
 const Stat = ({ label, children, sub }) => (
-  <div className="bg-[#0a0a0a] px-5 py-5 min-w-0">
+  <div className="bg-surface px-5 py-5 min-w-0">
     <MonoLabel className="block mb-3 text-gray-500">{label}</MonoLabel>
     <div className="text-[1.3rem] md:text-[1.5rem] font-normal tracking-tight leading-none truncate">{children}</div>
     {sub && <MonoLabel className="block mt-2 text-gray-600 normal-case tracking-wider">{sub}</MonoLabel>}
@@ -118,7 +118,7 @@ export default function Company() {
   }, [rows, km]);
 
   return (
-    <div className="min-h-screen w-full bg-[#050011] text-white font-sans overflow-x-clip">
+    <div className="min-h-screen w-full bg-page text-white font-sans overflow-x-clip">
       <Navbar />
 
       <section className="px-6 md:px-16 pt-10 pb-12">

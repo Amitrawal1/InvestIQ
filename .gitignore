@@ -22,3 +22,6 @@ dist/
 # NSE XBRL downloads (large, re-downloadable)
 ml/data/raw/xbrl/
 ml/data/raw/xbrl_samples/
+
+# Private project notes
+PROJECT_HANDBOOK.md

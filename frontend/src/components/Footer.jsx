@@ -30,7 +30,7 @@ const columns = [
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-[#0a0a0a] text-white border-t border-gray-800 mt-24 overflow-hidden">
+    <footer className="w-full bg-surface text-white border-t border-gray-800 mt-24 overflow-hidden">
       <div className="px-6 md:px-16 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
         <div className="lg:col-span-2 space-y-6">
           <span className="font-black text-2xl tracking-tight">INVEST IQ</span>
@@ -64,7 +64,7 @@ export default function Footer() {
         className="px-6 md:px-16 select-none pointer-events-none"
       >
         <svg viewBox="0 0 850 100" className="w-full font-sans font-black" aria-hidden="true">
-          <text x="0" y="88" fontSize="90" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="1" textLength="850">
+          <text x="0" y="88" fontSize="90" fill="none" strokeWidth="1" className="stroke-wordmark" textLength="850">
             INVEST IQ
           </text>
         </svg>

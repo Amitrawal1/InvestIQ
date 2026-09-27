@@ -5,6 +5,162 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Semantic colour tokens -> utilities (bg-page, bg-surface, text-accent, ...).
+   `inline` makes each utility read the variable at the element, so a
+   `.theme-dark` subtree (the Intro page) resolves the dark values. */
+@theme inline {
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-accent: var(--accent);
+  --color-dim: var(--dim);
+  --color-dim-hover: var(--dim-hover);
+  --color-btn: var(--btn);
+  --color-btn-fg: var(--btn-fg);
+  --color-btn-fill: var(--btn-fill);
+  --color-btn-ink: var(--btn-ink);
+  --color-wordmark: var(--wordmark);
+}
+
+/* ==========================================================
+   THEME
+   Dark is the default (and the design reference). Light mode
+   remaps Tailwind's palette variables so the existing classes
+   invert: white <-> near-black, gray scale mirrored.
+   ========================================================== */
+:root,
+.theme-dark {
+  color-scheme: dark;
+  --page: #050011;
+  --surface: #0a0a0a;
+  --surface-2: #1a1a1a;
+  --accent: #d942ff;
+  --dim: #555;
+  --dim-hover: #aaa;
+  --btn: #1a1a1a;
+  --btn-fg: #fff;
+  --btn-fill: #fcfcfc;
+  --btn-ink: #111;
+  --wordmark: rgba(255, 255, 255, 0.18);
+
+  /* chart.js (read through useChartTheme) */
+  --chart-line: #f5f5f5;
+  --chart-line-rgb: 245, 245, 245;
+  --chart-secondary: #6b7280;
+  --chart-muted: #9ca3af;
+  --chart-axis: #1f2937;
+  --chart-grid: rgba(255, 255, 255, 0.05);
+  --chart-bar: rgba(245, 245, 245, 0.85);
+  --chart-bar-2: rgba(107, 114, 128, 0.9);
+  --chart-neg: rgba(248, 113, 113, 0.8);
+  --chart-accent-rgb: 217, 66, 255;
+  --tooltip-bg: #0a0a0a;
+  --tooltip-title: #fff;
+  --tooltip-body: #d1d5db;
+  --tooltip-border: #1f2937;
+}
+
+/* When the routed page is a .theme-dark page (Intro), keep the canvas and
+   scrollbars dark too, whatever the chosen theme. */
+html:has(> body > #root > .theme-dark) {
+  color-scheme: dark !important;
+}
+html:has(> body > #root > .theme-dark) body {
+  background-color: #050011;
+}
+
+/* Restores Tailwind's default (dark-design) palette for a subtree */
+.theme-dark {
+  --color-white: #fff;
+  --color-black: #000;
+  --color-gray-50: oklch(98.5% 0.002 247.839);
+  --color-gray-100: oklch(96.7% 0.003 264.542);
+  --color-gray-200: oklch(92.8% 0.006 264.531);
+  --color-gray-300: oklch(87.2% 0.01 258.338);
+  --color-gray-400: oklch(70.7% 0.022 261.325);
+  --color-gray-500: oklch(55.1% 0.027 264.364);
+  --color-gray-600: oklch(44.6% 0.03 256.802);
+  --color-gray-700: oklch(37.3% 0.034 259.733);
+  --color-gray-800: oklch(27.8% 0.033 256.848);
+  --color-gray-900: oklch(21% 0.034 264.665);
+  --color-gray-950: oklch(13% 0.028 261.692);
+  --color-green-400: oklch(79.2% 0.209 151.711);
+  --color-green-500: oklch(72.3% 0.219 149.579);
+  --color-green-600: oklch(62.7% 0.194 149.214);
+  --color-green-700: oklch(52.7% 0.154 150.069);
+  --color-green-800: oklch(44.8% 0.119 151.328);
+  --color-green-900: oklch(39.3% 0.095 152.535);
+  --color-red-400: oklch(70.4% 0.191 22.216);
+  --color-red-500: oklch(63.7% 0.237 25.331);
+  --color-red-600: oklch(57.7% 0.245 27.325);
+  --color-red-800: oklch(44.4% 0.177 26.899);
+  --color-red-900: oklch(39.6% 0.141 25.723);
+  --color-yellow-500: oklch(79.5% 0.184 86.047);
+  color-scheme: dark;
+}
+
+:root[data-theme="light"],
+.theme-light {
+  /* .theme-light forces the light tokens on a subtree (Settings theme preview) */
+  color-scheme: light;
+  --page: #f6f6f7;
+  --surface: #ffffff;
+  --surface-2: #efeff1;
+  --accent: #b62ee0;
+  --dim: #a3a3a3;
+  --dim-hover: #525252;
+  --btn: #1a1a1a;
+  --btn-fg: #fff;
+  --btn-fill: #fcfcfc;
+  --btn-ink: #111;
+  --wordmark: rgba(0, 0, 0, 0.12);
+
+  --chart-line: #111111;
+  --chart-line-rgb: 17, 17, 17;
+  --chart-secondary: #9ca3af;
+  --chart-muted: #6b7280;
+  --chart-axis: #e5e7eb;
+  --chart-grid: rgba(0, 0, 0, 0.06);
+  --chart-bar: rgba(17, 17, 17, 0.85);
+  --chart-bar-2: rgba(156, 163, 175, 0.9);
+  --chart-neg: rgba(220, 38, 38, 0.8);
+  --chart-accent-rgb: 182, 46, 224;
+  --tooltip-bg: #ffffff;
+  --tooltip-title: #111111;
+  --tooltip-body: #374151;
+  --tooltip-border: #e5e7eb;
+
+  /* white/black swap: text-white -> near-black ink, bg-black -> white */
+  --color-white: #111111;
+  --color-black: #ffffff;
+  /* gray scale mirrored around 500 */
+  --color-gray-50: oklch(13% 0.028 261.692);
+  --color-gray-100: oklch(21% 0.034 264.665);
+  --color-gray-200: oklch(27.8% 0.033 256.848);
+  --color-gray-300: oklch(37.3% 0.034 259.733);
+  --color-gray-400: oklch(44.6% 0.03 256.802);
+  --color-gray-500: oklch(55.1% 0.027 264.364);
+  --color-gray-600: oklch(70.7% 0.022 261.325);
+  --color-gray-700: oklch(87.2% 0.01 258.338);
+  --color-gray-800: oklch(92.8% 0.006 264.531);
+  --color-gray-900: oklch(96.7% 0.003 264.542);
+  --color-gray-950: oklch(98.5% 0.002 247.839);
+  /* up/down keep their hue, a step darker for contrast on white;
+     the dim "weak" variants become light tints */
+  --color-green-400: oklch(52.7% 0.154 150.069);
+  --color-green-500: oklch(52.7% 0.154 150.069);
+  --color-green-600: oklch(52.7% 0.154 150.069);
+  --color-green-700: oklch(72.3% 0.219 149.579);
+  --color-green-800: oklch(87.1% 0.15 154.449);
+  --color-green-900: oklch(92.5% 0.084 155.995);
+  --color-red-400: oklch(57.7% 0.245 27.325);
+  --color-red-500: oklch(57.7% 0.245 27.325);
+  --color-red-600: oklch(50.5% 0.213 27.518);
+  --color-red-800: oklch(70.4% 0.191 22.216);
+  --color-red-900: oklch(88.5% 0.062 18.334);
+  --color-yellow-500: oklch(68.1% 0.162 75.834);
+}
+
 @layer utilities {
   .glass-card {
     background: rgba(255, 255, 255, 0.4);
@@ -52,7 +208,9 @@
 }
 
 body {
-  @apply bg-[#F9F9FB] text-[#141414] font-sans antialiased;
+  @apply font-sans antialiased;
+  background-color: var(--page);
+  color: var(--color-white);
 }
 
 /* ==========================================================

@@ -92,7 +92,7 @@ export default function Predictor() {
   const hasFilters = sector || industry || label || q;
 
   return (
-    <div className="min-h-screen w-full bg-[#050011] text-white font-sans overflow-x-clip">
+    <div className="min-h-screen w-full bg-page text-white font-sans overflow-x-clip">
       <Navbar />
 
       {/* HERO */}
@@ -125,7 +125,7 @@ export default function Predictor() {
         </PageHeading>
 
         {meta?.method && (
-          <div className="mt-10 border border-gray-800 rounded-xl bg-[#0a0a0a]">
+          <div className="mt-10 border border-gray-800 rounded-xl bg-surface">
             <button
               type="button"
               onClick={() => setShowMethod((v) => !v)}

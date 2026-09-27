@@ -13,7 +13,7 @@ const SENTIMENT_TONE = {
 };
 
 const IMPORTANCE_TONE = {
-  HIGH: "border-[#d942ff] text-[#d942ff]",
+  HIGH: "border-accent text-accent",
   MEDIUM: "border-gray-600 text-gray-300",
   LOW: "border-gray-800 text-gray-500",
 };
@@ -87,7 +87,7 @@ export default function NewsItem({ item, compact = false }) {
   const text = decodeEntities(item.content || item.headline || "");
 
   return (
-    <article className={`group bg-[#050011] hover:bg-[#0a0a0a] transition-colors px-6 ${compact ? "py-4 md:px-6" : "py-5 md:px-16"}`}>
+    <article className={`group bg-page hover:bg-surface transition-colors px-6 ${compact ? "py-4 md:px-6" : "py-5 md:px-16"}`}>
       <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-2">
         <span className="font-mono text-[13px] text-white tracking-wide">{item.symbol || "—"}</span>
         <span className="text-[13px] text-gray-500 truncate max-w-[220px] md:max-w-[360px]">

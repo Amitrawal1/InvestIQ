@@ -80,7 +80,7 @@ export default function SectorCompanies({ sector, companies, error }) {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-px bg-gray-800 border-y border-gray-800">
           {shown.map((c) => (
-            <div key={c.id} className="group bg-[#050011] hover:bg-[#0a0a0a] transition-colors px-6 py-5 flex flex-col gap-3 min-h-[128px]">
+            <div key={c.id} className="group bg-page hover:bg-surface transition-colors px-6 py-5 flex flex-col gap-3 min-h-[128px]">
               <div className="flex justify-between items-center gap-2">
                 <span className="font-mono text-[13px] text-white tracking-wide truncate">{c.symbol}</span>
                 {c.market_segment === "SME" && (

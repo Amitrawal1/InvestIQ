@@ -54,11 +54,11 @@ const Login = () => {
   const message = validationError || error;
 
   return (
-    <div className="min-h-screen w-full bg-[#050011] text-white font-sans flex flex-col lg:flex-row">
+    <div className="min-h-screen w-full bg-page text-white font-sans flex flex-col lg:flex-row">
       {/* LEFT - editorial panel */}
       <section className="relative lg:w-[55%] flex flex-col justify-between px-6 md:px-16 py-8 lg:py-10 border-b lg:border-b-0 lg:border-r border-gray-800 overflow-hidden">
         <div className="absolute inset-0 bg-[url('/bg.png')] bg-cover bg-center opacity-40 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050011]/40 via-[#050011]/60 to-[#050011] pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-page/40 via-page/60 to-page pointer-events-none" />
 
         <div className="relative z-10 flex items-center justify-between">
           <Logo className="text-xl" />

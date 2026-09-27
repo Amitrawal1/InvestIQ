@@ -126,7 +126,7 @@ export default function News() {
   const hasFilters = sentiment !== "All" || importance !== "All" || confidentOnly || Boolean(search);
 
   return (
-    <div className="min-h-screen w-full bg-[#050011] text-white font-sans overflow-x-clip">
+    <div className="min-h-screen w-full bg-page text-white font-sans overflow-x-clip">
       <Navbar />
 
       {/* HERO */}
@@ -161,7 +161,7 @@ export default function News() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 + i * 0.06 }}
-              className="bg-[#0a0a0a] px-6 md:px-8 py-6"
+              className="bg-surface px-6 md:px-8 py-6"
             >
               <div className="flex justify-between items-center mb-4">
                 <MonoLabel>{s.label}</MonoLabel>

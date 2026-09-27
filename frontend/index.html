@@ -9,6 +9,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Apply the saved/system theme before React loads (no flash). Mirrors src/context/ThemeContext.jsx -->
+    <script>
+      (function () {
+        var pref = 'system';
+        try { pref = localStorage.getItem('investiq-theme') || 'system'; } catch (e) {}
+        var theme = pref === 'light' || pref === 'dark' ? pref
+          : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

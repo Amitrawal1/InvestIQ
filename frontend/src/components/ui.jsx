@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "motion/react";
 
 // Shared building blocks that mirror the Intro page's visual language:
-// deep #050011 canvas, #0a0a0a panels, gray-800 hairlines, mono micro-labels.
+// deep page canvas (--page), surface panels (--surface), gray-800 hairlines, mono micro-labels.
 
 export const fadeUp = {
   initial: { opacity: 0, y: 20 },
@@ -63,7 +63,7 @@ export function PillTag({ icon: Icon, children, className = "", ...props }) {
 
 // The star from the Intro "Explore Now" button
 export const StarIcon = ({ className = "" }) => (
-  <svg viewBox="0 0 24 24" className={`w-4 h-4 fill-white group-hover:fill-[#111] ${className}`}>
+  <svg viewBox="0 0 24 24" className={`w-4 h-4 fill-btn-fg group-hover:fill-btn-ink ${className}`}>
     <path d="M12 2L15 10H22L16 15L18 22L12 18L6 22L8 15L2 10H9L12 2Z" />
   </svg>
 );
@@ -75,16 +75,16 @@ export function PrimaryButton({ children, icon: Icon, className = "", ...props }
 
   return (
     <button
-      className={`group relative overflow-hidden bg-[#1a1a1a] px-6 py-3.5 border border-[#1a1a1a] rounded-md shadow-sm transition-transform hover:-translate-y-[0.5px] hover:shadow-[3px_3px_0px_rgba(17,17,17,0.5)] active:translate-y-0 active:shadow-sm disabled:opacity-60 disabled:pointer-events-none flex items-center justify-center gap-3 cursor-pointer ${className}`}
+      className={`group relative overflow-hidden bg-btn px-6 py-3.5 border border-btn rounded-md shadow-sm transition-transform hover:-translate-y-[0.5px] hover:shadow-[3px_3px_0px_rgba(17,17,17,0.5)] active:translate-y-0 active:shadow-sm disabled:opacity-60 disabled:pointer-events-none flex items-center justify-center gap-3 cursor-pointer ${className}`}
       {...props}
     >
-      <div className="absolute inset-0 bg-[#fcfcfc] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-0" />
+      <div className="absolute inset-0 bg-btn-fill -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-0" />
 
       <div className="relative z-10 flex items-center gap-2">
         {Icon
-          ? <Icon size={16} className={`text-white group-hover:text-[#111] ${iconMotion}`} />
+          ? <Icon size={16} className={`text-btn-fg group-hover:text-btn-ink ${iconMotion}`} />
           : <StarIcon className={iconMotion} />}
-        <span className="text-[15px] font-medium text-white group-hover:text-[#111] transition-colors duration-300">
+        <span className="text-[15px] font-medium text-btn-fg group-hover:text-btn-ink transition-colors duration-300">
           {children}
         </span>
       </div>
@@ -94,7 +94,7 @@ export function PrimaryButton({ children, icon: Icon, className = "", ...props }
 
 export function Panel({ children, className = "", glow = false }) {
   return (
-    <div className={`relative overflow-hidden bg-[#0a0a0a] border border-gray-800 rounded-xl ${className}`}>
+    <div className={`relative overflow-hidden bg-surface border border-gray-800 rounded-xl ${className}`}>
       {glow && (
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/5 rounded-full blur-3xl pointer-events-none" />
       )}

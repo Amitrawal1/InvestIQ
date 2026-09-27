@@ -75,7 +75,7 @@ const Category = () => {
                   <Link
                     key={sector.id}
                     to={`/sectors/${sector.slug}`}
-                    className="category-card group relative overflow-hidden rounded-xl border border-gray-800 hover:border-gray-500 bg-[#0a0a0a] min-w-[200px] md:min-w-0"
+                    className="category-card group relative overflow-hidden rounded-xl border border-gray-800 hover:border-gray-500 bg-surface min-w-[200px] md:min-w-0"
                   >
                     {meta.image && (
                       <img
@@ -85,7 +85,7 @@ const Category = () => {
                         className="absolute inset-0 h-full w-full object-cover grayscale opacity-60 transition-all duration-700 group-hover:grayscale-0 group-hover:opacity-90 group-hover:scale-105"
                       />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050011] via-[#050011]/40 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-page via-page/40 to-transparent" />
 
                     <div className="absolute top-0 left-0 w-full p-4 flex justify-between items-start">
                       <MonoLabel className="text-gray-300">{pad(index + 1)}</MonoLabel>

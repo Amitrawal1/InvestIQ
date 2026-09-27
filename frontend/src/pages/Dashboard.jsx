@@ -61,7 +61,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen w-full bg-[#050011] text-white font-sans">
+    <div className="min-h-screen w-full bg-page text-white font-sans">
       <Navbar onSearch={setSearchTerm} />
 
       <div className="px-6 md:px-16 pt-12 md:pt-16 pb-12">
@@ -85,7 +85,7 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 + i * 0.08 }}
-            className="bg-[#0a0a0a] px-6 md:px-8 py-8"
+            className="bg-surface px-6 md:px-8 py-8"
           >
             <div className="flex justify-between items-center mb-6">
               <MonoLabel>{m.label}</MonoLabel>
@@ -101,7 +101,7 @@ const Dashboard = () => {
       </section>
 
       {/* WORKSTATION - two-column panel */}
-      <section className="w-full flex flex-col lg:flex-row bg-[#0a0a0a] border-b border-gray-800">
+      <section className="w-full flex flex-col lg:flex-row bg-surface border-b border-gray-800">
         {/* Chart column */}
         <div className="w-full lg:w-[65%] border-b lg:border-b-0 lg:border-r border-gray-800 flex flex-col">
           <div className="border-b border-gray-800 px-6 md:px-8 py-5 flex justify-between items-center text-[10px] font-mono text-gray-400 tracking-widest uppercase">
@@ -138,7 +138,7 @@ const Dashboard = () => {
               className="mt-auto border-t border-gray-800 px-6 md:px-8 py-6 flex flex-col sm:flex-row gap-3 sm:gap-6"
             >
               <span className="flex items-center gap-2 shrink-0 text-[10px] font-mono tracking-widest uppercase text-white">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#d942ff]" /> AI Insight
+                <span className="w-1.5 h-1.5 rounded-full bg-accent" /> AI Insight
               </span>
               <p className="text-sm text-gray-400 leading-relaxed font-light">
                 {insights[selectedTicker] || "Inference pipeline predicts stable trend progression for this asset."}
@@ -166,7 +166,7 @@ const Dashboard = () => {
                 <div
                   key={stock.ticker}
                   onClick={() => setSelectedTicker(stock.ticker)}
-                  className={`group border-b border-gray-800/80 px-6 md:px-8 py-5 flex justify-between items-center cursor-pointer transition-colors duration-300 ${isActive ? 'text-white' : 'text-[#555] hover:text-[#aaa]'}`}
+                  className={`group border-b border-gray-800/80 px-6 md:px-8 py-5 flex justify-between items-center cursor-pointer transition-colors duration-300 ${isActive ? 'text-white' : 'text-dim hover:text-dim-hover'}`}
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">

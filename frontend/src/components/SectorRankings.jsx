@@ -198,7 +198,7 @@ function FallbackList({ companies, error, industry, rankingError }) {
 
   return (
     <div>
-      <div className="mx-6 md:mx-16 mb-6 border border-gray-800 rounded-xl bg-[#0a0a0a] px-5 py-4">
+      <div className="mx-6 md:mx-16 mb-6 border border-gray-800 rounded-xl bg-surface px-5 py-4">
         <MonoLabel className="text-gray-300">
           {rankingError ? "Rankings unavailable right now" : "Rankings are being prepared"}
         </MonoLabel>
@@ -217,7 +217,7 @@ function FallbackList({ companies, error, industry, rankingError }) {
               <Link
                 key={c.id}
                 to={`/company/${encodeURIComponent(c.symbol)}`}
-                className="group bg-[#050011] hover:bg-[#0a0a0a] transition-colors px-6 py-5 flex flex-col gap-3 min-h-[120px]"
+                className="group bg-page hover:bg-surface transition-colors px-6 py-5 flex flex-col gap-3 min-h-[120px]"
               >
                 <span className="font-mono text-[13px] text-white tracking-wide truncate">{c.symbol}</span>
                 <p className="text-[15px] leading-snug text-gray-300 group-hover:text-white transition-colors line-clamp-2">{c.name}</p>
