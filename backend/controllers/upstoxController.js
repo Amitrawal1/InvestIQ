@@ -1,5 +1,6 @@
 const {
     saveAccessToken,
+    hasAdminKey,
     isAdminKey,
     buildLoginUrl,
     isValidState,
@@ -14,9 +15,18 @@ div{max-width:480px;text-align:center}h1{font-weight:400;letter-spacing:.1em;tex
 
 // Daily login: open /upstox/login?key=<UPSTOX_ADMIN_KEY>, sign in to Upstox, done
 const login = (req, res) => {
+    if (!hasAdminKey()) {
+        return res.status(503).send(page("Not set up", "UPSTOX_ADMIN_KEY is not set on the server. Add it in the hosting environment variables and redeploy."));
+    }
     if (!isAdminKey(req.query.key)) {
         return res.status(403).send(page("Not allowed", "Missing or wrong admin key."));
     }
+
+    const missing = ["UPSTOX_CLIENT_ID", "UPSTOX_CLIENT_SECRET", "UPSTOX_REDIRECT_URI"].filter((name) => !(process.env[name] || "").trim());
+    if (missing.length) {
+        return res.status(503).send(page("Not set up", `Missing on the server: ${missing.join(", ")}. Add them and redeploy.`));
+    }
+
     res.redirect(buildLoginUrl());
 };
 

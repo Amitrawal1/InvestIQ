@@ -56,22 +56,30 @@ const saveAccessToken = async ({ access_token, user_id, user_name }) => {
     );
 };
 
+// Trimmed because values pasted into a dashboard often carry a stray space or newline
+const env = (name) => (process.env[name] || "").trim();
+
+const adminKey = () => env("UPSTOX_ADMIN_KEY");
+
+const hasAdminKey = () => adminKey().length > 0;
+
 // `state` proves the login was started by someone holding UPSTOX_ADMIN_KEY, so a
 // stranger can't finish an OAuth flow and replace the token with their own account's
 const signState = (timestamp) =>
-    crypto.createHmac("sha256", process.env.UPSTOX_ADMIN_KEY).update(String(timestamp)).digest("hex");
+    crypto.createHmac("sha256", adminKey()).update(String(timestamp)).digest("hex");
 
 const isAdminKey = (key) => {
-    const expected = process.env.UPSTOX_ADMIN_KEY || "";
-    if (!expected || typeof key !== "string" || key.length !== expected.length) return false;
-    return crypto.timingSafeEqual(Buffer.from(key), Buffer.from(expected));
+    const expected = adminKey();
+    const given = typeof key === "string" ? key.trim() : "";
+    if (!expected || given.length !== expected.length) return false;
+    return crypto.timingSafeEqual(Buffer.from(given), Buffer.from(expected));
 };
 
 const buildLoginUrl = () => {
     const timestamp = Date.now();
     const params = new URLSearchParams({
-        client_id: process.env.UPSTOX_CLIENT_ID,
-        redirect_uri: process.env.UPSTOX_REDIRECT_URI,
+        client_id: env("UPSTOX_CLIENT_ID"),
+        redirect_uri: env("UPSTOX_REDIRECT_URI"),
         response_type: "code",
         state: `${timestamp}.${signState(timestamp)}`,
     });
@@ -92,9 +100,9 @@ const exchangeCode = async (code) => {
         TOKEN_URL,
         new URLSearchParams({
             code,
-            client_id: process.env.UPSTOX_CLIENT_ID,
-            client_secret: process.env.UPSTOX_CLIENT_SECRET,
-            redirect_uri: process.env.UPSTOX_REDIRECT_URI,
+            client_id: env("UPSTOX_CLIENT_ID"),
+            client_secret: env("UPSTOX_CLIENT_SECRET"),
+            redirect_uri: env("UPSTOX_REDIRECT_URI"),
             grant_type: "authorization_code",
         }),
         { headers: { Accept: "application/json" }, timeout: 10000 }
@@ -105,6 +113,7 @@ const exchangeCode = async (code) => {
 module.exports = {
     getAccessToken,
     saveAccessToken,
+    hasAdminKey,
     isAdminKey,
     buildLoginUrl,
     isValidState,
