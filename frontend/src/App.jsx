@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet, useLocation } from 'react-router-dom';
+import { MotionConfig } from 'motion/react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import Login from './pages/Login';
@@ -21,6 +22,13 @@ const ScrollToTop = () => {
   }, [pathname, hash]);
   return null;
 };
+
+// App pages honour the OS "reduce motion" setting (Intro, the design reference, is left as is)
+const AppMotion = () => (
+  <MotionConfig reducedMotion="user">
+    <Outlet />
+  </MotionConfig>
+);
 
 // Protect private views from unauthenticated requests
 const PrivateRoute = ({ children }) => {
@@ -47,18 +55,20 @@ const App = () => {
         <Routes>
           {/* Intro is the design reference and always renders dark: .theme-dark restores the dark tokens for its subtree */}
           <Route path="" element={<div className="theme-dark"><Intro /></div>} />
-          <Route path="login" element={<Login />} />
-          <Route path="home" element={<Home />} />
-          <Route path="sectors/:slug" element={<Sector />} />
-          <Route path="news" element={<News />} />
-          <Route path="company/:symbol" element={<Company />} />
-          {/* The old demo dashboard is gone: the real one is Portfolio */}
-          <Route path="dashboard" element={<Navigate to="/portfolio" replace />} />
-          <Route path="predictor" element={<PrivateRoute><Predictor /></PrivateRoute>} />
-          <Route path="portfolio" element={<PrivateRoute><Portfolio /></PrivateRoute>} />
-          <Route path="settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
-          {/* Fallback paths redirect */}
-          <Route path="*" element={<Navigate to="/home" replace />} />
+          <Route element={<AppMotion />}>
+            <Route path="login" element={<Login />} />
+            <Route path="home" element={<Home />} />
+            <Route path="sectors/:slug" element={<Sector />} />
+            <Route path="news" element={<News />} />
+            <Route path="company/:symbol" element={<Company />} />
+            {/* The old demo dashboard is gone: the real one is Portfolio */}
+            <Route path="dashboard" element={<Navigate to="/portfolio" replace />} />
+            <Route path="predictor" element={<PrivateRoute><Predictor /></PrivateRoute>} />
+            <Route path="portfolio" element={<PrivateRoute><Portfolio /></PrivateRoute>} />
+            <Route path="settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
+            {/* Fallback paths redirect */}
+            <Route path="*" element={<Navigate to="/home" replace />} />
+          </Route>
         </Routes>
       </Router>
     </AuthProvider>

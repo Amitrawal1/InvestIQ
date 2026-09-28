@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+/* touch: phones (any pointer) and touch tablets -> 44px tap targets.
+   Mouse-driven desktops keep the compact sizes. */
+@custom-variant touch {
+  @media (max-width: 767.98px) {
+    @slot;
+  }
+  @media (pointer: coarse) {
+    @slot;
+  }
+}
+
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
@@ -197,3 +208,48 @@ body {
 @keyframes price-flash-down { from { color: #f87171; } }
 .price-flash-up { animation: price-flash-up 1.2s ease-out; }
 .price-flash-down { animation: price-flash-down 1.2s ease-out; }
+
+/* ==========================================================
+   MOBILE / TOUCH
+   ========================================================== */
+
+/* iOS zooms into any focused field under 16px: keep form controls at 16px on
+   phones and touch tablets (mouse-driven desktops keep each page's own sizing). */
+@media (max-width: 767.98px), (pointer: coarse) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+  /* 16px mono caps need less tracking than the 12px desktop selects */
+  select {
+    letter-spacing: 0.04em;
+  }
+}
+
+/* No grey flash on tap; touch devices get the :active states instead */
+a,
+button,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Honour reduced motion on the app pages. The Intro page (.theme-dark route
+   wrapper) is the design reference and keeps its own motion. */
+@media (prefers-reduced-motion: reduce) {
+  #root > :not(.theme-dark) *,
+  #root > :not(.theme-dark) *::before,
+  #root > :not(.theme-dark) *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* The market ticker stops scrolling on its own; it can be swiped instead */
+  .market-ticker-track {
+    animation: none !important;
+  }
+  .market-ticker-viewport {
+    overflow-x: auto;
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Search } from "lucide-react";
-import { MonoLabel, Pill, SectionLabel } from "./ui";
+import { MonoLabel, TouchPill, HScroll, SectionLabel } from "./ui";
 import { RankingTable, SORTS, StatusLine, Disclaimer, fmtDate } from "./rankings";
 import { getRankings, getSectorIndustries } from "../services/api";
 import { fmt } from "../data/sectorMeta";
@@ -115,35 +115,35 @@ export default function SectorRankings({ sector, companies, companiesError }) {
               Snapshot {fmtDate(info.snapshot_date)} · {info.model_version}
             </MonoLabel>
           )}
-          <Link to="/predictor" className="text-[10px] font-mono tracking-widest uppercase text-gray-400 hover:text-white transition-colors">
+          <Link to="/predictor" className="inline-flex items-center touch:min-h-11 text-[10px] font-mono tracking-widest uppercase text-gray-400 hover:text-white transition-colors">
             Full ranking across sectors →
           </Link>
         </div>
       </div>
 
       {/* Industry chips + search + sort */}
-      <div className="px-6 md:px-16 py-8 flex flex-col gap-5">
-        <div className="flex gap-2 overflow-x-auto pb-1">
-          <Pill active={!industry} onClick={() => selectIndustry("")} className="shrink-0">
+      <div className="px-6 md:px-16 py-6 md:py-8 flex flex-col gap-4 md:gap-5">
+        <HScroll label="Industries" className="-mx-6 md:mx-0" innerClassName="flex gap-2 px-6 md:px-0 pb-1">
+          <TouchPill active={!industry} onClick={() => selectIndustry("")} className="shrink-0">
             All <span className="text-gray-500">{fmt(total)}</span>
-          </Pill>
+          </TouchPill>
           {chips.map((c) => (
-            <Pill key={c.name} active={industry === c.name} onClick={() => selectIndustry(c.name)} className="shrink-0">
+            <TouchPill key={c.name} active={industry === c.name} onClick={() => selectIndustry(c.name)} className="shrink-0">
               {c.name} <span className="text-gray-500">{fmt(c.count)}</span>
-            </Pill>
+            </TouchPill>
           ))}
-        </div>
+        </HScroll>
 
         {!unavailable && (
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            <div className="flex items-center gap-2 overflow-x-auto pb-1">
+            <HScroll label="Sort" className="-mx-6 md:mx-0" innerClassName="flex items-center gap-2 px-6 md:px-0 pb-1">
               <MonoLabel className="shrink-0 mr-2 text-gray-500">Sort</MonoLabel>
               {SORTS.map((s) => (
-                <Pill key={s.value} active={sort === s.value} onClick={() => setSort(s.value)} className="shrink-0">
+                <TouchPill key={s.value} active={sort === s.value} onClick={() => setSort(s.value)} className="shrink-0">
                   {s.label}
-                </Pill>
+                </TouchPill>
               ))}
-            </div>
+            </HScroll>
             <div className="relative w-full lg:w-[320px] shrink-0">
               <Search size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
               <input
@@ -175,7 +175,7 @@ export default function SectorRankings({ sector, companies, companiesError }) {
           <div className="px-6 md:px-16 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <MonoLabel className="text-gray-500">Showing {fmt(rows.length)} of {fmt(info.total)}</MonoLabel>
             {rows.length < info.total && (
-              <Pill onClick={loadMore}>{loadingMore ? "Loading…" : `Show more (${fmt(info.total - rows.length)} left)`}</Pill>
+              <TouchPill onClick={loadMore}>{loadingMore ? "Loading…" : `Show more (${fmt(info.total - rows.length)} left)`}</TouchPill>
             )}
           </div>
         </>
@@ -227,7 +227,7 @@ function FallbackList({ companies, error, industry, rankingError }) {
           </div>
           <div className="px-6 md:px-16 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <MonoLabel className="text-gray-500">Showing {fmt(Math.min(visible, list.length))} of {fmt(list.length)}</MonoLabel>
-            {visible < list.length && <Pill onClick={() => setVisible((v) => v + 48)}>Show more</Pill>}
+            {visible < list.length && <TouchPill onClick={() => setVisible((v) => v + 48)}>Show more</TouchPill>}
           </div>
         </>
       )}

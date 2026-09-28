@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
+import { ChevronRight } from "lucide-react";
 
 // Shared building blocks that mirror the Intro page's visual language:
 // deep page canvas (--page), surface panels (--surface), gray-800 hairlines, mono micro-labels.
@@ -48,6 +49,59 @@ export function Pill({ active = false, icon: Icon, children, className = "", ...
       {Icon && <Icon size={14} strokeWidth={2} />}
       {children}
     </button>
+  );
+}
+
+// Pill for the app pages (filters, tabs, ranges): same look, but at least 44px tall on
+// touch-size screens. Intro keeps the plain Pill so its design never changes.
+export function TouchPill({ className = "", ...props }) {
+  return <Pill className={`touch:min-h-11 justify-center ${className}`} {...props} />;
+}
+
+// Horizontal scroller for wide tables and pill rows: scrolls inside itself (never the page)
+// and fades the edge that has more content, with a chevron hint on the right.
+// `fade` is the colour class the fades blend into (match the background behind the content).
+// `fadeLeft={false}` when the first column is sticky (it already marks the left edge).
+export function HScroll({ children, className = "", innerClassName = "", fade = "from-page", label, hint = true, fadeLeft = true }) {
+  const ref = useRef(null);
+  const [edges, setEdges] = useState({ left: false, right: false });
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    const update = () => {
+      const left = el.scrollLeft > 2;
+      const right = el.scrollLeft + el.clientWidth < el.scrollWidth - 2;
+      setEdges((e) => (e.left === left && e.right === right ? e : { left, right }));
+    };
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    if (el.firstElementChild) ro.observe(el.firstElementChild);
+    return () => {
+      el.removeEventListener("scroll", update);
+      ro.disconnect();
+    };
+  }, []);
+
+  const scrollable = edges.left || edges.right;
+  const fadeBase = "pointer-events-none absolute inset-y-0 w-10 z-10 transition-opacity duration-300";
+
+  return (
+    <div className={`relative min-w-0 ${className}`}>
+      <div
+        ref={ref}
+        className={`overflow-x-auto overscroll-x-contain [scrollbar-width:thin] ${innerClassName}`}
+        {...(scrollable && label ? { role: "region", "aria-label": label, tabIndex: 0 } : {})}
+      >
+        {children}
+      </div>
+      <div aria-hidden="true" className={`${fadeBase} left-0 bg-gradient-to-r ${fade} to-transparent ${edges.left && fadeLeft ? "opacity-100" : "opacity-0"}`} />
+      <div aria-hidden="true" className={`${fadeBase} right-0 bg-gradient-to-l ${fade} to-transparent flex items-start justify-end pt-3.5 ${edges.right ? "opacity-100" : "opacity-0"}`}>
+        {hint && <ChevronRight size={16} strokeWidth={1.5} className="text-gray-400 mr-0.5" />}
+      </div>
+    </div>
   );
 }
 
@@ -103,6 +157,14 @@ export function Panel({ children, className = "", glow = false }) {
   );
 }
 
+// Longest word, in ems of the heading font: long single words ("PHARMACEUTICALS")
+// shrink the heading on narrow screens instead of breaking mid-word.
+const titleEms = (title) => {
+  if (typeof title !== "string") return 1;
+  const longest = Math.max(...title.split(/\s+/).map((w) => w.length));
+  return Math.max(1, longest * 0.72);
+};
+
 export function PageHeading({ index, label, title, children }) {
   return (
     <motion.div
@@ -117,7 +179,8 @@ export function PageHeading({ index, label, title, children }) {
         </motion.div>
         <motion.h1
           variants={fadeUp}
-          className="text-[2.6rem] md:text-[4rem] font-normal tracking-tight leading-[1] text-white"
+          style={{ "--title-em": titleEms(title) }}
+          className="text-[min(2.6rem,calc((100vw-3rem)/var(--title-em)))] md:text-[min(4rem,calc((100vw-8rem)/var(--title-em)))] font-normal tracking-tight leading-[1] text-white break-words"
         >
           {title}
         </motion.h1>

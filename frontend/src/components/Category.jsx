@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { ArrowUpRight, Landmark, Layers, LayoutGrid } from "lucide-react";
-import { MonoLabel, PillTag } from "./ui";
+import { HScroll, MonoLabel, PillTag } from "./ui";
 import SourcePill from "./SourcePill";
 import { useSectors } from "../hooks/useSectorData";
 import { getSectorMeta, pad, fmt } from "../data/sectorMeta";
@@ -22,12 +22,23 @@ const Category = () => {
   return (
     <>
       <style>{`
+        /* Phones / tablets: a swipeable row of fixed-width cards */
         .category-card {
-          flex: 1 1 0%;
-          min-width: 0;
-          transition: flex-grow 600ms cubic-bezier(0.16, 1, 0.3, 1), border-color 300ms;
+          flex: 0 0 auto;
+          width: min(68vw, 250px);
+          scroll-snap-align: start;
+          transition: border-color 300ms;
         }
-        .category-card:hover { flex-grow: 3; }
+        /* Desktop: the hover accordion */
+        @media (min-width: 1024px) {
+          .category-card {
+            flex: 1 1 0%;
+            width: auto;
+            min-width: 0;
+            transition: flex-grow 600ms cubic-bezier(0.16, 1, 0.3, 1), border-color 300ms;
+          }
+          .category-card:hover { flex-grow: 3; }
+        }
       `}</style>
 
       <section id="sectors" className="w-full scroll-mt-24">
@@ -66,8 +77,11 @@ const Category = () => {
         {loading && <StatusLine>Loading sectors…</StatusLine>}
 
         {sectors.length > 0 && (
-          <div className="px-6 md:px-16">
-            <div className="flex h-[420px] w-full gap-2 overflow-x-auto md:overflow-hidden">
+          <HScroll
+            label="Sectors"
+            className="lg:mx-16"
+            innerClassName="flex h-[360px] md:h-[420px] w-full gap-2 px-6 md:px-16 lg:px-0 scroll-px-6 md:scroll-px-16 snap-x snap-mandatory lg:overflow-hidden"
+          >
               {sectors.map((sector, index) => {
                 const meta = getSectorMeta(sector.slug);
 
@@ -75,7 +89,7 @@ const Category = () => {
                   <Link
                     key={sector.id}
                     to={`/sectors/${sector.slug}`}
-                    className="category-card group relative overflow-hidden rounded-xl border border-gray-800 hover:border-gray-500 bg-surface min-w-[200px] md:min-w-0"
+                    className="category-card group relative overflow-hidden rounded-xl border border-gray-800 hover:border-gray-500 bg-surface"
                   >
                     {meta.image && (
                       <img
@@ -89,15 +103,15 @@ const Category = () => {
 
                     <div className="absolute top-0 left-0 w-full p-4 flex justify-between items-start">
                       <MonoLabel className="text-gray-300">{pad(index + 1)}</MonoLabel>
-                      <ArrowUpRight size={18} strokeWidth={1} className="text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                      <ArrowUpRight size={18} strokeWidth={1} className="text-white opacity-0 max-lg:opacity-100 transition-opacity duration-300 group-hover:opacity-100" />
                     </div>
 
                     <div className="absolute bottom-0 left-0 w-full p-4">
                       <MonoLabel className="block mb-2 text-gray-300">{fmt(sector.company_count)} cos</MonoLabel>
-                      <h3 className="text-[14px] font-medium tracking-tight leading-tight text-white line-clamp-2 break-words transition-[font-size] duration-500 group-hover:text-lg">
+                      <h3 className="text-[16px] lg:text-[14px] font-medium tracking-tight leading-tight text-white line-clamp-2 break-words transition-[font-size] duration-500 lg:group-hover:text-lg">
                         {sector.name}
                       </h3>
-                      <div className="max-h-0 overflow-hidden opacity-0 transition-all duration-500 group-hover:mt-2 group-hover:max-h-24 group-hover:opacity-100">
+                      <div className="max-h-0 overflow-hidden opacity-0 transition-all duration-500 group-hover:mt-2 group-hover:max-h-24 group-hover:opacity-100 max-lg:mt-2 max-lg:max-h-24 max-lg:opacity-100">
                         {meta.description && (
                           <p className="max-w-[240px] text-[10px] font-mono tracking-widest uppercase leading-relaxed text-gray-400">
                             {meta.description}
@@ -111,8 +125,7 @@ const Category = () => {
                   </Link>
                 );
               })}
-            </div>
-          </div>
+          </HScroll>
         )}
       </section>
     </>

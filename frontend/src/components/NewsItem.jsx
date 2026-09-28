@@ -93,7 +93,7 @@ export default function NewsItem({ item, compact = false }) {
         <span className="text-[13px] text-gray-500 truncate max-w-[220px] md:max-w-[360px]">
           {decodeEntities(item.company_name)}
         </span>
-        <span className="ml-auto flex flex-wrap items-center gap-2">
+        <span className="w-full sm:w-auto sm:ml-auto flex flex-wrap items-center gap-2">
           <ImportanceTag importance={item.importance} />
           <SentimentTag item={item} />
           {uncertain && (
@@ -121,7 +121,7 @@ export default function NewsItem({ item, compact = false }) {
             href={item.url || item.attachment_url}
             target="_blank"
             rel="noreferrer noopener"
-            className="inline-flex items-center gap-1.5 text-[10px] font-mono tracking-widest uppercase text-gray-500 hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 touch:py-3.5 touch:-my-3.5 text-[10px] font-mono tracking-widest uppercase text-gray-500 hover:text-white transition-colors"
           >
             Filing <ExternalLink size={11} strokeWidth={1.5} />
           </a>

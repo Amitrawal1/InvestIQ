@@ -225,7 +225,7 @@ export default function Intro() {
             <div className="w-16 h-[1.5px] bg-white mix-blend-difference" />
           </motion.div>
           
-          <motion.h2 variants={fadeUp} className="text-[clamp(2.75rem,7.5vh,3.5rem)] md:text-[clamp(3rem,8vh,5rem)] font-normal tracking-tight leading-[1] mb-6 text-white mix-blend-difference pointer-events-auto">
+          <motion.h2 variants={fadeUp} className="text-[min(clamp(2.75rem,7.5vh,3.5rem),calc((100vw-5rem)/6.8))] md:text-[clamp(3rem,8vh,5rem)] font-normal tracking-tight leading-[1] mb-6 text-white mix-blend-difference pointer-events-auto">
             MARKET<br/>INTELLIGENCE
           </motion.h2>
 

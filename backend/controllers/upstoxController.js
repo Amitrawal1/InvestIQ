@@ -5,6 +5,9 @@ const {
     buildLoginUrl,
     isValidState,
     exchangeCode,
+    requestAccessToken,
+    acceptNotifiedToken,
+    UpstoxRenewError,
 } = require("../services/upstoxAuthService");
 const { looksLikeUserState } = require("../services/cryptoService");
 const { upstoxLinkCallback } = require("./brokerController");
@@ -64,4 +67,53 @@ const adminCallback = async (req, res) => {
     }
 };
 
-module.exports = { login, callback };
+// Admin key from the X-Admin-Key header (scheduled job) or ?key= (phone bookmark)
+const adminKeyFrom = (req) => req.get("x-admin-key") || req.body?.key || req.query.key;
+
+// POST /upstox/request-token (X-Admin-Key) [?force=1]: ask Upstox to send the owner an approval
+// notification. Skips when today's token still works. Used by .github/workflows/upstox-token.yml.
+const requestToken = async (req, res) => {
+    if (!hasAdminKey() || !isAdminKey(adminKeyFrom(req))) {
+        return res.status(403).json({ success: false, message: "Missing or wrong admin key" });
+    }
+    try {
+        const result = await requestAccessToken({ force: req.query.force === "1" });
+        res.json({ success: true, ...result });
+    } catch (error) {
+        console.log("Upstox token request failed:", error.message);
+        const known = error instanceof UpstoxRenewError;
+        res.status(known ? 502 : 500).json({ success: false, message: known ? error.message : "Token request failed" });
+    }
+};
+
+// GET /upstox/request?key=...: the same from a phone, as a page
+const requestTokenPage = async (req, res) => {
+    if (!hasAdminKey()) return res.status(503).send(page("Not set up", "UPSTOX_ADMIN_KEY is not set on the server.", "error"));
+    if (!isAdminKey(req.query.key)) return res.status(403).send(page("Not allowed", "Missing or wrong admin key.", "error"));
+    try {
+        const result = await requestAccessToken({ force: req.query.force === "1" });
+        if (result.skipped) {
+            return res.send(page("Already connected", `Live market data is on today (${result.user}). Nothing to approve.`, "success"));
+        }
+        res.send(page("Check your phone", "Upstox sent an approval request to the Upstox app and WhatsApp. Tap Approve and live prices start within a minute.", "info"));
+    } catch (error) {
+        console.log("Upstox token request failed:", error.message);
+        res.status(502).send(page("Request failed", error instanceof UpstoxRenewError ? error.message : "Try again, or use /upstox/login.", "error"));
+    }
+};
+
+// POST /upstox/notifier: Upstox delivers the approved token here (no auth by design, so
+// acceptNotifiedToken verifies the token with Upstox and checks it's the owner's account)
+const notifier = async (req, res) => {
+    try {
+        const result = await acceptNotifiedToken(req.body);
+        console.log(`Upstox token renewed via approval for ${result.user}`);
+        res.json({ status: "success" });
+    } catch (error) {
+        const known = error instanceof UpstoxRenewError;
+        console.log("Upstox notifier rejected:", known ? error.message : error.message || error);
+        res.status(known ? 400 : 500).json({ status: "error" });
+    }
+};
+
+module.exports = { login, callback, requestToken, requestTokenPage, notifier };

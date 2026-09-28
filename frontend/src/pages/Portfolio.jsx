@@ -8,7 +8,7 @@ import { Line } from "react-chartjs-2";
 import { AlertTriangle, ArrowDown, ArrowUp, ArrowUpRight, Check, Info, Link2, Lock, Unplug, X } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { PageHeading, Panel, MonoLabel, SectionLabel, PrimaryButton, Pill, fadeUp, stagger } from "../components/ui";
+import { PageHeading, Panel, MonoLabel, SectionLabel, PrimaryButton, TouchPill, HScroll, fadeUp, stagger } from "../components/ui";
 import { GrowthBadge, ScoreBar, StatusLine, fmtScore, fmtPrice } from "../components/rankings";
 import { ghostButton } from "../components/ConfirmDialog";
 import {
@@ -73,12 +73,12 @@ function Notice({ notice, onDismiss }) {
               <button
                 type="button"
                 onClick={notice.action.onClick}
-                className="shrink-0 text-[11px] font-mono tracking-widest uppercase text-white underline underline-offset-4 hover:text-accent transition-colors cursor-pointer"
+                className="shrink-0 touch:py-3.5 touch:-my-3.5 text-[11px] font-mono tracking-widest uppercase text-white underline underline-offset-4 hover:text-accent transition-colors cursor-pointer"
               >
                 {notice.action.label}
               </button>
             )}
-            <button type="button" onClick={onDismiss} aria-label="Dismiss" className="shrink-0 text-gray-500 hover:text-white transition-colors cursor-pointer">
+            <button type="button" onClick={onDismiss} aria-label="Dismiss" className="shrink-0 touch:p-3.5 touch:-m-3.5 text-gray-500 hover:text-white transition-colors cursor-pointer">
               <X size={16} strokeWidth={1.5} />
             </button>
           </div>
@@ -338,7 +338,7 @@ function SortTh({ children, k, sort, onSort, className = "" }) {
       <button
         type="button"
         onClick={() => onSort(k)}
-        className={`inline-flex items-center gap-1 text-[10px] font-mono tracking-widest uppercase whitespace-nowrap cursor-pointer transition-colors ${active ? "text-white" : "text-gray-500 hover:text-white"}`}
+        className={`inline-flex items-center gap-1 touch:min-h-11 text-[10px] font-mono tracking-widest uppercase whitespace-nowrap cursor-pointer transition-colors ${active ? "text-white" : "text-gray-500 hover:text-white"}`}
       >
         {children}
         {active && <Arrow size={11} strokeWidth={1.5} />}
@@ -369,7 +369,7 @@ function HoldingName({ h }) {
     </>
   );
   return h.symbol ? (
-    <Link to={`/company/${encodeURIComponent(h.symbol)}`} className="block min-w-0">{inner}</Link>
+    <Link to={`/company/${encodeURIComponent(h.symbol)}`} className="block min-w-0 touch:py-1.5 touch:-my-1.5">{inner}</Link>
   ) : (
     <div className="min-w-0">{inner}</div>
   );
@@ -403,7 +403,7 @@ function Holdings({ holdings, total }) {
   const th = { sort, onSort };
   return (
     <>
-      <div className="hidden md:block overflow-x-auto border-y border-gray-800">
+      <HScroll label="Holdings" className="hidden xl:block border-y border-gray-800">
         <table className="w-full min-w-[1180px] border-collapse">
           <thead className="bg-surface border-b border-gray-800">
             <tr className="text-right">
@@ -448,24 +448,24 @@ function Holdings({ holdings, total }) {
             ))}
           </tbody>
         </table>
-      </div>
+      </HScroll>
 
-      {/* Phones: stacked cards */}
-      <div className="md:hidden">
-        <div className="px-6 pb-4 flex items-center gap-2 overflow-x-auto">
+      {/* Phones / tablets: stacked cards */}
+      <div className="xl:hidden">
+        <HScroll label="Sort holdings" innerClassName="px-6 md:px-16 pb-4 flex items-center gap-2">
           <MonoLabel className="text-gray-500 shrink-0">Sort</MonoLabel>
           {[["current_value", "Value"], ["pnl", "P&L"], ["day_change", "Today"], ["growth_score", "Score"], ["name", "Name"]].map(([k, l]) => (
             <button
               key={k}
               type="button"
               onClick={() => onSort(k)}
-              className={`shrink-0 px-3 py-1 rounded-full border text-[10px] font-mono tracking-widest uppercase cursor-pointer transition-colors ${sort.key === k ? "border-white text-white" : "border-gray-700 text-gray-500"}`}
+              className={`shrink-0 min-h-11 px-4 rounded-full border text-[10px] font-mono tracking-widest uppercase cursor-pointer transition-colors ${sort.key === k ? "border-white text-white" : "border-gray-700 text-gray-500"}`}
             >
               {l}{sort.key === k ? (sort.dir === "asc" ? " ↑" : " ↓") : ""}
             </button>
           ))}
-        </div>
-        <div className="grid grid-cols-1 gap-px bg-gray-800 border-y border-gray-800">
+        </HScroll>
+        <div className="grid grid-cols-1 md:grid-cols-2 md:[&>*:last-child:nth-child(odd)]:col-span-2 gap-px bg-gray-800 border-y border-gray-800">
           {rows.map((h) => (
             <Link
               key={`${h.broker}-${h.symbol}-${h.isin || ""}`}
@@ -515,7 +515,8 @@ function Positions({ positions }) {
   }
   const hasBroker = positions.some((p) => p.broker);
   return (
-    <div className="overflow-x-auto border-y border-gray-800">
+    <>
+    <HScroll label="Open positions" className="hidden lg:block border-y border-gray-800">
       <table className="w-full min-w-[820px] border-collapse">
         <thead className="bg-surface border-b border-gray-800">
           <tr className="text-right">
@@ -545,7 +546,42 @@ function Positions({ positions }) {
           ))}
         </tbody>
       </table>
+    </HScroll>
+
+    {/* Phones / tablets: stacked cards */}
+    <div className="lg:hidden grid grid-cols-1 md:grid-cols-2 md:[&>*:last-child:nth-child(odd)]:col-span-2 gap-px bg-gray-800 border-y border-gray-800">
+      {positions.map((p, i) => (
+        <div key={`${p.broker || ""}-${p.symbol}-${p.product}-${i}`} className="bg-page px-6 py-5 flex flex-col gap-4">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <p className="font-mono text-[15px] text-white truncate">{p.symbol}</p>
+              <MonoLabel className="text-gray-500">
+                {[p.exchange, p.product, hasBroker ? brokerName(p.broker) : null].filter(Boolean).join(" · ") || "—"}
+              </MonoLabel>
+            </div>
+            <div className="text-right shrink-0">
+              <p className={`font-mono text-[14px] ${gainTone(p.pnl)}`}>{fmtINR(p.pnl, { signed: true, digits: 2 })}</p>
+              <MonoLabel className="text-gray-600">P&amp;L</MonoLabel>
+            </div>
+          </div>
+          <div className="grid grid-cols-3 gap-2 text-[12px] font-mono">
+            {[
+              ["Qty", fmtQty(p.quantity), Number(p.quantity) < 0 ? "text-red-400" : "text-gray-300"],
+              ["Avg", fmtPrice(p.average_price), "text-gray-300"],
+              ["LTP", fmtPrice(p.last_price), "text-white"],
+              ["Realised", fmtINR(p.realised, { signed: true, digits: 2 }), gainTone(p.realised)],
+              ["Unrealised", fmtINR(p.unrealised, { signed: true, digits: 2 }), gainTone(p.unrealised)],
+            ].map(([k, v, tone]) => (
+              <div key={k} className="flex flex-col gap-1 min-w-0">
+                <MonoLabel className="text-gray-600">{k}</MonoLabel>
+                <span className={`truncate ${tone}`}>{v}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
+    </>
   );
 }
 
@@ -560,9 +596,9 @@ function Funds({ funds, connections }) {
             <Panel key={b} className="p-6 md:p-7">
               <MonoLabel className="text-gray-500">{brokerName(b)} · equity funds</MonoLabel>
               {f ? (
-                <dl className="mt-5 grid grid-cols-3 gap-4">
-                  {[["Available", f.available_cash], ["Used margin", f.used_margin], ["Total", f.total]].map(([k, v]) => (
-                    <div key={k} className="min-w-0">
+                <dl className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  {[["Available", f.available_cash], ["Used margin", f.used_margin], ["Total", f.total]].map(([k, v], i) => (
+                    <div key={k} className={`min-w-0 ${i === 2 ? "col-span-2 sm:col-span-1" : ""}`}>
                       <dt><MonoLabel className="text-gray-600">{k}</MonoLabel></dt>
                       <dd className="mt-2 font-mono text-[15px] text-white truncate">{fmtINR(v, { digits: 2 })}</dd>
                     </div>
@@ -850,13 +886,15 @@ export default function Portfolio() {
             title="What you own"
             flush
             aside={
-              <div role="tablist" aria-label="Portfolio views" className="flex flex-wrap gap-2">
+              <HScroll className="-mx-6 md:mx-0" innerClassName="px-6 md:px-0">
+              <div role="tablist" aria-label="Portfolio views" className="flex gap-2 w-max">
                 {[["holdings", `Holdings · ${holdings.length}`], ["positions", `Positions · ${positions.length}`], ["funds", "Funds"]].map(([k, l]) => (
-                  <Pill key={k} role="tab" aria-selected={tab === k} active={tab === k} onClick={() => setTab(k)}>
+                  <TouchPill key={k} role="tab" className="shrink-0" aria-selected={tab === k} active={tab === k} onClick={() => setTab(k)}>
                     {l}
-                  </Pill>
+                  </TouchPill>
                 ))}
               </div>
+              </HScroll>
             }
           >
             <div role="tabpanel">

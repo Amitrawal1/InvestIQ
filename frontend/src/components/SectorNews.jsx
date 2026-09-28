@@ -46,7 +46,7 @@ export default function SectorNews({ sector }) {
         </div>
         <Link
           to="/news"
-          className="inline-flex items-center gap-2 text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 touch:min-h-11 text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400 hover:text-white transition-colors"
         >
           All news <ArrowRight size={14} strokeWidth={1} />
         </Link>

@@ -38,7 +38,7 @@ const MarketTicker = () => {
         .market-ticker-track:hover { animation-play-state: paused; }
       `}</style>
 
-      <div className="w-full overflow-hidden border-y border-gray-800 bg-surface py-4">
+      <div className="market-ticker-viewport w-full overflow-hidden border-y border-gray-800 bg-surface py-4">
         <div className="market-ticker-track flex w-max">
           <TickerSet setKey="a" stocks={quotes} tick={tick} />
           <TickerSet setKey="b" stocks={quotes} tick={tick} />

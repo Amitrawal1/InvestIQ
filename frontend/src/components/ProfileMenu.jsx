@@ -7,7 +7,7 @@ import ThemeSwitch from './ThemeSwitch';
 import { MonoLabel } from './ui';
 
 const itemClass =
-  'flex w-full items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 focus-visible:bg-white/5 focus-visible:text-white outline-none transition-colors cursor-pointer';
+  'flex w-full items-center gap-3 px-4 py-3 md:py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 focus-visible:bg-white/5 focus-visible:text-white outline-none transition-colors cursor-pointer';
 
 // Avatar + dropdown in the Navbar: account header, settings links, theme control, sign out.
 export default function ProfileMenu() {
@@ -56,7 +56,7 @@ export default function ProfileMenu() {
       {!user && (
         <NavLink
           to="/login"
-          className="hidden sm:inline-flex px-4 py-2 rounded-full border border-gray-600 text-[11px] font-medium uppercase tracking-wider text-gray-300 hover:bg-white hover:text-black hover:border-white transition-colors"
+          className="hidden sm:inline-flex items-center touch:min-h-11 px-4 py-2 rounded-full border border-gray-600 text-[11px] font-medium uppercase tracking-wider text-gray-300 hover:bg-white hover:text-black hover:border-white transition-colors"
         >
           Sign in
         </NavLink>
@@ -70,7 +70,7 @@ export default function ProfileMenu() {
         aria-controls={panelId}
         aria-label={user ? `Account menu for ${name}` : 'Theme and sign in'}
         onClick={() => setOpen((v) => !v)}
-        className="group flex items-center gap-3 rounded-full outline-none focus-visible:ring-1 focus-visible:ring-gray-400 cursor-pointer"
+        className="group flex min-h-11 min-w-11 justify-center sm:justify-start items-center gap-3 rounded-full outline-none focus-visible:ring-1 focus-visible:ring-gray-400 cursor-pointer"
       >
         <span className="w-8 h-8 rounded-full border border-gray-600 group-hover:border-gray-400 flex items-center justify-center text-xs font-medium text-white transition-colors">
           {user ? initial : <User size={14} strokeWidth={1.5} />}

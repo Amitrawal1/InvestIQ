@@ -5,7 +5,7 @@ import { ArrowLeft, Check, TriangleAlert, ExternalLink } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import NewsItem from "../components/NewsItem";
-import { SectionLabel, MonoLabel, Pill, Panel, fadeUp, stagger } from "../components/ui";
+import { SectionLabel, MonoLabel, TouchPill, HScroll, Panel, fadeUp, stagger } from "../components/ui";
 import {
   GrowthBadge, ScoreBar, Disclaimer, StatusLine, SignedPct,
   fmtPct, fmtCr, fmtPrice, fmtRatio, fmtScore, fmtDate,
@@ -41,15 +41,28 @@ const retFrom = (rows, days) => {
   return past && last ? last / past - 1 : null;
 };
 
+// Charts are shorter on phones so a whole chart fits on screen with its controls
+const PHONE_MQ = "(max-width: 767.98px)";
+function useChartHeight(phone, desktop) {
+  const [small, setSmall] = useState(() => typeof window !== "undefined" && window.matchMedia(PHONE_MQ).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(PHONE_MQ);
+    const onChange = (e) => setSmall(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+  return small ? phone : desktop;
+}
+
 const Section = ({ index, label, title, children, aside }) => (
   <motion.section
     initial="initial"
     whileInView="animate"
     viewport={{ once: true, margin: "-60px" }}
     variants={stagger(0, 0.08)}
-    className="border-t border-gray-800 px-6 md:px-16 py-14"
+    className="border-t border-gray-800 px-6 md:px-16 py-12 md:py-14"
   >
-    <motion.div variants={fadeUp} className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+    <motion.div variants={fadeUp} className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 md:mb-10">
       <div>
         <SectionLabel index={index} className="mb-4">{label}</SectionLabel>
         <h2 className="text-[1.8rem] md:text-[2.4rem] font-normal tracking-tight leading-none">{title}</h2>
@@ -126,7 +139,7 @@ export default function Company() {
       <section className="px-6 md:px-16 pt-10 pb-12">
         <Link
           to={profile?.sector_slug ? `/sectors/${profile.sector_slug}` : "/predictor"}
-          className="inline-flex items-center gap-2 text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 touch:min-h-11 text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400 hover:text-white transition-colors"
         >
           <ArrowLeft size={14} strokeWidth={1} /> {profile?.sector || "Rankings"}
         </Link>
@@ -140,18 +153,18 @@ export default function Company() {
         {status === "error" && <StatusLine tone="error">Couldn't load this company. Is the backend running?</StatusLine>}
 
         {status === "ok" && (
-          <motion.div initial="initial" animate="animate" variants={stagger(0.1, 0.1)} className="mt-12 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+          <motion.div initial="initial" animate="animate" variants={stagger(0.1, 0.1)} className="mt-8 md:mt-12 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div className="min-w-0">
               <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-3 mb-4">
                 <SectionLabel index={profile.symbol} />
                 <nav className="flex flex-wrap items-center gap-2 text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400">
                   {profile.sector && (
-                    <Link to={`/sectors/${profile.sector_slug}`} className="hover:text-white transition-colors">{profile.sector}</Link>
+                    <Link to={`/sectors/${profile.sector_slug}`} className="touch:py-3.5 touch:-my-3.5 hover:text-white transition-colors">{profile.sector}</Link>
                   )}
                   {profile.industry && (
                     <>
                       <span className="text-gray-600">›</span>
-                      <Link to={`/sectors/${profile.sector_slug}?industry=${encodeURIComponent(profile.industry)}`} className="hover:text-white transition-colors">
+                      <Link to={`/sectors/${profile.sector_slug}?industry=${encodeURIComponent(profile.industry)}`} className="touch:py-3.5 touch:-my-3.5 hover:text-white transition-colors">
                         {profile.industry}
                       </Link>
                     </>
@@ -170,7 +183,7 @@ export default function Company() {
             </div>
 
             <motion.div variants={fadeUp} className="shrink-0">
-              <Panel glow className="px-6 py-5 min-w-[260px]">
+              <Panel glow className="px-6 py-5 sm:min-w-[260px]">
                 <MonoLabel className="text-gray-500">Growth score</MonoLabel>
                 <div className="mt-3 flex items-center gap-3">
                   <span className="text-[2.6rem] leading-none tracking-tight">{fmtScore(ranking?.growth_score)}</span>
@@ -308,6 +321,7 @@ function Analysis({ ranking, history }) {
 function MarketData({ symbol, name, km, yearRows, yearPrices }) {
   const [range, setRange] = useState("1y");
   const [cache, setCache] = useState({});
+  const chartH = useChartHeight(260, 340);
 
   useEffect(() => { setCache({}); setRange("1y"); }, [symbol]);
 
@@ -343,9 +357,9 @@ function MarketData({ symbol, name, km, yearRows, yearPrices }) {
       label="Market data"
       title="Price vs Smallcap 250"
       aside={
-        <div className="flex gap-2 overflow-x-auto pb-1">
+        <div className="flex flex-wrap gap-2">
           {RANGES.map(([v, l]) => (
-            <Pill key={v} active={range === v} onClick={() => setRange(v)} className="shrink-0">{l}</Pill>
+            <TouchPill key={v} active={range === v} onClick={() => setRange(v)} className="shrink-0">{l}</TouchPill>
           ))}
         </div>
       }
@@ -356,9 +370,9 @@ function MarketData({ symbol, name, km, yearRows, yearPrices }) {
           {loading && <MonoLabel className="text-gray-600">Loading…</MonoLabel>}
         </div>
         {!current ? (
-          <div className="h-[340px] flex items-center justify-center"><MonoLabel className="text-gray-600">Loading prices…</MonoLabel></div>
+          <div className="h-[260px] md:h-[340px] flex items-center justify-center"><MonoLabel className="text-gray-600">Loading prices…</MonoLabel></div>
         ) : current.data?.length > 1 ? (
-          <CompareChart data={current.data} benchmark={current.benchmark} name={name} />
+          <CompareChart data={current.data} benchmark={current.benchmark} name={name} height={chartH} />
         ) : (
           <div className="h-[200px] flex items-center justify-center"><MonoLabel className="text-gray-600">No price history for this range.</MonoLabel></div>
         )}
@@ -411,6 +425,7 @@ const KM_RATIO_KEYS = ["revenue_growth_yoy", "profit_growth_yoy", "op_margin_ttm
 function Financials({ symbol, km }) {
   const [fin, setFin] = useState(null);
   const [state, setState] = useState("loading");
+  const quarterH = useChartHeight(240, 300);
 
   useEffect(() => {
     let cancelled = false;
@@ -439,11 +454,11 @@ function Financials({ symbol, km }) {
             <>
               <Panel className="p-4 md:p-6">
                 <MonoLabel className="text-gray-500">Quarterly revenue & net profit</MonoLabel>
-                <div className="mt-4"><QuarterlyChart quarterly={quarterly} /></div>
+                <div className="mt-4"><QuarterlyChart quarterly={quarterly} height={quarterH} /></div>
               </Panel>
 
               <Panel>
-                <div className="overflow-x-auto">
+                <HScroll label="Quarterly results" fade="from-surface">
                   <table className="w-full min-w-[640px] border-collapse">
                     <thead className="border-b border-gray-800">
                       <tr>
@@ -468,7 +483,7 @@ function Financials({ symbol, km }) {
                       ))}
                     </tbody>
                   </table>
-                </div>
+                </HScroll>
               </Panel>
             </>
           )}
@@ -477,11 +492,11 @@ function Financials({ symbol, km }) {
             <Panel className="xl:col-span-2">
               <div className="px-4 pt-5 pb-2"><MonoLabel className="text-gray-500">Balance sheet & cash flow (half-yearly)</MonoLabel></div>
               {half.length ? (
-                <div className="overflow-x-auto">
+                <HScroll label="Balance sheet and cash flow" fade="from-surface" fadeLeft={false}>
                   <table className="w-full border-collapse">
                     <thead className="border-b border-gray-800">
                       <tr>
-                        <th className={cellTh}>Item</th>
+                        <th className={`${cellTh} sticky left-0 z-[1] bg-surface`}>Item</th>
                         {[...half].reverse().map((h) => (
                           <th key={h.period_end} className={`${cellTh} text-right`}>
                             {fmtDate(h.period_end, { month: "short", year: "numeric" })}
@@ -498,7 +513,7 @@ function Financials({ symbol, km }) {
                         ["Capex", "capex"], ["Free cash flow", "free_cash_flow"],
                       ].map(([label, key]) => (
                         <tr key={key} className="border-b border-gray-800/60 last:border-b-0">
-                          <td className="px-4 py-3 text-[13px] text-gray-400 whitespace-nowrap">{label}</td>
+                          <td className="px-4 py-3 text-[13px] text-gray-400 whitespace-nowrap sticky left-0 z-[1] bg-surface">{label}</td>
                           {[...half].reverse().map((h) => (
                             <td key={h.period_end} className={`${cellTd} text-right ${Number(h[key]) < 0 ? "text-red-400" : ""}`}>{fmtCr(h[key])}</td>
                           ))}
@@ -506,7 +521,7 @@ function Financials({ symbol, km }) {
                       ))}
                     </tbody>
                   </table>
-                </div>
+                </HScroll>
               ) : (
                 <p className="px-4 pb-6 text-[13px] text-gray-600">No half-yearly balance sheet filed yet.</p>
               )}
@@ -569,7 +584,7 @@ function CompanyNews({ profile }) {
           </div>
           {visible < items.length && (
             <div className="mt-6 flex justify-center">
-              <Pill onClick={() => setVisible((v) => v + NEWS_STEP)}>Show more ({items.length - visible} left)</Pill>
+              <TouchPill onClick={() => setVisible((v) => v + NEWS_STEP)}>Show more ({items.length - visible} left)</TouchPill>
             </div>
           )}
         </>

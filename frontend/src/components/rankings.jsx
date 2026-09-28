@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowDown, Info } from "lucide-react";
-import { MonoLabel } from "./ui";
+import { HScroll, MonoLabel } from "./ui";
 
 // Building blocks for the growth rankings (Sector, Predictor, Company pages).
 // Scores are 0-100; key_metrics returns/ratios arrive as fractions (0.34 = 34%).
@@ -101,7 +101,7 @@ export const StatusLine = ({ children, tone = "muted", className = "" }) => (
 );
 
 export const selectClass =
-  "appearance-none bg-white/5 border border-gray-700 rounded-full pl-4 pr-9 py-2.5 text-white text-[12px] font-mono tracking-wider uppercase outline-none focus:border-white transition-colors cursor-pointer [&>option]:bg-surface [&>option]:normal-case max-w-full";
+  "appearance-none touch:min-h-11 bg-white/5 border border-gray-700 rounded-full pl-4 pr-9 py-2.5 text-white text-[12px] font-mono tracking-wider uppercase outline-none focus:border-white transition-colors cursor-pointer [&>option]:bg-surface [&>option]:normal-case max-w-full";
 
 // Header cell that doubles as a sort toggle when `sortKey` is given
 function Th({ children, sortKey, sort, onSort, className = "" }) {
@@ -112,7 +112,7 @@ function Th({ children, sortKey, sort, onSort, className = "" }) {
         <button
           type="button"
           onClick={() => onSort(sortKey)}
-          className={`inline-flex items-center gap-1 text-[10px] font-mono tracking-widest uppercase cursor-pointer transition-colors ${active ? "text-white" : "text-gray-500 hover:text-white"}`}
+          className={`inline-flex items-center gap-1 touch:min-h-11 touch:min-w-8 text-[10px] font-mono tracking-widest uppercase cursor-pointer transition-colors ${active ? "text-white" : "text-gray-500 hover:text-white"}`}
         >
           {children}
           {active && <ArrowDown size={11} strokeWidth={1.5} />}
@@ -126,12 +126,12 @@ function Th({ children, sortKey, sort, onSort, className = "" }) {
 
 const rankOf = (row, rankKey) => row[rankKey] ?? null;
 
-// Ranked list: table on md+, stacked cards on phones. `rankKey` picks which rank to show.
+// Ranked list: table on lg+, stacked cards on phones (one column) and tablets (two). `rankKey` picks which rank to show.
 export function RankingTable({ rows, rankKey = "rank_overall", sort, onSort, showSector = false }) {
   return (
     <>
       {/* Desktop / tablet: table scrolls inside its own container, never the page */}
-      <div className="hidden md:block overflow-x-auto border-y border-gray-800">
+      <HScroll label="Ranked companies" className="hidden lg:block border-y border-gray-800">
         <table className="w-full min-w-[860px] border-collapse">
           <thead className="bg-surface border-b border-gray-800">
             <tr>
@@ -152,14 +152,14 @@ export function RankingTable({ rows, rankKey = "rank_overall", sort, onSort, sho
                 <tr key={r.company_id ?? r.symbol} className="group border-b border-gray-800/70 last:border-b-0 hover:bg-surface transition-colors">
                   <td className="pl-6 lg:pl-16 px-4 py-4 font-mono text-[13px] text-gray-400">{rank ?? "—"}</td>
                   <td className="px-4 py-4 max-w-[320px]">
-                    <Link to={`/company/${encodeURIComponent(r.symbol)}`} className="block">
+                    <Link to={`/company/${encodeURIComponent(r.symbol)}`} className="block touch:py-1.5 touch:-my-1.5">
                       <span className="block text-[15px] text-gray-200 group-hover:text-white transition-colors truncate">{r.name}</span>
                       <span className="block font-mono text-[11px] text-gray-500 tracking-wide">{r.symbol}</span>
                     </Link>
                   </td>
                   <td className="px-4 py-4 max-w-[240px]">
                     {showSector && r.sector && (
-                      <Link to={`/sectors/${r.sector_slug}`} className="block text-[12px] text-gray-400 hover:text-white truncate">{r.sector}</Link>
+                      <Link to={`/sectors/${r.sector_slug}`} className="block touch:py-3.5 touch:-my-3.5 text-[12px] text-gray-400 hover:text-white truncate">{r.sector}</Link>
                     )}
                     <MonoLabel className="block text-gray-500 truncate">{r.industry || "—"}</MonoLabel>
                   </td>
@@ -178,10 +178,10 @@ export function RankingTable({ rows, rankKey = "rank_overall", sort, onSort, sho
             })}
           </tbody>
         </table>
-      </div>
+      </HScroll>
 
-      {/* Phones: stacked cards */}
-      <div className="md:hidden grid grid-cols-1 gap-px bg-gray-800 border-y border-gray-800">
+      {/* Phones / tablets: stacked cards */}
+      <div className="lg:hidden grid grid-cols-1 md:grid-cols-2 md:[&>*:last-child:nth-child(odd)]:col-span-2 gap-px bg-gray-800 border-y border-gray-800">
         {rows.map((r) => {
           const km = r.key_metrics || {};
           const rank = rankOf(r, rankKey);

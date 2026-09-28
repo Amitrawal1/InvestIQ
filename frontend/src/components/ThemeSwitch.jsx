@@ -40,7 +40,7 @@ export default function ThemeSwitch({ className = '' }) {
             data-value={value}
             tabIndex={active ? 0 : -1}
             onClick={() => setPreference(value)}
-            className={`flex items-center justify-center gap-1.5 rounded-full px-2 py-1.5 text-[10px] font-mono tracking-widest uppercase transition-colors cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-gray-400 ${
+            className={`flex items-center justify-center gap-1.5 rounded-full px-2 py-1.5 touch:min-h-11 text-[10px] font-mono tracking-widest uppercase transition-colors cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-gray-400 ${
               active ? 'bg-white text-black' : 'text-gray-400 hover:text-white'
             }`}
           >

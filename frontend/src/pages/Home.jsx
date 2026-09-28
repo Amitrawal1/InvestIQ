@@ -88,9 +88,9 @@ export default function Home() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: i * 0.08 }}
-                            className={`group block p-8 md:p-10 bg-page ${to ? "cursor-pointer" : ""}`}
+                            className={`group block p-6 sm:p-8 md:p-10 bg-page ${to ? "cursor-pointer" : ""}`}
                         >
-                            <div className="flex justify-between items-start mb-10">
+                            <div className="flex justify-between items-start mb-8 md:mb-10">
                                 <span className="text-[10px] font-mono tracking-widest text-gray-500">0{i + 1}</span>
                                 <span className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-600 text-gray-400 group-hover:bg-white group-hover:text-black group-hover:border-white transition-colors duration-300">
                                     <Icon size={18} />

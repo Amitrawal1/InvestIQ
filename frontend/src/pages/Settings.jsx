@@ -35,9 +35,9 @@ const Section = ({ id, index, label, title, aside, children }) => (
     whileInView="animate"
     viewport={{ once: true, margin: "-60px" }}
     variants={stagger(0, 0.08)}
-    className="border-t border-gray-800 px-6 md:px-16 py-14 scroll-mt-[73px]"
+    className="border-t border-gray-800 px-6 md:px-16 py-12 md:py-14 scroll-mt-[73px]"
   >
-    <motion.div variants={fadeUp} className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+    <motion.div variants={fadeUp} className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 md:mb-10">
       <div>
         <SectionLabel index={index} className="mb-4">{label}</SectionLabel>
         <h2 className="text-[1.8rem] md:text-[2.4rem] font-normal tracking-tight leading-none text-white">{title}</h2>
@@ -114,7 +114,7 @@ function ProfileForm() {
   };
 
   return (
-    <Panel glow className="p-8 md:p-10 max-w-[640px]">
+    <Panel glow className="p-6 sm:p-8 md:p-10 max-w-[640px]">
       <form onSubmit={onSubmit} noValidate className="space-y-8">
         <Field id="profile-name" label="Display name" value={form.username} onChange={set("username")} error={errors.username} autoComplete="name" />
         <Field id="profile-email" label="Email" type="email" value={form.email} onChange={set("email")} error={errors.email} autoComplete="email" />
@@ -125,7 +125,7 @@ function ProfileForm() {
             type="button"
             onClick={onCancel}
             disabled={!dirty || saving}
-            className="px-5 py-3 rounded-full border border-gray-600 text-[11px] font-medium uppercase tracking-wider text-gray-300 hover:bg-white hover:text-black hover:border-white disabled:opacity-40 disabled:pointer-events-none transition-colors cursor-pointer"
+            className="touch:min-h-11 px-5 py-3 rounded-full border border-gray-600 text-[11px] font-medium uppercase tracking-wider text-gray-300 hover:bg-white hover:text-black hover:border-white disabled:opacity-40 disabled:pointer-events-none transition-colors cursor-pointer"
           >
             Cancel
           </button>
@@ -195,7 +195,7 @@ function Appearance() {
               active ? "border-white" : "border-gray-800 hover:border-gray-500"
             }`}
           >
-            <div aria-hidden="true" className="relative shrink-0 h-32 border-b border-gray-800 overflow-hidden">
+            <div aria-hidden="true" className="relative shrink-0 h-24 sm:h-32 border-b border-gray-800 overflow-hidden">
               <ThemePreview value={value} />
             </div>
             <div className="flex items-start justify-between gap-3 px-5 py-4">
@@ -236,7 +236,7 @@ function Account() {
         <button
           type="button"
           onClick={logout}
-          className="self-start sm:self-auto flex items-center gap-2 px-5 py-2.5 rounded-full border border-gray-600 text-[11px] font-medium uppercase tracking-wider text-gray-300 hover:bg-white hover:text-black hover:border-white transition-colors cursor-pointer"
+          className="self-start sm:self-auto flex items-center gap-2 touch:min-h-11 px-5 py-2.5 rounded-full border border-gray-600 text-[11px] font-medium uppercase tracking-wider text-gray-300 hover:bg-white hover:text-black hover:border-white transition-colors cursor-pointer"
         >
           <LogOut size={14} strokeWidth={1.5} /> Sign out
         </button>
@@ -289,7 +289,7 @@ function ChangePassword() {
   const filled = form.current || form.next || form.confirm;
 
   return (
-    <Panel glow className="p-8 md:p-10 max-w-[640px]">
+    <Panel glow className="p-6 sm:p-8 md:p-10 max-w-[640px]">
       <form onSubmit={onSubmit} noValidate className="space-y-8">
         {settingFirst ? (
           <p className="text-sm text-gray-400 leading-relaxed">
@@ -383,7 +383,7 @@ function LinkedBrokers() {
         })}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 md:px-8 py-5">
           <p className="text-[12px] text-gray-500 leading-relaxed max-w-[400px]">{CONSENT_NOTE}</p>
-          <Link to="/portfolio" className="shrink-0 inline-flex items-center gap-1.5 text-[11px] font-mono tracking-widest uppercase text-gray-300 hover:text-white transition-colors">
+          <Link to="/portfolio" className="shrink-0 inline-flex items-center gap-1.5 touch:min-h-11 text-[11px] font-mono tracking-widest uppercase text-gray-300 hover:text-white transition-colors">
             Open portfolio <ArrowUpRight size={13} strokeWidth={1.5} />
           </Link>
         </div>
@@ -449,7 +449,7 @@ function DeleteAccount() {
   };
 
   return (
-    <Panel className="p-8 md:p-10 max-w-[640px] border-red-900">
+    <Panel className="p-6 sm:p-8 md:p-10 max-w-[640px] border-red-900">
       <p className="text-sm text-gray-400 leading-relaxed">
         Permanently deletes your InvestIQ account, disconnects any linked brokers and erases synced portfolio data.
         This can't be undone.

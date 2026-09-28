@@ -31,8 +31,8 @@ const columns = [
 export default function Footer() {
   return (
     <footer className="w-full bg-surface text-white border-t border-gray-800 mt-24 overflow-hidden">
-      <div className="px-6 md:px-16 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
-        <div className="lg:col-span-2 space-y-6">
+      <div className="px-6 md:px-16 py-16 grid grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-10 md:gap-12">
+        <div className="col-span-2 space-y-6">
           <span className="font-black text-2xl tracking-tight">INVEST IQ</span>
           <p className="text-[10px] font-mono tracking-widest uppercase leading-relaxed text-gray-400 max-w-[320px]">
             AI powered analysis of daily finance news<br />to quantify market impact and predict trends.
@@ -40,12 +40,12 @@ export default function Footer() {
         </div>
 
         {columns.map((col) => (
-          <div key={col.title} className="space-y-5">
+          <div key={col.title} className="space-y-3 md:space-y-5">
             <h4 className="text-[10px] font-mono tracking-widest uppercase text-gray-500">{col.title}</h4>
-            <ul className="space-y-3">
+            <ul className="md:space-y-3">
               {col.links.map((link) => (
                 <li key={link.label}>
-                  <Link to={link.to} className="text-sm text-gray-300 hover:text-white hover:underline transition-colors">
+                  <Link to={link.to} className="inline-flex touch:min-h-11 items-center text-sm text-gray-300 hover:text-white hover:underline transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -70,7 +70,7 @@ export default function Footer() {
         </svg>
       </motion.div>
 
-      <div className="border-t border-gray-800 px-6 md:px-16 py-8 flex flex-col md:flex-row justify-between gap-4 text-[10px] font-mono tracking-widest uppercase text-gray-500">
+      <div className="border-t border-gray-800 px-6 md:px-16 pt-8 pb-[max(2rem,env(safe-area-inset-bottom))] flex flex-col md:flex-row justify-between gap-4 text-[10px] font-mono tracking-widest uppercase text-gray-500">
         <span>Quantifying the impact of global financial news</span>
         <span>© {new Date().getFullYear()} InvestIQ. Not investment advice.</span>
       </div>

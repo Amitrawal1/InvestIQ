@@ -7,14 +7,14 @@ import Footer from "../components/Footer";
 import SectorRankings from "../components/SectorRankings";
 import SectorNews from "../components/SectorNews";
 import SourcePill from "../components/SourcePill";
-import { PageHeading, MonoLabel, Pill } from "../components/ui";
+import { PageHeading, MonoLabel, TouchPill, HScroll } from "../components/ui";
 import { useSectors, useSectorCompanies } from "../hooks/useSectorData";
 import { getSectorMeta, pad, fmt } from "../data/sectorMeta";
 
 const BackLink = () => (
   <Link
     to="/home#sectors"
-    className="inline-flex items-center gap-2 text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400 hover:text-white transition-colors"
+    className="inline-flex items-center gap-2 touch:min-h-11 text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400 hover:text-white transition-colors"
   >
     <ArrowLeft size={14} strokeWidth={1} /> All sectors
   </Link>
@@ -63,10 +63,10 @@ export default function Sector() {
         <div className="relative z-10 px-6 md:px-16 pt-10 pb-14 md:pb-20">
           <BackLink />
 
-          <div className="mt-12 md:mt-16" key={slug}>
+          <div className="mt-8 md:mt-16" key={slug}>
             {sector ? (
               <PageHeading index={pad(index + 1)} label="Sector" title={sector.name.toUpperCase()}>
-                <div className="flex flex-col lg:items-end gap-5 lg:text-right">
+                <div className="flex flex-col items-start lg:items-end gap-5 lg:text-right">
                   {meta.description && (
                     <p className="text-[10px] font-mono tracking-widest uppercase text-gray-400 leading-relaxed max-w-[320px]">
                       {meta.description}
@@ -108,20 +108,22 @@ export default function Sector() {
           </section>
 
           {/* SECTOR SWITCHER */}
-          <section className="border-b border-gray-800 px-6 md:px-16 py-6 flex items-start gap-6">
+          {/* Phones: one swipeable row; tablet/desktop: wrapped */}
+          <section className="border-b border-gray-800 md:px-16 py-5 md:py-6 flex items-start gap-6">
             <MonoLabel className="shrink-0 hidden md:block pt-3">Sectors</MonoLabel>
-            <div className="flex flex-wrap gap-2">
+            <HScroll label="Sectors" className="flex-1" innerClassName="flex md:flex-wrap gap-2 px-6 md:px-0 pb-1 md:pb-0">
               {sectors.map((s) => (
-                <Pill
+                <TouchPill
                   key={s.id}
                   active={s.id === sector.id}
+                  aria-current={s.id === sector.id ? "page" : undefined}
                   onClick={() => navigate(`/sectors/${s.slug}`)}
-                  className="shrink-0"
+                  className="shrink-0 whitespace-nowrap"
                 >
                   {s.name}
-                </Pill>
+                </TouchPill>
               ))}
-            </div>
+            </HScroll>
           </section>
 
           {/* INDUSTRIES + GROWTH RANKING (?industry=<name>) */}

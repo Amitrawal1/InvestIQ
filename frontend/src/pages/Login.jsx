@@ -107,7 +107,7 @@ const Login = () => {
           <Logo className="text-xl" />
           <button
             onClick={() => navigate('/home')}
-            className="flex items-center gap-2 text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400 hover:text-white transition-colors cursor-pointer"
+            className="flex items-center gap-2 touch:min-h-11 touch:-my-2 text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400 hover:text-white transition-colors cursor-pointer"
           >
             Explore first <ArrowUpRight size={14} strokeWidth={1} />
           </button>
@@ -117,7 +117,7 @@ const Login = () => {
           initial="initial"
           animate="animate"
           variants={stagger(0.2, 0.15)}
-          className="relative z-10 py-20 lg:py-0"
+          className="relative z-10 py-14 md:py-20 lg:py-0"
         >
           <motion.div variants={fadeUp}>
             <SectionLabel index={isRegister ? '02' : '01'} className="mb-6">
@@ -126,7 +126,7 @@ const Login = () => {
           </motion.div>
           <motion.h1
             variants={fadeUp}
-            className="text-[3.2rem] md:text-[5rem] font-normal tracking-tight leading-[1]"
+            className="text-[clamp(2.6rem,12vw,3.2rem)] md:text-[5rem] font-normal tracking-tight leading-[1]"
           >
             {isRegister ? <>START<br />INVESTING<br />SMARTER</> : <>WELCOME<br />BACK</>}
           </motion.h1>
@@ -143,8 +143,8 @@ const Login = () => {
       </section>
 
       {/* RIGHT - form */}
-      <section className="lg:w-[45%] flex items-center justify-center px-6 md:px-16 py-16">
-        <Panel glow className="w-full max-w-[440px] p-8 md:p-10">
+      <section className="lg:w-[45%] flex items-center justify-center px-6 md:px-16 py-10 md:py-16 pb-[max(2.5rem,env(safe-area-inset-bottom))]">
+        <Panel glow className="w-full max-w-[440px] p-6 sm:p-8 md:p-10">
           <div className="flex justify-between items-start mb-10">
             <h2 className="text-xl md:text-2xl font-medium tracking-tight flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
@@ -194,7 +194,7 @@ const Login = () => {
             </PrimaryButton>
           </form>
 
-          <div className="mt-10 pt-6 border-t border-gray-800 flex justify-between items-center text-[10px] font-mono tracking-widest uppercase text-gray-500">
+          <div className="mt-10 pt-4 md:pt-6 border-t border-gray-800 flex flex-wrap justify-between items-center gap-x-4 text-[10px] font-mono tracking-widest uppercase text-gray-500">
             <span>{isRegister ? 'Already have an account?' : "Don't have an account?"}</span>
             <button
               type="button"
@@ -203,7 +203,7 @@ const Login = () => {
                 setValidationError('');
                 clearError();
               }}
-              className="text-white hover:underline cursor-pointer"
+              className="touch:min-h-11 text-white hover:underline cursor-pointer"
             >
               {isRegister ? 'Sign in' : 'Create one'}
             </button>

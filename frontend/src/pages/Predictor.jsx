@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown, ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { PageHeading, MonoLabel, Pill } from "../components/ui";
+import { PageHeading, MonoLabel, TouchPill, HScroll } from "../components/ui";
 import { RankingTable, Disclaimer, StatusLine, LABELS, SORTS, selectClass, fmtDate } from "../components/rankings";
 import { getRankings, getRankingsMeta, getSectors, getSectorIndustries } from "../services/api";
 import { fmt } from "../data/sectorMeta";
@@ -155,7 +155,7 @@ export default function Predictor() {
       </section>
 
       {/* FILTERS */}
-      <section className="px-6 md:px-16 py-8 flex flex-col gap-5 border-b border-gray-800">
+      <section className="px-6 md:px-16 py-6 md:py-8 flex flex-col gap-4 md:gap-5 border-b border-gray-800">
         <div className="flex flex-col lg:flex-row gap-3">
           <div className="relative w-full lg:w-[340px] shrink-0">
             <Search size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
@@ -192,7 +192,7 @@ export default function Predictor() {
             <button
               type="button"
               onClick={() => { setQuery(""); setParams(new URLSearchParams(sort !== "rank" ? { sort } : {}), { replace: true }); }}
-              className="inline-flex items-center gap-1.5 text-[10px] font-mono tracking-widest uppercase text-gray-400 hover:text-white cursor-pointer lg:ml-auto self-start lg:self-center"
+              className="inline-flex items-center gap-1.5 touch:min-h-11 text-[10px] font-mono tracking-widest uppercase text-gray-400 hover:text-white cursor-pointer lg:ml-auto self-start lg:self-center"
             >
               <X size={12} /> Clear filters
             </button>
@@ -200,21 +200,21 @@ export default function Predictor() {
         </div>
 
         <div className="flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-8">
-          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+          <HScroll label="Filter by label" className="-mx-6 md:mx-0" innerClassName="flex items-center gap-2 px-6 md:px-0 pb-1">
             <MonoLabel className="shrink-0 mr-2 text-gray-500">Label</MonoLabel>
-            <Pill active={!label} onClick={() => update({ label: "" })} className="shrink-0">All</Pill>
+            <TouchPill active={!label} onClick={() => update({ label: "" })} className="shrink-0">All</TouchPill>
             {LABELS.map((l) => (
-              <Pill key={l} active={label === l} onClick={() => update({ label: l })} className="shrink-0">{l}</Pill>
+              <TouchPill key={l} active={label === l} onClick={() => update({ label: l })} className="shrink-0">{l}</TouchPill>
             ))}
-          </div>
-          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+          </HScroll>
+          <HScroll label="Sort" className="-mx-6 md:mx-0" innerClassName="flex items-center gap-2 px-6 md:px-0 pb-1">
             <MonoLabel className="shrink-0 mr-2 text-gray-500">Sort</MonoLabel>
             {SORTS.map((s) => (
-              <Pill key={s.value} active={sort === s.value} onClick={() => update({ sort: s.value === "rank" ? "" : s.value })} className="shrink-0">
+              <TouchPill key={s.value} active={sort === s.value} onClick={() => update({ sort: s.value === "rank" ? "" : s.value })} className="shrink-0">
                 {s.label}
-              </Pill>
+              </TouchPill>
             ))}
-          </div>
+          </HScroll>
         </div>
       </section>
 
@@ -255,7 +255,7 @@ export default function Predictor() {
 function Pagination({ page, pages, onPage }) {
   if (pages <= 1) return null;
   const nums = [...new Set([1, page - 1, page, page + 1, pages].filter((n) => n >= 1 && n <= pages))].sort((a, b) => a - b);
-  const btn = "h-9 min-w-9 px-3 rounded-full border text-[11px] font-mono transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed";
+  const btn = "h-9 min-w-9 touch:h-11 touch:min-w-11 px-3 rounded-full border text-[11px] font-mono transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed";
 
   return (
     <div className="px-6 md:px-16 py-8 flex items-center justify-center gap-2 flex-wrap">

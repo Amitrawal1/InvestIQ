@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import NewsItem, { formatWhen } from "../components/NewsItem";
-import { PageHeading, MonoLabel, Pill, LiveDot } from "../components/ui";
+import { PageHeading, MonoLabel, TouchPill, LiveDot } from "../components/ui";
 import { getNews, getNewsStats } from "../services/api";
 import { fmt } from "../data/sectorMeta";
 
@@ -161,7 +161,7 @@ export default function News() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 + i * 0.06 }}
-              className="bg-surface px-6 md:px-8 py-6"
+              className={`bg-surface px-6 md:px-8 py-6 min-w-0 ${i === 4 ? "col-span-2 lg:col-span-1" : ""}`}
             >
               <div className="flex justify-between items-center mb-4">
                 <MonoLabel>{s.label}</MonoLabel>
@@ -176,24 +176,24 @@ export default function News() {
       )}
 
       {/* FILTERS */}
-      <section className="px-6 md:px-16 py-8 flex flex-col xl:flex-row xl:items-center justify-between gap-6 border-b border-gray-800">
+      <section className="px-6 md:px-16 py-6 md:py-8 flex flex-col xl:flex-row xl:items-center justify-between gap-5 md:gap-6 border-b border-gray-800">
         <div className="flex flex-col gap-3">
           <div className="flex items-start gap-4">
             <MonoLabel className="hidden md:block shrink-0 pt-3 w-[72px]">Sentiment</MonoLabel>
             <div className="flex flex-wrap gap-2">
               {SENTIMENTS.map((s) => (
-                <Pill key={s} active={sentiment === s} onClick={() => setSentiment(s)} className="shrink-0">
+                <TouchPill key={s} active={sentiment === s} onClick={() => setSentiment(s)} className="shrink-0">
                   {s === "All" ? "All" : s}
-                </Pill>
+                </TouchPill>
               ))}
-              <Pill
+              <TouchPill
                 active={confidentOnly}
                 onClick={() => setConfidentOnly((v) => !v)}
                 className="shrink-0"
                 title="Only labels the model scored at 95% confidence or above"
               >
                 Confident only
-              </Pill>
+              </TouchPill>
             </div>
           </div>
 
@@ -201,9 +201,9 @@ export default function News() {
             <MonoLabel className="hidden md:block shrink-0 pt-3 w-[72px]">Impact</MonoLabel>
             <div className="flex flex-wrap gap-2">
               {IMPORTANCES.map((s) => (
-                <Pill key={s} active={importance === s} onClick={() => setImportance(s)} className="shrink-0">
+                <TouchPill key={s} active={importance === s} onClick={() => setImportance(s)} className="shrink-0">
                   {s}
-                </Pill>
+                </TouchPill>
               ))}
             </div>
           </div>
@@ -229,7 +229,7 @@ export default function News() {
       ) : items.length === 0 ? (
         <div className="px-6 md:px-16 py-20 flex flex-col items-center gap-5">
           <MonoLabel className="text-gray-500">No announcements match these filters.</MonoLabel>
-          {hasFilters && <Pill onClick={resetFilters}>Clear filters</Pill>}
+          {hasFilters && <TouchPill onClick={resetFilters}>Clear filters</TouchPill>}
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-px bg-gray-800 border-b border-gray-800">
@@ -246,9 +246,9 @@ export default function News() {
             Showing {fmt(items.length)} of {fmt(total)}
           </MonoLabel>
           {items.length < total && (
-            <Pill onClick={loadMore} disabled={loadingMore}>
+            <TouchPill onClick={loadMore} disabled={loadingMore}>
               {loadingMore ? "Loading…" : `Load more (${fmt(total - items.length)} left)`}
-            </Pill>
+            </TouchPill>
           )}
         </div>
       )}

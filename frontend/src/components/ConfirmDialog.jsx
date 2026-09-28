@@ -5,10 +5,10 @@ import { X } from "lucide-react";
 import { MonoLabel } from "./ui";
 
 export const ghostButton =
-  "inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full border border-gray-600 text-[11px] font-medium uppercase tracking-wider text-gray-300 hover:bg-white hover:text-black hover:border-white disabled:opacity-40 disabled:pointer-events-none transition-colors cursor-pointer";
+  "inline-flex items-center justify-center gap-2 touch:min-h-11 px-5 py-2.5 rounded-full border border-gray-600 text-[11px] font-medium uppercase tracking-wider text-gray-300 hover:bg-white hover:text-black hover:border-white disabled:opacity-40 disabled:pointer-events-none transition-colors cursor-pointer";
 
 export const dangerButton =
-  "inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full border border-red-400 text-[11px] font-medium uppercase tracking-wider text-red-400 hover:bg-red-400 hover:text-black disabled:opacity-40 disabled:pointer-events-none transition-colors cursor-pointer";
+  "inline-flex items-center justify-center gap-2 touch:min-h-11 px-5 py-2.5 rounded-full border border-red-400 text-[11px] font-medium uppercase tracking-wider text-red-400 hover:bg-red-400 hover:text-black disabled:opacity-40 disabled:pointer-events-none transition-colors cursor-pointer";
 
 // Modal confirm: surface panel over a blurred page, Escape / backdrop cancel,
 // focus moves in on open and back to the trigger on close.
@@ -69,7 +69,7 @@ export default function ConfirmDialog({
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-4 bg-page/80 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-4 pb-[max(1rem,env(safe-area-inset-bottom))] bg-page/80 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -84,14 +84,14 @@ export default function ConfirmDialog({
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } }}
             exit={{ opacity: 0, y: 16, transition: { duration: 0.15 } }}
-            className="relative w-full max-w-[480px] bg-surface border border-gray-800 rounded-xl shadow-2xl p-6 md:p-8"
+            className="relative w-full max-w-[480px] max-h-[calc(100dvh-2rem)] overflow-y-auto bg-surface border border-gray-800 rounded-xl shadow-2xl p-6 md:p-8"
           >
             <button
               type="button"
               onClick={onCancel}
               disabled={busy}
               aria-label="Close"
-              className="absolute top-4 right-4 p-1.5 rounded-full text-gray-500 hover:text-white transition-colors cursor-pointer"
+              className="absolute top-2.5 right-2.5 p-3 md:top-4 md:right-4 md:p-1.5 rounded-full text-gray-500 hover:text-white transition-colors cursor-pointer"
             >
               <X size={16} strokeWidth={1.5} />
             </button>

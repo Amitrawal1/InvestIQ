@@ -1,0 +1,31 @@
+# Morning Upstox token renewal: asks Upstox to send the account owner an "Approve" notification
+# (Upstox app + WhatsApp). After the tap, Upstox posts the token to /upstox/notifier on the backend.
+# Skipped automatically when today's token already works.
+name: Upstox token request
+
+on:
+  schedule:
+    - cron: "45 2 * * 1-5"   # 08:15 IST, Monday-Friday (before the 09:15 market open)
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Request even if today's token still works"
+        type: boolean
+        default: false
+
+jobs:
+  request:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ask Upstox for an approval notification
+        env:
+          BACKEND_URL: https://invest-backend.vercel.app
+          ADMIN_KEY: ${{ secrets.UPSTOX_ADMIN_KEY }}
+          FORCE: ${{ github.event.inputs.force == 'true' && '1' || '0' }}
+        run: |
+          if [ -z "$ADMIN_KEY" ]; then echo "::error::Add the UPSTOX_ADMIN_KEY repository secret"; exit 1; fi
+          status=$(curl -sS -o response.json -w "%{http_code}" -X POST \
+            "$BACKEND_URL/upstox/request-token?force=$FORCE" -H "X-Admin-Key: $ADMIN_KEY")
+          cat response.json; echo
+          if [ "$status" != "200" ]; then echo "::error::Token request failed (HTTP $status)"; exit 1; fi
