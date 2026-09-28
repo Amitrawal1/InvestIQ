@@ -26,7 +26,13 @@ db.query("SELECT 1")
 // Vercel (and local dev tools) sit one proxy hop in front: use X-Forwarded-For for req.ip
 app.set("trust proxy", 1);
 app.use(cors());
-app.use(express.json());
+// strict: false accepts a bare `null` body (older frontends sent one on POST /brokers/:b/connect);
+// anything that isn't an object becomes {} so handlers can always read req.body.x
+app.use(express.json({ strict: false }));
+app.use((req, res, next) => {
+    if (req.body === null || typeof req.body !== "object") req.body = {};
+    next();
+});
 app.use("/sectors", sectorRoutes);
 app.use("/companies", companyRoutes);
 app.use("/stock-prices", stockPriceRoutes);

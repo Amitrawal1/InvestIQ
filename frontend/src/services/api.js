@@ -135,11 +135,11 @@ export const getBrokers = () => api.get('/api/brokers', { timeout: 10000 }).then
 
 // -> { url } of the broker's own login page
 export const connectBroker = (broker) =>
-  api.post(`/api/brokers/${encodeURIComponent(broker)}/connect`, null, { timeout: 10000 }).then((res) => res.data);
+  api.post(`/api/brokers/${encodeURIComponent(broker)}/connect`, {}, { timeout: 10000 }).then((res) => res.data);
 
 // -> { synced_at, totals }; 409 { code: "TOKEN_EXPIRED" } when the broker session has lapsed
 export const syncBroker = (broker) =>
-  api.post(`/api/brokers/${encodeURIComponent(broker)}/sync`, null, { timeout: 60000 }).then((res) => res.data);
+  api.post(`/api/brokers/${encodeURIComponent(broker)}/sync`, {}, { timeout: 60000 }).then((res) => res.data);
 
 export const disconnectBroker = (broker, deleteData = false) =>
   api
