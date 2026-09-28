@@ -1,0 +1,52 @@
+{
+  "model_version": "market-trend6-v1",
+  "created_at": "2026-09-28T10:03:08",
+  "method": "equal-weight mean of cross-sectional percentiles, missing -> 0.5; score = percentile x 100",
+  "signals": [
+    "dist_52w_high",
+    "ma200_gap",
+    "ma50_over_200",
+    "rel_6m",
+    "rel_3m",
+    "inv_down_days_3m"
+  ],
+  "universe": {
+    "min_adv_cr": 0.5,
+    "min_days_listed": 252
+  },
+  "scored_signal_date": "2026-09-16",
+  "companies_scored": 1460,
+  "walkforward": {
+    "6m": {
+      "ic_mean": 0.0892,
+      "spread_mean": 0.1033,
+      "top10_beat_rate": 0.4793,
+      "years_top10_above_universe": "7/8",
+      "test_years": [
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ]
+    },
+    "12m": {
+      "ic_mean": 0.097,
+      "spread_mean": 0.1765,
+      "top10_beat_rate": 0.4679,
+      "years_top10_above_universe": "7/7",
+      "test_years": [
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ]
+    }
+  }
+}

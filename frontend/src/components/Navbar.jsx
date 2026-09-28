@@ -18,7 +18,7 @@ const links = [
 const signedInLinks = [...links, { to: '/portfolio', label: 'Portfolio' }];
 
 const Navbar = ({ onSearch }) => {
-  const { quotes } = useMarketTicker();
+  const { quotes, tick } = useMarketTicker();
   const { user } = useAuth();
   const indices = quotes.filter((q) => INDEX_NAMES.includes(q.name));
 
@@ -66,7 +66,12 @@ const Navbar = ({ onSearch }) => {
                 {i > 0 && <ArrowRight size={12} strokeWidth={1} className="text-gray-600" />}
                 <div className="flex gap-2">
                   <span className="text-gray-500">{idx.name}</span>
-                  <span className="text-gray-200">{formatPrice(idx.price)}</span>
+                  <span
+                    key={idx.moved ? `${tick}` : 'still'}
+                    className={`text-gray-200 ${idx.moved ? `price-flash-${idx.moved}` : ''}`}
+                  >
+                    {formatPrice(idx.price)}
+                  </span>
                   <span className={idx.changePct == null ? 'text-gray-500' : idx.changePct < 0 ? 'text-red-400' : 'text-green-500'}>
                     {formatChangePct(idx.changePct)}
                   </span>

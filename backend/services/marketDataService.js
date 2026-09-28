@@ -2,7 +2,8 @@ const axios = require("axios");
 const { getAccessToken } = require("./upstoxAuthService");
 
 const QUOTES_URL = "https://api.upstox.com/v2/market-quote/quotes";
-const CACHE_MS = 15 * 1000;
+// Upstox allows ~2000 quote calls per 30 min: one call per 2 s per warm instance stays well inside it
+const CACHE_MS = 2 * 1000;
 
 const TICKER_INSTRUMENTS = [
     { name: "NIFTY 50", key: "NSE_INDEX|Nifty 50" },
@@ -19,6 +20,7 @@ const TICKER_INSTRUMENTS = [
 class UpstoxTokenError extends Error {}
 
 let cache = { at: 0, data: null };
+let inFlight = null;     // concurrent requests share one Upstox call
 
 const fetchQuotes = async (instrumentKeys) => {
     // Looked up on every fetch so a fresh login works without a restart
@@ -43,7 +45,11 @@ const fetchQuotes = async (instrumentKeys) => {
 // Response is keyed "NSE_EQ:RELIANCE" style; match back to our keys via instrument_token
 const getTickerQuotes = async () => {
     if (cache.data && Date.now() - cache.at < CACHE_MS) return cache.data;
+    if (!inFlight) inFlight = loadTickerQuotes().finally(() => { inFlight = null; });
+    return inFlight;
+};
 
+const loadTickerQuotes = async () => {
     const quotes = await fetchQuotes(TICKER_INSTRUMENTS.map((i) => i.key));
     const byToken = {};
     for (const q of Object.values(quotes)) byToken[q.instrument_token] = q;

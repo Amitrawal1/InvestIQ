@@ -402,3 +402,9 @@ body {
 .pulse-glow {
   animation: pulseGlow 2s infinite ease-in-out;
 }
+
+/* Live ticker: a price briefly flashes green/red when it moves */
+@keyframes price-flash-up { from { color: #22c55e; } }
+@keyframes price-flash-down { from { color: #f87171; } }
+.price-flash-up { animation: price-flash-up 1.2s ease-out; }
+.price-flash-down { animation: price-flash-down 1.2s ease-out; }

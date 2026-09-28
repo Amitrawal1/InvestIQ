@@ -1,4 +1,4 @@
-"""Preliminary growth ranking (`model_version = 'prelim-v1'`) -> `company_rankings`.
+"""Preliminary growth ranking (`model_version = 'prelim-v2'`) -> `company_rankings`.
 
 One snapshot per run for every EQ/BE company (contract: docs/company-rankings.md). Rebuilt on the
 1st and 16th of each month by .github/workflows/rankings.yml; rows for the snapshot date are replaced.
@@ -25,8 +25,12 @@ Method
                        low rise in debt/equity over a year (x0.5)
      cash_flow         cash conversion (OCF / net profit, only when profit > 0), FCF margin
                        (FCF TTM / revenue TTM), low accruals ratio
-     momentum          6m and 12m return minus NIFTY SMALLCAP 250, distance from 52-week high,
-                       low 1y volatility (x0.5)
+     momentum          the market model's six trend signals, equal weight (growth_model/market_model.py,
+                       walk-forward tested 2019-2026): distance from 52-week high, close vs 200-day
+                       average, 50-day vs 200-day average, 3m and 6m return minus NIFTY SMALLCAP 250,
+                       share of down days over 3 months (fewer = better). Low volatility was dropped
+                       (v1): it helped in some years and hurt in others. Price signals are NULL when the
+                       last year contains a price-series break (one-day move > +100% / < -60%).
      news              sum over items of sign x confidence x importance weight (HIGH 2, MEDIUM 1,
                        LOW 0.5; neutral = 0) / (total weight + 3), plus 0.1 x (HIGH positive - HIGH
                        negative); centred on 50: net-positive companies get 50 + 50 x their
@@ -58,7 +62,7 @@ from datetime import date, datetime, timedelta
 import numpy as np
 import pandas as pd
 
-MODEL_VERSION = "prelim-v1"
+MODEL_VERSION = "prelim-v2"
 SERIES = ("EQ", "BE")
 BENCHMARK = "NIFTY SMALLCAP 250"
 
@@ -72,6 +76,7 @@ MIN_COVERAGE = 0.5
 STALE_FINANCIALS_DAYS = 275
 STALE_PRICE_DAYS = 10
 PRICE_LOOKBACK_DAYS = 400
+BREAK_UP, BREAK_DOWN = 1.0, -0.6     # same series-break rule as growth_model/labels.py
 NEWS_DAYS = 90
 
 FLAG_PENALTY = {
@@ -98,9 +103,9 @@ SUBFEATURES = {
         ("cash_conversion", 1, True), ("fcf_margin", 1, True), ("accruals_ratio", 1, False),
     ], 1),
     "momentum": ([
-        ("rel_return_6m", 1, True), ("rel_return_1y", 1, True),
-        ("dist_52w_high", 1, True), ("volatility_1y", 0.5, False),
-    ], 1),
+        ("dist_52w_high", 1, True), ("ma200_gap", 1, True), ("ma50_over_200", 1, True),
+        ("rel_return_6m", 1, True), ("rel_return_3m", 1, True), ("down_days_3m", 1, False),
+    ], 3),
 }
 
 NEWS_IMPORTANCE_WEIGHT = {"HIGH": 2.0, "MEDIUM": 1.0, "LOW": 0.5}
@@ -263,6 +268,7 @@ def price_signals(prices, idx, snap):
         last = closes[-1]
         for k, d in horizons.items():
             rec[k] = last / _close_asof(dates, closes, snap_ts - pd.Timedelta(days=d)) - 1
+        rec["rel_return_3m"] = rec["return_3m"] - idx_ret["return_3m"]
         rec["rel_return_6m"] = rec["return_6m"] - idx_ret["return_6m"]
         rec["rel_return_1y"] = rec["return_1y"] - idx_ret["return_1y"]
         rec["return_1y_vs_smallcap"] = rec["rel_return_1y"]
@@ -272,6 +278,21 @@ def price_signals(prices, idx, snap):
             rec["dist_52w_high"] = last / rec["high_52w"] - 1
             logret = np.diff(np.log(year["close"].values))
             rec["volatility_1y"] = float(np.std(logret, ddof=1) * np.sqrt(252))
+            step = np.diff(year["close"].values) / year["close"].values[:-1]
+            if ((step > BREAK_UP) | (step < BREAK_DOWN)).any():
+                rec["price_break"] = True
+        if len(closes) >= 200:
+            ma50, ma200 = closes[-50:].mean(), closes[-200:].mean()
+            rec["ma200_gap"] = last / ma200 - 1
+            rec["ma50_over_200"] = ma50 / ma200 - 1
+        q = np.diff(closes[-64:])
+        if len(q) >= 40:
+            rec["down_days_3m"] = float((q < 0).mean())
+        if rec.get("price_break"):
+            for k in ("dist_52w_high", "ma200_gap", "ma50_over_200", "rel_return_3m", "rel_return_6m",
+                      "rel_return_1y", "return_1y_vs_smallcap", "down_days_3m", "volatility_1y",
+                      *horizons):
+                rec[k] = np.nan
         out.append(rec)
     return pd.DataFrame(out), idx_ret
 
@@ -493,24 +514,31 @@ def explain(row):
 
     # momentum
     if not bool(g("price_stale", True)):
-        r1, rel = v("return_1y"), v("rel_return_1y")
-        if _ok(r1) and _ok(rel) and strong("rel_return_1y") and r1 > 0:
-            reasons.append((P("rel_return_1y") - 0.05,
-                            f"Stock up {pct(r1)} in 1 year, {rel * 100:.0f} pts ahead of Smallcap 250"))
-        elif _ok(r1) and _ok(rel) and weak("rel_return_1y") and rel < 0:
-            risks.append((1 - P("rel_return_1y") - 0.05,
-                          f"Stock {'down ' + pct(-r1) if r1 < 0 else 'up only ' + pct(r1)} in 1 year, "
+        r6, rel = v("return_6m"), v("rel_return_6m")
+        if _ok(r6) and _ok(rel) and strong("rel_return_6m") and r6 > 0:
+            reasons.append((P("rel_return_6m") - 0.05,
+                            f"Stock up {pct(r6)} in 6 months, {rel * 100:.0f} pts ahead of Smallcap 250"))
+        elif _ok(r6) and _ok(rel) and weak("rel_return_6m") and rel < 0:
+            risks.append((1 - P("rel_return_6m") - 0.05,
+                          f"Stock {'down ' + pct(-r6) if r6 < 0 else 'up only ' + pct(r6)} in 6 months, "
                           f"{-rel * 100:.0f} pts behind Smallcap 250"))
+        gap, cross = v("ma200_gap"), v("ma50_over_200")
+        if _ok(gap) and _ok(cross) and gap > 0 and cross > 0 and strong("ma200_gap"):
+            reasons.append((0.7, f"In an uptrend: {gap * 100:.0f}% above its 200-day average"))
+        elif _ok(gap) and _ok(cross) and gap < 0 and cross < 0 and weak("ma200_gap"):
+            risks.append((0.7, f"In a downtrend: {-gap * 100:.0f}% below its 200-day average"))
         d = v("dist_52w_high")
         if _ok(d) and d > -0.05:
             reasons.append((0.75, f"Trading within {max(-d * 100, 0):.0f}% of its 52-week high"))
         elif _ok(d) and d < -0.4:
             risks.append((0.75, f"{-d * 100:.0f}% below its 52-week high"))
         vol = v("volatility_1y")
-        if _ok(vol) and weak("volatility_1y") and vol > 0.6:
+        if _ok(vol) and vol > 0.6:
             risks.append((0.6, f"Highly volatile: {pct(vol)} annualised volatility"))
     elif _ok(v("last_price")):
         risks.append((0.5, "No recent trading data"))
+    if g("price_break") is True:
+        risks.append((0.55, "Price history has a gap or unadjusted corporate action; trend signals skipped"))
 
     # news
     n = v("news_count_90d")
