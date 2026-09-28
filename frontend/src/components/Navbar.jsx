@@ -11,7 +11,6 @@ const INDEX_NAMES = ['NIFTY 50', 'SENSEX'];
 const links = [
   { to: '/home', label: 'Home' },
   { to: '/news', label: 'News' },
-  { to: '/dashboard', label: 'Dashboard' },
   { to: '/predictor', label: 'Predictor' },
 ];
 

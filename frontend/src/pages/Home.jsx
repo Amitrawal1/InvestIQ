@@ -11,9 +11,9 @@ import { fadeUp, stagger, SectionLabel, Pill, PrimaryButton } from "../component
 
 const highlights = [
     { icon: Newspaper, label: "News Alerts", text: "Breaking financial news, filtered to what moves Indian equities.", to: "/news" },
-    { icon: LineChart, label: "Stock Signals", text: "Sentiment from announcements and earnings turned into clear signals." },
-    { icon: TrendingUp, label: "Market Trends", text: "Aggregate news sentiment to spot sector rotations early." },
-    { icon: Cpu, label: "AI Predictor", text: "Machine learning models that estimate a stock's next move." },
+    { icon: LineChart, label: "Stock Signals", text: "Sentiment from announcements and earnings turned into clear signals.", to: "/predictor" },
+    { icon: TrendingUp, label: "Market Trends", text: "Aggregate news sentiment to spot sector rotations early.", to: "/home#sectors" },
+    { icon: Cpu, label: "AI Predictor", text: "Machine learning models that estimate a stock's next move.", to: "/predictor" },
 ]
 
 const MotionLink = motion.create(Link)
@@ -62,8 +62,8 @@ export default function Home() {
                                 </p>
                             </div>
                             <div className="flex flex-wrap gap-3">
-                                <PrimaryButton onClick={() => navigate("/dashboard")}>
-                                    Open Dashboard
+                                <PrimaryButton onClick={() => navigate("/portfolio")}>
+                                    Open Portfolio
                                 </PrimaryButton>
                                 <Pill icon={Cpu} onClick={() => navigate("/predictor")} className="py-3.5">
                                     AI Predictor

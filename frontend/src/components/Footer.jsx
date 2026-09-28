@@ -7,7 +7,7 @@ const columns = [
     title: 'Product',
     links: [
       { label: 'Home', to: '/home' },
-      { label: 'Dashboard', to: '/dashboard' },
+      { label: 'Portfolio', to: '/portfolio' },
       { label: 'AI Predictor', to: '/predictor' },
     ],
   },
@@ -15,8 +15,8 @@ const columns = [
     title: 'Data',
     links: [
       { label: 'Market News', to: '/news' },
-      { label: 'Stock Signals', to: '/dashboard' },
-      { label: 'Sector Trends', to: '/home' },
+      { label: 'Company Rankings', to: '/predictor' },
+      { label: 'Sector Trends', to: '/home#sectors' },
     ],
   },
   {

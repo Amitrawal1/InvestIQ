@@ -774,7 +774,9 @@ export default function Portfolio() {
   };
 
   const syncIcon = useMemo(
-    () => (props) => <SpinIcon {...props} spinning={syncing} />,
+    () => function SyncIcon(props) {
+      return <SpinIcon {...props} spinning={syncing} />;
+    },
     [syncing]
   );
 

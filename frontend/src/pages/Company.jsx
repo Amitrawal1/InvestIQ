@@ -107,6 +107,8 @@ export default function Company() {
   const rows = yearPrices?.data || [];
 
   const header = useMemo(() => {
+    const km = ranking?.key_metrics || {};
+    const rows = yearPrices?.data || [];
     const last = rows.length ? Number(rows[rows.length - 1].close) : null;
     const prev = rows.length > 1 ? Number(rows[rows.length - 2].close) : null;
     return {
@@ -115,7 +117,7 @@ export default function Company() {
       d1: last && prev ? last / prev - 1 : null,
       y1: km.return_1y ?? retFrom(rows, 365),
     };
-  }, [rows, km]);
+  }, [ranking, yearPrices]);
 
   return (
     <div className="min-h-screen w-full bg-page text-white font-sans overflow-x-clip">

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useId } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, usePresence } from "motion/react";
 import {ArrowRight,ArrowUpRight,Newspaper,LineChart,TrendingUp,Cpu,MonitorPlay,X} from "lucide-react";
 import IntroGlobe from "../components/IntroGlobe";
-import Home from "./Home";
+import { fadeUp, Pill, PrimaryButton } from "../components/ui";
 // --- DATA ---
 const chaptersData = [
   { name: "Information Technology", image: "/InformationTechnology.jpg" },
@@ -21,12 +21,16 @@ const featureDescriptions = {
   "AI PREDICTOR": "Leverage advanced Natural Language Processing. Our proprietary AI doesn't just read the news; it historical compares it to past events to calculate the probability of a stock's upward movement."
 };
 
-// --- ANIMATION VARIANTS ---
-const fadeUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
-};
+// Header links -> real pages ("About" scrolls to the sector section below)
+const headerLinks = [
+  { label: "Visit", to: "/home" },
+  { label: "Portfolio", to: "/portfolio" },
+  { label: "Discover", to: "/predictor" },
+  { label: "Learn", to: "/news" },
+  { label: "About", to: "#about" },
+];
 
+// --- ANIMATION VARIANTS ---
 const letterBlock = {
   initial: { y: 120, opacity: 0 },
   animate: { 
@@ -117,8 +121,7 @@ function SandTransitionImage({ src, alt }) {
 export default function Intro() {
   const navigate = useNavigate();
   const [activeChapter, setActiveChapter] = useState(2); 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeFeature, setActiveFeature] = useState(null); // New state for feature description
+  const [activeFeature, setActiveFeature] = useState(null); // feature description panel
 
   useEffect(() => {
     const cycleTimer = setInterval(() => {
@@ -129,8 +132,7 @@ export default function Intro() {
 
   const handleFeatureClick = (label) => {
     if (label === "GO TO DASHBOARD") {
-      // Add your navigation logic here, e.g., window.location.href = '/dashboard';
-      console.log("Navigating to dashboard...");
+      navigate("/home");
       return;
     }
     setActiveFeature(activeFeature === label ? null : label);
@@ -140,7 +142,7 @@ export default function Intro() {
     <div className="font-sans text-[#111] bg-[#050011] overflow-x-hidden selection:bg-black selection:text-white">
       
       {/* SECTION 1: HERO - Bg set to #050011 immediately to prevent white flash */}
-      <section className="relative w-full h-screen min-h-[800px] flex flex-col bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat overflow-hidden ">
+      <section className="relative w-full h-svh min-h-[640px] flex flex-col bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat overflow-hidden">
         {/* 1A. HEADER */}
         <motion.header
           initial="initial"
@@ -189,30 +191,17 @@ export default function Intro() {
             <ArrowRight className="hidden md:block w-[5%] text-gray-400" size={14} strokeWidth={1} />
 
             <div className="hidden md:flex w-[15%] flex-col space-y-1 text-gray-300">
-              {["Visit", "Dashboard", "Discover", "Learn", "About"].map(link => (
-                <a key={link} href={`#${link.toLowerCase()}`} className="hover:text-white hover:underline">{link}</a>
-              ))}
+              {headerLinks.map(({ label, to }) =>
+                to.startsWith("#") ? (
+                  <a key={label} href={to} className="hover:text-white hover:underline">{label}</a>
+                ) : (
+                  <Link key={label} to={to} className="hover:text-white hover:underline">{label}</Link>
+                )
+              )}
             </div>
 
           </motion.div>
         </motion.header>
-
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -20, opacity: 0 }}
-              className="absolute top-24 left-0 w-full bg-[#fcfcfc] border-b border-gray-200 shadow-xl z-50 md:hidden p-6 pt-10"
-            >
-              <div className="flex flex-col space-y-6 text-sm font-mono tracking-[0.2em] uppercase text-gray-800">
-                {["GET STARTED", "ALGORITHM", "PERFORMANCE", "About"].map(link => (
-                  <a key={link} href={`#${link.toLowerCase()}`} className="hover:text-black">{link}</a>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* 1D. FRONT BACKGROUND GLOBE */}
         <motion.div
@@ -229,37 +218,24 @@ export default function Intro() {
           initial="initial"
           animate="animate"
           variants={{ animate: { transition: { staggerChildren: 0.15, delayChildren: 0.6 } } }}
-          className="px-10 md:px-16 mt-20 sm:mt-28 md:mt-32 w-[320px] z-10 pointer-events-none"
+          className="px-10 md:px-16 mt-[clamp(2rem,9vh,8rem)] w-[320px] z-10 pointer-events-none"
         >
           <motion.div variants={fadeUp} className="flex items-center gap-4 mb-4 text-xs font-mono pointer-events-auto w-fit">
             <span className="text-white mix-blend-difference">01</span>
             <div className="w-16 h-[1.5px] bg-white mix-blend-difference" />
           </motion.div>
           
-          <motion.h2 variants={fadeUp} className="text-[3.5rem] md:text-[5rem] font-normal tracking-tight leading-[1] mb-6 text-white mix-blend-difference pointer-events-auto">
+          <motion.h2 variants={fadeUp} className="text-[clamp(2.75rem,7.5vh,3.5rem)] md:text-[clamp(3rem,8vh,5rem)] font-normal tracking-tight leading-[1] mb-6 text-white mix-blend-difference pointer-events-auto">
             MARKET<br/>INTELLIGENCE
           </motion.h2>
 
-          <motion.p variants={fadeUp} className="text-[13px] md:text-[14px] text-gray-300 w-[240px] leading-[1.6] mb-10 mix-blend-difference pointer-events-auto">
+          <motion.p variants={fadeUp} className="text-[13px] md:text-[14px] text-gray-300 w-[240px] leading-[1.6] mb-[clamp(1.5rem,4vh,2.5rem)] mix-blend-difference pointer-events-auto">
             Utilize the power of modern natural<br/>language processing to decode <br/>financial news signals.
           </motion.p>
 
-          <motion.button 
-            variants={fadeUp}
-            onClick={() => navigate("/Home")}
-            className="pointer-events-auto group relative overflow-hidden bg-[#1a1a1a] px-6 py-3.5 border border-[#1a1a1a] rounded-md shadow-sm transition-transform hover:-translate-y-[0.5px] hover:shadow-[3px_3px_0px_rgba(17,17,17,0.5)] active:translate-y-0 active:shadow-sm flex items-center gap-3"
-          >
-            <div className="absolute inset-0 bg-[#fcfcfc] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-0" />
-            
-            <div className="relative z-10 flex items-center gap-2">
-              <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white group-hover:fill-[#111] transition-all duration-300 group-hover:scale-110 group-hover:-rotate-12 group-hover:-translate-y-1">
-                <path d="M12 2L15 10H22L16 15L18 22L12 18L6 22L8 15L2 10H9L12 2Z" />
-              </svg>
-              <span className="text-[15px] font-medium text-white group-hover:text-[#111] transition-colors duration-300">
-                Explore Now
-              </span>
-            </div>
-          </motion.button>
+          <motion.div variants={fadeUp} className="pointer-events-auto w-fit">
+            <PrimaryButton onClick={() => navigate("/home")}>Explore Now</PrimaryButton>
+          </motion.div>
         </motion.div>
       </section>
 
@@ -289,22 +265,14 @@ export default function Intro() {
                 { icon: TrendingUp, label: "MARKET TRENDS" },
                 { icon: Cpu, label: "AI PREDICTOR" },
                 { icon: MonitorPlay, label: "GO TO DASHBOARD" },
-            ].map((pill, i) => {
+            ].map((pill) => {
               const isActive = activeFeature === pill.label;
               return (
-                <motion.button 
-                  key={i}
-                  variants={fadeUp}
-                  onClick={() => handleFeatureClick(pill.label)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full border text-[11px] font-medium uppercase tracking-wider transition-all duration-300 
-                    ${isActive 
-                      ? "bg-white text-black border-white" 
-                      : "border-gray-300 bg-white/10 backdrop-blur-sm text-gray-300 hover:border-white hover:bg-white/20 hover:text-white"
-                    }`}
-                >
-                  <pill.icon size={14} strokeWidth={2} />
-                  {pill.label}
-                </motion.button>
+                <motion.div key={pill.label} variants={fadeUp}>
+                  <Pill active={isActive} icon={pill.icon} onClick={() => handleFeatureClick(pill.label)}>
+                    {pill.label}
+                  </Pill>
+                </motion.div>
               )
             })}
           </motion.div>
@@ -349,7 +317,7 @@ export default function Intro() {
       </section>
         
         {/* SECTION 3: "MARKET COLLECTION" */}
-        <section className="relative w-full bg-[#0a0a0a] text-white flex flex-col z-30">
+        <section id="about" className="relative w-full bg-[#0a0a0a] text-white flex flex-col z-30">
         {/* 3B. HEADING AREA */}
         <div className="px-8 md:px-16 pt-32 md:pt-48 mb-16 z-10 flex flex-col xl:flex-row justify-between items-start gap-12">
           

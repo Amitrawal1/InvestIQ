@@ -206,7 +206,7 @@ export function RankingTable({ rows, rankKey = "rank_overall", sort, onSort, sho
                 <ScoreBar value={r.growth_score} />
               </div>
               <div className="grid grid-cols-3 gap-2 pl-12">
-                {[["1Y", <SignedPct value={km.return_1y} />], ["Rev", <SignedPct value={km.revenue_growth_yoy} />], ["ROE", <span className="font-mono text-gray-300">{fmtPct(km.roe)}</span>]].map(([k, v]) => (
+                {[["1Y", <SignedPct key="1y" value={km.return_1y} />], ["Rev", <SignedPct key="rev" value={km.revenue_growth_yoy} />], ["ROE", <span key="roe" className="font-mono text-gray-300">{fmtPct(km.roe)}</span>]].map(([k, v]) => (
                   <div key={k} className="flex flex-col gap-1 text-[12px]">
                     <MonoLabel className="text-gray-600">{k}</MonoLabel>
                     {v}
