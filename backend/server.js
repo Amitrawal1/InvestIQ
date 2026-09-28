@@ -1,4 +1,5 @@
 const express = require("express");
+const { resultPage } = require("./services/resultPage");
 const cors = require("cors");
 require("dotenv").config();
 
@@ -55,6 +56,15 @@ app.get("/", (req, res) => {
 app.use((err, req, res, next) => {
     const status = Number(err.status || err.statusCode) || 500;
     if (status >= 500) console.error("Unhandled error:", err.message);
+    if (/\/callback$/.test(req.path)) {
+        const base = (process.env.FRONTEND_URL || "").trim().replace(/\/+$/, "");
+        return res.status(status).send(resultPage({
+            title: "Couldn't finish linking",
+            message: "Something went wrong while connecting your account. Please try again from Portfolio.",
+            tone: "error",
+            action: base ? { href: `${base}/portfolio?error=link_failed`, label: "Return to Portfolio" } : { label: "Go back" },
+        }));
+    }
     res.status(status).json({
         success: false,
         message: status < 500 && err.expose ? err.message : status < 500 ? "Bad request" : "Something went wrong. Try again.",

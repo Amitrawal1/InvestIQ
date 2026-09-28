@@ -9,11 +9,13 @@ const {
 const { looksLikeUserState } = require("../services/cryptoService");
 const { upstoxLinkCallback } = require("./brokerController");
 
-const page = (title, message) => `<!doctype html>
-<html><head><meta charset="utf-8"><title>${title}</title>
-<style>body{background:#050011;color:#fff;font-family:ui-monospace,monospace;display:grid;place-items:center;min-height:100vh;margin:0;padding:16px}
-div{max-width:480px;text-align:center}h1{font-weight:400;letter-spacing:.1em;text-transform:uppercase;font-size:18px}p{color:#9ca3af;font-size:13px;line-height:1.6}</style>
-</head><body><div><h1>${title}</h1><p>${message}</p></div></body></html>`;
+const { resultPage } = require("../services/resultPage");
+
+const siteLink = () => {
+    const base = (process.env.FRONTEND_URL || "").trim().replace(/\/+$/, "");
+    return base ? { href: `${base}/portfolio`, label: "Return to Portfolio" } : { label: "Go back" };
+};
+const page = (title, message, tone = "info") => resultPage({ title, message, tone, action: siteLink() });
 
 // Daily login: open /upstox/login?key=<UPSTOX_ADMIN_KEY>, sign in to Upstox, done
 const login = (req, res) => {
@@ -36,24 +38,29 @@ const login = (req, res) => {
 // and the admin market-data login below (state "<timestamp>.<hex hmac>"), unchanged
 const callback = async (req, res) => {
     if (looksLikeUserState(req.query.state)) return upstoxLinkCallback(req, res);
-    return adminCallback(req, res);
+    try {
+        return await adminCallback(req, res);
+    } catch (err) {
+        console.log("Upstox admin callback failed:", err.message);
+        if (!res.headersSent) res.status(500).send(page("Something went wrong", "Start again from /upstox/login.", "error"));
+    }
 };
 
 const adminCallback = async (req, res) => {
     const { code, state, error } = req.query;
 
-    if (error) return res.status(400).send(page("Upstox login cancelled", String(error)));
+    if (error) return res.status(400).send(page("Upstox login cancelled", String(error), "error"));
     if (!code || !isValidState(state)) {
-        return res.status(400).send(page("Invalid login", "This login link expired or wasn't started from /upstox/login. Start again."));
+        return res.status(400).send(page("Link expired", "This login link expired or wasn't started from InvestIQ. Start again from Portfolio.", "error"));
     }
 
     try {
         const token = await exchangeCode(code);
         await saveAccessToken(token);
-        res.send(page("Upstox connected", "Live market data is on until Upstox expires the token (around 3:30 AM IST). You can close this tab."));
+        res.send(page("Upstox connected", "Live market data is on until Upstox expires the token (around 3:30 AM IST). You can close this tab.", "success"));
     } catch (err) {
         console.log("Upstox token exchange failed:", err.response?.data || err.message);
-        res.status(502).send(page("Upstox login failed", "Upstox rejected the code. Start again from /upstox/login."));
+        res.status(502).send(page("Upstox login failed", "Upstox rejected the code. Start again from /upstox/login.", "error"));
     }
 };
 

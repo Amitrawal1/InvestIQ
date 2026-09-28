@@ -1,3 +1,4 @@
+const { resultPage } = require("../services/resultPage");
 const { signState, verifyState, ConfigError } = require("../services/cryptoService");
 const { getBroker } = require("../services/brokers");
 const { findUserById } = require("../services/authService");
@@ -77,13 +78,28 @@ const remove = async (req, res) => {
 const backToFrontend = (res, query) => {
     const base = frontendUrl();
     if (!base) {
-        return res.status(503).type("text/plain").send("FRONTEND_URL isn't configured on the server.");
+        return res.status(503).send(resultPage({
+            title: query.linked ? "Account linked" : "Couldn't finish linking",
+            message: "InvestIQ doesn't know its website address yet (FRONTEND_URL). Go back to the InvestIQ site and open Portfolio.",
+            tone: query.linked ? "success" : "error",
+            action: { label: "Go back" },
+        }));
     }
     res.redirect(`${base}/portfolio?${new URLSearchParams(query)}`);
 };
 
 // Shared by /upstox/callback (purpose "link") and /brokers/zerodha/callback
+// Any unexpected failure still sends the browser back to Portfolio (never a JSON error page)
 const finishLink = async (res, brokerName, state, params, cancelled) => {
+    try {
+        return await finishLinkSteps(res, brokerName, state, params, cancelled);
+    } catch (error) {
+        console.log(`${brokerName} callback failed:`, error.message);
+        if (!res.headersSent) backToFrontend(res, { error: "link_failed" });
+    }
+};
+
+const finishLinkSteps = async (res, brokerName, state, params, cancelled) => {
     const broker = getBroker(brokerName);
     let claims = null;
     try {
