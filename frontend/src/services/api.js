@@ -74,3 +74,77 @@ export const getCompanyPrices = (symbol, range = '1y') =>
 // Company announcements with FinBERT sentiment
 export const getCompanyNews = (companyId, limit = 30) =>
   api.get(`/api/news/company/${companyId}`, { params: { limit }, timeout: 10000 }).then((res) => res.data);
+
+// --- Accounts (docs/auth-and-portfolio.md) ---
+
+// Requests whose 401 means "wrong password", not "session expired"
+const PASSWORD_CHECKS = ['/api/auth/login', '/api/auth/register', '/api/auth/password'];
+
+// A 401 on an authenticated request means the token is missing/invalid/expired:
+// tell AuthContext so it can sign the user out cleanly.
+api.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    const { config, response } = error;
+    const url = config?.url || '';
+    const passwordCheck =
+      PASSWORD_CHECKS.includes(url) || (url === '/api/auth/me' && config?.method === 'delete');
+    if (response?.status === 401 && localStorage.getItem('token') && !passwordCheck) {
+      window.dispatchEvent(new Event('investiq:unauthorized'));
+    }
+    return Promise.reject(error);
+  }
+);
+
+// Best human-readable message from an API error
+export const apiError = (err, fallback = 'Something went wrong. Try again.') => {
+  if (err?.response?.data?.message) return err.response.data.message;
+  if (err?.response?.data?.error && typeof err.response.data.error === 'string') return err.response.data.error;
+  if (err?.code === 'ECONNABORTED' || !err?.response) return "Can't reach InvestIQ right now. Check your connection and try again.";
+  if (err.response.status >= 500) return 'InvestIQ had a problem on its side. Try again in a moment.';
+  return fallback;
+};
+
+// -> { token, user }
+export const loginUser = (email, password) =>
+  api.post('/api/auth/login', { email, password }, { timeout: 15000 }).then((res) => res.data);
+
+// -> { token, user }
+export const registerUser = (username, email, password) =>
+  api.post('/api/auth/register', { username, email, password }, { timeout: 15000 }).then((res) => res.data);
+
+// -> { user }
+export const getMe = () => api.get('/api/auth/me', { timeout: 10000 }).then((res) => res.data.user);
+
+// { username?, email? } -> { user }
+export const updateMe = (changes) => api.patch('/api/auth/me', changes, { timeout: 10000 }).then((res) => res.data.user);
+
+// -> { success: true }
+export const changePassword = (current_password, new_password) =>
+  api.post('/api/auth/password', { current_password, new_password }, { timeout: 15000 }).then((res) => res.data);
+
+// Deletes the account, its broker links and synced data
+export const deleteAccount = (password) =>
+  api.delete('/api/auth/me', { data: { password }, timeout: 20000 }).then((res) => res.data);
+
+// --- Broker linking + portfolio (read-only) ---
+
+// -> [{ broker, connected, broker_user_name, broker_user_id, token_valid, token_expires_at,
+//       connected_at, last_synced_at, last_error, configured }]
+export const getBrokers = () => api.get('/api/brokers', { timeout: 10000 }).then((res) => res.data);
+
+// -> { url } of the broker's own login page
+export const connectBroker = (broker) =>
+  api.post(`/api/brokers/${encodeURIComponent(broker)}/connect`, null, { timeout: 10000 }).then((res) => res.data);
+
+// -> { synced_at, totals }; 409 { code: "TOKEN_EXPIRED" } when the broker session has lapsed
+export const syncBroker = (broker) =>
+  api.post(`/api/brokers/${encodeURIComponent(broker)}/sync`, null, { timeout: 60000 }).then((res) => res.data);
+
+export const disconnectBroker = (broker, deleteData = false) =>
+  api
+    .delete(`/api/brokers/${encodeURIComponent(broker)}`, { params: deleteData ? { delete_data: 1 } : {}, timeout: 20000 })
+    .then((res) => res.data);
+
+// -> { connections, summary, holdings, positions, funds, insights, history }
+export const getPortfolio = () => api.get('/api/portfolio', { timeout: 20000 }).then((res) => res.data);

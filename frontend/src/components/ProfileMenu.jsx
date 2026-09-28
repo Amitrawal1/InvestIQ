@@ -1,7 +1,7 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
-import { ChevronDown, LogIn, LogOut, Settings, Pencil, User } from 'lucide-react';
+import { ChevronDown, LogIn, LogOut, Settings, Pencil, User, Briefcase } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import ThemeSwitch from './ThemeSwitch';
 import { MonoLabel } from './ui';
@@ -106,6 +106,9 @@ export default function ProfileMenu() {
                 </div>
 
                 <nav aria-label="Account" className="py-2">
+                  <Link to="/portfolio" className={itemClass}>
+                    <Briefcase size={15} strokeWidth={1.5} aria-hidden="true" /> Portfolio
+                  </Link>
                   <Link to="/settings" className={itemClass}>
                     <Settings size={15} strokeWidth={1.5} aria-hidden="true" /> Profile &amp; settings
                   </Link>

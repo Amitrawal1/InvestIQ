@@ -11,6 +11,9 @@ const newsRoutes = require("./routes/newsRoutes");
 const marketRoutes = require("./routes/marketRoutes");
 const upstoxRoutes = require("./routes/upstoxRoutes");
 const rankingRoutes = require("./routes/rankingRoutes");
+const authRoutes = require("./routes/authRoutes");
+const brokerRoutes = require("./routes/brokerRoutes");
+const portfolioRoutes = require("./routes/portfolioRoutes");
 
 db.query("SELECT 1")
     .then(() => {
@@ -20,6 +23,8 @@ db.query("SELECT 1")
         console.log("MySQL connection failed:", error.message);
     });
 
+// Vercel (and local dev tools) sit one proxy hop in front: use X-Forwarded-For for req.ip
+app.set("trust proxy", 1);
 app.use(cors());
 app.use(express.json());
 app.use("/sectors", sectorRoutes);
@@ -29,11 +34,24 @@ app.use("/news", newsRoutes);
 app.use("/market", marketRoutes);
 app.use("/upstox", upstoxRoutes);
 app.use("/rankings", rankingRoutes);
+app.use("/auth", authRoutes);
+app.use("/brokers", brokerRoutes);
+app.use("/portfolio", portfolioRoutes);
 
 
 app.get("/", (req, res) => {
     res.json({
         message: "InvestIQ Backend is running"
+    });
+});
+
+// Last-resort JSON error handler (bad JSON bodies, unexpected throws): no stack traces to clients
+app.use((err, req, res, next) => {
+    const status = Number(err.status || err.statusCode) || 500;
+    if (status >= 500) console.error("Unhandled error:", err.message);
+    res.status(status).json({
+        success: false,
+        message: status < 500 && err.expose ? err.message : status < 500 ? "Bad request" : "Something went wrong. Try again.",
     });
 });
 

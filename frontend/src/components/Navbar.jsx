@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Search, ArrowRight } from 'lucide-react';
 import Logo from './Logo';
 import ProfileMenu from './ProfileMenu';
+import { useAuth } from '../context/AuthContext';
 import useMarketTicker, { formatPrice, formatChangePct } from '../hooks/useMarketTicker';
 
 const INDEX_NAMES = ['NIFTY 50', 'SENSEX'];
@@ -14,8 +15,11 @@ const links = [
   { to: '/predictor', label: 'Predictor' },
 ];
 
+const signedInLinks = [...links, { to: '/portfolio', label: 'Portfolio' }];
+
 const Navbar = ({ onSearch }) => {
   const { quotes } = useMarketTicker();
+  const { user } = useAuth();
   const indices = quotes.filter((q) => INDEX_NAMES.includes(q.name));
 
   return (
@@ -27,7 +31,7 @@ const Navbar = ({ onSearch }) => {
         <div className="flex items-center gap-8">
           <Logo />
           <div className="hidden md:flex items-center gap-6 text-[11px] font-mono tracking-[0.2em] uppercase">
-            {links.map(({ to, label }) => (
+            {(user ? signedInLinks : links).map(({ to, label }) => (
               <NavLink
                 key={to}
                 to={to}

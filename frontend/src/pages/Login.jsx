@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -20,6 +20,16 @@ const Field = ({ label, type = 'text', value, onChange, placeholder, autoComplet
   </label>
 );
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MIN_PASSWORD = 8;
+
+// Where to go after signing in: the page PrivateRoute bounced us from, else the portfolio
+const destinationOf = (state) => {
+  const from = state?.from;
+  if (!from?.pathname || from.pathname === '/login') return '/portfolio';
+  return `${from.pathname}${from.search || ''}${from.hash || ''}`;
+};
+
 const Login = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [username, setUsername] = useState('');
@@ -28,15 +38,37 @@ const Login = () => {
   const [validationError, setValidationError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  const { login, register, error } = useAuth();
+  const { login, register, error, clearError } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Typing clears a stale server error (e.g. "Invalid email or password")
+  const edit = (setter) => (value) => {
+    setter(value);
+    if (validationError) setValidationError('');
+    if (error) clearError();
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setValidationError('');
 
-    if (!email || !password || (isRegister && !username)) {
+    clearError();
+
+    if (!email.trim() || !password || (isRegister && !username.trim())) {
       setValidationError('All fields are required');
+      return;
+    }
+    if (!EMAIL_RE.test(email.trim())) {
+      setValidationError('Enter a valid email address');
+      return;
+    }
+    if (isRegister && username.trim().length < 2) {
+      setValidationError('Username needs at least 2 characters');
+      return;
+    }
+    if (isRegister && password.length < MIN_PASSWORD) {
+      setValidationError(`Password needs at least ${MIN_PASSWORD} characters`);
       return;
     }
 
@@ -47,7 +79,7 @@ const Login = () => {
     setSubmitting(false);
 
     if (success) {
-      navigate('/dashboard');
+      navigate(destinationOf(location.state), { replace: true });
     }
   };
 
@@ -119,23 +151,23 @@ const Login = () => {
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <Field label="Username" value={username} onChange={setUsername} placeholder="yourname" autoComplete="username" />
+                  <Field label="Username" value={username} onChange={edit(setUsername)} placeholder="yourname" autoComplete="username" />
                 </motion.div>
               )}
             </AnimatePresence>
 
-            <Field label="Email" type="email" value={email} onChange={setEmail} placeholder="you@example.com" autoComplete="email" />
+            <Field label="Email" type="email" value={email} onChange={edit(setEmail)} placeholder="you@example.com" autoComplete="email" />
             <Field
               label="Password"
               type="password"
               value={password}
-              onChange={setPassword}
-              placeholder="••••••••"
+              onChange={edit(setPassword)}
+              placeholder={isRegister ? 'At least 8 characters' : '••••••••'}
               autoComplete={isRegister ? 'new-password' : 'current-password'}
             />
 
             {message && (
-              <p className="text-[11px] font-mono tracking-wider uppercase text-red-400">{message}</p>
+              <p role="alert" className="text-[11px] font-mono tracking-wider uppercase text-red-400">{message}</p>
             )}
 
             <PrimaryButton type="submit" icon={ArrowRight} disabled={submitting} className="w-full">
@@ -150,6 +182,7 @@ const Login = () => {
               onClick={() => {
                 setIsRegister(!isRegister);
                 setValidationError('');
+                clearError();
               }}
               className="text-white hover:underline cursor-pointer"
             >

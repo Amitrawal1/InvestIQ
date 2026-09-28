@@ -6,6 +6,8 @@ const {
     isValidState,
     exchangeCode,
 } = require("../services/upstoxAuthService");
+const { looksLikeUserState } = require("../services/cryptoService");
+const { upstoxLinkCallback } = require("./brokerController");
 
 const page = (title, message) => `<!doctype html>
 <html><head><meta charset="utf-8"><title>${title}</title>
@@ -30,7 +32,14 @@ const login = (req, res) => {
     res.redirect(buildLoginUrl());
 };
 
+// One redirect URI serves two flows: user broker linking (signed JSON state, purpose "link")
+// and the admin market-data login below (state "<timestamp>.<hex hmac>"), unchanged
 const callback = async (req, res) => {
+    if (looksLikeUserState(req.query.state)) return upstoxLinkCallback(req, res);
+    return adminCallback(req, res);
+};
+
+const adminCallback = async (req, res) => {
     const { code, state, error } = req.query;
 
     if (error) return res.status(400).send(page("Upstox login cancelled", String(error)));
