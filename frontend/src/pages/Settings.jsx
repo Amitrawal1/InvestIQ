@@ -246,7 +246,9 @@ function Account() {
 }
 
 function ChangePassword() {
-  const { changePassword } = useAuth();
+  const { changePassword, user } = useAuth();
+  // Google-only accounts have no password yet: they set one (no "current password" step)
+  const settingFirst = user?.has_password === false;
   const empty = { current: "", next: "", confirm: "" };
   const [form, setForm] = useState(empty);
   const [errors, setErrors] = useState({});
@@ -264,7 +266,7 @@ function ChangePassword() {
   const onSubmit = async (e) => {
     e.preventDefault();
     const next = {};
-    if (!form.current) next.current = "Enter your current password";
+    if (!settingFirst && !form.current) next.current = "Enter your current password";
     if (form.next.length < MIN_PASSWORD) next.next = `Use at least ${MIN_PASSWORD} characters`;
     else if (form.next === form.current) next.next = "Choose a password you haven't used here";
     if (form.confirm !== form.next) next.confirm = "Passwords don't match";
@@ -289,14 +291,20 @@ function ChangePassword() {
   return (
     <Panel glow className="p-8 md:p-10 max-w-[640px]">
       <form onSubmit={onSubmit} noValidate className="space-y-8">
-        <Field id="pw-current" label="Current password" type="password" value={form.current} onChange={set("current")} error={errors.current} autoComplete="current-password" />
+        {settingFirst ? (
+          <p className="text-sm text-gray-400 leading-relaxed">
+            You sign in with Google. Set a password if you also want to sign in with your email.
+          </p>
+        ) : (
+          <Field id="pw-current" label="Current password" type="password" value={form.current} onChange={set("current")} error={errors.current} autoComplete="current-password" />
+        )}
         <Field id="pw-new" label={`New password · ${MIN_PASSWORD}+ characters`} type="password" value={form.next} onChange={set("next")} error={errors.next} autoComplete="new-password" />
         <Field id="pw-confirm" label="Confirm new password" type="password" value={form.confirm} onChange={set("confirm")} error={errors.confirm} autoComplete="new-password" />
         {formError && <p role="alert" className="text-[11px] font-mono tracking-wider uppercase text-red-400">{formError}</p>}
         <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-          <PrimaryButton type="submit" icon={KeyRound} disabled={!filled || busy}>{busy ? "Updating…" : "Update password"}</PrimaryButton>
+          <PrimaryButton type="submit" icon={KeyRound} disabled={!filled || busy}>{busy ? "Updating…" : settingFirst ? "Set password" : "Update password"}</PrimaryButton>
           <span role="status" className="text-[11px] font-mono tracking-wider uppercase text-green-500">
-            {done ? "Password updated" : ""}
+            {done ? "Password saved" : ""}
           </span>
         </div>
       </form>
@@ -399,7 +407,9 @@ function LinkedBrokers() {
 }
 
 function DeleteAccount() {
-  const { deleteAccount } = useAuth();
+  const { deleteAccount, user } = useAuth();
+  // Google-only accounts confirm by typing their email (they have no password)
+  const byEmail = user?.has_password === false;
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [fieldError, setFieldError] = useState("");
@@ -410,7 +420,11 @@ function DeleteAccount() {
   const start = (e) => {
     e.preventDefault();
     if (!password) {
-      setFieldError("Enter your password to continue");
+      setFieldError(byEmail ? "Type your account email to continue" : "Enter your password to continue");
+      return;
+    }
+    if (byEmail && password.trim().toLowerCase() !== (user?.email || "").toLowerCase()) {
+      setFieldError("That isn't your account email");
       return;
     }
     setError("");
@@ -420,15 +434,15 @@ function DeleteAccount() {
   const confirm = async () => {
     setBusy(true);
     setError("");
-    const res = await deleteAccount(password);
+    const res = byEmail ? await deleteAccount(null, password.trim()) : await deleteAccount(password);
     if (res.ok) {
       navigate("/home", { replace: true });
       return;
     }
     setBusy(false);
-    if (res.status === 401 || res.status === 403) {
+    if (res.status === 400 || res.status === 401 || res.status === 403) {
       setConfirming(false);
-      setFieldError(res.message || "Password is incorrect");
+      setFieldError(res.message || (byEmail ? "That isn't your account email" : "Password is incorrect"));
     } else {
       setError(res.message);
     }
@@ -443,12 +457,12 @@ function DeleteAccount() {
       <form onSubmit={start} noValidate className="mt-8 space-y-8">
         <Field
           id="delete-password"
-          label="Confirm with your password"
-          type="password"
+          label={byEmail ? `Type ${user?.email || "your email"} to confirm` : "Confirm with your password"}
+          type={byEmail ? "email" : "password"}
           value={password}
           onChange={(v) => { setPassword(v); setFieldError(""); }}
           error={fieldError}
-          autoComplete="current-password"
+          autoComplete={byEmail ? "off" : "current-password"}
         />
         <button type="submit" className={dangerButton}>
           <Trash2 size={13} strokeWidth={1.5} /> Delete account

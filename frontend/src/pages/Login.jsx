@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Logo from '../components/Logo';
+import GoogleSignIn from '../components/GoogleSignIn';
 import { fadeUp, stagger, SectionLabel, PrimaryButton, Panel } from '../components/ui';
 
 const Field = ({ label, type = 'text', value, onChange, placeholder, autoComplete }) => (
@@ -38,7 +39,7 @@ const Login = () => {
   const [validationError, setValidationError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  const { login, register, error, clearError } = useAuth();
+  const { login, loginWithGoogle, register, error, clearError } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -81,6 +82,16 @@ const Login = () => {
     if (success) {
       navigate(destinationOf(location.state), { replace: true });
     }
+  };
+
+  // One click: signs in, or creates the account on first use (same for both tabs)
+  const handleGoogle = async (credential) => {
+    setValidationError('');
+    clearError();
+    setSubmitting(true);
+    const success = await loginWithGoogle(credential);
+    setSubmitting(false);
+    if (success) navigate(destinationOf(location.state), { replace: true });
   };
 
   const message = validationError || error;
@@ -139,6 +150,14 @@ const Login = () => {
               <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
               {isRegister ? 'Create an account' : 'Sign in to InvestIQ'}
             </h2>
+          </div>
+
+          <div className="mb-8">
+            <GoogleSignIn
+              onCredential={handleGoogle}
+              text={isRegister ? 'signup_with' : 'continue_with'}
+              disabled={submitting}
+            />
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">

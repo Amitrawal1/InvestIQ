@@ -78,7 +78,7 @@ export const getCompanyNews = (companyId, limit = 30) =>
 // --- Accounts (docs/auth-and-portfolio.md) ---
 
 // Requests whose 401 means "wrong password", not "session expired"
-const PASSWORD_CHECKS = ['/api/auth/login', '/api/auth/register', '/api/auth/password'];
+const PASSWORD_CHECKS = ['/api/auth/login', '/api/auth/register', '/api/auth/password', '/api/auth/google'];
 
 // A 401 on an authenticated request means the token is missing/invalid/expired:
 // tell AuthContext so it can sign the user out cleanly.
@@ -113,6 +113,13 @@ export const loginUser = (email, password) =>
 export const registerUser = (username, email, password) =>
   api.post('/api/auth/register', { username, email, password }, { timeout: 15000 }).then((res) => res.data);
 
+// -> { google_client_id } (null when Google sign-in isn't set up on the server)
+export const getAuthConfig = () => api.get('/api/auth/config', { timeout: 8000 }).then((res) => res.data);
+
+// Google Identity Services ID token -> { token, user } (creates the account on first use)
+export const googleSignIn = (credential) =>
+  api.post('/api/auth/google', { credential }, { timeout: 15000 }).then((res) => res.data);
+
 // -> { user }
 export const getMe = () => api.get('/api/auth/me', { timeout: 10000 }).then((res) => res.data.user);
 
@@ -124,8 +131,11 @@ export const changePassword = (current_password, new_password) =>
   api.post('/api/auth/password', { current_password, new_password }, { timeout: 15000 }).then((res) => res.data);
 
 // Deletes the account, its broker links and synced data
-export const deleteAccount = (password) =>
-  api.delete('/api/auth/me', { data: { password }, timeout: 20000 }).then((res) => res.data);
+// Accounts without a password (Google-only) confirm with their email instead
+export const deleteAccount = (password, confirmEmail) =>
+  api
+    .delete('/api/auth/me', { data: confirmEmail ? { confirm_email: confirmEmail } : { password }, timeout: 20000 })
+    .then((res) => res.data);
 
 // --- Broker linking + portfolio (read-only) ---
 

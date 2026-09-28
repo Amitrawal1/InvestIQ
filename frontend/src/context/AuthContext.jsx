@@ -127,6 +127,19 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // "Continue with Google": credential is the ID token from Google Identity Services
+  const loginWithGoogle = async (credential) => {
+    setError(null);
+    try {
+      const { token, user: userData } = await authApi.googleSignIn(credential);
+      startSession(token, userData);
+      return true;
+    } catch (err) {
+      setError(apiError(err, 'Google sign-in failed. Try again.'));
+      return false;
+    }
+  };
+
   const register = async (username, email, password) => {
     setError(null);
     try {
@@ -153,6 +166,7 @@ export const AuthProvider = ({ children }) => {
   const changePassword = async (currentPassword, newPassword) => {
     try {
       await authApi.changePassword(currentPassword, newPassword);
+      setUser((u) => (u ? { ...u, has_password: true } : u));
       return { ok: true };
     } catch (err) {
       return { ok: false, status: err.response?.status, message: apiError(err, "Couldn't change your password.") };
@@ -160,9 +174,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Deletes the account server-side, then signs out
-  const deleteAccount = async (password) => {
+  const deleteAccount = async (password, confirmEmail) => {
     try {
-      await authApi.deleteAccount(password);
+      await authApi.deleteAccount(password, confirmEmail);
       clearSession(false);
       return { ok: true };
     } catch (err) {
@@ -184,6 +198,7 @@ export const AuthProvider = ({ children }) => {
     sessionExpired,
     clearError,
     login,
+    loginWithGoogle,
     register,
     logout,
     updateProfile,

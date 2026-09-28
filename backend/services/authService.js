@@ -6,30 +6,50 @@ CREATE TABLE IF NOT EXISTS users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
     username VARCHAR(80) NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NULL,              -- NULL for accounts that only use Google
+    google_sub VARCHAR(64) NULL UNIQUE,           -- Google account id ("sub"), when linked
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     last_login_at DATETIME NULL
 )`;
 
+// Tables created before Google sign-in: add google_sub and allow password-less accounts
+const migrateUsersTable = async () => {
+    const [cols] = await db.query(
+        `SELECT COLUMN_NAME, IS_NULLABLE FROM information_schema.COLUMNS
+         WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'users'`
+    );
+    const byName = Object.fromEntries(cols.map((c) => [c.COLUMN_NAME, c]));
+    if (!byName.google_sub) {
+        await db.query("ALTER TABLE users ADD COLUMN google_sub VARCHAR(64) NULL");
+        await db.query("ALTER TABLE users ADD UNIQUE KEY uq_users_google_sub (google_sub)");
+    }
+    if (byName.password_hash && byName.password_hash.IS_NULLABLE === "NO") {
+        await db.query("ALTER TABLE users MODIFY password_hash VARCHAR(255) NULL");
+    }
+};
+
 // Created lazily, once per process (retried if the first attempt fails)
 let usersReady = null;
 const ensureUsersTable = () => {
     if (!usersReady) {
-        usersReady = db.query(USERS_SQL);
+        usersReady = db.query(USERS_SQL).then(migrateUsersTable);
         usersReady.catch(() => { usersReady = null; });
     }
     return usersReady;
 };
 
-// Public shape only: never includes password_hash
-const PUBLIC_FIELDS = "id, username, email, created_at";
+// Public shape only: never includes password_hash or google_sub themselves
+const PUBLIC_FIELDS = `id, username, email, created_at,
+    password_hash IS NOT NULL AS has_password, google_sub IS NOT NULL AS google_linked`;
 
 const toPublicUser = (row) => (row ? {
     id: Number(row.id),
     username: row.username,
     email: row.email,
     created_at: row.created_at,
+    has_password: Boolean(Number(row.has_password)),
+    google_linked: Boolean(Number(row.google_linked)),
 } : null);
 
 const findUserById = async (id) => {
@@ -42,8 +62,14 @@ const findUserById = async (id) => {
 const findUserWithHash = async ({ id, email }) => {
     await ensureUsersTable();
     const [rows] = id !== undefined
-        ? await db.query(`SELECT ${PUBLIC_FIELDS}, password_hash FROM users WHERE id = ?`, [id])
-        : await db.query(`SELECT ${PUBLIC_FIELDS}, password_hash FROM users WHERE email = ?`, [email]);
+        ? await db.query(`SELECT ${PUBLIC_FIELDS}, password_hash, google_sub FROM users WHERE id = ?`, [id])
+        : await db.query(`SELECT ${PUBLIC_FIELDS}, password_hash, google_sub FROM users WHERE email = ?`, [email]);
+    return rows[0] || null;
+};
+
+const findUserByGoogleSub = async (sub) => {
+    await ensureUsersTable();
+    const [rows] = await db.query(`SELECT ${PUBLIC_FIELDS}, google_sub FROM users WHERE google_sub = ?`, [sub]);
     return rows[0] || null;
 };
 
@@ -126,6 +152,7 @@ module.exports = {
     toPublicUser,
     findUserById,
     findUserWithHash,
+    findUserByGoogleSub,
     normaliseEmail,
     normaliseUsername,
     emailError,

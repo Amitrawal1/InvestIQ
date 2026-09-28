@@ -28,6 +28,7 @@ Real user accounts replace the offline demo login. Signed-in users can link **Up
 | `BROKER_TOKEN_KEY` | 64 hex chars, AES-256-GCM key for broker tokens |
 | `FRONTEND_URL` | Where OAuth callbacks send the browser back, e.g. `http://127.0.0.1:5173` locally, the Vercel frontend URL in production |
 | `UPSTOX_CLIENT_ID`, `UPSTOX_CLIENT_SECRET`, `UPSTOX_REDIRECT_URI` | Existing Upstox app (redirect `https://invest-backend.vercel.app/upstox/callback`) |
+| `GOOGLE_CLIENT_ID` | "Continue with Google" (Google Cloud -> OAuth client ID, Web application; origins = frontend URLs). Not secret. Unset -> the button is hidden |
 | `ZERODHA_API_KEY`, `ZERODHA_API_SECRET` | Kite Connect app (redirect URL in the Kite developer console: `https://invest-backend.vercel.app/brokers/zerodha/callback`) |
 
 Missing broker env vars -> that broker's connect endpoint returns 503 `{ message: "Zerodha linking isn't configured yet" }`; the rest keeps working.
@@ -85,10 +86,16 @@ Auth (`/auth`):
 |---|---|
 | `POST /auth/register` | `{ username, email, password }` (password >= 8 chars) -> `{ token, user }`; 409 if email exists |
 | `POST /auth/login` | `{ email, password }` -> `{ token, user }`; 401 `{ message: "Invalid email or password" }` |
+| `GET /auth/config` | -> `{ google_client_id }` (null when Google sign-in isn't set up) |
+| `POST /auth/google` | `{ credential }` (Google Identity Services ID token, verified against Google's public keys: RS256, issuer, audience = `GOOGLE_CLIENT_ID`, expiry, verified email) -> `{ token, user }`. Signs in the account with that Google id; else links Google to the account with the same email; else creates a password-less account (201). 409 `GOOGLE_MISMATCH` if the email is linked to another Google account |
 | `GET /auth/me` | -> `{ user }` (`{ id, username, email, created_at }`); 401 if token missing/invalid/expired |
 | `PATCH /auth/me` | `{ username?, email? }` -> `{ user }`; 409 if email taken |
-| `POST /auth/password` | `{ current_password, new_password }` -> `{ success: true }` |
-| `DELETE /auth/me` | `{ password }` -> deletes user, broker connections (disconnecting them) and snapshots |
+| `POST /auth/password` | `{ current_password, new_password }` -> `{ success: true }`; Google-only accounts set a first password without `current_password` |
+| `DELETE /auth/me` | `{ password }` (Google-only accounts: `{ confirm_email }`) -> deletes user, broker connections (disconnecting them) and snapshots |
+
+`users` also has `google_sub VARCHAR(64) NULL UNIQUE`, and `password_hash` is nullable (Google-only
+accounts); older tables are migrated on first use. The public user object adds `has_password` and
+`google_linked`.
 
 Brokers (`/brokers`, all require auth except callbacks):
 | Route | Result |

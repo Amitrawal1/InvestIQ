@@ -10,6 +10,7 @@ const {
     toPublicUser,
     findUserById,
     findUserWithHash,
+    findUserByGoogleSub,
     normaliseEmail,
     normaliseUsername,
     emailError,
@@ -21,6 +22,7 @@ const {
     clearFailures,
 } = require("../services/authService");
 const { deleteAllForUser } = require("../services/portfolioService");
+const { verifyGoogleIdToken, isGoogleConfigured, googleClientId, GoogleTokenError } = require("../services/googleAuth");
 
 const fail = (res, status, message, code) => res.status(status).json({ success: false, message, ...(code ? { code } : {}) });
 
@@ -30,7 +32,8 @@ const serverError = (res, error, what) => {
 };
 
 const EMAIL_TAKEN = "An account with this email already exists";
-const BAD_LOGIN = "Invalid email or password";
+// Same text whether the account is missing, the password is wrong or the account only uses Google
+const BAD_LOGIN = "Invalid email or password. If you signed up with Google, use Continue with Google.";
 
 const clientIp = (req) => req.ip || req.socket?.remoteAddress || "unknown";
 
@@ -102,6 +105,65 @@ const login = async (req, res) => {
     }
 };
 
+// GET /auth/config -> public sign-in options for the frontend (the Google client id isn't secret)
+const config = (req, res) => res.json({
+    success: true,
+    google_client_id: isAuthConfigured() && isGoogleConfigured() ? googleClientId() : null,
+});
+
+// Google display name -> username (the same rules as a typed one)
+const usernameFromGoogle = (profile) => {
+    const name = normaliseUsername(profile.name) || profile.email.split("@")[0];
+    return name.slice(0, 80) || "investor";
+};
+
+// POST /auth/google { credential } (a Google Identity Services ID token)
+// Signs in the account linked to this Google id; else links Google to the account with the same
+// (Google-verified) email; else creates a new password-less account.
+const google = async (req, res) => {
+    if (!ensureConfigured(res)) return;
+    if (!isGoogleConfigured()) return fail(res, 503, "Google sign-in isn't set up yet", "GOOGLE_NOT_CONFIGURED");
+
+    let profile;
+    try {
+        profile = await verifyGoogleIdToken(req.body?.credential);
+    } catch (error) {
+        if (error instanceof GoogleTokenError) return fail(res, 401, "Google sign-in failed. Try again.", "GOOGLE_INVALID");
+        return serverError(res, error, "Google token check");
+    }
+
+    try {
+        let row = await findUserByGoogleSub(profile.sub);
+        if (!row) {
+            const existing = await findUserWithHash({ email: profile.email });
+            if (existing && existing.google_sub && existing.google_sub !== profile.sub) {
+                return fail(res, 409, "This email is linked to a different Google account", "GOOGLE_MISMATCH");
+            }
+            if (existing) {
+                await db.query("UPDATE users SET google_sub = ? WHERE id = ?", [profile.sub, existing.id]);
+                row = existing;
+            } else {
+                try {
+                    const [result] = await db.query(
+                        "INSERT INTO users (email, username, password_hash, google_sub, last_login_at) VALUES (?, ?, NULL, ?, ?)",
+                        [profile.email, usernameFromGoogle(profile), profile.sub, new Date()]
+                    );
+                    return res.status(201).json(session(await findUserById(result.insertId)));
+                } catch (error) {
+                    // Two sign-ins at once: the other request created the account first
+                    if (!isDuplicateKey(error)) throw error;
+                    row = await findUserByGoogleSub(profile.sub);
+                    if (!row) return fail(res, 409, EMAIL_TAKEN, "EMAIL_TAKEN");
+                }
+            }
+        }
+        await db.query("UPDATE users SET last_login_at = ? WHERE id = ?", [new Date(), row.id]);
+        res.json(session(await findUserById(row.id)));
+    } catch (error) {
+        serverError(res, error, "Google sign-in");
+    }
+};
+
 // GET /auth/me
 const me = (req, res) => res.json({ success: true, user: req.user });
 
@@ -151,12 +213,14 @@ const checkOwnPassword = async (req, res, password) => {
 };
 
 // POST /auth/password { current_password, new_password }
+// Google-only accounts (no password yet) set their first password without current_password.
 const changePassword = async (req, res) => {
     const invalid = passwordError(req.body?.new_password, "New password");
     if (invalid) return fail(res, 400, invalid, "VALIDATION");
 
     try {
-        if (!(await checkOwnPassword(req, res, req.body?.current_password))) return;
+        const row = await findUserWithHash({ id: req.user.id });
+        if (row?.password_hash && !(await checkOwnPassword(req, res, req.body?.current_password))) return;
         await db.query("UPDATE users SET password_hash = ? WHERE id = ?", [await hashPassword(req.body.new_password), req.user.id]);
         res.json({ success: true });
     } catch (error) {
@@ -165,9 +229,15 @@ const changePassword = async (req, res) => {
 };
 
 // DELETE /auth/me { password } -> disconnects brokers, deletes snapshots and the account
+// Accounts without a password (Google-only) confirm by typing their email: { confirm_email }
 const deleteMe = async (req, res) => {
     try {
-        if (!(await checkOwnPassword(req, res, req.body?.password))) return;
+        const row = await findUserWithHash({ id: req.user.id });
+        if (row?.password_hash) {
+            if (!(await checkOwnPassword(req, res, req.body?.password))) return;
+        } else if (normaliseEmail(req.body?.confirm_email) !== row?.email) {
+            return fail(res, 400, "Type your account email to confirm", "CONFIRM_EMAIL");
+        }
         await deleteAllForUser(req.user.id);
         await db.query("DELETE FROM users WHERE id = ?", [req.user.id]);
         res.json({ success: true });
@@ -176,4 +246,4 @@ const deleteMe = async (req, res) => {
     }
 };
 
-module.exports = { register, login, me, updateMe, changePassword, deleteMe };
+module.exports = { register, login, google, config, me, updateMe, changePassword, deleteMe };
