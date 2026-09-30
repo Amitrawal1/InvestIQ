@@ -7,6 +7,7 @@ import NewsItem, { formatWhen } from "../components/NewsItem";
 import { PageHeading, MonoLabel, TouchPill, LiveDot } from "../components/ui";
 import { getNews, getNewsStats } from "../services/api";
 import { fmt } from "../data/sectorMeta";
+import usePageTitle from "../hooks/usePageTitle";
 
 const PAGE_SIZE = 25;
 
@@ -20,6 +21,7 @@ const StatusLine = ({ children, tone = "muted" }) => (
 );
 
 export default function News() {
+  usePageTitle("Market News");
   const [sentiment, setSentiment] = useState("All");
   const [importance, setImportance] = useState("All");
   const [confidentOnly, setConfidentOnly] = useState(false);

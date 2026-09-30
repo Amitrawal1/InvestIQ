@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
-import { ArrowUpRight, Check, KeyRound, Link2, LogOut, Monitor, Moon, Sun, Trash2, Unplug } from "lucide-react";
+import { ArrowUpRight, Check, Download, KeyRound, Link2, LogOut, Monitor, Moon, ShieldCheck, Sun, Trash2, Unplug } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { PageHeading, Panel, MonoLabel, SectionLabel, PrimaryButton, fadeUp, stagger } from "../components/ui";
@@ -11,7 +11,9 @@ import ConfirmDialog, { ghostButton, dangerButton } from "../components/ConfirmD
 import {
   BROKER_ORDER, CONSENT_NOTE, BrokerStatus, DisconnectDialog, brokerName, connectionState, useBrokerConnect,
 } from "../components/brokers";
-import { apiError, getBrokers } from "../services/api";
+import { apiError, getBrokers, getMe, getPortfolio } from "../services/api";
+import { SITE } from "../data/site";
+import usePageTitle from "../hooks/usePageTitle";
 
 const MIN_PASSWORD = 8;
 
@@ -406,6 +408,94 @@ function LinkedBrokers() {
   );
 }
 
+const POLICY_LINKS = [
+  { to: "/privacy", label: "Privacy Policy" },
+  { to: "/terms", label: "Terms of Use" },
+  { to: "/disclaimer", label: "Investment Disclaimer" },
+  { to: "/help", label: "Help & Contact" },
+];
+
+// Right of access (DPDP Act): everything the API holds about the user, as one JSON file.
+// Broker tokens are never sent to the browser, so they can't leak into the export.
+function PrivacyData() {
+  const [busy, setBusy] = useState(false);
+  const [status, setStatus] = useState("");
+  const [error, setError] = useState("");
+
+  const download = async () => {
+    setBusy(true);
+    setStatus("");
+    setError("");
+    try {
+      const [profile, brokers, portfolio] = await Promise.allSettled([getMe(), getBrokers(), getPortfolio()]);
+      const value = (r) => (r.status === "fulfilled" ? r.value : { error: apiError(r.reason, "Unavailable") });
+      const data = {
+        exported_at: new Date().toISOString(),
+        service: SITE.name,
+        account: value(profile),
+        linked_brokers: value(brokers),
+        portfolio: value(portfolio),
+        stored_in_this_browser: ["token (your sign-in session)", "investiq-theme (theme preference)"],
+      };
+      const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `investiq-data-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      setStatus("Download started");
+    } catch (err) {
+      setError(apiError(err, "Couldn't prepare your data. Try again."));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="max-w-[640px] space-y-4">
+      <Panel className="divide-y divide-gray-800">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-6 md:px-8 py-6">
+          <div className="min-w-0">
+            <span className="text-sm text-white">Download my data</span>
+            <p className="mt-2 text-[12px] text-gray-500 leading-relaxed max-w-[360px]">
+              Your profile, linked brokers and synced portfolio as a JSON file. Broker access tokens are never included.
+            </p>
+          </div>
+          <button type="button" onClick={download} disabled={busy} className={`${ghostButton} shrink-0`}>
+            <Download size={13} strokeWidth={1.5} /> {busy ? "Preparing…" : "Download"}
+          </button>
+        </div>
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 px-6 md:px-8 py-6">
+          <div className="min-w-0">
+            <span className="text-sm text-white">What we store</span>
+            <p className="mt-2 text-[12px] text-gray-500 leading-relaxed max-w-[360px]">
+              No ads, no analytics, no tracking cookies. This browser keeps only your sign-in session and theme.
+              Privacy requests: {SITE.contactEmail}.
+            </p>
+          </div>
+          <ShieldCheck size={18} strokeWidth={1.5} className="shrink-0 text-green-500" aria-hidden="true" />
+        </div>
+        <ul className="flex flex-wrap gap-x-6 gap-y-3 px-6 md:px-8 py-5">
+          {POLICY_LINKS.map((l) => (
+            <li key={l.to}>
+              <Link to={l.to} className="inline-flex items-center gap-1.5 touch:min-h-11 text-[11px] font-mono tracking-widest uppercase text-gray-300 hover:text-white transition-colors">
+                {l.label} <ArrowUpRight size={13} strokeWidth={1.5} />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Panel>
+      {(status || error) && (
+        <p role="status" className={`text-[11px] font-mono tracking-wider uppercase ${error ? "text-red-400" : "text-green-500"}`}>
+          {error || status}
+        </p>
+      )}
+    </div>
+  );
+}
+
 function DeleteAccount() {
   const { deleteAccount, user } = useAuth();
   // Google-only accounts confirm by typing their email (they have no password)
@@ -486,6 +576,7 @@ function DeleteAccount() {
 }
 
 export default function Settings() {
+  usePageTitle("Settings");
   const { hash } = useLocation();
 
   // Support /settings#profile (e.g. "Edit profile" in the navbar menu)
@@ -504,7 +595,7 @@ export default function Settings() {
       <section className="px-6 md:px-16 pt-12 pb-12">
         <PageHeading index="06" label="Account" title="SETTINGS">
           <p className="text-[10px] font-mono tracking-widest uppercase text-gray-400 leading-relaxed max-w-[360px] lg:text-right">
-            Your profile, password, linked brokers, how InvestIQ looks, and your account.
+            Your profile, password, linked brokers, how InvestIQ looks, your data, and your account.
           </p>
         </PageHeading>
       </section>
@@ -525,11 +616,15 @@ export default function Settings() {
         <Appearance />
       </Section>
 
-      <Section id="account" index="05" label="Account" title="Session">
+      <Section id="privacy" index="05" label="Privacy" title="Privacy & data">
+        <PrivacyData />
+      </Section>
+
+      <Section id="account" index="06" label="Account" title="Session">
         <Account />
       </Section>
 
-      <Section id="delete-account" index="06" label="Danger zone" title="Delete account">
+      <Section id="delete-account" index="07" label="Danger zone" title="Delete account">
         <DeleteAccount />
       </Section>
 

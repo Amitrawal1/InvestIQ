@@ -8,11 +8,13 @@ import { PageHeading, MonoLabel, TouchPill, HScroll } from "../components/ui";
 import { RankingTable, Disclaimer, StatusLine, LABELS, SORTS, selectClass, fmtDate } from "../components/rankings";
 import { getRankings, getRankingsMeta, getSectors, getSectorIndustries } from "../services/api";
 import { fmt } from "../data/sectorMeta";
+import usePageTitle from "../hooks/usePageTitle";
 
 const PAGE_SIZE = 50;
 
 // Full growth ranking across every company. Filters live in the URL so a view is shareable.
 export default function Predictor() {
+  usePageTitle("Company Rankings");
   const [params, setParams] = useSearchParams();
   const sector = params.get("sector") || "";
   const industry = params.get("industry") || "";

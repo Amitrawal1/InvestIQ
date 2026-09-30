@@ -17,6 +17,7 @@ import {
 } from "../components/brokers";
 import useChartTheme from "../hooks/useChartTheme";
 import { apiError, getPortfolio, syncBroker } from "../services/api";
+import usePageTitle from "../hooks/usePageTitle";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, Filler);
 
@@ -721,6 +722,7 @@ function Insights({ insights, holdings }) {
 let noticeSeq = 0;
 
 export default function Portfolio() {
+  usePageTitle("Portfolio");
   const [params, setParams] = useSearchParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);

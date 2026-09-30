@@ -8,6 +8,7 @@ import MarketTicker from "../components/MarketTicker"
 import Footer from "../components/Footer"
 import LiveClock from "../components/LiveClock"
 import { fadeUp, stagger, SectionLabel, Pill, PrimaryButton } from "../components/ui"
+import usePageTitle from "../hooks/usePageTitle"
 
 const highlights = [
     { icon: Newspaper, label: "News Alerts", text: "Breaking financial news, filtered to what moves Indian equities.", to: "/news" },
@@ -19,6 +20,7 @@ const highlights = [
 const MotionLink = motion.create(Link)
 
 export default function Home() {
+    usePageTitle("Home")
     const navigate = useNavigate()
     const { hash } = useLocation()
 

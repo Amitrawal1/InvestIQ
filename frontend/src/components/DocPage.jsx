@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "motion/react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -55,6 +55,14 @@ export const Table = ({ head, rows }) => (
 
 export default function DocPage({ index, label, title, tabTitle, intro, updated, sections, children }) {
   usePageTitle(tabTitle || title);
+  const { hash } = useLocation();
+
+  // Deep links such as /about#methodology land on their section (App's ScrollToTop skips hashes)
+  useEffect(() => {
+    if (!hash) return;
+    const el = document.getElementById(decodeURIComponent(hash.slice(1)));
+    if (el) requestAnimationFrame(() => el.scrollIntoView({ block: "start" }));
+  }, [hash]);
 
   return (
     <div className="min-h-screen w-full bg-page text-white font-sans overflow-x-clip">

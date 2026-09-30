@@ -12,6 +12,12 @@ import News from './pages/News';
 import Company from './pages/Company';
 import Settings from './pages/Settings';
 import Portfolio from './pages/Portfolio';
+import About from './pages/About';
+import Help from './pages/Help';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
+import Disclaimer from './pages/Disclaimer';
+import NotFound from './pages/NotFound';
 
 
 // New page -> start at the top (links like /home#sectors scroll to their section instead)
@@ -66,8 +72,14 @@ const App = () => {
             <Route path="predictor" element={<PrivateRoute><Predictor /></PrivateRoute>} />
             <Route path="portfolio" element={<PrivateRoute><Portfolio /></PrivateRoute>} />
             <Route path="settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
-            {/* Fallback paths redirect */}
-            <Route path="*" element={<Navigate to="/home" replace />} />
+            {/* Company, support and legal pages (public) */}
+            <Route path="about" element={<About />} />
+            <Route path="help" element={<Help />} />
+            <Route path="contact" element={<Navigate to="/help#contact" replace />} />
+            <Route path="privacy" element={<Privacy />} />
+            <Route path="terms" element={<Terms />} />
+            <Route path="disclaimer" element={<Disclaimer />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </Router>

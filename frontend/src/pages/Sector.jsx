@@ -10,6 +10,7 @@ import SourcePill from "../components/SourcePill";
 import { PageHeading, MonoLabel, TouchPill, HScroll } from "../components/ui";
 import { useSectors, useSectorCompanies } from "../hooks/useSectorData";
 import { getSectorMeta, pad, fmt } from "../data/sectorMeta";
+import usePageTitle from "../hooks/usePageTitle";
 
 const BackLink = () => (
   <Link
@@ -22,6 +23,7 @@ const BackLink = () => (
 
 export default function Sector() {
   const { slug } = useParams();
+  usePageTitle(slug ? slug.split("-").filter(Boolean).map((w) => w[0].toUpperCase() + w.slice(1)).join(" ") : "Sector");
   const navigate = useNavigate();
 
   const { sectors, source, loading, error } = useSectors();

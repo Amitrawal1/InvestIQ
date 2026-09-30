@@ -14,6 +14,7 @@ import { CompareChart, QuarterlyChart, ScoreHistoryChart } from "../components/C
 import {
   getCompanyDetails, getCompanyFinancials, getCompanyPrices, getCompanyNews, getNews,
 } from "../services/api";
+import usePageTitle from "../hooks/usePageTitle";
 
 const RANGES = [["6m", "6M"], ["1y", "1Y"], ["3y", "3Y"], ["5y", "5Y"], ["max", "MAX"]];
 
@@ -89,6 +90,7 @@ const Stat = ({ label, children, sub }) => (
 
 export default function Company() {
   const { symbol } = useParams();
+  usePageTitle(symbol ? symbol.toUpperCase() : "Company");
   const [detail, setDetail] = useState(null); // { profile, ranking, score_history }
   const [status, setStatus] = useState("loading"); // loading | ok | notfound | error
 

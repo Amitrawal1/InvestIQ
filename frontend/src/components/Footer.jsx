@@ -20,10 +20,20 @@ const columns = [
     ],
   },
   {
-    title: 'Account',
+    title: 'Company',
     links: [
-      { label: 'Sign In', to: '/login' },
-      { label: 'Intro', to: '/' },
+      { label: 'About', to: '/about' },
+      { label: 'How It Works', to: '/about#methodology' },
+      { label: 'Help & Contact', to: '/help' },
+      { label: 'Settings', to: '/settings' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
+      { label: 'Privacy Policy', to: '/privacy' },
+      { label: 'Terms of Use', to: '/terms' },
+      { label: 'Disclaimer', to: '/disclaimer' },
     ],
   },
 ];
@@ -31,7 +41,7 @@ const columns = [
 export default function Footer() {
   return (
     <footer className="w-full bg-surface text-white border-t border-gray-800 mt-24 overflow-hidden">
-      <div className="px-6 md:px-16 py-16 grid grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-10 md:gap-12">
+      <div className="px-6 md:px-16 py-16 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-x-6 gap-y-10 md:gap-12">
         <div className="col-span-2 space-y-6">
           <span className="font-black text-2xl tracking-tight">INVEST IQ</span>
           <p className="text-[10px] font-mono tracking-widest uppercase leading-relaxed text-gray-400 max-w-[320px]">
@@ -71,8 +81,11 @@ export default function Footer() {
       </motion.div>
 
       <div className="border-t border-gray-800 px-6 md:px-16 pt-8 pb-[max(2rem,env(safe-area-inset-bottom))] flex flex-col md:flex-row justify-between gap-4 text-[10px] font-mono tracking-widest uppercase text-gray-500">
-        <span>Quantifying the impact of global financial news</span>
-        <span>© {new Date().getFullYear()} InvestIQ. Not investment advice.</span>
+        <span>© {new Date().getFullYear()} InvestIQ · Made in India</span>
+        <span className="md:text-right">
+          Not SEBI registered. Not investment advice.{' '}
+          <Link to="/disclaimer" className="text-gray-400 hover:text-white underline underline-offset-4 decoration-gray-700 transition-colors">Read the disclaimer</Link>
+        </span>
       </div>
     </footer>
   );

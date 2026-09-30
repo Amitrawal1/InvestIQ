@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Logo from '../components/Logo';
 import GoogleSignIn from '../components/GoogleSignIn';
 import { fadeUp, stagger, SectionLabel, PrimaryButton, Panel } from '../components/ui';
+import usePageTitle from '../hooks/usePageTitle';
 
 const Field = ({ label, type = 'text', value, onChange, placeholder, autoComplete }) => (
   <label className="block">
@@ -38,6 +39,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [validationError, setValidationError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  usePageTitle(isRegister ? 'Create account' : 'Sign in');
 
   const { login, loginWithGoogle, register, error, clearError } = useAuth();
   const navigate = useNavigate();
@@ -192,7 +194,21 @@ const Login = () => {
             <PrimaryButton type="submit" icon={ArrowRight} disabled={submitting} className="w-full">
               {submitting ? 'Please wait…' : isRegister ? 'Create account' : 'Sign in'}
             </PrimaryButton>
+
+            {!isRegister && (
+              <Link to="/help#faq" className="block -mt-4 text-center text-[10px] font-mono tracking-widest uppercase text-gray-500 hover:text-white transition-colors">
+                Forgot password?
+              </Link>
+            )}
           </form>
+
+          {/* Clickwrap consent: covers email sign-up and Continue with Google */}
+          <p className="mt-8 text-[12px] leading-relaxed text-gray-500">
+            By continuing you confirm you are 18 or older and agree to the{' '}
+            <Link to="/terms" className="text-gray-300 underline underline-offset-4 decoration-gray-700 hover:text-white">Terms of Use</Link> and{' '}
+            <Link to="/privacy" className="text-gray-300 underline underline-offset-4 decoration-gray-700 hover:text-white">Privacy Policy</Link>.
+            InvestIQ is a research tool, not investment advice.
+          </p>
 
           <div className="mt-10 pt-4 md:pt-6 border-t border-gray-800 flex flex-wrap justify-between items-center gap-x-4 text-[10px] font-mono tracking-widest uppercase text-gray-500">
             <span>{isRegister ? 'Already have an account?' : "Don't have an account?"}</span>
