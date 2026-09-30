@@ -329,6 +329,34 @@ def _market_news_text(row):
             [(0.84 - 0.02 * i, t) for i, t in enumerate(risks)])
 
 
+# Risk text for stocks whose price has already run far (the market model rewards trend, so these
+# rank high). Liquid stocks 2017-2026 (growth_model labels): up > 100% in 6 months or >= 60% above
+# the 200-day average (~3% of stocks per date) still beat the Smallcap 250 on average over 12m
+# (+19% mean excess) but with a -4% median, and 19.6% fell 30%+ vs 16.6% of the rest.
+EXTENDED_RET_6M = 1.0
+EXTENDED_MA200_GAP = 0.6
+# Profit growth above this (x100 %) is almost always off a small base and won't repeat at that pace
+LOW_BASE_GROWTH = 3.0
+
+
+def _caution_risks(row):
+    """Extended-price and low-base-profit cautions (text only; they don't change the score)."""
+    out = []
+    r6, gap = _num(row.get("return_6m")), _num(row.get("ma200_gap"))
+    if not bool(row.get("price_stale", True)) and (
+            (_ok(r6) and r6 > EXTENDED_RET_6M) or (_ok(gap) and gap >= EXTENDED_MA200_GAP)):
+        what = f"up {r6 * 100:.0f}% in 6 months" if _ok(r6) and r6 > EXTENDED_RET_6M \
+            else f"{gap * 100:.0f}% above its 200-day average"
+        out.append(f"Price already stretched ({what}): historically about 1 in 5 such stocks fell 30%+ within a year")
+    ttm, g_ttm, g_q = (_num(row.get(k)) for k in ("net_profit_ttm", "net_profit_ttm_growth", "net_profit_yoy"))
+    if _ok(ttm) and ttm > 0 and _ok(g_ttm) and g_ttm > LOW_BASE_GROWTH:
+        out.append(f"Profit growth is off a small base (TTM {crore(ttm)} vs {crore(ttm / (1 + g_ttm))} a year ago); "
+                   f"unlikely to continue at this pace")
+    elif _ok(g_q) and g_q > LOW_BASE_GROWTH:
+        out.append(f"Quarterly profit up {g_q * 100:.0f}% YoY from a small base; unlikely to continue at this pace")
+    return out
+
+
 def explain(row, fsrow):
     if row["is_fin_sector"]:
         fr, fk, flags = explain_fin(row, fsrow)
@@ -350,6 +378,8 @@ def explain(row, fsrow):
     tv = _num(row.get("avg_traded_value_3m_cr"))
     if _ok(tv) and tv < THIN_TRADING_CR and not bool(row.get("price_stale", True)):
         risks = risks[:3] + [f"Thinly traded: about Rs {tv * 100:.0f} lakh a day over 3 months"] + risks[3:]
+    # Cautions come right after red flags: a high score shouldn't read as risk-free
+    risks = _caution_risks(row) + risks
     # build.explain prints "within -0%" for a stock exactly at its 52-week high (left as is for prelim-v2)
     reasons = [t.replace("Trading within -0% of", "Trading at") for t in reasons]
     return reasons[:5], (flags + risks)[:5]
