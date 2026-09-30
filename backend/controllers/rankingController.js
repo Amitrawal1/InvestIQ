@@ -35,6 +35,24 @@ const METHOD = "Preliminary growth score (to be replaced by InvestIQ's machine-l
     + "The group percentiles are averaged into a 0-100 score, companies with too little data are shown "
     + "as unranked, and the score is a screening aid, not investment advice.";
 
+const INVESTIQ_V1_METHOD = "InvestIQ score (investiq-v1): 70% market model, 30% financial model, plus a small news weight. "
+    + "The market model measures how strongly the price trend confirms the business - distance from "
+    + "the 52-week high, position versus the 200-day and 50-day averages, 3- and 6-month returns "
+    + "relative to the NIFTY Smallcap 250 and how few down days the stock has had. The financial model "
+    + "scores revenue and profit growth, profitability, balance-sheet health and cash-flow quality "
+    + "from the company's own filings, using only results that were public at the time. In "
+    + "walk-forward tests over 2019-2026 this mix ranked future 6- and 12-month out-performers about "
+    + "twice as well as the earlier preliminary score. A fresh financial reading is required to be "
+    + "ranked, and red flags that have historically preceded under-performance (negative equity; for "
+    + "banks, NBFCs and insurers also worsening asset quality and capital near the regulatory minimum) "
+    + "cost points. Banks, NBFCs and insurers are scored mainly on price trend, with their NPAs, "
+    + "capital, ROA/ROE and cost ratios shown against their own peer group. Scores are percentiles "
+    + "from 0 to 100; companies with too little data are shown as unranked. This is a screening aid, "
+    + "not investment advice.";
+
+// Text shown on /rankings/meta, by the latest snapshot's model_version (prelim text as fallback)
+const methodFor = (modelVersion) => (modelVersion === "investiq-v1" ? INVESTIQ_V1_METHOD : METHOD);
+
 const toInt = (value, fallback, min, max) => {
     const parsed = Number.parseInt(value, 10);
 
@@ -159,7 +177,7 @@ const getRankingsMeta = async (req, res) => {
                 next_update: nextUpdateAfter(latest ? latest.snapshot_date : null),
                 ranked: latest ? toNum(latest.ranked) : 0,
                 unranked: latest ? toNum(latest.unranked) : 0,
-                method: METHOD,
+                method: methodFor(latest ? latest.model_version : null),
                 snapshots: rows.map((row) => row.snapshot_date),
             };
         }, (value) => value.snapshot_date !== null);

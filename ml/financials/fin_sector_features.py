@@ -69,9 +69,11 @@ None in the parser, so NaN here.
 
 CLI:  python3 -m financials.fin_sector_features --symbols HDFCBANK BAJFINANCE --out fin.csv
       python3 -m financials.fin_sector_features --refresh-extract --check 300 --out fin.csv
+      python3 -m financials.fin_sector_features --push-db      # refresh the DB copy CI reads
 """
 
 import argparse
+import json
 import time
 from multiprocessing import Pool
 from pathlib import Path
@@ -620,6 +622,8 @@ def main(argv=None):
     parser.add_argument("--out", help="write the feature table to this CSV")
     parser.add_argument("--refresh-extract", action="store_true",
                         help=f"re-parse the cached XBRL into {EXTRACT_FILE.relative_to(ML_DIR)}")
+    parser.add_argument("--push-db", action="store_true",
+                        help=f"also replace the DB copy ({DB_TABLE}) that CI reads")
     parser.add_argument("--check", type=int, default=0, metavar="N",
                         help="recompute N sampled rows from truncated history (look-ahead check)")
     args = parser.parse_args(argv)
@@ -628,11 +632,15 @@ def main(argv=None):
     warnings.filterwarnings("ignore", message="pandas only supports SQLAlchemy")
 
     conn = None
-    if args.refresh_extract or not EXTRACT_FILE.exists():
+    if args.refresh_extract or args.push_db or not EXTRACT_FILE.exists():
         from news_pipeline.db import get_connection
         conn = get_connection()
     try:
         extract_table = load_extract(conn, args.symbols, refresh=args.refresh_extract)
+        if args.push_db:
+            if args.symbols:
+                raise SystemExit("--push-db replaces the whole DB copy: run it without --symbols")
+            print(f"pushed {push_extract(conn, extract_table):,} filings to {DB_TABLE}")
     finally:
         if conn is not None:
             conn.close()

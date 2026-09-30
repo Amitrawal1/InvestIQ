@@ -4,3 +4,7 @@ numpy==2.2.6
 mysql-connector-python==26.7.0
 python-dotenv==1.2.1
 certifi
+# investiq-v1 (rankings.build_v3) imports the market/financial model modules
+scipy==1.18.1
+scikit-learn==1.6.1
+xgboost==3.4.1

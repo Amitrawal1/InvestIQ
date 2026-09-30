@@ -1,4 +1,6 @@
-# Rebuild the company growth rankings snapshot (company_rankings) on the 1st and 16th of each month.
+# Rebuild the company growth rankings snapshot (company_rankings, model investiq-v1) on the 1st and 16th of each month.
+# Banks/NBFCs/insurers read the fin_sector_extract table; refresh it on the Mac after new filings:
+#   cd ml && python3 -m financials.fin_sector_features --refresh-extract --push-db
 # Writes to TiDB Cloud using the DB_* repository secrets (Settings -> Secrets and variables -> Actions).
 name: Company rankings
 
@@ -32,7 +34,7 @@ jobs:
         run: pip install -r rankings/requirements.txt
 
       - name: Build rankings
-        run: python -m rankings.build
+        run: python -m rankings.build_v3 --publish   # investiq-v1 (70% market + 30% financial + news); prelim-v2: rankings.build
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_PORT: ${{ secrets.DB_PORT }}

@@ -1,6 +1,6 @@
 {
   "model_version": "fin-v1",
-  "created_at": "2026-09-30T18:08:35",
+  "created_at": "2026-09-30T20:05:08",
   "method": "prelim-v2 financial blend (rankings/build.py), unchanged: per-date percentiles of the sub-features -> growth / profitability / financial_health / cash_flow component percentiles, weighted 0.30 / 0.20 / 0.15 / 0.15 renormalised over available components, minus 3 points per red flag (6 for negative equity); no growth component -> 50; financial_score = percentile of that blend among eligible companies x 100. It won the walk-forward against a data-selected blend and XGBoost (see winner_rule).",
   "winner_rule": "baseline: more years with IC > 0 / higher mean IC than the other transparent method; no ML method beat it by >= 0.01 mean IC on both horizons",
   "selection_rule": {

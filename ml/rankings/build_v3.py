@@ -14,12 +14,12 @@ Why this recipe (walk-forward evidence: rankings/combiner_eval.py, V3_COMPARISON
 - combiner weight w (growth_score = w x market + (1 - w) x financial) was chosen by a rule fixed
   before the test (`combiner_eval.choose_w`): max of mean(yearly IC) - 0.5 x std(yearly IC) over
   a pre-declared grid, on training years only per fold (expanding window, purged). On all labelled
-  years (6m and 12m averaged) the rule picks MARKET_WEIGHT = 1.0: 6m alone prefers ~0.7, 12m
-  prefers 1.0, and the difference between 0.7-1.0 is within noise; the financial model adds no
-  reliable ranking power on top of price trend. So the score is price-trend led, and financial
-  statements act as (a) the eligibility gate (a company needs a fresh growth reading to be ranked,
-  as in prelim-v2), (b) the one red-flag penalty the evidence supports, and (c) the reasons / risks
-  text. prelim-v2's weights (80% financial) had IC 0.052 / 0.057 on the same rows.
+  years (6m and 12m averaged) the rule picks w = 1.0: 6m alone prefers ~0.7, 12m prefers 1.0, and
+  the difference between 0.7-1.0 is within noise. The shipped MARKET_WEIGHT = 0.7 (owner's choice
+  within that noise band: 6m IC .065 vs .061 trend-only, 12m .097 vs .102) keeps a 30% business-
+  quality anchor so the list is not a pure momentum screen. Financial statements also act as (a) the
+  eligibility gate (a company needs a fresh growth reading to be ranked, as in prelim-v2), (b) the one
+  red-flag penalty the evidence supports, and (c) the reasons / risks text. prelim-v2's weights (80% financial) had IC 0.052 / 0.057 on the same rows.
 - news has only existed since 2026-08 (no labelled history), so it can't be backtested: it keeps
   the small fixed weight NEWS_WEIGHT = 0.05, as in prelim-v2.
 - banks / NBFCs / insurers (financials/fin_sector_features.py, FIN_SECTOR_REPORT.md): the
@@ -95,7 +95,7 @@ from .build import _num, _ok, _true, crore, pct, pct_rank
 from .combiner_eval import FIN_PENALTY, FIN_SUBFEATURES, fin_asof, fin_scores
 
 MODEL_VERSION = "investiq-v1"
-MARKET_WEIGHT = 1.0          # combiner_eval rule on all labelled years (6m + 12m); see docstring
+MARKET_WEIGHT = 0.7          # user choice: 70% trend + 30% financial (6m IC .065, 12m .097; see docstring)
 FIN_MARKET_WEIGHT = 1.0      # financial sector: recipe not adopted -> price trend led
 ADOPT_FIN_RECIPE = False     # combiner_eval.adopt_fin_recipe result
 NEWS_WEIGHT = 0.05
@@ -108,18 +108,18 @@ COMPONENTS = ["growth", "profitability", "financial_health", "cash_flow", "momen
 FIN_V1_WEIGHTS = {c: v2.WEIGHTS[c] for c in v2.FINANCIAL_COMPONENTS}
 
 METHOD_TEXT = (
-    "InvestIQ score (investiq-v1): companies are ranked mainly by the market model, which measures how "
-    "strongly a stock's price trend is confirming the business - distance from its 52-week high, position "
-    "versus its 200-day and 50-day averages, 3- and 6-month returns relative to the NIFTY Smallcap 250 and "
-    "how few down days it has had. In walk-forward tests over 2019-2026 this was the most reliable signal; "
-    "financial-statement scores added no consistent ranking power on top of it, so they are used to decide "
-    "which companies have enough fresh data to be ranked (a recent growth reading is required), to apply a "
-    "penalty for red flags that have historically preceded under-performance (negative equity; for banks, "
-    "NBFCs and insurers also worsening asset quality and capital near the regulatory minimum), and to explain "
-    "each score in the strengths and risks lists. Banks, NBFCs and insurers are compared with their own peer "
-    "groups on growth, profitability and asset quality. News sentiment has a small fixed weight because its "
-    "history is too short to test. Scores are percentiles from 0 to 100; companies with too little data are "
-    "shown as unranked, and the score is a screening aid, not investment advice."
+    "InvestIQ score (investiq-v1): 70% market model, 30% financial model, plus a small news weight. The "
+    "market model measures how strongly the price trend confirms the business - distance from the 52-week "
+    "high, position versus the 200-day and 50-day averages, 3- and 6-month returns relative to the NIFTY "
+    "Smallcap 250 and how few down days the stock has had. The financial model scores revenue and profit "
+    "growth, profitability, balance-sheet health and cash-flow quality from the company's own filings, using "
+    "only results that were public at the time. In walk-forward tests over 2019-2026 this mix ranked future "
+    "6- and 12-month out-performers about twice as well as the earlier preliminary score. A fresh financial "
+    "reading is required to be ranked, and red flags that have historically preceded under-performance "
+    "(negative equity; for banks, NBFCs and insurers also worsening asset quality and capital near the "
+    "regulatory minimum) cost points. Banks, NBFCs and insurers are scored mainly on price trend, with their "
+    "NPAs, capital, ROA/ROE and cost ratios shown against their own peer group. Scores are percentiles from 0 "
+    "to 100; companies with too little data are shown as unranked. This is a screening aid, not investment advice."
 )
 
 PEER_NAME = {"bank": "banks", "lending_nbfc": "lending NBFCs", "other_nbfc": "NBFC-format peers",
@@ -130,15 +130,19 @@ PEER_NAME = {"bank": "banks", "lending_nbfc": "lending NBFCs", "other_nbfc": "NB
 # Financial sector inputs
 # ---------------------------------------------------------
 
-def load_fin_sector(snap, company_ids):
-    """-> (scored fin_sector rows for D keyed by company_id, in-scope company ids, raw extract or None)."""
-    from financials.fin_sector_features import EXTRACT_FILE, build_feature_table, load_extract, raw_from_extract
+def load_fin_sector(snap, company_ids, conn=None):
+    """-> (scored fin_sector rows for D keyed by company_id, in-scope company ids, raw extract or None).
+    Reads the local extract when present (the Mac with the XBRL cache), else its DB copy (CI)."""
+    from financials.fin_sector_features import (EXTRACT_FILE, build_feature_table, load_extract,
+                                                load_extract_db, raw_from_extract)
 
-    if not EXTRACT_FILE.exists():
-        print(f"warning: {EXTRACT_FILE} missing: banks/NBFCs/insurers get no financial components "
-              f"(run `python3 -m financials.fin_sector_features --refresh-extract` where the XBRL cache is)")
+    extract = load_extract() if EXTRACT_FILE.exists() else (load_extract_db(conn) if conn else None)
+    if extract is None:
+        print(f"warning: no fin_sector extract ({EXTRACT_FILE} or DB table): banks/NBFCs/insurers get no "
+              f"financial components (run `python3 -m financials.fin_sector_features --refresh-extract "
+              f"--push-db` where the XBRL cache is)")
         return pd.DataFrame(columns=["company_id"]), set(), None
-    raw = raw_from_extract(load_extract())
+    raw = raw_from_extract(extract)
     table = build_feature_table(raw)
     in_scope = set(table["company_id"].dropna().astype(int))
     keys = pd.DataFrame({"company_id": sorted(in_scope & set(company_ids)), "snapshot": pd.Timestamp(snap)})
@@ -400,7 +404,7 @@ def load_inputs(conn, snap):
     prices, idx = v2.load_prices(conn, companies["company_id"], snap)
     px, idx_ret = v2.price_signals(prices, idx, snap)
     news = v2.news_signals(v2.load_news(conn, snap))
-    fs, fin_scope, fs_raw = load_fin_sector(snap, companies["company_id"])
+    fs, fin_scope, fs_raw = load_fin_sector(snap, companies["company_id"], conn)
     fs_shares = v2.shares_outstanding(fs_raw, snap) if fs_raw is not None else None
     return dict(companies=companies, fin=fin, shares=shares, px=px, idx_ret=idx_ret, news=news,
                 fs=fs, fin_scope=fin_scope, fs_shares=fs_shares)
