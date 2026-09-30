@@ -129,6 +129,102 @@ NBFC_MARKERS = ("ImpairmentOnFinancialInstruments", "FeesAndCommissionIncome",
 INSURANCE_MARKERS = ("PremiumsEarnedNet", "GrossPremiumIncome", "NetPremiumIncome",
                      "PremiumEarned", "NetPremiumEarned")
 
+# ---------------------------------------------------------------------------
+# Financial-sector lines: the optional `fin_sector` block (banks, NBFCs, insurers)
+#
+# Added after the non-financial schema was fixed, as NEW keys only: a filing detected as
+# non_financial gets no `fin_sector` key and its output is unchanged. Money is crore; ratios are
+# fractions, read as filed (whatever unit they were tagged with) and range-checked.
+# ---------------------------------------------------------------------------
+
+LENDER_FORMATS = ("bank", "nbfc", "insurance")
+
+# Flows (quarter and year-to-date P&L contexts)
+FIN_FLOW_TAGS = {
+    "bank": {
+        "interest_income": ("InterestEarned",),
+        "interest_on_advances": ("InterestOrDiscountOnAdvancesOrBills",),
+        "interest_expense": ("InterestExpended",),
+        "other_income": ("OtherIncome",),
+        "total_income": ("Income",),
+        "operating_expenses": ("OperatingExpenses",),
+        "pre_provision_profit": ("OperatingProfitBeforeProvisionAndContingencies",),
+        "provisions": ("ProvisionsOtherThanTaxAndContingencies",),
+    },
+    "nbfc": {                         # Ind-AS Division III
+        "interest_income": ("InterestEarned", "InterestIncome"),
+        "interest_expense": ("FinanceCosts",),
+        "fee_income": ("FeesAndCommissionIncome",),
+        "other_income": ("OtherIncome",),
+        "total_income": ("Income",),
+        "provisions": ("ImpairmentOnFinancialInstruments",),
+        "total_expenses": ("Expenses",),
+        "profit_before_exceptional": ("ProfitBeforeExceptionalItemsAndTax",),
+    },
+    "insurance": {
+        "gross_premium": ("GrossPremiumsWritten", "GrossPremiumIncome"),
+        "net_premium": ("NetPremiumWritten", "NetPremiumIncome"),
+        "premium_earned": ("PremiumEarned",),
+        "incurred_claims": ("IncurredClaims",),
+        "benefits_paid": ("BenefitsPaidNet",),
+        "commission": ("NetCommission", "Commission"),
+        "investment_income": ("IncomeFromInvestmentsNet",),
+        "underwriting_profit": ("UnderwritingProfitOrLoss",),
+    },
+}
+
+# Point-in-time ratios filed inside the P&L contexts (as of the period end). name -> (tags, lo, hi):
+# a value outside [lo, hi] is a keying error (e.g. 14% filed as 0.0014) and becomes None. An exact
+# 0 is how consolidated bank filings leave these "not applicable", so 0 is None too.
+FIN_RATIO_TAGS = {
+    "bank": {
+        "gross_npa_pct": (("PercentageOfGrossNpa",), 0.0005, 0.6),
+        "net_npa_pct": (("PercentageOfNpa",), 0.0, 0.4),
+        "cet1_ratio": (("CET1Ratio",), 0.03, 0.6),
+        "at1_ratio": (("AdditionalTier1Ratio",), 0.0, 0.3),
+        "roa_reported": (("ReturnOnAssets",), -0.3, 0.1),
+    },
+    "insurance": {
+        "claims_ratio": (("IncurredClaimRatio",), 0.05, 3.0),
+        "combined_ratio": (("CombinedRatio",), 0.3, 3.0),
+        "solvency_ratio": (("SolvencyRatio",), 0.5, 10.0),
+    },
+}
+# Amounts filed in the P&L contexts but meaning "as of the period end" (bank asset quality)
+FIN_POINT_TAGS = {
+    "bank": {"gross_npa": ("GrossNonPerformingAssets",), "net_npa": ("NonPerformingAssets",)},
+}
+
+# Balance sheet (instant context at the period end)
+FIN_BALANCE_TAGS = {
+    "bank": {
+        "advances": ("Advances",), "deposits": ("Deposits",), "investments": ("Investments",),
+        "borrowings": ("Borrowings",), "cash_with_rbi": ("CashAndBalancesWithReserveBankOfIndia",),
+    },
+    "nbfc": {
+        "advances": ("Loans",), "deposits": ("Deposits",), "investments": ("Investments",),
+        "borrowings": ("Borrowings",), "debt_securities": ("DebtSecurities",),
+        "subordinated_liabilities": ("SubordinatedLiabilities",),
+    },
+    "insurance": {
+        "investments": ("Investments",), "policyholders_funds": ("PolicyholdersFunds",),
+        "borrowings": ("Borrowings",),
+    },
+}
+
+# Insurers' P&L: found by these tags (only when the filing is detected as insurance, so other
+# formats pick contexts exactly as before), and the lines that mean the same as the main schema
+INSURANCE_PNL_MARKERS = ("ProfitLossAfterTax", "ProfitLossAfterTaxAndExtraordinaryItems",
+                         "ProfitOrLossBeforeTax", "ProfitLossBeforeTax",
+                         "GrossPremiumsWritten", "GrossPremiumIncome")
+INSURANCE_INCOME_TAGS = {
+    "profit_before_tax": ("ProfitOrLossBeforeTax", "ProfitLossBeforeTax"),
+    "tax": ("ProvisionsForTaxes", "ProvisionForTax"),        # life: shareholders' tax; non-life: tax
+    "net_profit": ("ProfitLossAfterTax", "ProfitLossAfterTaxAndExtraordinaryItems"),
+    "eps_basic": ("BasicAndDilutedEPSAfterExtraordinaryItemsNetOfTaxExpenseForThePeriodNotToBeAnnualized",),
+    "eps_diluted": ("BasicAndDilutedEPSAfterExtraordinaryItemsNetOfTaxExpenseForThePeriodNotToBeAnnualized",),
+}
+
 
 # ---------------------------------------------------------------------------
 # Low-level helpers
@@ -312,7 +408,7 @@ def _detect_format(filing, schema_href):
 
 
 def _income(filing, ctx, fmt, statement_type, warnings, label):
-    tags = BANK_INCOME_TAGS if fmt == "bank" else INCOME_TAGS
+    tags = {"bank": BANK_INCOME_TAGS, "insurance": INSURANCE_INCOME_TAGS}.get(fmt, INCOME_TAGS)
     income = {key: filing.pick(ctx, tags.get(key, ()), warnings, label) for key in INCOME_TAGS}
 
     # Some older filings omit the bottom line but give continuing + discontinued profit
@@ -468,12 +564,96 @@ def _all_zero(section, keys):
     return all(v in (None, 0.0) for v in values)
 
 
+def _raw_ratio(filing, ctx, tags):
+    """A ratio fact as filed, ignoring its unit (ReturnOnAssets is often tagged INR)."""
+    for tag in tags:
+        for text, _ in filing.facts.get(ctx, {}).get(tag, ()):
+            number = _number(text)
+            if number is not None:
+                return number
+    return None
+
+
+def _fin_flows(filing, ctx, fmt, warnings, label):
+    flows = {key: filing.pick(ctx, tags, warnings, label) for key, tags in FIN_FLOW_TAGS[fmt].items()}
+    if fmt in ("bank", "nbfc"):
+        income, expense = flows["interest_income"], flows["interest_expense"]
+        flows["net_interest_income"] = income - expense if income is not None and expense is not None else None
+    if fmt == "nbfc":
+        # Division III has no opex / pre-provision lines: derive them from the totals
+        total, finance, impairment = flows["total_expenses"], flows["interest_expense"], flows["provisions"]
+        flows["operating_expenses"] = (total - finance - impairment
+                                       if None not in (total, finance, impairment) else None)
+        pbe = flows["profit_before_exceptional"]
+        flows["pre_provision_profit"] = pbe + impairment if None not in (pbe, impairment) else None
+    return flows
+
+
+def _fin_point_in_time(filing, contexts, fmt, warnings):
+    """Ratios / NPA amounts as of the period end, from the first P&L context that files them."""
+    out = {}
+    for key, (tags, lo, hi) in FIN_RATIO_TAGS.get(fmt, {}).items():
+        value = next((v for v in (_raw_ratio(filing, c, tags) for c in contexts) if v), None)
+        if value is not None and key == "solvency_ratio" and 0.005 <= value < 0.1:
+            # IRDAI solvency (1.5-3x) filed as a percentage then divided by 100 (e.g. 0.0267 for 2.67)
+            warnings.append(f"fin_sector: solvency ratio {value} looks divided by 100; used {value * 100:g}")
+            value *= 100
+        if value is not None and not lo <= value <= hi:
+            warnings.append(f"fin_sector: {key} {value} outside [{lo}, {hi}]; set to None")
+            value = None
+        out[key] = value
+    for key, tags in FIN_POINT_TAGS.get(fmt, {}).items():
+        out[key] = next((v for v in (filing.pick(c, tags, warnings, "fin_sector") for c in contexts) if v), None)
+    if fmt == "bank" and out.get("net_npa_pct") == 0.0 and not out.get("gross_npa_pct"):
+        out["net_npa_pct"] = None
+    return out
+
+
+def _fin_balance(filing, ctx, fmt, warnings):
+    label = "fin_sector.balance_sheet"
+    sheet = {key: filing.pick(ctx, tags, warnings, label) for key, tags in FIN_BALANCE_TAGS[fmt].items()}
+    # Shareholders' funds: banks and insurers file capital + reserves (insurers' own
+    # ShareholdersFunds line is unreliable); NBFCs file Ind-AS Equity
+    if fmt == "nbfc":
+        sheet["net_worth"] = filing.pick(ctx, ("Equity",), warnings, label)
+    else:
+        capital = filing.pick(ctx, ("Capital", "ShareCapital"), warnings, label)
+        reserves = filing.value(ctx, "ReservesAndSurplus", warnings, label)
+        sheet["net_worth"] = capital + reserves if capital is not None and reserves is not None else None
+    return None if _all_zero(sheet, sheet) else sheet
+
+
+def _fin_sector(filing, fmt, quarter_ctx, ytd_ctx, ytd_months, bs_ctx):
+    """The `fin_sector` block: lender / insurer lines the main schema has no place for.
+
+    Its warnings stay inside the block, so the filing's main `warnings` list is unchanged.
+    """
+    warnings = []
+    block = {"format": fmt,
+             "quarter": _fin_flows(filing, quarter_ctx, fmt, warnings, "fin_sector.quarter"),
+             "ytd": None, "balance_sheet": None}
+    if ytd_ctx is not None:
+        block["ytd"] = {"months": ytd_months, **_fin_flows(filing, ytd_ctx, fmt, warnings, "fin_sector.ytd")}
+    contexts = [quarter_ctx] + ([ytd_ctx] if ytd_ctx is not None else [])
+    block["quarter"].update(_fin_point_in_time(filing, contexts, fmt, warnings))
+    if bs_ctx is not None:
+        block["balance_sheet"] = _fin_balance(filing, bs_ctx, fmt, warnings)
+    block["warnings"] = warnings
+    return block
+
+
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
-def parse_xbrl(xml_text: str) -> dict:
-    """Parse one XBRL results filing into the README contract. Raises ValueError on invalid XML."""
+def parse_xbrl(xml_text: str, fin_sector_format: str | None = None) -> dict:
+    """Parse one XBRL results filing into the README contract. Raises ValueError on invalid XML.
+
+    Filings detected as bank / nbfc / insurance also get a `fin_sector` block (README). Pass
+    `fin_sector_format` to build that block with a given format's tags whatever the detected format
+    (e.g. an NBFC quarter whose markers were missing and that was detected as non_financial);
+    without it, non_financial output is exactly what it always was.
+    """
 
     if isinstance(xml_text, bytes):
         xml_text = xml_text.decode("utf-8", errors="replace")
@@ -519,8 +699,9 @@ def parse_xbrl(xml_text: str) -> dict:
 
     # --- P&L contexts: non-dimensional durations carrying P&L lines --------------------------
     pnl = []
+    pnl_markers = PNL_MARKERS + (INSURANCE_PNL_MARKERS if fmt == "insurance" else ())
     for ctx in filing.facts:
-        if filing.is_dimensional(ctx) or not filing.has_any(ctx, PNL_MARKERS):
+        if filing.is_dimensional(ctx) or not filing.has_any(ctx, pnl_markers):
             continue
         kind, start, end = filing.period(ctx)
         if kind == "duration" and end:
@@ -596,6 +777,15 @@ def parse_xbrl(xml_text: str) -> dict:
             warnings.append("cash flow filed with only zeros; treated as not reported")
         else:
             result["cash_flow"] = flow
+
+    # --- Financial-sector lines (new key; absent for non_financial unless asked for) ----------
+    fin_fmt = fin_sector_format or (fmt if fmt in LENDER_FORMATS else None)
+    if fin_fmt is not None:
+        if fin_fmt not in LENDER_FORMATS:
+            raise ValueError(f"fin_sector_format must be one of {LENDER_FORMATS}, not {fin_fmt!r}")
+        has_ytd = ytd_ctx != quarter_ctx and ytd_months and months and ytd_months > months
+        result["fin_sector"] = _fin_sector(filing, fin_fmt, quarter_ctx, ytd_ctx if has_ytd else None,
+                                           ytd_months if has_ytd else None, bs_ctx)
 
     # --- Lender formats: say what was left out -----------------------------------------------
     if fmt in ("bank", "nbfc", "insurance"):

@@ -322,8 +322,10 @@ def build_row(record, parsed, company_id, error=None):
         if extra:
             unmapped.append(f"{section}: extra keys {extra}")
 
+    # `fin_sector` (bank/NBFC/insurer lines) has no columns yet: it is read from the XBRL cache by
+    # fin_sector_features.extract, so it is left out here on purpose rather than reported as unmapped
     known = {"symbol", "isin", "statement_type", "format", "period_start", "period_end", "months",
-             "warnings", *SECTIONS}
+             "warnings", "fin_sector", *SECTIONS}
     extra = sorted(set(parsed) - known)
     if extra:
         unmapped.append(f"top-level extra keys {extra}")

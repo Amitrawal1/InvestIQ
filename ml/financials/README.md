@@ -18,6 +18,9 @@ liquidity, cash-flow quality) and models are built on top of it later.
 | `store.py` | `financial_filings` table DDL and upserts |
 | `collect.py` | CLI: list filings per company, download XBRL (cached), parse, store. Resumable, rate-limited |
 | `validate.py` | CLI: checks parser output against NSE's JSON figures and accounting identities |
+| `features.py` | Point-in-time features for `non_financial` filings |
+| `fin_sector_features.py` | Point-in-time features for banks, NBFCs and insurers (uses the `fin_sector` block) |
+| `fin_sector_eval.py` | CLI: IC / spread check of those features against 6m/12m excess returns (see FIN_SECTOR_REPORT.md) |
 
 ## Parser contract: `parse_xbrl(xml_text: str) -> dict`
 
@@ -57,8 +60,38 @@ rupees. A value that isn't reported is `None`, never 0.
     "net_change_in_cash",
   },
   "warnings": [str],                # anything odd: missing context, unit guess, sign flips, ...
+  "fin_sector": {                   # ONLY for format bank / nbfc / insurance (absent for non_financial)
+    "format": "bank" | "nbfc" | "insurance",
+    "quarter": {                    # flows of the quarter context + point-in-time ratios filed with it
+      # bank:  interest_income, interest_on_advances, interest_expense, net_interest_income, other_income,
+      #        total_income, operating_expenses, pre_provision_profit, provisions,
+      #        gross_npa, net_npa (crore), gross_npa_pct, net_npa_pct, cet1_ratio, at1_ratio, roa_reported
+      # nbfc:  interest_income, interest_expense (finance costs), net_interest_income, fee_income,
+      #        other_income, total_income, total_expenses, profit_before_exceptional,
+      #        provisions (impairment on financial instruments), operating_expenses and
+      #        pre_provision_profit (derived: expenses - finance costs - impairment; PBT + impairment)
+      # insurance: gross_premium, net_premium, premium_earned, incurred_claims, benefits_paid, commission,
+      #        investment_income, underwriting_profit, claims_ratio, combined_ratio, solvency_ratio
+    },
+    "ytd": None | {"months": int, ...same flow keys...},
+    "balance_sheet": None | {       # advances (NBFC: loans), deposits, investments, borrowings,
+                                    # debt_securities, subordinated_liabilities, cash_with_rbi,
+                                    # policyholders_funds, net_worth (capital + reserves / Ind-AS equity)
+    },
+    "warnings": [str],              # the block's own warnings (the main list is left unchanged)
+  },
 }
 ```
+
+The `fin_sector` block was added as new keys only: every cached non_financial filing parses to
+byte-identical output, and bank/NBFC output is identical apart from the new key (checked on all
+66,839 cached files, see FIN_SECTOR_REPORT.md). Ratios are fractions, read as filed whatever unit
+they are tagged with, and out-of-range values (keying errors) or the 0.00 placeholders consolidated
+bank filings use become None. `parse_xbrl(xml, fin_sector_format="nbfc")` builds the block with a
+given format's tags for a filing detected otherwise. Insurers' P&L contexts are found by their own
+tags (profit after tax, premiums), so insurance filings now parse instead of failing. The block is
+not stored in `financial_filings` yet (no columns); `fin_sector_features.py` reads it from the
+XBRL cache.
 
 Rules:
 - Pick contexts by their dates, not by context-id names (`OneD`, `FourD`, `OneI` are common but not

@@ -1,0 +1,36 @@
+{
+  "model_version": "fin-v1",
+  "method_key": "baseline",
+  "horizons": {
+    "6m": {
+      "features": {
+        "revenue_yoy": 1,
+        "net_profit_yoy": 1,
+        "eps_yoy": 1,
+        "revenue_yoy_accel": 1,
+        "op_margin_q": 1,
+        "op_margin_change_yoy": 1,
+        "profitable": 1,
+        "cash_conversion": 1,
+        "ocf_margin": 1,
+        "accruals_ratio": -1,
+        "filing_lag_days": -1,
+        "log_revenue_ttm": 1
+      }
+    },
+    "12m": {
+      "features": {
+        "revenue_yoy": 1,
+        "net_profit_yoy": 1,
+        "eps_yoy": 1,
+        "revenue_yoy_accel": 1,
+        "net_profit_yoy_accel": 1,
+        "op_margin_change_yoy": 1,
+        "cash_conversion": 1,
+        "fcf_margin": 1,
+        "accruals_ratio": -1,
+        "log_revenue_ttm": 1
+      }
+    }
+  }
+}
