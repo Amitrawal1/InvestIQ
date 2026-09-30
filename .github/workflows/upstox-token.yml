@@ -24,7 +24,7 @@ jobs:
           ADMIN_KEY: ${{ secrets.UPSTOX_ADMIN_KEY }}
           FORCE: ${{ github.event.inputs.force == 'true' && '1' || '0' }}
         run: |
-          if [ -z "$ADMIN_KEY" ]; then echo "::error::Add the UPSTOX_ADMIN_KEY repository secret"; exit 1; fi
+          if [ -z "$ADMIN_KEY" ]; then echo "::warning::UPSTOX_ADMIN_KEY is not set; skipping token request"; exit 0; fi
           status=$(curl -sS -o response.json -w "%{http_code}" -X POST \
             "$BACKEND_URL/upstox/request-token?force=$FORCE" -H "X-Admin-Key: $ADMIN_KEY")
           cat response.json; echo
