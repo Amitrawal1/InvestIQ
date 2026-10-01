@@ -1,33 +1,33 @@
 import React, { useState, useEffect, useRef, useId } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, usePresence } from "motion/react";
-import {ArrowRight,ArrowUpRight,Newspaper,LineChart,TrendingUp,Cpu,MonitorPlay,X} from "lucide-react";
+import {ArrowRight,ArrowUpRight,Newspaper,LineChart,TrendingUp,Cpu,MonitorPlay,Briefcase,X} from "lucide-react";
 import IntroGlobe from "../components/IntroGlobe";
 import { fadeUp, Pill, PrimaryButton } from "../components/ui";
 // --- DATA ---
 const chaptersData = [
-  { name: "Information Technology", image: "/InformationTechnology.jpg" },
-  { name: "Financials", image: "/Financials.jpg" },
-  { name: "Health Care", image: "/healthCare.jpg" },
-  { name: "Consumer Discretionary", image: "/ConsumerDiscretionary.jpg" },
-  { name: "Industrials", image: "/Industrials.jpg" }
+  { name: "Technology", image: "/InformationTechnology.jpg" },
+  { name: "Financial Services", image: "/Financials.jpg" },
+  { name: "Healthcare & Pharma", image: "/healthCare.jpg" },
+  { name: "Consumer & FMCG", image: "/ConsumerDiscretionary.jpg" },
+  { name: "Industrials & Infra", image: "/Industrials.jpg" }
 ];
 
 // --- FEATURE DESCRIPTIONS DATA ---
 const featureDescriptions = {
-  "NEWS ALERTS": "Get instant notifications on breaking financial news that moves the market. Our system scans thousands of sources globally to bring you only the news that matters to your portfolio.",
-  "STOCK SIGNALS": "Translate complex news into actionable insights. We provide clear Buy/Sell signals based on sentiment analysis of recent announcements, earnings reports, and geopolitical events.",
-  "MARKET TRENDS": "Stay ahead of the curve by understanding the broader macroeconomic shifts. We analyze aggregate news sentiment to identify sector rotations and emerging bull or bear market phases.",
-  "AI PREDICTOR": "Leverage advanced Natural Language Processing. Our proprietary AI doesn't just read the news; it historical compares it to past events to calculate the probability of a stock's upward movement."
+  "COMPANY RANKINGS": "Every NSE-listed company gets a 0-100 growth score: 70% price trend vs the Smallcap 250, 30% financial health from its filings, plus news. Each score lists its reasons and risks, tested on 2019-2026 data.",
+  "NEWS ALERTS": "Company announcements from NSE every 15 minutes. Our AI (FinBERT, a finance-trained language model) tags each one positive, negative or neutral and rates how important it is, so you see what matters first.",
+  "COMPANY RESEARCH": "One page per company: price chart against the market, quarterly revenue and profit, margins, ROE, debt and cash flow, recent filings, and how it ranks inside its sector and industry.",
+  "YOUR PORTFOLIO": "Link Upstox or Zerodha with read-only access and see every holding with its InvestIQ score and risks. You sign in on your broker's own page, and InvestIQ can never place orders or move money."
 };
 
-// Header links -> real pages ("About" scrolls to the sector section below)
+// Header links -> real pages
 const headerLinks = [
-  { label: "Visit", to: "/home" },
+  { label: "Home", to: "/home" },
+  { label: "Rankings", to: "/predictor" },
+  { label: "News", to: "/news" },
   { label: "Portfolio", to: "/portfolio" },
-  { label: "Discover", to: "/predictor" },
-  { label: "Learn", to: "/news" },
-  { label: "About", to: "#about" },
+  { label: "How it works", to: "/about" },
 ];
 
 // --- ANIMATION VARIANTS ---
@@ -121,7 +121,7 @@ function SandTransitionImage({ src, alt }) {
 export default function Intro() {
   const navigate = useNavigate();
   const [activeChapter, setActiveChapter] = useState(2); 
-  const [activeFeature, setActiveFeature] = useState(null); // feature description panel
+  const [activeFeature, setActiveFeature] = useState("COMPANY RANKINGS"); // feature description panel (open on the main feature)
 
   useEffect(() => {
     const cycleTimer = setInterval(() => {
@@ -174,17 +174,17 @@ export default function Intro() {
 
           <motion.div variants={fadeUp} className="flex justify-between items-start mt-8 text-[10px] md:text-[11px] font-mono tracking-[0.2em] uppercase pointer-events-auto">
             <div className="w-[15%] space-y-1 text-gray-300">
-              <p>STOCK</p>
-              <p>NEWS</p>
-              <p>TRENDS</p>
+              <p>RANK</p>
+              <p>RESEARCH</p>
+              <p>TRACK</p>
             </div>
             
             <ArrowRight className="hidden md:block w-[5%] text-gray-400" size={14} strokeWidth={1} />
             
             <div className="flex-1 md:w-[30%] text-gray-300 leading-relaxed font-mono">
-              <p className="hidden md:block">AI POWERED ANALYSIS OF DAILY</p>
-              <p className="hidden md:block">FINANCE NEWS TO QUANTIFY MARKET</p>
-              <p className="hidden md:block">IMPACT AND PREDICT TRENDS.</p>
+              <p className="hidden md:block">AI RANKINGS FOR 3,100+ NSE-LISTED</p>
+              <p className="hidden md:block">COMPANIES, BUILT FROM PRICES,</p>
+              <p className="hidden md:block">RESULTS FILINGS AND DAILY NEWS.</p>
               
             </div>
 
@@ -230,7 +230,7 @@ export default function Intro() {
           </motion.h2>
 
           <motion.p variants={fadeUp} className="text-[13px] md:text-[14px] text-gray-300 w-[240px] leading-[1.6] mb-[clamp(1.5rem,4vh,2.5rem)] mix-blend-difference pointer-events-auto">
-            Utilize the power of modern natural<br/>language processing to decode <br/>financial news signals.
+            Find Indian companies worth<br/>researching. Every NSE stock, scored<br/>on trend, financials and news.
           </motion.p>
 
           <motion.div variants={fadeUp} className="pointer-events-auto w-fit">
@@ -248,7 +248,7 @@ export default function Intro() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
             className="text-[2.2rem] md:text-[3.5rem] lg:text-[4.2rem] leading-[1.1] font-medium tracking-tight text-[#fcfcfc] max-w-[1000px] text-center px-6 mb-12">
-            WE READ THE NEWS.<br/>YOU GET THE <br className="hidden md:block"/> TICKER.
+            WE DO THE RESEARCH.<br/>YOU MAKE THE <br className="hidden md:block"/> CALL.
         </motion.h2>
 
         <div className="flex flex-col items-center w-full max-w-4xl px-4">
@@ -260,10 +260,10 @@ export default function Intro() {
               className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8"
           >
             {[
+                { icon: TrendingUp, label: "COMPANY RANKINGS" },
                 { icon: Newspaper, label: "NEWS ALERTS" },
-                { icon: LineChart, label: "STOCK SIGNALS" },
-                { icon: TrendingUp, label: "MARKET TRENDS" },
-                { icon: Cpu, label: "AI PREDICTOR" },
+                { icon: LineChart, label: "COMPANY RESEARCH" },
+                { icon: Briefcase, label: "YOUR PORTFOLIO" },
                 { icon: MonitorPlay, label: "GO TO DASHBOARD" },
             ].map((pill) => {
               const isActive = activeFeature === pill.label;
@@ -278,7 +278,7 @@ export default function Intro() {
           </motion.div>
 
           {/* FEATURE DESCRIPTION PANEL */}
-          <div className="w-full h-[120px] flex justify-center mt-4">
+          <div className="w-full min-h-[120px] flex justify-center mt-4">
             <AnimatePresence mode="wait">
               {activeFeature && (
                 <motion.div
@@ -323,7 +323,7 @@ export default function Intro() {
           
           <div className="xl:w-[60%]">
             <h2 className="text-[1.8rem] md:text-[3rem] lg:text-[3.8rem] xl:text-[4rem] leading-[1.15] font-medium tracking-tight text-white">
-              Curated from thousands of global data points
+              Built from the prices, filings and news of 3,100+ companies
               <span className="inline-flex gap-2 md:gap-3 align-middle mx-2 md:mx-4 translate-y-[-4px]">
                 {[Newspaper, TrendingUp, Cpu].map((Icon, i) => (
                   <span key={i} className="flex items-center justify-center w-10 h-10 md:w-14 md:h-14 rounded-full border border-gray-600 bg-black text-gray-400 hover:bg-white hover:text-black hover:border-white transition-colors duration-300">
@@ -331,16 +331,16 @@ export default function Intro() {
                   </span>
                 ))}
               </span>
-              & AI predictions.
+              & tested before it ships.
             </h2>
           </div>
 
           <div className="xl:w-[35%] flex flex-col xl:items-end xl:text-right">
             <p className="text-[9px] md:text-[10px] font-mono tracking-widest text-gray-400 uppercase mb-6 leading-relaxed">
-              We don't just read the news<br/>we predict the impact.
+              A research tool for Indian markets.<br/>Not investment advice.
             </p>
             <div className="flex flex-wrap gap-3 xl:justify-end">
-              {["Real-Time", "Data-Driven", "Actionable"].map(pill => (
+              {["Updated daily", "Backtested", "Read-only"].map(pill => (
                 <span key={pill} className="px-5 py-2 rounded-full border border-gray-600 text-[9px] font-mono tracking-widest uppercase text-gray-300 hover:bg-white hover:text-black hover:border-white transition-colors duration-300 cursor-default">
                   {pill}
                 </span>
@@ -386,7 +386,7 @@ export default function Intro() {
 
           <div className="w-full lg:w-[65%] flex flex-col">
             <div className="border-b border-gray-800 p-8 flex justify-between items-center text-[10px] font-mono text-gray-400 tracking-widest uppercase">
-              <span>Analyze the news. Predict the market.</span>
+              <span>10 sectors. Find the leaders in each.</span>
               <div className="flex gap-2">
                 <span>Sector</span>
                 <div className="overflow-hidden relative w-4 h-[15px]">
@@ -439,7 +439,7 @@ export default function Intro() {
 
         {/* 3D. BOTTOM FOOTER */}
         <div className="w-full border-t border-gray-800 bg-[#0a0a0a] px-8 py-8 text-[10px] font-mono tracking-widest text-gray-500 uppercase z-10 text-center md:text-left">
-          Quantifying the impact of global financial news
+          Research for Indian markets · Not SEBI registered · Not investment advice
         </div>
 
       </section>
