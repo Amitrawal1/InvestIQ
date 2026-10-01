@@ -65,7 +65,8 @@ Red flags (nullable booleans):
 
 Conventions: money INR crore, ratios as fractions (0.12 = 12%). Missing inputs give NaN (never 0).
 Divisions by ~0 give NaN. Bank NPA / CET1 fields that consolidated filings leave as 0.00 are
-None in the parser, so NaN here.
+None in the parser; a consolidated quarter then takes them from the bank's standalone filing of the
+same period when one was collected (fill_bank_ratios_from_standalone), else they stay NaN.
 
 CLI:  python3 -m financials.fin_sector_features --symbols HDFCBANK BAJFINANCE --out fin.csv
       python3 -m financials.fin_sector_features --refresh-extract --check 300 --out fin.csv
@@ -312,7 +313,52 @@ def raw_from_extract(table):
             df[col] = pd.to_numeric(df[col], errors="coerce").astype(float)
     df = df.copy()
     df["company_key"] = df["company_id"].fillna(-1).astype(int).astype(str) + ":" + df["symbol"]
-    return df.reset_index(drop=True)
+    return fill_bank_ratios_from_standalone(df.reset_index(drop=True))
+
+
+# Asset quality and capital are regulatory ratios of the bank itself (RBI reports them on the
+# standalone books). HDFCBANK, SBIN, PNB, BANKBARODA, BANKINDIA, UNIONBANK, IDFCFIRSTB and RBLBANK
+# leave them 0.00 in their consolidated filings (None in the parser), so a consolidated quarter takes
+# them from the same bank's standalone filing of the same period.
+BANK_STANDALONE_COLUMNS = ["fsq_gross_npa_pct", "fsq_net_npa_pct", "fsq_gross_npa", "fsq_net_npa",
+                           "fsq_cet1_ratio", "fsq_roa_reported"]
+
+
+def fill_bank_ratios_from_standalone(df):
+    """Fill a bank's missing consolidated NPA / CET1 / reported-ROA fields from its standalone filing.
+
+    Only NaN fields of `bank`-format consolidated rows are filled, from the earliest-filed standalone
+    filing of the same company and period that has them; a value filed consolidated is never
+    replaced. Point in time: when that standalone filing was published after the consolidated one
+    (usually minutes apart, same board meeting), the consolidated row takes the later filing_date,
+    so its features never use a number before it was public. Rows of other formats, and banks
+    without a standalone filing for the period, are returned unchanged.
+    """
+
+    cols = [c for c in BANK_STANDALONE_COLUMNS if c in df.columns]
+    is_bank = df["company_format"] == "bank"
+    cons = df[is_bank & (df["statement_type"] == "consolidated")]
+    stand = df[is_bank & (df["statement_type"] == "standalone")]
+    if cons.empty or stand.empty or not cols:
+        return df
+
+    stand = stand[stand[cols].notna().any(axis=1)].sort_values(["filing_date", "nse_seq_number"])
+    by_period = {key: rows for key, rows in stand.groupby(["company_key", "period_end"], sort=False)}
+    df = df.copy()
+    for idx, row in cons.iterrows():
+        missing = [c for c in cols if pd.isna(row[c])]
+        candidates = by_period.get((row["company_key"], row["period_end"]))
+        if not missing or candidates is None:
+            continue
+        for _, source in candidates.iterrows():
+            values = {c: source[c] for c in missing if not pd.isna(source[c])}
+            if values:
+                for col, value in values.items():
+                    df.at[idx, col] = value
+                if source["filing_date"] > row["filing_date"]:
+                    df.at[idx, "filing_date"] = source["filing_date"]
+                break
+    return df
 
 
 # ---------------------------------------------------------

@@ -3,9 +3,9 @@
 # Skipped automatically when today's token already works.
 name: Upstox token request
 
+# The weekday-morning trigger moved to Vercel Cron (backend/vercel.json -> GET /upstox/cron) because
+# GitHub started this schedule 6+ hours late. This workflow stays as the manual "Run workflow" button.
 on:
-  schedule:
-    - cron: "45 2 * * 1-5"   # 08:15 IST, Monday-Friday (before the 09:15 market open)
   workflow_dispatch:
     inputs:
       force:

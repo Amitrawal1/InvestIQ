@@ -487,14 +487,15 @@ def listing_stats(prices):
     return pd.DataFrame({"days_listed": days, "volatility_3m": vol}).reset_index()
 
 
-def previous_top_list(conn, snap):
-    """Company ids on the Top list of the latest investiq-v1 snapshot before `snap` (empty if none)."""
+def previous_top_list(conn, snap, key="top_list"):
+    """Company ids on list `key` (top_list / steady_list) of the latest investiq-v1 snapshot before
+    `snap` (empty if none)."""
     cur = conn.cursor()
     try:
         cur.execute(
             "SELECT company_id FROM company_rankings WHERE model_version = %s AND snapshot_date = "
             "(SELECT MAX(snapshot_date) FROM company_rankings WHERE model_version = %s AND snapshot_date < %s) "
-            "AND JSON_EXTRACT(key_metrics, '$.top_list.in_list') = true",
+            f"AND JSON_EXTRACT(key_metrics, '$.{key}.in_list') = true",
             (MODEL_VERSION, MODEL_VERSION, snap),
         )
         return [int(r[0]) for r in cur.fetchall()]
@@ -537,6 +538,31 @@ def add_top_list(conn, snap, records, listing):
         km = r["key_metrics"] if isinstance(r["key_metrics"], dict) else {}
         km["top_list"] = entry
         r["key_metrics"] = km
+    add_steady_list(conn, snap, records, df)
+    return chosen
+
+
+# Steady list (rankings/early_movers.py E1, reports/EARLY_MOVERS.md): up to 30 names breaking out of a
+# base (within 5% of the 52-week high, up < 30% in 6 months, above the 200-day average but < 60% above
+# it), best investiq-v1 scores first, same universe and volatility rule as the Top list; a holding stays
+# while it still qualifies or ranks in the top 150. Backtest 2019-2026: fewer blow-ups and smaller
+# drawdowns than the Top list in every year, lower returns in fast rallies. Stored in key_metrics.steady_list.
+def add_steady_list(conn, snap, records, base):
+    from .early_movers import RECOMMENDED, select_early_movers
+
+    df = base.copy()
+    for col in ("dist_52w_high", "return_6m", "ma200_gap"):
+        df[col] = pd.to_numeric(pd.Series([r.get(col) for r in records], index=df.index), errors="coerce")
+    prev = previous_top_list(conn, snap, "steady_list") if conn is not None else []
+    chosen = select_early_movers(df, prev, RECOMMENDED)
+    pos = {int(c): (i + 1, bool(k)) for i, (c, k) in enumerate(zip(chosen["company_id"], chosen["kept"]))}
+    for r in records:
+        cid = int(r["company_id"])
+        r["key_metrics"]["steady_list"] = {
+            "in_list": cid in pos,
+            "position": pos[cid][0] if cid in pos else None,
+            "status": ("kept" if pos[cid][1] else "new") if cid in pos else None,
+        }
     return chosen
 
 

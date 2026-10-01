@@ -17,6 +17,7 @@ const columns = [
       { label: 'Market News', to: '/news' },
       { label: 'Company Rankings', to: '/predictor' },
       { label: 'Sector Trends', to: '/home#sectors' },
+      { label: 'Track Record', to: '/track-record' },
     ],
   },
   {

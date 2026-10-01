@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown, ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import Navbar from "../components/Navbar";
@@ -22,9 +22,10 @@ export default function Predictor() {
   const sort = params.get("sort") || "rank";
   const page = Math.max(1, Number(params.get("page")) || 1);
   const q = params.get("q") || "";
-  // "top" (default): the backtested Top list; "all": every ranked company
-  const view = params.get("view") === "all" ? "all" : "top";
-  const topList = view === "top";
+  // "top" (default): the backtested Top list; "steady": the steadier breakout list; "all": every ranked company
+  const view = ["all", "steady"].includes(params.get("view")) ? params.get("view") : "top";
+  const listKey = view === "top" ? "top_list" : view === "steady" ? "steady_list" : null;
+  const listMeta = listKey ? meta?.[listKey] : null;
 
   const [query, setQuery] = useState(q);
   const [meta, setMeta] = useState(null);
@@ -73,13 +74,13 @@ export default function Predictor() {
     const p = { page, limit: PAGE_SIZE };
     // No sort = the default order: rank, or Top list position
     if (sort !== "rank") p.sort = sort;
-    if (topList) p.list = "top";
+    if (view !== "all") p.list = view;
     if (sector) p.sector = sector;
     if (industry) p.industry = industry;
     if (label) p.label = label;
     if (q) p.search = q;
     return p;
-  }, [sector, industry, label, sort, page, q, topList]);
+  }, [sector, industry, label, sort, page, q, view]);
 
   useEffect(() => {
     const id = ++requestId.current;
@@ -108,7 +109,7 @@ export default function Predictor() {
         <PageHeading index="05" label="Growth ranking" title="PREDICTOR">
           <div className="flex flex-col lg:items-end gap-3 lg:text-right">
             <p className="text-[10px] font-mono tracking-widest uppercase text-gray-400 leading-relaxed max-w-[360px]">
-              Every listed company scored on price trend, financial health and news. The Top list is the 50 to research first.
+              Every listed company scored on price trend, financial health and news. Start with the Top list, or the Steady list for smaller swings.
             </p>
             {metaError ? (
               <MonoLabel className="text-red-400">Ranking status unavailable</MonoLabel>
@@ -165,13 +166,17 @@ export default function Predictor() {
       {/* VIEW: Top list or full ranking */}
       <section className="px-6 md:px-16 pt-8 flex flex-col gap-5">
         <div role="tablist" aria-label="Ranking view" className="inline-flex self-start rounded-full border border-gray-700 p-1 bg-surface">
-          {[["top", `Top list${meta?.top_list?.count ? ` · ${meta.top_list.count}` : ""}`], ["all", `Full ranking${meta?.ranked ? ` · ${fmt(meta.ranked)}` : ""}`]].map(([v, text]) => (
+          {[
+            ["top", `Top list${meta?.top_list?.count ? ` · ${meta.top_list.count}` : ""}`],
+            ["steady", `Steady list${meta?.steady_list?.count ? ` · ${meta.steady_list.count}` : ""}`],
+            ["all", `Full ranking${meta?.ranked ? ` · ${fmt(meta.ranked)}` : ""}`],
+          ].map(([v, text]) => (
             <button
               key={v}
               type="button"
               role="tab"
               aria-selected={view === v}
-              onClick={() => update({ view: v === "all" ? "all" : "", sort: "" })}
+              onClick={() => update({ view: v === "top" ? "" : v, sort: "" })}
               className={`touch:min-h-11 px-5 py-2 rounded-full text-[12px] font-medium uppercase tracking-wider transition-colors cursor-pointer ${
                 view === v ? "bg-white text-black" : "text-gray-300 hover:text-white"
               }`}
@@ -180,11 +185,11 @@ export default function Predictor() {
             </button>
           ))}
         </div>
-        {topList && meta?.top_list?.rules?.length > 0 && (
+        {listMeta?.rules?.length > 0 && (
           <div className="border border-gray-800 rounded-xl bg-surface px-5 py-4 max-w-[900px]">
-            <MonoLabel className="block mb-3 text-gray-300">How the Top list is picked</MonoLabel>
+            <MonoLabel className="block mb-3 text-gray-300">How the {view === "steady" ? "Steady" : "Top"} list is picked</MonoLabel>
             <ul className="space-y-2">
-              {meta.top_list.rules.map((rule) => (
+              {listMeta.rules.map((rule) => (
                 <li key={rule} className="flex gap-3 text-[14px] leading-relaxed text-gray-400">
                   <span aria-hidden="true" className="mt-[0.7em] h-px w-3 shrink-0 bg-gray-500" />
                   <span>{rule}</span>
@@ -192,7 +197,10 @@ export default function Predictor() {
               ))}
             </ul>
             <p className="mt-3 text-[12px] text-gray-500">
-              Tested on 2019-2026 data with the list refreshed every 15 days. It fell less than the index in most sell-offs, but it is a research shortlist, not a buy list.
+              {view === "steady"
+                ? "Tested on 2019-2026 data with the list refreshed every 15 days. Pick it for smaller swings, not for the highest returns. A research shortlist, not a buy list."
+                : "Tested on 2019-2026 data with the list refreshed every 15 days. It fell less than the index in most sell-offs, but it is a research shortlist, not a buy list."}
+              {" "}<Link to="/track-record" className="text-gray-300 underline underline-offset-4 decoration-gray-700 hover:text-white">See how published lists have done</Link>
             </p>
           </div>
         )}
@@ -239,7 +247,7 @@ export default function Predictor() {
                 setQuery("");
                 const keep = {};
                 if (sort !== "rank") keep.sort = sort;
-                if (!topList) keep.view = "all";
+                if (view !== "top") keep.view = view;
                 setParams(new URLSearchParams(keep), { replace: true });
               }}
               className="inline-flex items-center gap-1.5 touch:min-h-11 text-[10px] font-mono tracking-widest uppercase text-gray-400 hover:text-white cursor-pointer lg:ml-auto self-start lg:self-center"
@@ -277,21 +285,21 @@ export default function Predictor() {
         ) : notReady ? (
           <StatusLine>Rankings are being prepared. The first snapshot will appear here once it's built.</StatusLine>
         ) : rows.length === 0 ? (
-          <StatusLine>{topList && !hasFilters ? "The Top list appears with the next snapshot." : "No companies match these filters."}</StatusLine>
+          <StatusLine>{listKey && !hasFilters ? "This list appears with the next snapshot." : "No companies match these filters."}</StatusLine>
         ) : (
           <>
             <div className="px-6 md:px-16 py-4">
               <MonoLabel className="text-gray-500">
-                {topList ? `${fmt(total)} companies on the Top list` : `${fmt(total)} companies · page ${page} of ${fmt(pages)}`}
+                {listKey ? `${fmt(total)} companies on the ${view === "steady" ? "Steady" : "Top"} list` : `${fmt(total)} companies · page ${page} of ${fmt(pages)}`}
               </MonoLabel>
             </div>
             <RankingTable
               rows={rows}
-              rankKey={topList ? "top_list" : industry ? "rank_in_industry" : sector ? "rank_in_sector" : "rank_overall"}
+              rankKey={listKey || (industry ? "rank_in_industry" : sector ? "rank_in_sector" : "rank_overall")}
               sort={sort}
               onSort={(s) => update({ sort: s === "rank" ? "" : s })}
               showSector={!sector}
-              topList={topList}
+              listKey={listKey}
             />
             <Pagination page={page} pages={pages} onPage={(p) => update({ page: p > 1 ? String(p) : "" }, true)} />
           </>

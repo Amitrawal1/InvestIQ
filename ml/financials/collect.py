@@ -10,13 +10,20 @@ Usage (from ml/):
     # Offline: read listings + XBRL from a cache dir, no network at all
     python3 -m financials.collect --from-cache data/raw/xbrl_samples --all-in-cache
 
+    # Download into the XBRL cache only (no table writes; the DB is only read)
+    python3 -m financials.collect --symbols HDFCBANK SBIN --download-only
+
 For each company: list its Quarterly and Annual filings, keep those with an XBRL (.xml) file,
 skip the ones already stored, download the XBRL into ml/data/raw/xbrl/<SYMBOL>/<seq>.xml
 (cached; never re-downloaded unless --refresh), parse it and upsert one `financial_filings`
-row per filing. Consolidated and standalone results are separate filings, so both are stored.
+row per filing. Consolidated and standalone results are separate filings: by default one per
+period is kept (consolidated when filed, else standalone), except for banks, where both are kept
+because RBI's asset-quality and capital ratios (NPA, CET1) are only filled in the standalone one.
 
 Resumable: work is committed per company, and stored seq numbers are skipped next run.
-One bad filing or company is logged and skipped. Only one run at a time (lock file).
+One bad filing or company is logged and skipped. A lost database connection aborts the company
+(nothing of it is half-stored), reconnects, and retries it once from the XBRL cache.
+Only one run at a time (lock file).
 """
 
 import argparse
@@ -29,6 +36,8 @@ from collections import Counter
 from contextlib import contextmanager
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
+
+import mysql.connector
 
 from news_pipeline.db import get_connection
 
@@ -46,6 +55,9 @@ LOCK_FILE = LOG_DIR / "financials_collect.lock"
 PERIODS = ("Quarterly", "Annual", "Integrated")
 DEFAULT_SINCE_YEAR = 2016
 DOWNLOAD_RETRIES = 4
+
+# Errors meaning the database connection is gone (not a bad row): the whole company is retried
+DB_CONNECTION_ERRORS = (mysql.connector.errors.OperationalError, mysql.connector.errors.InterfaceError)
 
 INTEGRATED_URL = "https://www.nseindia.com/api/integrated-filing-results"
 INTEGRATED_TYPE = "Integrated Filing- Financials"
@@ -227,16 +239,30 @@ def has_xbrl_link(record):
     return url.lower().endswith(".xml") and bool(record.get("seqNumber"))
 
 
-def select_filings(source, symbol, since_year, stats, both_types=False):
+def is_bank(records):
+    """True when NSE's listing marks the company as a bank.
+
+    The old results listing has a `bank` field ('B' for banks, 'N' other companies, 'F' / 'A' other
+    financials); integrated-filing records lack it, but banks' XBRL files are named BANKING_*.
+    """
+
+    return any(r.get("bank") == "B" or "/BANKING_" in (r.get("xbrl") or "").upper()
+               or "_BANKING_" in (r.get("xbrl") or "").upper() for r in records)
+
+
+def select_filings(source, symbol, since_year, stats, both_types=False, bank_standalone=True):
     """Listed filings with an XBRL file whose period ends in or after `since_year`, one per seq number.
 
     Unless `both_types`, keep one statement type per period: consolidated (the whole group, what
     investors own) when filed, otherwise standalone. That halves the downloads for most companies.
+    Banks keep both when `bank_standalone`: their consolidated filings leave NPA / CET1 as 0.00.
     """
 
     by_seq = {}
+    listed = []
     for period in PERIODS:
         for record in source.list_filings(symbol, period):
+            listed.append(record)
             stats["listed"] += 1
             if not has_xbrl_link(record):
                 stats["no_xbrl"] += 1
@@ -247,6 +273,9 @@ def select_filings(source, symbol, since_year, stats, both_types=False):
                 continue
             by_seq.setdefault(int(record["seqNumber"]), record)
 
+    if bank_standalone and not both_types and is_bank(listed):
+        stats["bank_both_types"] = 1
+        both_types = True
     if not both_types:
         by_period = {}
         for record in by_seq.values():
@@ -277,7 +306,8 @@ def collect_symbol(conn, source, parse_xbrl, symbol, company_ids, args, totals):
     stats = Counter()
     by_symbol, by_isin = company_ids
 
-    records = select_filings(source, symbol, args.since, stats, args.both_statement_types)
+    records = select_filings(source, symbol, args.since, stats, args.both_statement_types,
+                             bank_standalone=not args.no_bank_standalone)
     skip = set()
     if not (args.refresh or args.reparse):
         skip = store.stored_seq_numbers(conn, symbol, include_failed=not args.retry_failed)
@@ -305,6 +335,9 @@ def collect_symbol(conn, source, parse_xbrl, symbol, company_ids, args, totals):
             log.error("%s seq %s: %s", symbol, seq, exc)
             stats["failed"] += 1
             continue
+        if args.download_only:
+            stats["downloaded"] += 1
+            continue
 
         parsed, error = None, None
         try:
@@ -315,6 +348,8 @@ def collect_symbol(conn, source, parse_xbrl, symbol, company_ids, args, totals):
 
         try:
             row, unmapped = store.upsert_filing(conn, record, parsed, company_id, error=error)
+        except DB_CONNECTION_ERRORS:
+            raise      # the company's uncommitted rows are gone with the connection: retry it whole
         except Exception as exc:
             log.error("%s seq %s: not stored: %s", symbol, seq, exc)
             stats["failed"] += 1
@@ -328,7 +363,8 @@ def collect_symbol(conn, source, parse_xbrl, symbol, company_ids, args, totals):
             totals["unmapped_fields"][item.split(":")[0]] += 1
             log.warning("%s seq %s: parser output not stored: %s", symbol, seq, item)
 
-    conn.commit()
+    if not args.download_only:
+        conn.commit()
     return stats
 
 
@@ -356,8 +392,14 @@ def main(argv=None):
     parser.add_argument("--reparse", action="store_true",
                         help="Re-parse and re-store filings already stored, from cached XBRL")
     parser.add_argument("--retry-failed", action="store_true", help="Retry filings stored as failed")
+    parser.add_argument("--no-bank-standalone", action="store_true",
+                        help="Banks too: keep only one statement type per period (default keeps both)")
+    parser.add_argument("--download-only", action="store_true",
+                        help="Only list and download XBRL into the cache: nothing is parsed or written to the DB")
     parser.add_argument("--pause", type=float, default=1.0, help="Seconds between NSE requests")
     args = parser.parse_args(argv)
+    if args.download_only and args.from_cache:
+        parser.error("--download-only needs NSE, not --from-cache")
 
     setup_logging()
 
@@ -380,7 +422,8 @@ def main(argv=None):
         parse_xbrl = load_parser()
         conn = get_connection()
         try:
-            store.ensure_table(conn)
+            if not args.download_only:
+                store.ensure_table(conn)
 
             symbols = [s.strip().upper() for s in (args.symbols or [])]
             if args.all:
@@ -405,8 +448,20 @@ def main(argv=None):
 
             for index, symbol in enumerate(symbols, start=1):
                 try:
-                    conn.ping(reconnect=True, attempts=3, delay=5)
-                    stats = collect_symbol(conn, source, parse_xbrl, symbol, company_ids, args, totals)
+                    try:
+                        conn.ping(reconnect=True, attempts=3, delay=5)
+                        stats = collect_symbol(conn, source, parse_xbrl, symbol, company_ids, args, totals)
+                    except DB_CONNECTION_ERRORS as exc:
+                        # Lost mid-company (e.g. INDUSINDBK on 2026-09-28: every row "not stored"):
+                        # reconnect and redo it; its XBRL is cached, so this costs no downloads
+                        log.warning("[%d/%d] %s: database connection lost (%s); reconnecting and retrying",
+                                    index, len(symbols), symbol, exc)
+                        try:
+                            conn.rollback()
+                        except Exception:
+                            pass
+                        conn.ping(reconnect=True, attempts=5, delay=10)
+                        stats = collect_symbol(conn, source, parse_xbrl, symbol, company_ids, args, totals)
                 except Exception as exc:
                     log.error("[%d/%d] %s: %s", index, len(symbols), symbol, exc)
                     totals["company_errors"] += 1
@@ -418,11 +473,13 @@ def main(argv=None):
 
                 totals["companies"] += 1
                 totals["counts"].update(stats)
-                log.info("[%d/%d] %s: listed=%d with-xbrl=%d stored=%d skipped=%d failed=%d%s",
+                log.info("[%d/%d] %s: listed=%d with-xbrl=%d stored=%d skipped=%d failed=%d%s%s%s",
                          index, len(symbols), symbol, stats["listed"],
                          stats["listed"] - stats["no_xbrl"] - stats["too_old"],
                          stats["stored"], stats["skipped"], stats["failed"],
-                         f" not-cached={stats['not_cached']}" if source.offline else "")
+                         f" not-cached={stats['not_cached']}" if source.offline else "",
+                         f" downloaded-or-cached={stats['downloaded']}" if args.download_only else "",
+                         " (bank: both statement types)" if stats["bank_both_types"] else "")
 
             counts = totals["counts"]
             log.info("Done: companies=%d (errors=%d, not in companies table=%d) filings stored=%d "

@@ -1,0 +1,574 @@
+id,isin,symbol,name,first_seen,last_seen,last_series,last_close,symbols,nse_delisted_date,nse_delisting_type,exit_kind,distress,source
+1,INE605B01016,ABCIL,,2016-01-01,2016-01-01,EQ,235.45,ABCIL,,,unknown,0,NSE bhavcopy monthly snapshots
+2,INE806B01028,MURLIIND,Murli Industries Limited,2016-01-01,2016-01-01,BE,3.2,MURLIIND,2018-08-08,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+3,INE598B01013,ZENITHCOMP,Zenith Computers Limited,2016-01-01,2016-01-01,EQ,2.7,ZENITHCOMP,2016-03-18,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+4,INE779B01019,CLUTCHAUTO,Clutch Auto Limited,2016-02-01,2016-02-01,BZ,10.65,CLUTCHAUTO,2018-07-02,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+5,INE011A01019,ESSAROIL,Essar Oil Limited,2016-01-01,2016-02-01,EQ,260.3,ESSAROIL,2016-02-17,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+6,INE674B01012,HELIOSMATH,Helios and Matheson Information Technology Limited,2016-02-01,2016-02-01,BZ,11.1,HELIOSMATH,2018-05-30,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+7,INE471A01023,DIGJAM,,2016-01-01,2016-03-01,EQ,8.9,DIGJAM,,,unknown,0,NSE bhavcopy monthly snapshots
+8,INE409H01028,SPECTACLE,Spectacle Ventures Ltd,2016-02-01,2016-03-01,EQ,1.4,SPECTACLE,2018-08-08,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+9,INE484C01014,TIDEWATER,,2016-01-01,2016-03-01,EQ,23269.4,TIDEWATER,,,unknown,0,NSE bhavcopy monthly snapshots
+10,INE292A01015,UTTAMVALUE,,2016-01-01,2016-03-01,EQ,3.45,UTTAMVALUE,,,unknown,0,NSE bhavcopy monthly snapshots
+11,INE192B01023,WELSPUNIND,,2016-01-01,2016-03-01,EQ,849.85,WELSPUNIND,,,unknown,0,NSE bhavcopy monthly snapshots
+12,INE218G01025,PALREDTECH,,2016-01-01,2016-04-01,EQ,61.85,PALREDTECH,,,unknown,0,NSE bhavcopy monthly snapshots
+13,INE211C01037,ARVINDREM,Arvind Remedies Limited,2016-02-01,2016-05-02,BZ,4.7,ARVINDREM,2018-08-08,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+14,INE378J01013,CMAHENDRA,C Mahendra Exports Limited,2016-02-01,2016-05-02,BZ,1.65,CMAHENDRA,2018-08-08,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+15,INE247G01024,COREEDUTEC,Core Education & Technologies Limited,2016-02-01,2016-05-02,BZ,1.75,COREEDUTEC,2018-07-02,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+16,INE549I01011,INNOIND,Innoventive Industries Limited,2016-02-01,2016-05-02,BZ,4.7,INNOIND,2018-07-02,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+17,INE264B01020,JCTEL,JCT Electronics Limited,2016-01-01,2016-05-02,EQ,0.35,JCTEL,2018-07-02,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+18,INE846H01039,NCOPPER,Nissan Copper Limited,2016-05-02,2016-05-02,BZ,1.15,NCOPPER,2018-05-30,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+19,INE702L01010,PARAPRINT,Paramount Printpackaging Limited,2016-01-01,2016-05-02,EQ,1.0,PARAPRINT,2018-07-02,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+20,INE491H01018,PLETHICO,Plethico Pharmaceuticals Limited,2016-05-02,2016-05-02,BZ,10.45,PLETHICO,2018-05-30,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+21,INE863A01013,SOFTTECHGR,Software Technology Group International Limited,2016-02-01,2016-05-02,EQ,1.85,SOFTTECHGR,2018-09-11,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+22,INE504B01011,BLUESTINFO,,2016-01-01,2016-06-01,EQ,289.95,BLUESTINFO,,,unknown,0,NSE bhavcopy monthly snapshots
+23,INF109K01FV4,IGOLD,,2016-01-01,2016-06-01,EQ,2700.95,IGOLD,,,unknown,0,NSE bhavcopy monthly snapshots
+24,INE517H01028,ADVANTA,,2016-01-01,2016-07-01,EQ,587.5,ADVANTA,,,unknown,0,NSE bhavcopy monthly snapshots
+25,INE970N01019,NGCT,,2016-01-01,2016-07-01,EQ,1.8,NGCT,,,unknown,0,NSE bhavcopy monthly snapshots
+26,INE698H01018,BROADCAST,Broadcast Initiatives Limited,2016-02-01,2016-08-01,BE,3.25,BROADCAST,2018-05-30,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+27,INE508A01022,DUNCANSLTD,Duncans Industries Limited,2016-01-01,2016-08-01,BZ,11.75,DUNCANSLTD,2018-09-11,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+28,INE975A01015,ELDERPHARM,Elder Pharmaceuticals Limited,2016-01-01,2016-08-01,BZ,28.5,ELDERPHARM,2018-05-30,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+29,INE039E01020,ERAINFRA,Era Infra Engineering Limited,2016-01-01,2016-08-01,BZ,1.6,ERAINFRA,2018-08-08,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+30,INE096L01017,KTIL,Kesar Terminals & Infrastructure Limited,2016-01-01,2016-08-01,EQ,581.5,KTIL,2020-01-07,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+31,INE826A01028,ENTEGRA,Entegra Limited,2016-01-01,2016-09-01,BZ,3.15,ENTEGRA,2020-03-02,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+32,INE988E01028,JMTAUTOLTD,,2016-01-01,2016-09-01,EQ,44.3,JMTAUTOLTD,,,unknown,0,NSE bhavcopy monthly snapshots
+33,INE405E01015,MINDAIND,,2016-01-01,2016-09-01,EQ,1386.95,MINDAIND,,,unknown,0,NSE bhavcopy monthly snapshots
+34,INE650K01013,8KMILES,,2016-01-01,2016-10-03,EQ,2062.1,8KMILES,,,unknown,0,NSE bhavcopy monthly snapshots
+35,INE482J01013,GAL,,2016-01-01,2016-10-03,EQ,108.15,GAL,,,unknown,0,NSE bhavcopy monthly snapshots
+36,INE678H01010,EVERONN,Everonn Education Limited,2016-01-01,2016-11-01,EQ,11.6,EVERONN,2018-07-02,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+37,INE810H01019,OMNITECH,Omnitech Infosolutions Limited,2016-01-01,2016-11-01,EQ,2.9,OMNITECH,2018-08-08,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+38,INF733I01028,RELBANK,,2016-01-01,2016-11-01,EQ,2130.0,RELBANK,,,unknown,0,NSE bhavcopy monthly snapshots
+39,INF733I01010,RELGOLD,,2016-01-01,2016-11-01,EQ,2731.8,RELGOLD,,,unknown,0,NSE bhavcopy monthly snapshots
+40,INF204KA1EU6,RELNIFTY,,2016-01-01,2016-11-01,EQ,90.02,RELNIFTY,,,unknown,0,NSE bhavcopy monthly snapshots
+41,INE605A01026,PRICOL,,2016-01-01,2016-12-01,EQ,90.3,PRICOL,,,unknown,0,NSE bhavcopy monthly snapshots
+42,INE305H01010,SUNILHITEC,,2016-01-01,2016-12-01,EQ,10.65,SUNILHITEC,,,unknown,0,NSE bhavcopy monthly snapshots
+43,INE990B01012,KEMROCK,Kemrock Industries and Exports Limited,2016-01-01,2017-01-02,BZ,7.1,KEMROCK,2018-05-30,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+44,INE411C01017,SURYAJYOTI,Suryajyoti Spinning Mills Limited,2016-01-01,2017-01-02,BZ,6.9,SURYAJYOTI,2018-08-08,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+45,INE818H01012,DAAWAT,,2016-01-01,2017-02-01,EQ,437.5,DAAWAT,,,unknown,0,NSE bhavcopy monthly snapshots
+46,INE178D01010,KALINDEE,,2016-01-01,2017-02-01,EQ,111.0,KALINDEE,,,unknown,0,NSE bhavcopy monthly snapshots
+47,INE458B01028,BHAGYNAGAR,,2016-01-01,2017-03-01,EQ,24.0,BHAGYNAGAR,,,unknown,0,NSE bhavcopy monthly snapshots
+48,INE655I01024,BIRLACOT,Birla Cotsyn (India) Limited,2016-01-01,2017-03-01,BE,0.05,BIRLACOT,2016-03-16,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+49,INE797A01021,GEOMETRIC,,2016-01-01,2017-03-01,EQ,260.6,GEOMETRIC,,,unknown,0,NSE bhavcopy monthly snapshots
+50,INE651A01020,MYSOREBANK,,2016-01-01,2017-03-01,EQ,587.7,MYSOREBANK,,,unknown,0,NSE bhavcopy monthly snapshots
+51,INE594A01014,OUDHSUG,,2016-01-01,2017-03-01,EQ,138.5,OUDHSUG,,,unknown,0,NSE bhavcopy monthly snapshots
+52,INE648A01026,SBBJ,,2016-01-01,2017-03-01,EQ,747.15,SBBJ,,,unknown,0,NSE bhavcopy monthly snapshots
+53,INE654A01024,SBT,,2016-01-01,2017-03-01,EQ,587.25,SBT,,,unknown,0,NSE bhavcopy monthly snapshots
+54,INE935O01010,SFCL,,2016-01-01,2017-03-01,EQ,112.0,SFCL,,,unknown,0,NSE bhavcopy monthly snapshots
+55,INE771B01032,TRICOM,Tricom India Limited,2016-01-01,2017-03-01,EQ,1.05,TRICOM,2018-07-02,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+56,INE018B01012,UPERGANGES,,2016-01-01,2017-03-01,EQ,350.65,UPERGANGES,,,unknown,0,NSE bhavcopy monthly snapshots
+57,INE135B01014,AGRODUTCH,Agro Dutch Industries Limited,2016-01-01,2017-04-03,BZ,1.65,AGRODUTCH,2018-05-30,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+58,INE436N01029,AMTL,Advance Metering Technology Limited,2016-01-01,2017-04-03,EQ,24.45,AMTL,2017-05-02,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+59,INE910H01017,CAIRN,,2016-01-01,2017-04-03,EQ,305.05,CAIRN,,,unknown,0,NSE bhavcopy monthly snapshots
+60,INE588A01016,NEPCMICON,NEPC India Limited,2016-01-01,2017-04-03,BZ,1.35,NEPCMICON,2018-08-08,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+61,INE849J01021,REISIXTEN,REI Six Ten Retail Limited,2016-01-01,2017-04-03,BE,0.4,REISIXTEN,2018-09-11,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+62,INE055L01013,ACROPETAL,Acropetal Technologies Limited,2016-01-01,2017-05-02,BZ,1.7,ACROPETAL,2018-08-08,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+63,INE479E01028,CHEMFALKAL,,2016-01-01,2017-05-02,EQ,303.8,CHEMFALKAL,,,unknown,0,NSE bhavcopy monthly snapshots
+64,INE353G01020,DISHMAN,,2016-01-01,2017-05-02,EQ,309.65,DISHMAN,,,unknown,0,NSE bhavcopy monthly snapshots
+65,INE599B01011,GEINDSYS,Gei Industrial Systems Limited,2016-01-01,2017-05-02,BZ,4.4,GEINDSYS,2018-08-08,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+66,INE547G01019,LUMAXAUTO,Lumax Automotive Systems Limited,2016-01-01,2017-05-02,BZ,12.9,LUMAXAUTO,2018-05-30,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+67,INE353B01021,PARRYSUGAR,,2016-01-01,2017-05-02,EQ,62.65,PARRYSUGAR,,,unknown,0,NSE bhavcopy monthly snapshots
+68,INE096T01010,PNEUMATIC,,2016-02-01,2017-05-02,EQ,1534.0,PNEUMATIC,,,unknown,0,NSE bhavcopy monthly snapshots
+69,INE774I01031,RMMIL,,2016-01-01,2017-05-02,BZ,0.5,RMMIL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+70,INE900K01012,SHRIASTER,Shri Aster Silicates Limited,2016-02-01,2017-05-02,BZ,1.4,SHRIASTER,2018-05-30,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+71,INE384L01017,SUDAR,Sudar Industries Limited,2016-01-01,2017-05-02,BZ,1.1,SUDAR,2018-09-11,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+72,INE756B01017,SVOGL,SVOGL Oil Gas & Energy Limited,2016-01-01,2017-05-02,BZ,2.6,SVOGL,2018-07-02,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+73,INE624C01015,VALECHAENG,,2016-01-01,2017-05-02,BZ,20.4,VALECHAENG,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+74,INE574I01027,ARCOTECH,,2016-01-01,2017-06-01,EQ,341.75,ARCOTECH,,,unknown,0,NSE bhavcopy monthly snapshots
+75,INE291F01016,HINDUJAFO,,2016-01-01,2017-06-01,EQ,36.4,HINDUJAFO,,,unknown,0,NSE bhavcopy monthly snapshots
+76,INE376A01032,SRGINFOTEC,SRG Infotec (India) Limited,2016-01-01,2017-06-01,BE,0.25,SRGINFOTEC,2017-06-30,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+77,INE069A01017,ABIRLANUVO,,2016-01-01,2017-07-03,EQ,1920.95,ABIRLANUVO,,,unknown,0,NSE bhavcopy monthly snapshots
+78,INE988A01026,ASIL,,2016-08-01,2017-07-03,EQ,0.8,ASIL,,,unknown,0,NSE bhavcopy monthly snapshots
+79,INE892H01017,GTOFFSHORE,GOL Offshore Limited,2016-01-01,2017-07-03,BE,13.35,GTOFFSHORE,2018-07-02,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+80,INF174K01518,KOTAKNIFTY,,2016-01-01,2017-07-03,EQ,965.96,KOTAKNIFTY,,,unknown,0,NSE bhavcopy monthly snapshots
+81,INE315J01015,FIRSTWIN,First Winner Industries Limited,2016-01-01,2017-08-01,EQ,3.6,FIRSTWIN,2020-07-10,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+82,INE048A01011,HOCL,Hindustan Organic Chemicals Limited,2016-01-01,2017-08-01,EQ,24.1,HOCL,2017-08-24,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+83,INE483S01012,INFIBEAM,,2016-05-02,2017-08-01,EQ,1444.4,INFIBEAM,,,unknown,0,NSE bhavcopy monthly snapshots
+84,INE553E01012,NET4,Net 4 India Limited,2016-01-01,2017-08-01,BZ,1.85,NET4,2018-09-11,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+85,INE241C01026,NICCO,Nicco Corporation Limited,2016-01-01,2017-08-01,BE,0.5,NICCO,2020-07-10,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+86,INE149A01025,TUBEINVEST,,2016-01-01,2017-08-01,EQ,776.6,TUBEINVEST,,,unknown,0,NSE bhavcopy monthly snapshots
+87,INE023B01012,IFGLREFRAC,,2016-01-01,2017-09-01,EQ,291.2,IFGLREFRAC,,,unknown,0,NSE bhavcopy monthly snapshots
+88,INE455B01016,PHOENIXLL,,2016-01-01,2017-09-01,EQ,212.35,PHOENIXLL,,,unknown,0,NSE bhavcopy monthly snapshots
+89,INE763I01018,TRIL,,2016-01-01,2017-09-01,EQ,322.75,TRIL,,,unknown,0,NSE bhavcopy monthly snapshots
+90,INE385B01031,REIAGROLTD,Rei Agro Limited,2016-01-01,2017-10-03,BZ,0.15,REIAGROLTD,2018-09-11,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+91,INE553K01019,SGJHL,Shree Ganesh Jewellery House (I) Limited,2016-01-01,2017-10-03,BZ,1.1,SGJHL,2018-08-08,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+92,INE633A01028,SHRENUJ,Shrenuj & Company Limited,2016-01-01,2017-10-03,BZ,0.55,SHRENUJ,2018-08-08,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+93,INE705C01012,SHIVTEX,,2016-01-01,2017-11-01,EQ,409.75,SHIVTEX,,,unknown,0,NSE bhavcopy monthly snapshots
+94,INE272B01015,MALWACOTT,Malwa Cotton Spg. Mills Limited,2016-01-01,2018-01-01,BZ,4.75,MALWACOTT,2018-09-11,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+95,INE628H01015,ORBITCORP,Orbit Corporation Limited,2016-01-01,2018-01-01,BZ,1.55,ORBITCORP,2018-08-08,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+96,INE696A01025,UBHOLDINGS,United Breweries (Holdings) Limited,2016-01-01,2018-01-01,BZ,11.75,UBHOLDINGS,2018-09-11,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+97,INE110D01013,GUJNRECOKE,,2016-01-01,2018-02-01,EQ,1.2,GUJNRECOKE,,,unknown,0,NSE bhavcopy monthly snapshots
+98,IN9110D01011,GUJNREDVR,,2016-01-01,2018-02-01,EQ,1.25,GUJNREDVR,,,unknown,0,NSE bhavcopy monthly snapshots
+99,INE550B01014,HBSTOCK,,2016-01-01,2018-03-01,EQ,40.8,HBSTOCK,,,unknown,0,NSE bhavcopy monthly snapshots
+100,INE819B01021,JENSONICOL,Jenson & Nicholson (lndia) Limited ,2016-01-01,2018-03-01,BE,3.5,JENSONICOL,2019-02-13,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+101,INE602A01015,PHILIPCARB,,2016-01-01,2018-04-02,EQ,1139.85,PHILIPCARB,,,unknown,0,NSE bhavcopy monthly snapshots
+102,INE431L01016,SERVALL,Servalakshmi Paper Limited,2016-01-01,2018-04-02,BZ,0.9,SERVALL,2019-10-17,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+103,INE965A01016,VISUINTL,,2016-01-01,2018-04-02,BZ,0.05,VISUINTL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+104,INE213M01024,VKSPL,VKS Projects Limited,2016-01-01,2018-04-02,BZ,0.05,VKSPL,2018-09-11,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+105,INE862A01015,LML,LML Limited,2016-01-01,2018-05-02,EQ,5.4,LML,2019-10-17,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+106,INE719A01017,ZANDUREALT,,2016-01-01,2018-05-02,EQ,2040.1,ZANDUREALT,,,unknown,0,NSE bhavcopy monthly snapshots
+107,INE481K01013,ESL,,2016-01-01,2018-06-01,BE,1.3,ESL,,,unknown,0,NSE bhavcopy monthly snapshots
+108,INE854D01016,MCDOWELL-N,,2016-01-01,2018-06-01,EQ,3260.75,MCDOWELL-N,,,unknown,0,NSE bhavcopy monthly snapshots
+109,INE294G01018,RAJOIL,,2016-01-01,2018-06-01,BZ,1.6,RAJOIL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+110,INE950G01015,UNIPLY,,2016-01-01,2018-06-01,EQ,402.25,UNIPLY,,,unknown,0,NSE bhavcopy monthly snapshots
+111,INE455J01027,AUSTRAL,,2016-01-01,2018-07-02,BZ,0.15,AUSTRAL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+112,INE890I01035,FARMAXIND,Farmax India Limited,2016-01-01,2018-07-02,BZ,0.05,FARMAXIND,2020-07-10,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+113,INE551A01022,HINDDORROL,Hindustan Dorr-Oliver Limited,2016-01-01,2018-07-02,BE,1.75,HINDDORROL,2019-10-17,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+114,INE763A01023,POLARIS,Polaris Consulting & Services Limited,2016-01-01,2018-07-02,EQ,470.05,POLARIS,2018-08-01,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+115,INE381A01016,SAMTEL,Samtel Color Limited,2016-01-01,2018-07-02,BZ,0.25,SAMTEL,2019-10-17,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+116,INE528K01011,GALLISPAT,,2016-01-01,2018-08-01,EQ,317.05,GALLISPAT,,,unknown,0,NSE bhavcopy monthly snapshots
+117,INE743C01013,MONNETISPA,,2016-01-01,2018-08-01,BE,16.55,MONNETISPA,,,unknown,0,NSE bhavcopy monthly snapshots
+118,INE529F01027,SIGNET,,2016-01-01,2018-08-01,EQ,5.85,SIGNET,,,unknown,0,NSE bhavcopy monthly snapshots
+119,INE651G01027,SUPREMETEX,Supreme Tex Mart Limited,2016-01-01,2018-08-01,BE,0.6,SUPREMETEX,2019-10-17,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+120,INE286K01024,TECHNO,,2016-01-01,2018-08-01,EQ,276.0,TECHNO,,,unknown,0,NSE bhavcopy monthly snapshots
+121,INE259B01020,GAMMONIND,,2016-01-01,2018-09-03,BZ,1.7,GAMMONIND,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+122,INE785C01048,LITL,Lanco Infratech Limited,2016-01-01,2018-09-03,EQ,0.55,LITL,2019-10-17,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+123,INE904G01038,RASOYPR,Rasoya Proteins Limited,2016-01-01,2018-09-03,BZ,0.05,RASOYPR,2020-07-10,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+124,INE357D01010,SURANACORP,,2016-01-01,2018-09-03,BE,0.75,SURANACORP,,,unknown,0,NSE bhavcopy monthly snapshots
+125,INE352A01017,VALUEIND,,2016-01-01,2018-09-03,BZ,3.8,VALUEIND,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+126,INE768E01024,AICHAMP,AI Champdany Industries Limited,2016-01-01,2018-10-01,BE,15.2,AICHAMP,2018-10-17,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+127,INE043K01029,BSLIMITED,,2016-01-01,2018-10-01,BZ,0.3,BSLIMITED,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+128,INE648H01013,HANUNG,Hanung Toys and Textiles Limited,2016-01-01,2018-10-01,BE,0.85,HANUNG,2019-10-17,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+129,INE890A01016,JMCPROJECT,,2016-01-01,2018-10-01,EQ,368.75,JMCPROJECT,,,unknown,0,NSE bhavcopy monthly snapshots
+130,INE739A01015,MOSERBAER,Moser-Baer (I) Limited,2016-01-01,2018-10-01,BZ,1.5,MOSERBAER,2019-10-17,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+131,INE290B01025,OCL,,2016-01-01,2018-10-01,EQ,1016.65,OCL,,,unknown,0,NSE bhavcopy monthly snapshots
+132,INE324C01038,STERLINBIO,,2016-01-01,2018-10-01,BZ,0.7,STERLINBIO,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+133,INE439L01019,DALMIABHA,,2016-01-01,2018-11-01,EQ,2132.15,DALMIABHA,,,unknown,0,NSE bhavcopy monthly snapshots
+134,INE456C01012,DFMFOODS,,2017-01-02,2018-11-01,EQ,253.2,DFMFOODS,,,unknown,0,NSE bhavcopy monthly snapshots
+135,INF109KB1WF4,ICICIGOLD,,2016-07-01,2018-11-01,EQ,288.25,GOLDIWIN|ICICIGOLD|IGOLD,,,unknown,0,NSE bhavcopy monthly snapshots
+136,INF109KC1JI4,ICICINXT50,,2018-09-03,2018-11-01,EQ,268.48,ICICINXT50,,,unknown,0,NSE bhavcopy monthly snapshots
+137,INE659D01019,SURANAIND,Surana Industries Limited,2016-01-01,2018-11-01,BZ,1.4,SURANAIND,2020-03-02,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+138,INE688I01017,CAPF,,2016-01-01,2018-12-03,EQ,522.7,CAPF,,,unknown,0,NSE bhavcopy monthly snapshots
+139,INE481K01021,ELECTROSL,ELECTROSTEEL STEELS LIMITED,2018-07-02,2018-12-03,BE,44.25,ELECTROSL,2018-12-20,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+140,INE486J01014,INFINITE,Infinite Computer Solutions (India) Limited,2016-01-01,2018-12-03,EQ,471.5,INFINITE,2018-12-21,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+141,INE559B01023,NAKODA,,2016-01-01,2018-12-03,BZ,0.1,NAKODA,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+142,INE194B01029,PANORAMUNI,Panoramic Universal Limited,2016-01-01,2018-12-03,BZ,1.95,PANORAMUNI,2020-07-10,Compulsory Delisting,compulsory_delisting,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+143,INE675G01018,PINCON,,2016-07-01,2018-12-03,BZ,5.3,PINCON,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+144,INE673G01013,BHARATIDIL,,2016-01-01,2019-01-01,BZ,3.0,BHARATIDIL|BHARTISHIP,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+145,INE844O01022,GUJGASLTD,,2016-01-01,2019-01-01,EQ,669.05,GUJGASLTD,,,unknown,0,NSE bhavcopy monthly snapshots
+146,INE00R701017,OCLINDIA,,2019-01-01,2019-01-01,BE,1093.05,OCLINDIA,,,unknown,0,NSE bhavcopy monthly snapshots
+147,INE944B01019,TODAYS,Todays Writing Instruments Limited,2016-01-01,2019-01-01,BZ,0.3,TODAYS,2020-03-02,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+148,INE087J01010,MANDHANA,,2016-01-01,2019-02-01,EQ,3.15,MANDHANA,,,unknown,0,NSE bhavcopy monthly snapshots
+149,INE077A01010,DENABANK,,2016-01-01,2019-03-01,EQ,11.9,DENABANK,,,unknown,0,NSE bhavcopy monthly snapshots
+150,INE028B01029,SHARONBIO,,2016-01-01,2019-03-01,BZ,3.4,SHARONBIO,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+151,INE235G01011,USHERAGRO,Usher Agro Limited,2016-01-01,2019-03-01,BE,1.8,USHERAGRO,2020-03-02,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+152,INE705A01016,VIJAYABANK,,2016-01-01,2019-03-01,EQ,43.25,VIJAYABANK,,,unknown,0,NSE bhavcopy monthly snapshots
+153,INE130C01021,AMTEKAUTO,,2016-01-01,2019-04-01,BZ,2.75,AMTEKAUTO,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+154,INE952D01018,BILPOWER,,2016-01-01,2019-04-01,BZ,0.55,BILPOWER,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+155,INE878C01033,GEMINI,Gemini Communication Limited,2016-01-01,2019-04-01,BZ,0.25,GEMINI,2020-03-02,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+156,INE346H01014,GITANJALI,,2016-01-01,2019-04-01,BZ,1.05,GITANJALI,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+157,INE924A01013,SALORAINTL,Salora International Limited,2016-01-01,2019-04-01,EQ,18.3,SALORAINTL,2019-04-25,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+158,INE883G01018,SGFL,,2016-01-01,2019-04-01,BZ,1.05,SGFL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+159,INE067H01016,ABGSHIP,ABG Shipyard Limited,2016-01-01,2019-05-02,BZ,1.4,ABGSHIP,2020-03-02,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+160,INE588B01014,ECEIND,ECE Industries Limited,2016-01-01,2019-05-02,EQ,243.45,ECEIND,2019-05-17,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+161,INE510K01019,SHILPI,Shilpi Cable Technologies Limited,2016-01-01,2019-05-02,BZ,1.55,SHILPI,2020-03-02,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+162,INE017D01010,ANGIND,ANG Industries Limited,2016-01-01,2019-06-03,BZ,0.8,ANGIND,2020-07-10,Delisting - Liquidation,liquidation,1,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+163,INE249C01011,FEDDERELEC,,2016-01-01,2019-06-03,BZ,5.05,FEDDERELEC|FEDDERLOYD,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+164,INE992B01026,LAKSHMIEFL,,2016-01-01,2019-06-03,BZ,2.7,LAKSHMIEFL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+165,INE455O01019,PENPEBS,,2016-01-01,2019-06-03,EQ,62.95,PENPEBS,,,unknown,0,NSE bhavcopy monthly snapshots
+166,INE308H01022,PRATIBHA,,2016-01-01,2019-06-03,BZ,1.05,PRATIBHA,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+167,INE898F01018,SIMPLEX,,2016-01-01,2019-06-03,BZ,5.45,SIMPLEX,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+168,INE180K01011,BHARATFIN,,2016-01-01,2019-07-01,EQ,906.4,BHARATFIN|SKSMICRO,,,unknown,0,NSE bhavcopy monthly snapshots
+169,INE191A01019,ORCHIDPHAR,,2016-01-01,2019-07-01,BZ,5.5,ORCHIDPHAR,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+170,INE332G01032,POCHIRAJU,,2016-01-01,2019-07-01,BZ,2.25,POCHIRAJU,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+171,INE410D01017,RAMGOPOLY,Ramgopal Polytex Limited,2018-03-01,2019-07-01,BE,1.7,RAMGOPOLY,2019-07-25,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+172,INE305H01028,SUNILHITEC,,2017-01-02,2019-07-01,BE,0.45,SUNILHITEC,,,unknown,0,NSE bhavcopy monthly snapshots
+173,INE474I01012,TULSI,,2016-01-01,2019-07-01,BZ,0.5,TULSI,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+174,INE225I01026,ZYLOG,,2016-01-01,2019-07-01,BZ,0.55,ZYLOG,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+175,INE878I01014,BAFNAPHARM,,2016-01-01,2019-08-01,BE,5.45,BAFNAPHARM,,,unknown,0,NSE bhavcopy monthly snapshots
+176,INE223G01017,EXCELCROP,,2016-01-01,2019-08-01,EQ,2700.5,EXCELCROP,,,unknown,0,NSE bhavcopy monthly snapshots
+177,INE875A01025,IVRCLINFRA,,2016-01-01,2019-08-01,BE,0.5,IVRCLINFRA,,,unknown,0,NSE bhavcopy monthly snapshots
+178,INE311H01018,ELAND,E-Land Apparel Limited,2016-01-01,2019-09-03,EQ,4.6,ELAND,2019-10-01,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+179,INE761A01019,KHAITANELE,,2016-01-01,2019-09-03,BZ,1.35,KHAITANELE,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+180,INE274B01011,MONSANTO,,2016-01-01,2019-09-03,EQ,2010.05,MONSANTO,,,unknown,0,NSE bhavcopy monthly snapshots
+181,INE318J01027,NUTEK,,2016-01-01,2019-09-03,BZ,0.25,NUTEK,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+182,INE799L01016,TARAJEWELS,,2016-01-01,2019-09-03,BZ,0.5,TARAJEWELS,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+183,INE806F01011,VIJSHAN,,2016-01-01,2019-09-03,BZ,2.75,VIJSHAN,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+184,INE517U01013,AGLSL,,2017-08-01,2019-10-01,EQ,49.3,AGLSL,,,unknown,0,NSE bhavcopy monthly snapshots
+185,INE442A01024,ASSAMCO,Assam Company India Limited,2016-01-01,2019-10-01,BE,0.6,ASSAMCO,2020-01-20,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+186,INE580B01029,GRUH,,2016-01-01,2019-10-01,EQ,260.35,GRUH,,,unknown,0,NSE bhavcopy monthly snapshots
+187,INE639K01016,NITESHEST,NEL Holdings Limited,2016-01-01,2019-10-01,BE,1.65,NITESHEST,2019-11-07,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+188,INE400H01019,ADHUNIK,,2016-01-01,2019-11-01,BZ,0.65,ADHUNIK,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+189,INF760K01BR1,CRMFGETF,,2016-03-01,2019-11-01,EQ,3440.2,CRMFGETF,,,unknown,0,NSE bhavcopy monthly snapshots
+190,INE968G01033,PROVOGE,,2016-01-01,2019-11-01,BE,1.05,PROVOGE,,,unknown,0,NSE bhavcopy monthly snapshots
+191,INE619A01027,RUCHISOYA,,2016-01-01,2019-11-01,EQ,3.6,RUCHISOYA,,,unknown,0,NSE bhavcopy monthly snapshots
+192,INE219H01039,SRSLTD,,2016-01-01,2019-11-01,BZ,0.15,SRSLTD,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+193,INE428O01016,AIFL,,2016-01-01,2019-12-02,BZ,1.55,AIFL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+194,INE825H01017,ESSDEE,,2016-01-01,2019-12-02,BZ,2.65,ESSDEE,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+195,INE133B01019,KESARENT,Kesar Enterprises Limited,2016-01-01,2019-12-02,EQ,29.8,KESARENT,2020-01-07,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+196,INE096L01025,KTIL,Kesar Terminals & Infrastructure Limited,2016-09-01,2019-12-02,EQ,30.75,KTIL,2020-01-07,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+197,INE453M01018,NAGAROIL,,2016-01-01,2019-12-02,BE,0.35,NAGAROIL,,,unknown,0,NSE bhavcopy monthly snapshots
+198,INF204KA17D8,NETFNV20,,2016-01-01,2019-12-02,EQ,576.54,NETFNV20|RELNV20,,,unknown,0,NSE bhavcopy monthly snapshots
+199,INE141B01020,NOESISIND,,2016-03-01,2019-12-02,BZ,0.95,NOESISIND,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+200,INE122J01015,PIRPHYTO,,2016-01-01,2019-12-02,BE,24.5,PIRPHYTO,,,unknown,0,NSE bhavcopy monthly snapshots
+201,INE067D01015,VIMALOIL,,2016-01-01,2019-12-02,BE,5.0,VIMALOIL,,,unknown,0,NSE bhavcopy monthly snapshots
+202,INE270A01011,ALOKTEXT,,2016-01-01,2020-01-01,BE,3.05,ALOKTEXT,,,unknown,0,NSE bhavcopy monthly snapshots
+203,INE933J01015,ARROWTEX,,2016-01-01,2020-02-03,BE,8.8,ARROWTEX,,,unknown,0,NSE bhavcopy monthly snapshots
+204,INE742A01019,PETRONENGG,,2016-01-01,2020-02-03,BE,7.9,PETRONENGG,,,unknown,0,NSE bhavcopy monthly snapshots
+205,INE028D01025,RAINBOWPAP,,2016-01-01,2020-02-03,BZ,0.15,RAINBOWPAP,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+206,INE428A01015,ALBK,,2016-01-01,2020-03-02,EQ,11.35,ALBK,,,unknown,0,NSE bhavcopy monthly snapshots
+207,INE434A01013,ANDHRABANK,,2016-01-01,2020-03-02,EQ,13.35,ANDHRABANK,,,unknown,0,NSE bhavcopy monthly snapshots
+208,INE221I01017,CELESTIAL,,2016-01-01,2020-03-02,BE,1.9,CELESTIAL,,,unknown,0,NSE bhavcopy monthly snapshots
+209,INE112A01023,CORPBANK,,2016-01-01,2020-03-02,EQ,17.55,CORPBANK,,,unknown,0,NSE bhavcopy monthly snapshots
+210,INE155B01012,HINDSYNTEX,,2016-01-01,2020-03-02,BE,1.45,HINDSYNTEX,,,unknown,0,NSE bhavcopy monthly snapshots
+211,INE306B01029,ICSA,,2016-01-01,2020-03-02,BZ,0.2,ICSA,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+212,INE245C01019,LEEL,,2016-01-01,2020-03-02,BZ,2.6,LEEL|LLOYDELENG,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+213,INE744I01034,MVL,,2016-01-01,2020-03-02,BZ,0.05,MVL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+214,INE141A01014,ORIENTBANK,,2016-01-01,2020-03-02,EQ,34.4,ORIENTBANK,,,unknown,0,NSE bhavcopy monthly snapshots
+215,INE686I01011,SITASHREE,,2016-01-01,2020-03-02,BZ,0.35,SITASHREE,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+216,INE667A01018,SYNDIBANK,,2016-01-01,2020-03-02,EQ,18.5,SYNDIBANK,,,unknown,0,NSE bhavcopy monthly snapshots
+217,INE695A01019,UNITEDBNK,,2016-01-01,2020-03-02,EQ,7.2,UNITEDBNK,,,unknown,0,NSE bhavcopy monthly snapshots
+218,INE183H01011,XLENERGY,,2016-01-01,2020-03-02,BZ,0.3,XLENERGY,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+219,INE264A01014,GSKCONS,,2016-01-01,2020-04-01,EQ,9548.55,GSKCONS,,,unknown,0,NSE bhavcopy monthly snapshots
+220,INE920A01011,DOLPHINOFF,,2016-01-01,2020-05-04,BZ,4.05,DOLPHINOFF,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+221,INE361M01021,HIGHGROUND,,2016-12-01,2020-05-04,BZ,0.4,HIGHGROUND,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+222,INE122R01018,MANPASAND,,2016-01-01,2020-06-01,BZ,5.05,MANPASAND,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+223,INE153U01017,MAXINDIA,,2016-08-01,2020-06-01,EQ,64.5,MAXINDIA,,,unknown,0,NSE bhavcopy monthly snapshots
+224,INE955V20013,ARVINDF-RE,,2020-07-01,2020-07-01,BE,57.9,ARVINDF-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+225,INF846K01347,AXISGOLD,,2016-01-01,2020-07-01,EQ,4267.7,AXISGOLD,,,unknown,0,NSE bhavcopy monthly snapshots
+226,INF846K01ZL0,AXISNIFTY,,2017-08-01,2020-07-01,EQ,1162.99,AXISNIFTY,,,unknown,0,NSE bhavcopy monthly snapshots
+227,INE180G01019,EDL,Empee Distilleries Limited,2016-01-01,2020-07-01,BZ,7.0,EDL,2020-07-24,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+228,INE278R01018,KARDA,,2018-04-02,2020-07-01,BE,275.65,KARDA,,,unknown,0,NSE bhavcopy monthly snapshots
+229,INE113O01014,BLUEBLENDS,,2016-02-01,2020-08-03,BZ,0.85,BLUEBLENDS,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+230,INE076H01025,EON,,2016-01-01,2020-08-03,BZ,7.8,EON,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+231,INE852F20015,GDL-RE,,2020-08-03,2020-08-03,BE,21.7,GDL-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+232,INE774D20016,M&MFIN-RE,,2020-08-03,2020-08-03,BE,69.55,M&MFIN-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+233,INE056I20017,REFEX-RE,,2020-08-03,2020-08-03,BE,24.05,REFEX-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+234,INE430G01026,JVLAGRO,,2016-01-01,2020-09-01,BZ,0.75,JVLAGRO,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+235,INE405E20015,MINDA-RE,,2020-09-01,2020-09-01,BE,59.3,MINDA-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+236,INE184C01028,CIMMCO,,2016-01-01,2020-10-01,EQ,20.4,CIMMCO,,,unknown,0,NSE bhavcopy monthly snapshots
+237,INE501A20019,DEEPAK-RE,,2020-10-01,2020-10-01,BE,16.35,DEEPAK-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+238,INE230A20015,EIH-RE,,2020-10-01,2020-10-01,BE,14.9,EIH-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+239,INE093A01033,HEXAWARE,Hexaware Technologies Limited,2016-01-01,2020-10-01,EQ,465.5,HEXAWARE,2020-11-09,Voluntary Delisting,voluntary_delisting,0,NSE bhavcopy monthly snapshots; type from https://nsearchives.nseindia.com/content/equities/delisted.csv
+240,INE474B01017,PSL,,2016-01-01,2020-10-01,BE,0.5,PSL,,,unknown,0,NSE bhavcopy monthly snapshots
+241,INE754A01014,SUBEX,,2016-01-01,2020-10-01,EQ,11.9,SUBEX,,,unknown,0,NSE bhavcopy monthly snapshots
+242,INE694C01018,LAKSHVILAS,,2016-01-01,2020-11-02,EQ,15.4,LAKSHVILAS,,,unknown,0,NSE bhavcopy monthly snapshots
+243,INE893J20011,MOLDTEK-RE,,2020-11-02,2020-11-02,BE,318.35,MOLDTEK-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+244,INE292A01023,UVSL,,2016-07-01,2020-11-02,EQ,0.3,UVSL,,,unknown,0,NSE bhavcopy monthly snapshots
+245,INE498B20016,SHOPER-RE,,2020-12-01,2020-12-01,BE,38.2,SHOPER-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+246,INE526A01016,GARDENSILK,,2016-01-01,2021-01-01,EQ,12.85,GARDENSILK,,,unknown,0,NSE bhavcopy monthly snapshots
+247,INE343D01010,JAIHINDPRO,,2016-01-01,2021-01-01,BZ,1.55,JAIHINDPRO,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+248,INE143H01015,KSK,,2016-01-01,2021-01-01,BZ,0.75,KSK,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+249,INE749B01012,ORTINLABSS,,2016-01-01,2021-01-01,EQ,29.65,ORTINLABSS,,,unknown,0,NSE bhavcopy monthly snapshots
+250,INE618H01016,PARABDRUGS,,2016-01-01,2021-01-01,BZ,5.3,PARABDRUGS,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+251,INF179K01CN1,HDFCMFGETF,,2016-01-01,2021-02-01,EQ,4351.4,HDFCMFGETF,,,unknown,0,NSE bhavcopy monthly snapshots
+252,INF179KB1KP3,HDFCNIFETF,,2016-01-01,2021-02-01,EQ,1510.68,HDFCNIFETF,,,unknown,0,NSE bhavcopy monthly snapshots
+253,INF179KB1KQ1,HDFCSENETF,,2016-05-02,2021-02-01,EQ,5135.32,HDFCSENETF,,,unknown,0,NSE bhavcopy monthly snapshots
+254,INE775B01025,KWALITY,,2016-01-01,2021-02-01,EQ,2.75,KWALITY,,,unknown,0,NSE bhavcopy monthly snapshots
+255,INE498L20015,L&TFH-RE,,2021-02-01,2021-02-01,BE,25.7,L&TFH-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+256,INE592I01029,METKORE,,2016-01-01,2021-02-01,BZ,0.7,METKORE,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+257,INE217G01027,PROSEED,,2016-01-01,2021-02-01,BE,0.4,GREENFIRE|PROSEED,,,unknown,0,NSE bhavcopy monthly snapshots
+258,INE216G01011,SUJANAUNI,,2016-01-01,2021-02-01,BE,0.3,SUJANAUNI,,,unknown,0,NSE bhavcopy monthly snapshots
+259,INE550C20012,URJA-RE,,2021-02-01,2021-02-01,BE,7.4,URJA-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+260,INF789F1AUN8,UTIBANKETF,,2020-10-01,2021-02-01,EQ,331.19,UTIBANKETF,,,unknown,0,NSE bhavcopy monthly snapshots
+261,INF789F1AHR6,UTISXN50,,2019-04-01,2021-02-01,EQ,395.32,UTISXN50,,,unknown,0,NSE bhavcopy monthly snapshots
+262,INE391Z01012,CKFSL,,2019-05-02,2021-03-01,BZ,0.35,CKFSL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+263,INE117B01012,CURATECH,,2016-01-01,2021-03-01,BZ,1.55,CURATECH,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+264,INE731U01010,DIGJAMLTD,,2016-08-01,2021-03-01,BZ,4.7,DIGJAMLTD,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+265,INE446C01013,GLOBOFFS,,2016-01-01,2021-03-01,EQ,9.5,GLOBOFFS,,,unknown,0,NSE bhavcopy monthly snapshots
+266,INF789F01059,GOLDSHARE,,2016-01-01,2021-03-01,EQ,4147.35,GOLDSHARE,,,unknown,0,NSE bhavcopy monthly snapshots
+267,INE537A01013,GTNIND,,2016-01-01,2021-03-01,EQ,11.2,GTNIND,,,unknown,0,NSE bhavcopy monthly snapshots
+268,INE529D20014,PATINT-RE,,2021-03-01,2021-03-01,BE,14.9,PATINT-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+269,INE105I01012,SELMCL,,2016-01-01,2021-03-01,BZ,1.6,SELMCL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+270,INE955I01036,SEZAL,,2016-01-01,2021-03-01,BZ,5.1,SEZAL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+271,INE502K01016,TALWALKARS,,2016-01-01,2021-03-01,BZ,1.6,TALWALKARS,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+272,INE627Z01019,TALWGYM,,2018-07-02,2021-03-01,BZ,1.1,TALWGYM,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+273,INF789FC1N82,UTINEXT50,,2017-09-01,2021-03-01,EQ,412.04,UTINEXT50,,,unknown,0,NSE bhavcopy monthly snapshots
+274,INE672K01025,CNOVAPETRO,,2016-01-01,2021-04-01,BE,15.95,CNOVAPETRO,,,unknown,0,NSE bhavcopy monthly snapshots
+275,INE649H01011,EUROCERA,,2016-01-01,2021-04-01,BZ,1.15,EUROCERA,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+276,INE939D01015,HARITASEAT,,2016-01-01,2021-04-01,EQ,735.45,HARITASEAT,,,unknown,0,NSE bhavcopy monthly snapshots
+277,INE299C01024,KGL,,2016-01-01,2021-04-01,BZ,0.3,KGL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+278,INE302M01033,PRABHAT,,2016-01-01,2021-04-01,EQ,97.0,PRABHAT,,,unknown,0,NSE bhavcopy monthly snapshots
+279,INE263L01013,SANGHVIFOR,,2016-01-01,2021-04-01,BE,20.05,SANGHVIFOR,,,unknown,0,NSE bhavcopy monthly snapshots
+280,INE068D01021,CASTEXTECH,,2016-01-01,2021-05-03,BE,0.65,CASTEXTECH,,,unknown,0,NSE bhavcopy monthly snapshots
+281,INE087J01028,GBGLOBAL,,2019-07-01,2021-05-03,EQ,6.8,GBGLOBAL|MIL,,,unknown,0,NSE bhavcopy monthly snapshots
+282,INE291D20011,KDDL-RE,,2021-05-03,2021-05-03,BE,168.35,KDDL-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+283,INE216D01026,KSERASERA,,2016-01-01,2021-05-03,BZ,0.15,KSERASERA,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+284,INE974H01013,MEGH,,2016-01-01,2021-05-03,EQ,148.1,MEGH,,,unknown,0,NSE bhavcopy monthly snapshots
+285,INE090C01019,STINDIA,,2016-01-01,2021-05-03,BZ,3.0,STINDIA,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+286,INE409A01015,THIRUSUGAR,,2016-01-01,2021-05-03,BZ,7.9,THIRUSUGAR,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+287,INE950G01023,UNIPLY,,2018-07-02,2021-05-03,BZ,4.0,UNIPLY,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+288,INE466H01028,UNITY,,2016-01-01,2021-05-03,BZ,0.85,UNITY,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+289,INE202B01012,DHFL,,2016-01-01,2021-06-01,EQ,17.45,DHFL,,,unknown,0,NSE bhavcopy monthly snapshots
+290,INE287C01029,MIC,,2016-01-01,2021-06-01,BE,1.25,MIC,,,unknown,0,NSE bhavcopy monthly snapshots
+291,INF247L01031,N100,,2016-01-01,2021-06-01,EQ,983.06,N100,,,unknown,0,NSE bhavcopy monthly snapshots
+292,INE005D01015,RAMSARUP,,2016-02-01,2021-06-01,BZ,0.95,RAMSARUP,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+293,INE215G01021,SMPL,,2016-01-01,2021-06-01,BZ,0.2,SMPL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+294,INE602K01014,SYNCOM,,2016-01-01,2021-06-01,BZ,3.8,SYNCOM,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+295,INE703A01011,VIDEOIND,,2016-01-01,2021-06-01,BZ,5.7,VIDEOIND,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+296,INE161L20019,VLIFE-RE,,2021-06-01,2021-06-01,BE,0.8,VLIFE-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+297,INE251C01017,ABMINTLTD,,2017-02-01,2021-07-01,EQ,69.35,ABMINTLTD,,,unknown,0,NSE bhavcopy monthly snapshots
+298,INE395A01016,BSELINFRA,,2016-01-01,2021-07-01,EQ,1.6,BSELINFRA,,,unknown,0,NSE bhavcopy monthly snapshots
+299,INF373I01049,KOTAKGOLD,,2016-01-01,2021-07-01,EQ,410.9,KOTAKGOLD,,,unknown,0,NSE bhavcopy monthly snapshots
+300,INE484C01022,TIDEWATER,,2016-04-01,2021-07-01,EQ,12510.7,TIDEWATER,,,unknown,0,NSE bhavcopy monthly snapshots
+301,INE748C01020,3IINFOTECH,,2016-01-01,2021-08-02,BE,9.25,3IINFOTECH,,,unknown,0,NSE bhavcopy monthly snapshots
+302,INE964B01033,ALCHEM,,2016-01-01,2021-08-02,BZ,3.75,ALCHEM,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+303,INE574I01035,ARCOTECH,,2017-07-03,2021-08-02,BZ,1.9,ARCOTECH,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+304,INE448A01013,AUTOLITIND,,2016-01-01,2021-08-02,BZ,17.0,AUTOLITIND,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+305,INE607L01029,BILENERGY,,2016-01-01,2021-08-02,BZ,0.6,BILENERGY,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+306,INE662C01015,CHROMATIC,,2016-01-01,2021-08-02,BZ,1.1,CHROMATIC,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+307,INE656K01010,DQE,,2016-01-01,2021-08-02,BZ,0.95,DQE,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+308,INE063J01011,EUROMULTI,,2016-01-01,2021-08-02,BZ,1.45,EUROMULTI,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+309,INE278R01026,KARDA,,2020-08-03,2021-08-02,BE,199.9,KARDA,,,unknown,0,NSE bhavcopy monthly snapshots
+310,INE196J01019,OISL,,2016-01-01,2021-08-02,BZ,1.85,OISL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+311,INE495J01015,PRADIP,,2016-01-01,2021-08-02,BE,1.0,PRADIP,,,unknown,0,NSE bhavcopy monthly snapshots
+312,INE196B01016,SHIRPUR-G,,2016-01-01,2021-08-02,BZ,6.0,SHIRPUR-G,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+313,INE509K01011,TECHNOFAB,,2016-01-01,2021-08-02,BZ,6.15,TECHNOFAB,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+314,INE871B01014,ZICOM,,2016-01-01,2021-08-02,BZ,1.6,ZICOM,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+315,INF754K01EM9,EQ30,,2016-06-01,2021-09-01,EQ,403.09,EQ30,,,unknown,0,NSE bhavcopy monthly snapshots
+316,INF754K01EK3,NIFTYEES,,2016-03-01,2021-09-01,EQ,22210.0,NIFTYEES,,,unknown,0,NSE bhavcopy monthly snapshots
+317,INE077B01018,ZODJRDMKJ,,2016-02-01,2021-09-01,EQ,31.0,ZODJRDMKJ,,,unknown,0,NSE bhavcopy monthly snapshots
+318,INE022I20019,ASIAN-RE,,2021-10-01,2021-10-01,BE,40.9,ASIAN-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+319,INE078A01026,EMCO,,2016-01-01,2021-10-01,BZ,1.9,EMCO,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+320,INF109KC1CZ3,ICICI500,,2018-06-01,2021-10-01,EQ,247.77,ICICI500,,,unknown,0,NSE bhavcopy monthly snapshots
+321,INE087A20019,KIL-RE,,2021-10-01,2021-10-01,BE,8.4,KIL-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+322,INE533D01024,RAJRAYON,,2016-01-01,2021-10-01,BZ,0.3,RAJRAYON,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+323,INE324L20013,RPP-RE,,2021-10-01,2021-10-01,BE,25.6,RPP-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+324,INE824B01021,TATASTLBSL,,2016-01-01,2021-11-01,BE,90.05,BHUSANSTL|TATASTLBSL,,,unknown,0,NSE bhavcopy monthly snapshots
+325,INE621L20012,TRAIL-RE,,2021-11-01,2021-11-01,BE,6.85,TRAIL-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+326,INE561C20019,BGEAR-RE,,2021-12-01,2021-12-01,BE,172.05,BGEAR-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+327,INE053A20011,IHCL-RE,,2021-12-01,2021-12-01,BE,32.6,IHCL-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+328,INE520H20014,BEARD-RE,,2022-01-03,2022-01-03,BE,6.15,BEARD-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+329,INE852F01015,GDL,,2016-01-01,2022-01-03,EQ,277.75,GDL,,,unknown,0,NSE bhavcopy monthly snapshots
+330,INE302H01017,GTNTEX,,2016-01-01,2022-01-03,EQ,15.4,GTNTEX,,,unknown,0,NSE bhavcopy monthly snapshots
+331,INE418N01027,INTEGRA,,2016-02-01,2022-01-03,BE,4.7,INTEGRA,,,unknown,0,NSE bhavcopy monthly snapshots
+332,INE023S01016,JIYAECO,,2019-09-03,2022-01-03,BZ,3.2,JIYAECO,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+333,INE805B01012,MANGTIMBER,,2016-01-01,2022-01-03,EQ,16.8,MANGTIMBER,,,unknown,0,NSE bhavcopy monthly snapshots
+334,INE790C01014,PATSPINLTD,,2016-01-01,2022-01-03,EQ,14.85,PATSPINLTD,,,unknown,0,NSE bhavcopy monthly snapshots
+335,INE637H20016,SHIVAM-RE,,2022-01-03,2022-01-03,BE,24.6,SHIVAM-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+336,INE943C01027,SRIPIPES,,2016-01-01,2022-01-03,EQ,207.05,SRIPIPES,,,unknown,0,NSE bhavcopy monthly snapshots
+337,INE008I01026,COX&KINGS,,2016-01-01,2022-02-01,BZ,2.15,COX&KINGS,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+338,INE489H01020,NITINFIRE,,2016-01-01,2022-02-01,BZ,2.3,NITINFIRE,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+339,INE925Y01010,GODHA,,2021-01-01,2022-03-02,BE,153.45,GODHA,,,unknown,0,NSE bhavcopy monthly snapshots
+340,INE766A01018,PAEL,,2016-01-01,2022-04-01,EQ,6.2,PAEL,,,unknown,0,NSE bhavcopy monthly snapshots
+341,INE248H01012,ROHITFERRO,,2016-01-01,2022-04-01,EQ,28.7,ROHITFERRO,,,unknown,0,NSE bhavcopy monthly snapshots
+342,INE663A01017,SUPPETRO,,2016-01-01,2022-04-01,EQ,943.05,SUPPETRO,,,unknown,0,NSE bhavcopy monthly snapshots
+343,INE022I20027,ASIAN-RE1,,2022-05-02,2022-05-02,BE,3.8,ASIAN-RE1,,,unknown,0,NSE bhavcopy monthly snapshots
+344,INE803A01027,ATNINTER,,2016-02-01,2022-05-02,BE,0.2,ATNINTER,,,unknown,0,NSE bhavcopy monthly snapshots
+345,INE898S20011,AURUM-RE,,2022-05-02,2022-05-02,BE,13.75,AURUM-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+346,INE486B01011,JAINSTUDIO,,2016-02-01,2022-05-02,BZ,3.15,JAINSTUDIO,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+347,INE988E01036,JMTAUTOLTD,,2016-10-03,2022-05-02,BZ,1.85,JMTAUTOLTD,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+348,INE022B01014,MUKANDENGG,,2016-01-01,2022-05-02,BE,29.3,MUKANDENGG,,,unknown,0,NSE bhavcopy monthly snapshots
+349,INE808B01016,OPTOCIRCUI,,2016-01-01,2022-05-02,BZ,2.0,OPTOCIRCUI,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+350,INE256H20015,DYNPRO-RE,,2022-06-01,2022-06-01,BE,21.75,DYNPRO-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+351,INE418N20019,ESSEN-RE,,2022-06-01,2022-06-01,BE,0.15,ESSEN-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+352,INE528K01029,GALLISPAT,,2018-09-03,2022-06-01,EQ,65.0,GALLISPAT,,,unknown,0,NSE bhavcopy monthly snapshots
+353,INE866K01015,INDOSOLAR,,2016-01-01,2022-06-01,BZ,4.3,INDOSOLAR,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+354,INE989C01012,DIAPOWER,,2016-01-01,2022-08-01,BZ,1.9,DIAPOWER,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+355,INE836H01014,MCDHOLDING,,2016-01-01,2022-08-01,BZ,69.8,MCDHOLDING,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+356,INE160H01019,PBAINFRA,,2016-01-01,2022-08-01,EQ,13.95,PBAINFRA,,,unknown,0,NSE bhavcopy monthly snapshots
+357,INE034H01016,SORILINFRA,,2016-01-01,2022-08-01,EQ,65.55,SORILINFRA|STOREONE,,,unknown,0,NSE bhavcopy monthly snapshots
+358,INE688J01015,EXCEL,,2016-01-01,2022-09-01,EQ,8.55,EXCEL,,,unknown,0,NSE bhavcopy monthly snapshots
+359,INF109KC1E27,ICICIBANKN,,2019-08-01,2022-09-01,EQ,39.45,ICICIBANKN,,,unknown,0,NSE bhavcopy monthly snapshots
+360,INF109KC1N67,ICICITECH,,2020-09-01,2022-09-01,EQ,28.89,ICICITECH,,,unknown,0,NSE bhavcopy monthly snapshots
+361,INE880B01015,ANSALHSG,,2016-01-01,2022-10-03,EQ,4.9,ANSALHSG,,,unknown,0,NSE bhavcopy monthly snapshots
+362,INE589G01011,BRFL,,2016-01-01,2022-10-03,BZ,2.7,BRFL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+363,INE874H01015,CANDC,,2016-01-01,2022-10-03,BZ,3.35,CANDC,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+364,INE268C01029,EASUNREYRL,,2016-01-01,2022-10-03,BZ,2.55,EASUNREYRL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+365,INE026B01049,JIKIND,,2016-02-01,2022-10-03,BZ,0.55,JIKIND,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+366,INE904J01016,JINDCOT,,2016-01-01,2022-10-03,BZ,2.3,JINDCOT,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+367,INE908V20012,LIBAS-RE,,2022-10-03,2022-10-03,BE,1.5,LIBAS-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+368,INE701B01021,PUNJLLOYD,,2016-01-01,2022-10-03,BZ,2.3,PUNJLLOYD,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+369,INE699A01011,UTTAMSTL,,2016-01-01,2022-10-03,BE,3.3,UTTAMSTL,,,unknown,0,NSE bhavcopy monthly snapshots
+370,INE855F01034,BARTRONICS,,2016-01-01,2022-11-01,BZ,3.55,BARTRONICS,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+371,INE018I01017,MINDTREE,,2016-01-01,2022-11-01,EQ,3508.7,MINDTREE,,,unknown,0,NSE bhavcopy monthly snapshots
+372,INE722A01011,SHRIRAMCIT,,2016-01-01,2022-11-01,EQ,1802.35,SHRIRAMCIT,,,unknown,0,NSE bhavcopy monthly snapshots
+373,INE075B01012,SICAL,,2016-01-01,2022-11-01,BE,6.55,SICAL,,,unknown,0,NSE bhavcopy monthly snapshots
+374,INE495B20012,SUVEN-RE,,2022-11-01,2022-11-01,BE,2.45,SUVEN-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+375,INE662L01016,TCIDEVELOP,,2016-01-01,2022-11-01,EQ,390.0,TCIDEVELOP,,,unknown,0,NSE bhavcopy monthly snapshots
+376,INE363W01018,BHAGYAPROP,,2017-08-01,2022-12-01,EQ,41.6,BHAGYAPROP,,,unknown,0,NSE bhavcopy monthly snapshots
+377,INE418N20027,ESSEN-RE1,,2022-12-01,2022-12-01,BE,2.55,ESSEN-RE1,,,unknown,0,NSE bhavcopy monthly snapshots
+378,INE382T01022,4THDIM,,2022-10-03,2023-01-02,BE,117.0,4THDIM,,,unknown,0,NSE bhavcopy monthly snapshots
+379,INE00Y820016,AKG-RE,,2023-01-02,2023-01-02,BE,17.35,AKG-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+380,INE071F20012,APCL-RE,,2023-01-02,2023-01-02,BE,7.95,APCL-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+381,INE482J20013,GAL-RE,,2023-01-02,2023-01-02,BE,0.45,GAL-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+382,INE473B20019,HATSUN-RE,,2023-01-02,2023-01-02,BE,464.6,HATSUN-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+383,INE890A01024,JMCPROJECT,,2018-11-01,2023-01-02,EQ,139.05,JMCPROJECT,,,unknown,0,NSE bhavcopy monthly snapshots
+384,INE889E01010,PIONDIST,,2016-01-01,2023-01-02,EQ,184.35,PIONDIST,,,unknown,0,NSE bhavcopy monthly snapshots
+385,INE611A20016,RSWM-RE,,2023-01-02,2023-01-02,BE,77.15,RSWM-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+386,INE845C01016,SUBCAPCITY,,2019-02-01,2023-01-02,EQ,80.85,SUBCAPCITY,,,unknown,0,NSE bhavcopy monthly snapshots
+387,INE988K01017,EQUITAS,,2016-05-02,2023-02-01,EQ,119.6,EQUITAS,,,unknown,0,NSE bhavcopy monthly snapshots
+388,INE978A20019,HERIT-RE,,2023-02-01,2023-02-01,BE,138.05,HERIT-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+389,INE227G20018,INDO-RE,,2023-02-01,2023-02-01,BE,0.7,INDO-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+390,INE312H01016,INOXLEISUR,,2016-01-01,2023-02-01,EQ,489.15,INOXLEISUR,,,unknown,0,NSE bhavcopy monthly snapshots
+391,INE176C01016,SATHAISPAT,,2016-01-01,2023-02-01,BE,2.6,SATHAISPAT,,,unknown,0,NSE bhavcopy monthly snapshots
+392,INE429C01035,SINTEX,,2016-01-01,2023-02-01,BE,2.65,SINTEX,,,unknown,0,NSE bhavcopy monthly snapshots
+393,INE666E01012,ANDHRACEMT,,2016-01-01,2023-03-01,EQ,5.15,ANDHRACEMT,,,unknown,0,NSE bhavcopy monthly snapshots
+394,INE180C20018,CGCL-RE,,2023-03-01,2023-03-01,BE,161.25,CGCL-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+395,INE456C01020,DFMFOODS,,2018-12-03,2023-03-01,EQ,459.25,DFMFOODS,,,unknown,0,NSE bhavcopy monthly snapshots
+396,INE099J01015,JPINFRATEC,,2016-01-01,2023-03-01,BE,1.2,JPINFRATEC,,,unknown,0,NSE bhavcopy monthly snapshots
+397,INE455T01018,JSLHISAR,,2016-02-01,2023-03-01,EQ,506.5,JSLHISAR,,,unknown,0,NSE bhavcopy monthly snapshots
+398,INE934B01028,MERCATOR,,2016-01-01,2023-03-01,BE,0.9,MERCATOR,,,unknown,0,NSE bhavcopy monthly snapshots
+399,INE294G20018,ROML-RE,,2023-03-01,2023-03-01,BE,3.6,ROML-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+400,INE905P01028,BCP,,2019-09-03,2023-04-03,EQ,4.3,BCP,,,unknown,0,NSE bhavcopy monthly snapshots
+401,INF754K01KN4,EBBETF0423,,2020-02-03,2023-04-03,EQ,1224.06,EBBETF0423,,,unknown,0,NSE bhavcopy monthly snapshots
+402,INE542A01039,GSCLCEMENT,,2016-01-01,2023-04-03,EQ,31.65,GSCLCEMENT,,,unknown,0,NSE bhavcopy monthly snapshots
+403,INE285B01017,SPICEJET,,2019-09-03,2023-04-03,EQ,31.0,SPICEJET,,,unknown,0,NSE bhavcopy monthly snapshots
+404,INE716B01011,TIPSINDLTD,,2016-01-01,2023-04-03,EQ,1579.15,TIPSINDLTD,,,unknown,0,NSE bhavcopy monthly snapshots
+405,INE767B01022,VIKASPROP,,2019-09-03,2023-04-03,BZ,0.45,VIKASPROP,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+406,INE706A01022,VIKASWSP,,2019-09-03,2023-04-03,BZ,1.05,VIKASWSP,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+407,INE974C01022,WINPRO,,2019-09-03,2023-04-03,EQ,2.25,JUMPNET|WINPRO,,,unknown,0,NSE bhavcopy monthly snapshots
+408,INE065J20016,GISO-RE,,2023-05-02,2023-05-02,BE,1.6,GISO-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+409,INE313D01013,MOHOTAIND,,2016-01-01,2023-05-02,BZ,4.35,MOHOTAIND|MOHOTAMILL|RAIREKMOH,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+410,INE088B01015,NATNLSTEEL,,2016-01-01,2023-05-02,BE,4.0,NATNLSTEEL,,,unknown,0,NSE bhavcopy monthly snapshots
+411,INE573K20025,RUSHI-RE1,,2023-05-02,2023-05-02,BE,108.2,RUSHI-RE1,,,unknown,0,NSE bhavcopy monthly snapshots
+412,INE480C20020,SDBL-RE1,,2023-05-02,2023-05-02,BE,26.35,SDBL-RE1,,,unknown,0,NSE bhavcopy monthly snapshots
+413,INE008Z01012,SRPL,,2020-10-01,2023-05-02,EQ,46.9,SRPL,,,unknown,0,NSE bhavcopy monthly snapshots
+414,INE294A01037,BALLARPUR,,2016-01-01,2023-06-01,BZ,0.9,BALLARPUR,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+415,INE988C01014,DHARSUGAR,,2016-01-01,2023-06-01,BZ,8.0,DHARSUGAR,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+416,INE925Y20010,GODHA-RE,,2023-06-01,2023-06-01,BE,0.05,GODHA-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+417,INE001A01036,HDFC,,2016-01-01,2023-07-03,EQ,2871.35,HDFC,,,unknown,0,NSE bhavcopy monthly snapshots
+418,INE553C20016,NECLTD-RE,,2023-07-03,2023-07-03,BE,0.35,NECLTD-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+419,INE904D01019,PDPL,,2016-01-01,2023-07-03,BZ,3.3,PDPL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+420,INE542F01012,RNAVAL,,2016-01-01,2023-07-03,BZ,2.3,PIPAVAVDOC|RDEL|RNAVAL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+421,INE388G01018,TANTIACONS,,2016-01-01,2023-07-03,BZ,16.05,TANTIACONS,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+422,INF754K01EL1,EBANK,,2016-09-01,2023-08-01,EQ,4531.74,EBANK,,,unknown,0,NSE bhavcopy monthly snapshots
+423,INE743C01021,JSWISPL,,2018-10-01,2023-08-01,EQ,38.8,AIONJSW|JSWISPL,,,unknown,0,NSE bhavcopy monthly snapshots
+424,INE154U01015,MAXVIL,,2016-07-01,2023-08-01,EQ,198.2,MAXVIL,,,unknown,0,NSE bhavcopy monthly snapshots
+425,INE872A01014,SREINFRA,,2016-01-01,2023-08-01,BE,1.95,SREINFRA,,,unknown,0,NSE bhavcopy monthly snapshots
+426,INE008Z20012,SRPL-RE,,2023-08-01,2023-08-01,BE,0.15,SRPL-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+427,INE999K20014,GREEN-RE,,2023-09-01,2023-09-01,BE,2.9,GREEN-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+428,INE572A01028,JBCHEPHARM,,2016-01-01,2023-09-01,EQ,2796.15,JBCHEPHARM,,,unknown,0,NSE bhavcopy monthly snapshots
+429,INE980A01023,PRESSMN,,2016-01-01,2023-09-01,BE,216.9,PRESSMN,,,unknown,0,NSE bhavcopy monthly snapshots
+430,INF789FB1X41,UTINIFTETF,,2016-01-01,2023-09-01,EQ,2086.82,UTINIFTETF,,,unknown,0,NSE bhavcopy monthly snapshots
+431,INE181G01025,AJRINFRA,,2016-01-01,2023-10-03,BZ,0.7,AJRINFRA|GAMMNINFRA,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+432,INE474E20011,BHANDA-RE,,2023-10-03,2023-10-03,BE,1.9,BHANDA-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+433,INE0AEJ01013,BIRLATYRE,,2020-03-02,2023-10-03,BE,4.45,BIRLATYRE,,,unknown,0,NSE bhavcopy monthly snapshots
+434,INF666M01FS5,IBMFNIFTY,,2019-06-03,2023-10-03,EQ,203.99,IBMFNIFTY,,,unknown,0,NSE bhavcopy monthly snapshots
+435,INE187A01017,JBFIND,,2016-01-01,2023-10-03,BZ,4.3,JBFIND,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+436,INE048C01017,VICEROY,,2016-01-01,2023-10-03,BZ,2.6,VICEROY,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+437,INE674A01014,TATASTLLP,,2016-01-01,2023-11-01,EQ,766.9,TATASPONGE|TATASTLLP,,,unknown,0,NSE bhavcopy monthly snapshots
+438,INE899L01022,UJAAS,,2016-01-01,2023-11-01,EQ,2.1,UJAAS,,,unknown,0,NSE bhavcopy monthly snapshots
+439,INE065B01013,INDLMETER,,2016-01-01,2023-12-01,BZ,6.95,INDLMETER,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+440,INE172H01014,RMCL,,2016-01-01,2023-12-01,BZ,1.75,RMCL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+441,INE093R20011,LLOYDS-RE,,2024-01-01,2024-01-01,BE,25.85,LLOYDS-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+442,INE013A01015,RELCAPITAL,,2016-01-01,2024-01-01,BE,12.0,RELCAPITAL,,,unknown,0,NSE bhavcopy monthly snapshots
+443,INE416A01036,SABTN,,2016-01-01,2024-01-01,BE,2.9,SABTN,,,unknown,0,NSE bhavcopy monthly snapshots
+444,INE376C01020,SPENTEX,,2016-01-01,2024-01-01,BZ,2.4,SPENTEX,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+445,INE493A01027,TATACOFFEE,,2016-01-01,2024-01-01,EQ,321.8,TATACOFFEE,,,unknown,0,NSE bhavcopy monthly snapshots
+446,INE422C01014,TINPLATE,,2016-01-01,2024-01-01,EQ,453.45,TINPLATE,,,unknown,0,NSE bhavcopy monthly snapshots
+447,INE439E20014,SKIPPER-RE,,2024-02-01,2024-02-01,BE,81.65,SKIPPER-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+448,INE056C01010,TATAMETALI,,2016-01-01,2024-02-01,EQ,1059.0,TATAMETALI,,,unknown,0,NSE bhavcopy monthly snapshots
+449,INE01II20013,SILGO-RE,,2024-03-01,2024-03-01,BE,1.2,SILGO-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+450,INE549A20018,HCC-RE,,2024-04-01,2024-04-01,BE,12.15,HCC-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+451,INE530B20016,IIFL-RE,,2024-05-02,2024-05-02,BE,86.6,IIFL-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+452,INE425A01011,METALFORGE,,2016-01-01,2024-05-02,BZ,4.5,METALFORGE,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+453,INE190H20016,SAKUMA-RE,,2024-05-02,2024-05-02,BE,1.8,SAKUMA-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+454,INE806C20018,TIL-RE,,2024-05-02,2024-05-02,BE,153.35,TIL-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+455,INE334L01012,UJJIVAN,,2016-06-01,2024-05-02,EQ,589.5,UJJIVAN,,,unknown,0,NSE bhavcopy monthly snapshots
+456,INE055C20012,KEEPLN-RE,,2024-06-03,2024-06-03,BE,1.85,KEEPLN-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+457,INE0APB20016,MGEL-RE,,2024-06-03,2024-06-03,BE,0.8,MGEL-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+458,INE624Z20016,SOLARA-RE,,2024-06-03,2024-06-03,BE,27.1,SOLARA-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+459,INE501W01021,SPTL,,2017-09-01,2024-06-03,BZ,0.85,SPTL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+460,INE159N20019,VIJIFI-RE,,2024-06-03,2024-06-03,BE,0.85,VIJIFI-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+461,INE013820019,KSHITI-RE,,2024-07-01,2024-07-01,BE,0.96,KSHITI-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+462,INE201J01017,LGBFORGE,,2016-01-01,2024-07-01,BE,12.97,LGBFORGE,,,unknown,0,NSE bhavcopy monthly snapshots
+463,INE828O20017,MITCON-RE,,2024-07-01,2024-07-01,BE,48.13,MITCON-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+464,INE671H20015,SOBHA-RE,,2024-07-01,2024-07-01,BE,271.3,SOBHA-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+465,INE752P01024,FRETAIL,FUTURE RETAIL LIMITED,2016-09-01,2024-08-01,BZ,2.28,FRETAIL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+466,INE224E20028,GACMDVR-RE,GACM TECHNOLOGIES LIMITED,2024-08-01,2024-08-01,BE,0.51,GACMDVR-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+467,INE224E20010,GATECH-RE,GACM TECHNOLOGIES LIMITED,2024-08-01,2024-08-01,BE,0.09,GATECH-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+468,INE878H20016,INVENT-RE,INVENTURE GRO & SEC LTD,2024-08-01,2024-08-01,BE,0.57,INVENT-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+469,INE732F01019,ISMTLTD,ISMT LIMITED,2016-01-01,2024-08-01,EQ,130.71,ISMTLTD,,,unknown,0,NSE bhavcopy monthly snapshots
+470,INE268L01020,SPYL,SHEKHAWATI POLY-YARN LTD.,2016-01-01,2024-08-01,BE,6.67,SPYL,,,unknown,0,NSE bhavcopy monthly snapshots
+471,IN9155A01020,TATAMTRDVR,TATA MOTORS DVR  A  ORD,2016-01-01,2024-08-01,EQ,783.55,TATAMTRDVR,,,unknown,0,NSE bhavcopy monthly snapshots
+472,INE0ALR20011,ATAL-RE,ATAL REALTECH LIMITED,2024-09-02,2024-09-02,BE,0.39,ATAL-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+473,INE831Q01016,BKMINDST,BKM INDUSTRIES LIMITED,2016-01-01,2024-09-02,BZ,1.45,BKMINDST|MANAKINDST,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+474,INE677H01012,DEEPENR,DEEP ENE RESOURCES LTD,2016-01-01,2024-09-02,EQ,258.42,DEEPENR|DEEPIND,,,unknown,0,NSE bhavcopy monthly snapshots
+475,INE999K20022,GREEN-RE1,ORIENT GREEN POWER CO LTD,2024-09-02,2024-09-02,BE,6.42,GREEN-RE1,,,unknown,0,NSE bhavcopy monthly snapshots
+476,INE817A01019,MELSTAR,MELSTAR INFORMATION TECH,2016-02-01,2024-09-02,BZ,4.25,MELSTAR,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+477,INF204KB18W4,SDL24BEES,NIPPON INDIA- NIMFXX,2020-12-01,2024-09-02,EQ,123.92,NCPSESDL24|SDL24BEES,,,unknown,0,NSE bhavcopy monthly snapshots
+478,INE778U01029,TCNSBRANDS,TCNS CLOTHING CO. LIMITED,2018-08-01,2024-09-02,EQ,583.95,TCNSBRANDS,,,unknown,0,NSE bhavcopy monthly snapshots
+479,INE01KI20019,VINNY-RE,VINNY OVERSEAS LTD,2024-09-02,2024-09-02,BE,0.61,VINNY-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+480,INE043D01016,IDFC,IDFC LIMITED,2016-01-01,2024-10-01,EQ,111.91,IDFC,,,unknown,0,NSE bhavcopy monthly snapshots
+481,INE645L01011,JUBLINDS,JUBILANT INDUSTRIES LTD,2016-01-01,2024-10-01,EQ,1649.95,JUBLINDS,,,unknown,0,NSE bhavcopy monthly snapshots
+482,INE117Z20011,NARMA-RE,NARMADA AGROBASE LIMITED,2024-10-01,2024-10-01,BE,1.22,NARMA-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+483,INE886H01027,TV18BRDCST,TV18 BROADCAST LIMITED,2016-01-01,2024-10-01,EQ,44.88,TV18BRDCST,,,unknown,0,NSE bhavcopy monthly snapshots
+484,INE802G01018,JETAIRWAYS,JET AIRWAYS (INDIA) LTD.,2016-01-01,2024-11-01,BZ,36.1,JETAIRWAYS,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+485,INF959L01HI3,NAVINIFTY,NAVIAMC - NAVINIFTY,2023-10-03,2024-11-01,EQ,295.11,NAVINIFTY,,,unknown,0,NSE bhavcopy monthly snapshots
+486,INE333I01036,NTL,NEUEON TOWERS LIMITED,2016-01-01,2024-12-02,BZ,5.22,NTL|SUJANATWR,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+487,INE861A01058,VISESHINFO,VISESH INFOTECNICS LTD,2016-01-01,2024-12-02,BZ,0.33,VISESHINFO,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+488,INE514Y20012,MOKSH-RE,MOKSH ORNAMENTS LIMITED,2025-01-01,2025-01-01,BE,1.16,MOKSH-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+489,INE112X20017,SIKKO-RE,SIKKO INDUSTRIES LTD,2025-01-01,2025-01-01,BE,0.52,SIKKO-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+490,INE763G01038,ISEC,ICICI SECURITIES LIMITED,2018-05-02,2025-03-03,EQ,802.55,ISEC,,,unknown,0,NSE bhavcopy monthly snapshots
+491,INE00FF01017,AMIORG,AMI ORGANICS LIMITED,2021-10-01,2025-04-01,EQ,2527.65,AMIORG,,,unknown,0,NSE bhavcopy monthly snapshots
+492,INF754K01LD3,EBBETF0425,EDELAMC - EBBETF0425,2020-08-03,2025-04-01,EQ,1289.0,EBBETF0425,,,unknown,0,NSE bhavcopy monthly snapshots
+493,INE01GN20017,IRIS-RE,IRIS CLOTHINGS LIMITED,2025-04-01,2025-04-01,BE,6.88,IRIS-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+494,INE222J01013,RANEENGINE,RANE ENG VALVE LTD,2016-01-01,2025-04-01,EQ,284.85,RANEENGINE,,,unknown,0,NSE bhavcopy monthly snapshots
+495,INE244J01017,RBL,RANE BRAKE LINING LTD,2016-01-01,2025-04-01,EQ,708.85,RBL,,,unknown,0,NSE bhavcopy monthly snapshots
+496,INE195Y01010,SECURCRED,SECUR CREDENTIALS LIMITED,2022-11-01,2025-04-01,BZ,1.7,SECURCRED,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+497,INE416L01017,EROSMEDIA,EROS INTL MEDIA LTD,2016-01-01,2025-06-02,BZ,6.44,EROSMEDIA,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+498,INE0FLR01028,IWEL,INOX WIND ENERGY LIMITED,2021-07-01,2025-06-02,EQ,11065.0,IWEL,,,unknown,0,NSE bhavcopy monthly snapshots
+499,INE774D20024,M&MFIN-RE1,MAHINDRA & MAHINDRA RE,2025-06-02,2025-06-02,BE,65.18,M&MFIN-RE1,,,unknown,0,NSE bhavcopy monthly snapshots
+500,INE813A20018,MAHLIFE-RE,MAHINDRA LIFESPACE RE,2025-06-02,2025-06-02,BE,68.5,MAHLIFE-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+501,INE888B01018,PODDARHOUS,PODDAR HOUSE & DVPT LTD,2017-05-02,2025-06-02,BZ,37.48,PODDARHOUS,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+502,INE778A01021,TECHIN,TECHINDIA NIRMAN LIMITED,2016-01-01,2025-06-02,BZ,14.57,TECHIN,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+503,INE864B01027,UMANGDAIRY,UMANG DAIRIES LIMITED,2016-01-01,2025-06-02,EQ,78.54,UMANGDAIRY,,,unknown,0,NSE bhavcopy monthly snapshots
+504,INE707C20018,CAPTRU-RE,CAPITAL TRUST LTD,2025-07-01,2025-07-01,BE,0.06,CAPTRU-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+505,INE321D01016,OCCL,ORIENTAL CARBN & CHEM LTD,2016-02-01,2025-07-01,BE,241.31,OCCL,,,unknown,0,NSE bhavcopy monthly snapshots
+506,INE788B01028,INDSWFTLTD,IND-SWIFT LIMITED,2016-01-01,2025-08-01,EQ,16.65,INDSWFTLTD,,,unknown,0,NSE bhavcopy monthly snapshots
+507,INE729D20010,KILITC-RE,KILITCH DRUGS (INDIA) LTD,2025-08-01,2025-08-01,BE,90.89,KILITC-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+508,INE766P20016,MAHLOG-RE,MAHINDRA LOGISTICS LTD,2025-08-01,2025-08-01,BE,41.04,MAHLOG-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+509,INE572J20011,SPAND-RE,SPANDANA SPHOORTY FIN,2025-08-01,2025-08-01,BE,24.12,SPAND-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+510,INE225C01029,UDAICEMENT,UDAIPUR CEMENT WORKS LTD,2022-01-03,2025-08-01,EQ,36.61,UDAICEMENT,,,unknown,0,NSE bhavcopy monthly snapshots
+511,INE0JWS20017,VALIANT-RE,VALIANT LABORATORIES LTD,2025-08-01,2025-08-01,BE,13.21,VALIANT-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+512,INE267I01010,ARSSINFRA,ARSS INFRA PROJ. LTD,2016-01-01,2025-09-01,BE,49.23,ARSSINFRA,,,unknown,0,NSE bhavcopy monthly snapshots
+513,INE670B01028,GANGOTRI,GANGOTRI TEXTILES LTD.,2016-01-01,2025-09-01,BZ,0.63,GANGOTRI,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+514,INE952A01022,HINDNATGLS,HIND NATL GLASS & IND LTD,2016-01-01,2025-09-01,EQ,9.31,HINDNATGLS,,,unknown,0,NSE bhavcopy monthly snapshots
+515,INE080I20017,LLOYDSE-RE,LLOYDS ENTERPRISES LTD,2025-09-01,2025-09-01,BE,27.45,LLOYDSE-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+516,INE140A01024,PEL,PIRAMAL ENTERPRISES LTD,2016-01-01,2025-09-01,EQ,1086.5,PEL,,,unknown,0,NSE bhavcopy monthly snapshots
+517,INE274G01010,DHANI,DHANI SERVICES LIMITED,2016-01-01,2025-10-01,EQ,63.61,DHANI|IBVENTURES,,,unknown,0,NSE bhavcopy monthly snapshots
+518,INE935Q01015,FSC,FUTURE SUPP CHAIN SOL LTD,2018-01-01,2025-10-01,BZ,2.36,FSC,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+519,INE253A01025,HINDMOTORS,HINDUSTAN MOTORS LIMITED,2016-01-01,2025-10-01,EQ,20.47,HINDMOTORS,,,unknown,0,NSE bhavcopy monthly snapshots
+520,INE059901020,IEL,INDIABULLS ENT LTD,2023-01-02,2025-10-01,BE,19.11,IEL,,,unknown,0,NSE bhavcopy monthly snapshots
+521,INE558B01017,MANGCHEFER,MANG.CHEM.FERT.LTD,2016-01-01,2025-10-01,EQ,327.6,MANGCHEFER,,,unknown,0,NSE bhavcopy monthly snapshots
+522,INE155G20011,NDTV-RE,NEW DELHI TELEVISION LTD,2025-10-01,2025-10-01,BE,20.21,NDTV-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+523,INE152B01027,ACLGATI,ALLCARGO GATI LIMITED,2016-01-01,2025-11-03,EQ,66.37,ACLGATI|GATI,,,unknown,0,NSE bhavcopy monthly snapshots
+524,INE707C20026,CAPTRU-RE1,CAPITAL TRUST LTD,2025-11-03,2025-11-03,BE,6.44,CAPTRU-RE1,,,unknown,0,NSE bhavcopy monthly snapshots
+525,INE726L20019,DELPH-RE,ELPHI WORLD MONEY LTD,2025-11-03,2025-11-03,BE,8.85,DELPH-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+526,INE423A20016,ADANI-RE,ADANI ENTERPRISES LIMITED,2025-12-01,2025-12-01,BE,429.2,ADANI-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+527,INE0NN720012,ATL-RE,ALLCARGO TERMINALS LTD,2025-12-01,2025-12-01,BE,7.31,ATL-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+528,INE516K01024,GOENKA,GOENKA DIAMOND&JEWELS LTD,2016-01-01,2025-12-01,BZ,1.09,GOENKA,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+529,INE227G20034,INDO-RE2,INDOWIND ENERGY LTD,2025-12-01,2025-12-01,BE,1.54,INDO-RE2,,,unknown,0,NSE bhavcopy monthly snapshots
+530,INE00SZ01018,MARSHALL,MARSHALL MACHINES LTD,2021-12-01,2025-12-01,BZ,3.97,MARSHALL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+531,INE293A01013,ROLTA,ROLTA INDIA LTD,2016-01-01,2025-12-01,BZ,1.75,ROLTA,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+532,INE591Q01016,SUULD,SUUMAYA INDUSTRIES LTD,2020-11-02,2025-12-01,BZ,1.67,SUULD,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+533,INE093B01015,ALPSINDUS,ALPS INDUSTRIES LTD.,2016-01-01,2026-01-01,BE,3.43,ALPSINDUS,,,unknown,0,NSE bhavcopy monthly snapshots
+534,INE688E01024,HERCULES,HERCULES INVESTMENTS LTD,2016-01-01,2026-01-01,EQ,159.32,HERCULES,,,unknown,0,NSE bhavcopy monthly snapshots
+535,INE505Y20010,VINEET-RE,VINEET LABORATORIES LTD,2026-01-01,2026-01-01,BE,4.07,VINEET-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+536,INE01II20021,SILGO-RE1,SILGO RETAIL LTD,2026-02-02,2026-02-02,BE,6.76,SILGO-RE1,,,unknown,0,NSE bhavcopy monthly snapshots
+537,INE455F01025,JPASSOCIAT,JAIPRAKASH ASSOCIATES LTD,2016-01-01,2026-03-02,BE,2.73,JPASSOCIAT,,,unknown,0,NSE bhavcopy monthly snapshots
+538,INE912L20015,ONECAP-RE,ONELIFE ADVISORS LTD,2026-03-02,2026-03-02,BE,0.18,ONECAP-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+539,INE888C20024,SADHNA-RE,SADHANA NITROCHEM LTD,2026-03-02,2026-03-02,BE,0.39,SADHNA-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+540,INE075B20012,SICAL-RE,SICAL LOGISTICS LTD,2026-03-02,2026-03-02,BE,0.67,SICAL-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+541,INE618L20018,5PAISA-RE,5PAISA CAPITAL LTD,2026-04-01,2026-04-01,BE,0.21,5PAISA-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+542,INF846K01Z04,AXISBPSETF,AXISAMC - AXISBPSETF,2021-06-01,2026-04-01,EQ,13.22,AXISBPSETF,,,unknown,0,NSE bhavcopy monthly snapshots
+543,INE474L01016,OMKARCHEM,OMKAR SPL CHEM LTD,2016-01-01,2026-04-01,BZ,3.85,OMKARCHEM,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+544,INE999B01013,SANGHIIND,SANGHI INDUSTRIES LTD,2016-01-01,2026-04-01,EQ,50.17,SANGHIIND,,,unknown,0,NSE bhavcopy monthly snapshots
+545,INF204KC1022,SDL26BEES,RELCAPAMC-NETFSDL26,2021-04-01,2026-04-01,EQ,136.65,NETFSDL26|SDL26BEES,,,unknown,0,NSE bhavcopy monthly snapshots
+546,INE806C20026,TIL-RE1,TIL LTD,2026-04-01,2026-04-01,BE,2.8,TIL-RE1,,,unknown,0,NSE bhavcopy monthly snapshots
+547,INE675C01017,CIGNITITEC,CIGNITI TECHNOLOGIES LTD,2016-01-01,2026-05-04,EQ,1146.0,CIGNITITEC,,,unknown,0,NSE bhavcopy monthly snapshots
+548,INE246F01010,GSPL,GUJARAT STATE PETRO LTD,2016-01-01,2026-05-04,EQ,289.9,GSPL,,,unknown,0,NSE bhavcopy monthly snapshots
+549,INE325G01010,AVAILFC,AVAILABLE FINANCE LTD.,2026-05-04,2026-06-01,EQ,156.35,AVAILFC,,,unknown,0,NSE bhavcopy monthly snapshots
+550,INE680Z20018,AVG-RE,AVG LOGISTICS LIMITED,2026-06-01,2026-06-01,BE,6.24,AVG-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+551,INE418N20043,ESSEN-RE3,INTEGRA ESSENTIA LTD,2026-06-01,2026-06-01,BE,0.06,ESSEN-RE3,,,unknown,0,NSE bhavcopy monthly snapshots
+552,INE782L01012,SANCO,SANCO INDUSTRIES LIMITED,2016-12-01,2026-06-01,BZ,3.1,SANCO,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+553,INE015B01018,WIMPLAST,WIM PLAST LTD,2026-05-04,2026-06-01,EQ,330.5,WIMPLAST,,,unknown,0,NSE bhavcopy monthly snapshots
+554,INE925Y01036,AURIGROW,AURI GROW INDIA LIMITED,2022-04-01,2026-07-01,EQ,0.28,AURIGROW|GODHA,,,unknown,0,NSE bhavcopy monthly snapshots
+555,INE572A01036,JBCHEPHARM,J B CHEMICALS AND PHARMA,2023-10-03,2026-07-01,EQ,2298.0,JBCHEPHARM,,,unknown,0,NSE bhavcopy monthly snapshots
+556,INE235C20010,SUMEET-RE,SUMEET INDUSTRIES LTD,2026-07-01,2026-07-01,BE,2.51,SUMEET-RE,,,unknown,0,NSE bhavcopy monthly snapshots
+557,INE784B01035,WINSOME,WINSOME YARNS LIMITED,2016-01-01,2026-07-01,BZ,2.29,WINSOME,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+558,INE224M01013,BGLOBAL,BHARATIYA GLOBAL INFO LTD,2016-01-01,2026-08-03,BZ,3.27,BGLOBAL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+559,INE981B01011,CMICABLES,CMI LIMITED,2016-12-01,2026-08-03,BZ,2.79,CMICABLES,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+560,INE411Y01011,DIL,DEBOCK INDUSTRIES LIMITED,2022-04-01,2026-08-03,BZ,0.77,DIL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+561,INE216H01027,EDUCOMP,EDUCOMP SOLUTIONS LTD,2016-01-01,2026-08-03,BZ,0.91,EDUCOMP,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+562,INE220J01025,FCONSUMER,FUTURE CONSUMER LIMITED,2016-01-01,2026-08-03,BZ,0.26,FCEL|FCONSUMER,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+563,INE161G01027,MORARJEE,MORARJEE TEXTILES LIMITED,2016-01-01,2026-08-03,BZ,11.24,MORARJEE,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+564,INE454M01024,NAGAFERT,NAGARJUN FERT AND CHE LTD,2016-07-01,2026-08-03,BZ,2.49,NAGAFERT,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+565,INE849L01019,ORTEL,ORTEL COMMUNICATIONS LTD,2016-01-01,2026-08-03,BZ,1.87,ORTEL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+566,INE011H01014,RAJVIR,RAJVIR INDUSTRIES LIMITED,2016-01-01,2026-08-03,BZ,5.64,RAJVIR,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+567,INE860T01019,SABEVENTS,SAB EVENTS & GOVERNANCE,2016-10-03,2026-08-03,EQ,6.32,SABEVENTS,,,unknown,0,NSE bhavcopy monthly snapshots
+568,INE429F01012,SKIL,SKIL INFRASTRUCTURE LTD.,2016-01-01,2026-08-03,BZ,0.94,SKIL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+569,INE008Z01020,SRPL,SHREE RAM PROTEINS LTD.,2023-06-01,2026-08-03,BZ,0.33,SRPL,,,suspended_bz,1,NSE bhavcopy monthly snapshots
+570,INE275F01019,UNIVAFOODS,UNIVA FOODS LIMITED,2016-01-01,2026-08-03,BE,8.6,HOTELRUGBY|UNIVAFOODS,,,unknown,0,NSE bhavcopy monthly snapshots
+571,INF209KC1134,ABGSEC,BIRLASLAMC - ABGSEC,2024-08-01,2026-09-01,EQ,113.68,ABGSEC,,,unknown,0,NSE bhavcopy monthly snapshots
+572,INF740KA1ZI7,GSEC10ADD,DSPAMC - GSEC10ADD,2026-09-01,2026-09-01,EQ,26.49,GSEC10ADD,,,unknown,0,NSE bhavcopy monthly snapshots
+573,INE013820027,KSHITIJ-RE,KSHITIJ POLYLINE LTD,2026-09-01,2026-09-01,BE,0.05,KSHITIJ-RE,,,unknown,0,NSE bhavcopy monthly snapshots

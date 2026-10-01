@@ -86,6 +86,26 @@ const requestToken = async (req, res) => {
     }
 };
 
+// GET /upstox/cron: the weekday-morning token request from Vercel Cron (vercel.json). Vercel sends
+// "Authorization: Bearer <CRON_SECRET>" when the CRON_SECRET env var is set; anything else is refused.
+// Skips when today's token already works, so a second trigger (GitHub "Run workflow") is harmless.
+const cronRequestToken = async (req, res) => {
+    const secret = (process.env.CRON_SECRET || "").trim();
+    if (!secret) return res.status(503).json({ success: false, message: "CRON_SECRET is not set" });
+    if (req.get("authorization") !== `Bearer ${secret}`) {
+        return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+    try {
+        const result = await requestAccessToken({ force: false });
+        console.log(result.skipped ? `Upstox cron: token already valid (${result.user})` : "Upstox cron: approval requested");
+        res.json({ success: true, ...result });
+    } catch (error) {
+        console.log("Upstox cron token request failed:", error.message);
+        const known = error instanceof UpstoxRenewError;
+        res.status(known ? 502 : 500).json({ success: false, message: known ? error.message : "Token request failed" });
+    }
+};
+
 // GET /upstox/request?key=...: the same from a phone, as a page
 const requestTokenPage = async (req, res) => {
     if (!hasAdminKey()) return res.status(503).send(page("Not set up", "UPSTOX_ADMIN_KEY is not set on the server.", "error"));
@@ -116,4 +136,4 @@ const notifier = async (req, res) => {
     }
 };
 
-module.exports = { login, callback, requestToken, requestTokenPage, notifier };
+module.exports = { login, callback, requestToken, requestTokenPage, cronRequestToken, notifier };

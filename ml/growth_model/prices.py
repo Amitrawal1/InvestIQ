@@ -52,8 +52,23 @@ def _fetch_index_prices(conn):
     return df
 
 
-def load_prices(refresh=False):
-    """-> (stock_prices df [company_id, price_date, close, volume], index_prices df)."""
+def load_prices(refresh=False, include_delisted=False, delisted_source="local"):
+    """-> (stock_prices df [company_id, price_date, close, volume], index_prices df).
+
+    include_delisted (backtests only): also append companies that left NSE since 2016 (see
+    market_data/delisted.py) with NEGATIVE company ids. They are never written to the cache, and
+    the website never reads them.
+    """
+    stocks, index = _load_prices(refresh)
+    if include_delisted:
+        from market_data.delisted import load_delisted
+        extra, _ = load_delisted(delisted_source)
+        print(f"  + {len(extra):,} delisted rows ({extra['company_id'].nunique()} companies, {delisted_source})")
+        stocks = pd.concat([stocks, extra], ignore_index=True)
+    return stocks, index
+
+
+def _load_prices(refresh):
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     if not refresh and STOCK_CACHE.exists() and INDEX_CACHE.exists():
         return pd.read_pickle(STOCK_CACHE), pd.read_pickle(INDEX_CACHE)

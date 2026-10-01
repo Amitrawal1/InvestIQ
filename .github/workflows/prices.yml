@@ -1,0 +1,52 @@
+# Daily stock and index prices (stock_prices, index_prices) from Upstox v3 historical candles.
+# No Upstox token needed. Incremental: each company from its last stored day; re-runs are safe (upserts).
+# Runs at 07:30 IST Tuesday-Saturday so the previous session's end-of-day candle is published
+# (it isn't yet on the same evening). GitHub may start scheduled runs late; that's fine here.
+name: Daily prices
+
+on:
+  schedule:
+    - cron: "0 2 * * 2-6"   # 02:00 UTC = 07:30 IST, Tue-Sat (covers Mon-Fri sessions)
+  workflow_dispatch:         # "Run workflow" button for a manual catch-up
+
+concurrency:
+  group: daily-prices
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: ml
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: ml/market_data/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r market_data/requirements.txt
+
+      # Exit code 2 = finished, but a few symbols failed (a handful always do, e.g. stale instrument
+      # keys); that's logged and not a reason to mark the run red. Anything else is a real failure.
+      - name: Collect prices
+        run: python -m market_data.collect_prices || [ $? -eq 2 ]
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_SSL: "true"
+          TZ: Asia/Kolkata
+          PYTHONWARNINGS: ignore
+
+      - name: Show the summary
+        if: always()
+        run: tail -n 3 logs/prices_collect.log || true

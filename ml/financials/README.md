@@ -46,7 +46,10 @@ rupees. A value that isn't reported is `None`, never 0.
   "income_ytd": None | {            # year-to-date P&L context when present (e.g. 6 or 12 months)
     "months": int, ...same keys as income...
   },
-  "balance_sheet": None | {         # as of period_end; usually only in Sep (H1) and Mar (FY) filings
+  "balance_sheet": None | {         # as of period_end; usually only in Sep (H1) and Mar (FY) filings.
+                                    # Before Sep 2022 NSE's XBRL had no balance sheet: annual results
+                                    # then get only total_assets / equity_owners / total_equity, read
+                                    # from segment and equity lines (see "Legacy filings" below)
     "total_assets", "non_current_assets", "current_assets",
     "cash_and_equivalents", "inventories", "trade_receivables",
     "total_equity", "equity_owners", "non_controlling_interest",
@@ -104,6 +107,16 @@ Rules:
 - Banks/NBFCs/insurers use different tags. Detect the format; fill what maps cleanly
   (interest earned -> revenue, etc.), leave the rest `None`, and add a warning. Do not guess.
 
+Legacy filings (period end before 30 Sep 2022): NSE's old results XBRL template has no Statement of
+Assets and Liabilities at all (it was only in the PDF). For a non_financial **annual** filing with no
+balance sheet of its own, the parser fills three keys and leaves the rest None:
+`total_assets` = `NetSegmentAssets` (segment + unallocable assets, at the period end), `equity_owners`
+= paid-up equity capital + reserves excluding revaluation reserves (12-month column), and
+`total_equity` = the same for standalone results only. Checked on the filings that carry both: 94% /
+88% exactly equal to the real lines (DATA_FIXES.md). No warning is added, so `parse_status` is
+unchanged; such rows are recognisable by `period_end < '2022-09-30'` with `bs_current_assets` NULL.
+Every filing that has a balance sheet, and every filing from Sep 2022 on, parses as before.
+
 ## Table: `financial_filings`
 
 One row per NSE filing (`nse_seq_number` unique). Columns mirror the parser output flattened with
@@ -120,3 +133,7 @@ listing record), `xbrl_url`, `parse_status` (`ok` / `partial` / `failed`), `warn
 - Everything downloaded is cached on disk (`ml/data/raw/xbrl/<SYMBOL>/<seq>.xml`) and never
   re-downloaded unless `--refresh` is given.
 - Development and tests use `ml/data/raw/xbrl_samples/` only (no network).
+- One statement type per period is collected (consolidated when filed), **except banks** (listing
+  `bank = 'B'` or `BANKING_*` XBRL): both, because their consolidated filings leave NPA / CET1 as
+  0.00 (`--no-bank-standalone` turns this off). `--download-only` fills the cache without any DB
+  write. A lost DB connection retries the company once from the cache.

@@ -158,3 +158,7 @@ export const disconnectBroker = (broker, deleteData = false) =>
 
 // -> { connections, summary, holdings, positions, funds, insights, history }
 export const getPortfolio = () => api.get('/api/portfolio', { timeout: 20000 }).then((res) => res.data);
+
+// -> { as_of, benchmark, lists: { top|steady: { first_snapshot, since_start, chained: [{date, value, benchmark}], snapshots: [...] } } }
+export const getTrackRecord = () =>
+  api.get('/api/rankings/track-record', { timeout: 20000 }).then((res) => res.data);

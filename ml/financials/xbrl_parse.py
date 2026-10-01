@@ -12,7 +12,9 @@ How periods are found (never by context-id name):
   definitions entirely, and then those facts are the only dates available.
 - P&L: of the non-dimensional duration contexts ending at the period end, the shortest is the
   quarter and the longest is the year-to-date.
-- Balance sheet: the non-dimensional instant context at the period end.
+- Balance sheet: the non-dimensional instant context at the period end. Filings for periods before
+  Sep 2022 carry none (NSE's old template); for their annual results the totals are read from the
+  segment and equity lines instead (`_legacy_balance_sheet`, LEGACY_TEMPLATE_END).
 - Cash flow: the longest context holding the cash-flow totals (year-to-date: 6 months in Sep,
   12 in Mar). When that context is mis-dated, its depreciation/finance-cost add-backs are matched
   against the P&L contexts to find the period it really covers.
@@ -109,6 +111,33 @@ CAPEX_TAGS = (
     "PurchaseOfIntangibleAssetsUnderDevelopment",
 )
 
+# ---------------------------------------------------------------------------
+# Legacy filings: what stands in for the balance sheet before the Sep-2022 half-year
+#
+# NSE's results XBRL template had no Statement of Assets and Liabilities until the filing system
+# NSE moved to in mid-2022: every filing for a period ending before 30 Sep 2022 (except the odd one
+# re-filed later on the new system) carries the P&L, segments and, from FY2020-21, the cash flow,
+# but no balance-sheet facts at all. The balance sheet was only in the PDF attachment. Two lines of
+# those filings are the same numbers as balance-sheet totals, so they are read instead (see
+# DATA_FIXES.md for the checks against filings that carry both):
+#   - NetSegmentAssets (segment assets + unallocable assets, instant at the period end) = total
+#     assets: equal to `Assets` in 94% of the 5,871 filings that carry both, within 2% in 95%.
+#   - PaidUpValueOfEquityShareCapital + ReserveExcludingRevaluationReserves, filed in the
+#     financial-year (12-month) column of the annual results = equity attributable to owners:
+#     equal in 87% of 7,756 filings that carry both, within 10% in 92% (88% / 94% after the
+#     sanity checks in _legacy_balance_sheet).
+# Only for non_financial filings, only for annual (financial-year-end) results, only when the filing
+# has no balance sheet of its own, and only for periods ending before LEGACY_TEMPLATE_END - so every
+# filing that already had a balance sheet, and every filing from Sep 2022 on, parses exactly as before.
+# ---------------------------------------------------------------------------
+
+LEGACY_TEMPLATE_END = date(2022, 9, 30)
+LEGACY_SEGMENT_ASSETS_TAG = "NetSegmentAssets"
+LEGACY_EQUITY_TAGS = ("PaidUpValueOfEquityShareCapital", "ReserveExcludingRevaluationReserves")
+# Owners' equity above 200x the year's total income is a keying error: on filings that carry both,
+# this drops 65 of 7,756 values, 42 of them more than 2x off (the real 99.5th percentile is ~130x)
+LEGACY_MAX_EQUITY_TO_INCOME = 200
+
 # Tags that mark a context as holding each statement
 PNL_MARKERS = ("RevenueFromOperations", "ProfitLossForPeriod", "InterestEarned",
                "ProfitLossForThePeriod", "ProfitBeforeTax")
@@ -190,6 +219,11 @@ FIN_RATIO_TAGS = {
         "solvency_ratio": (("SolvencyRatio",), 0.5, 10.0),
     },
 }
+# Values above a ratio's upper bound that are still accepted (no warning). Payments banks (FINOPB)
+# hold 60-80% CET1 because they can't lend; the 1.00 some filings show in 2022 is a placeholder and
+# stays out. Kept apart from FIN_RATIO_TAGS so the warning text for real keying errors is unchanged.
+FIN_RATIO_ACCEPT_UP_TO = {"cet1_ratio": 0.9}
+
 # Amounts filed in the P&L contexts but meaning "as of the period end" (bank asset quality)
 FIN_POINT_TAGS = {
     "bank": {"gross_npa": ("GrossNonPerformingAssets",), "net_npa": ("NonPerformingAssets",)},
@@ -490,6 +524,62 @@ def _balance_sheet(filing, ctx, fmt, statement_type, warnings):
     return sheet
 
 
+def _legacy_segment_assets(filing, period_end):
+    """NetSegmentAssets of the plain (non-dimensional) instant at the period end, or None.
+
+    Legacy files often leave that instant context undefined (only the dimensional segment
+    contexts are declared), so an undefined context carrying the tag counts too, as long as it
+    is the only such context and holds no reporting-period dates of its own (a P&L context).
+    """
+    values = []
+    for ctx, bucket in filing.facts.items():
+        if LEGACY_SEGMENT_ASSETS_TAG not in bucket:
+            continue
+        info = filing.contexts.get(ctx)
+        if info is None:
+            if filing.text(ctx, "DateOfEndOfReportingPeriod"):
+                continue
+        elif info["dim"] or info["instant"] != period_end:
+            continue
+        values.append(filing.value(ctx, LEGACY_SEGMENT_ASSETS_TAG, [], ""))
+    values = {v for v in values if v is not None}
+    if len(values) != 1:
+        return None
+    value = values.pop()
+    return value if value > 0 else None
+
+
+def _legacy_balance_sheet(filing, fy_ctx, period_end, statement_type):
+    """Balance-sheet totals of a legacy annual filing (see LEGACY_TEMPLATE_END), or None.
+
+    total_assets from the segment totals; equity_owners = paid-up equity capital + reserves
+    (excluding revaluation reserves) from the financial-year P&L context `fy_ctx`; total_equity
+    is the same number for standalone results only (a consolidated filing's non-controlling
+    interest isn't filed). Every other key is None. A 0.00 reserves line is a template
+    placeholder, and owners' equity above total assets, or above LEGACY_MAX_EQUITY_TO_INCOME times
+    the year's total income, is a unit/keying error (e.g. reserves filed in rupees thousands):
+    those are dropped.
+    """
+    sheet = dict.fromkeys(list(BALANCE_TAGS) + list(BALANCE_SUMS) + ["total_debt"])
+    sheet["total_assets"] = _legacy_segment_assets(filing, period_end)
+
+    paid_up, reserves = (filing.value(fy_ctx, tag, [], "") for tag in LEGACY_EQUITY_TAGS)
+    if paid_up is not None and paid_up > 0 and reserves:
+        equity = paid_up + reserves
+        assets = sheet["total_assets"]
+        income = filing.value(fy_ctx, "Income", [], "")
+        too_big = ((assets is not None and equity > assets * 1.01)
+                   or (income is not None and income > 0 and abs(equity) > LEGACY_MAX_EQUITY_TO_INCOME * income))
+        if not too_big:
+            sheet["equity_owners"] = equity
+            if statement_type == "standalone":
+                sheet["total_equity"] = equity
+
+    if sheet["total_assets"] is None and sheet["equity_owners"] is None:
+        return None
+    return sheet
+
+
 def _cash_flow(filing, ctx, months, warnings):
     label = "cash_flow"
     flow = {"months": months}
@@ -598,7 +688,7 @@ def _fin_point_in_time(filing, contexts, fmt, warnings):
             # IRDAI solvency (1.5-3x) filed as a percentage then divided by 100 (e.g. 0.0267 for 2.67)
             warnings.append(f"fin_sector: solvency ratio {value} looks divided by 100; used {value * 100:g}")
             value *= 100
-        if value is not None and not lo <= value <= hi:
+        if value is not None and not lo <= value <= max(hi, FIN_RATIO_ACCEPT_UP_TO.get(key, hi)):
             warnings.append(f"fin_sector: {key} {value} outside [{lo}, {hi}]; set to None")
             value = None
         out[key] = value
@@ -754,6 +844,14 @@ def parse_xbrl(xml_text: str, fin_sector_format: str | None = None) -> dict:
             warnings.append("balance sheet filed with only zeros; treated as not reported")
         else:
             result["balance_sheet"] = sheet
+
+    # --- Legacy annual filings: balance-sheet totals from segment / equity lines -------------
+    if (result["balance_sheet"] is None and bs_ctx is None and fmt == "non_financial"
+            and fin_sector_format is None and period_end < LEGACY_TEMPLATE_END):
+        fy_ctx = (ytd_ctx if ytd_ctx != quarter_ctx and ytd_months == 12
+                  else quarter_ctx if months == 12 else None)
+        if fy_ctx is not None:
+            result["balance_sheet"] = _legacy_balance_sheet(filing, fy_ctx, period_end, statement_type)
 
     # --- Cash flow: the longest non-dimensional context holding the totals -------------------
     flows = []

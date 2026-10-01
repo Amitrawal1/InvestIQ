@@ -1,0 +1,5 @@
+{
+  "crons": [
+    { "path": "/upstox/cron", "schedule": "45 2 * * 1-5" }
+  ]
+}

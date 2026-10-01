@@ -1,0 +1,158 @@
+{
+  "monthly": {
+    "snapshots": 130,
+    "windows": 118,
+    "rows": 214996,
+    "departed_rows": 21421,
+    "rows_that_left_inside_window": 4036,
+    "departed_isins_with_a_row": 521,
+    "all": {
+      "survivors_only": {
+        "n": 188264,
+        "mean_excess": 0.04149207399943018,
+        "median_excess": -0.08870405558183164,
+        "beat_rate": 0.4060574512386861,
+        "share_ret_le_-90%": 0.001126078273063358,
+        "share_ret_le_-50%": 0.06043109675774445
+      },
+      "with_departed_last": {
+        "n": 208798,
+        "mean_excess": 0.021961788628383324,
+        "median_excess": -0.10191486656636017,
+        "beat_rate": 0.39435243632601846,
+        "share_ret_le_-90%": 0.0023467657736185215,
+        "share_ret_le_-50%": 0.07562811904328585
+      },
+      "effect_mean_last": 0.019530285371046858,
+      "effect_median_last": 0.013210810984528532,
+      "departed_only_last": {
+        "n": 20534,
+        "mean_excess": -0.1570997505308047,
+        "median_excess": -0.26081475343262905,
+        "beat_rate": 0.2870361351904159,
+        "share_ret_le_-90%": 0.013538521476575437,
+        "share_ret_le_-50%": 0.21496055322879126
+      },
+      "with_departed_distress": {
+        "n": 208798,
+        "mean_excess": 0.017009622706911087,
+        "median_excess": -0.10322178708956542,
+        "beat_rate": 0.393246103889884,
+        "share_ret_le_-90%": 0.008381306334351862,
+        "share_ret_le_-50%": 0.08018276037126792
+      },
+      "effect_mean_distress": 0.024482451292519095,
+      "effect_median_distress": 0.014517731507733778,
+      "departed_only_distress": {
+        "n": 20534,
+        "mean_excess": -0.20745537242968265,
+        "median_excess": -0.2833519700295788,
+        "beat_rate": 0.27578650043829744,
+        "share_ret_le_-90%": 0.07490016557903964,
+        "share_ret_le_-50%": 0.26127398461088924
+      },
+      "with_departed_collapse": {
+        "n": 208798,
+        "mean_excess": 0.01585750334445561,
+        "median_excess": -0.10352856774490937,
+        "beat_rate": 0.393092845716913,
+        "share_ret_le_-90%": 0.009995306468452763,
+        "share_ret_le_-50%": 0.08129867144321305
+      },
+      "effect_mean_collapse": 0.025634570654974573,
+      "effect_median_collapse": 0.01482451216307773,
+      "departed_only_collapse": {
+        "n": 20534,
+        "mean_excess": -0.21917058712930168,
+        "median_excess": -0.2898311636763138,
+        "beat_rate": 0.274228109476965,
+        "share_ret_le_-90%": 0.09131197039057173,
+        "share_ret_le_-50%": 0.272621018798091
+      }
+    },
+    "liquid": {
+      "survivors_only": {
+        "n": 118942,
+        "mean_excess": 0.003283819772951061,
+        "median_excess": -0.09238453943337321,
+        "beat_rate": 0.40152343158850534,
+        "share_ret_le_-90%": 0.0013788232920246843,
+        "share_ret_le_-50%": 0.05672512653225942
+      },
+      "with_departed_last": {
+        "n": 126907,
+        "mean_excess": -0.006981228408059212,
+        "median_excess": -0.09839682105406278,
+        "beat_rate": 0.3955494968756649,
+        "share_ret_le_-90%": 0.0026633676629342746,
+        "share_ret_le_-50%": 0.06526826731385976
+      },
+      "effect_mean_last": 0.010265048181010273,
+      "effect_median_last": 0.0060122816206895635,
+      "departed_only_last": {
+        "n": 7965,
+        "mean_excess": -0.16027003703903514,
+        "median_excess": -0.21587932197198745,
+        "beat_rate": 0.30634023854362835,
+        "share_ret_le_-90%": 0.021845574387947268,
+        "share_ret_le_-50%": 0.1928436911487759
+      },
+      "with_departed_distress": {
+        "n": 126907,
+        "mean_excess": -0.007125925244693364,
+        "median_excess": -0.09840818347297353,
+        "beat_rate": 0.3955494968756649,
+        "share_ret_le_-90%": 0.0029785591023347804,
+        "share_ret_le_-50%": 0.06540222367560497
+      },
+      "effect_mean_distress": 0.010409745017644426,
+      "effect_median_distress": 0.006023644039600318,
+      "departed_only_distress": {
+        "n": 7965,
+        "mean_excess": -0.16257550363623924,
+        "median_excess": -0.2163478228797575,
+        "beat_rate": 0.30634023854362835,
+        "share_ret_le_-90%": 0.026867545511613307,
+        "share_ret_le_-50%": 0.19497802887633395
+      },
+      "with_departed_collapse": {
+        "n": 126907,
+        "mean_excess": -0.007541271042905894,
+        "median_excess": -0.09846983230648065,
+        "beat_rate": 0.3955494968756649,
+        "share_ret_le_-90%": 0.003569543051210729,
+        "share_ret_le_-50%": 0.06581197254682562
+      },
+      "effect_mean_collapse": 0.010825090815856954,
+      "effect_median_collapse": 0.00608529287310744,
+      "departed_only_collapse": {
+        "n": 7965,
+        "mean_excess": -0.16919324239502861,
+        "median_excess": -0.21887405139512028,
+        "beat_rate": 0.30634023854362835,
+        "share_ret_le_-90%": 0.03628374136848713,
+        "share_ret_le_-50%": 0.2015065913370998
+      }
+    },
+    "trend_ranking": {
+      "survivors_only": {
+        "dates": 112,
+        "mean_ic": 0.07856001511598461,
+        "top_minus_bottom_decile": 0.15164156589253475
+      },
+      "with_departed_distress": {
+        "dates": 112,
+        "mean_ic": 0.10563492721513892,
+        "top_minus_bottom_decile": 0.20649392105390474
+      }
+    }
+  },
+  "monthly_vs_labels": {
+    "matched_rows": 146972,
+    "corr": 0.9775845777096535,
+    "share_abs_diff_gt_10pp": 0.1928122363443377,
+    "share_abs_diff_gt_40pp": 0.02810059058868356,
+    "mean_ret_monthly_method": 0.2111417951037159,
+    "mean_ret_labels": 0.23694588828456933
+  }
+}

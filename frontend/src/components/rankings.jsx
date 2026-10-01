@@ -124,27 +124,28 @@ function Th({ children, sortKey, sort, onSort, className = "" }) {
   );
 }
 
-const rankOf = (row, rankKey) => (rankKey === "top_list" ? row.top_list?.position : row[rankKey]) ?? null;
+// rankKey "top_list" / "steady_list" -> that list's position
+const rankOf = (row, rankKey) => (rankKey.endsWith("_list") ? row[rankKey]?.position : row[rankKey]) ?? null;
 
-// Top list tags (key_metrics.top_list from investiq-v1): "New" / "Kept" on the list, "Not eligible" in the full ranking
+// List tags (investiq-v1 key_metrics.top_list / steady_list): "New" / "Kept" on a list, "Not eligible" in the full ranking
 const tagClass = "inline-flex items-center px-2 py-0.5 rounded-full border text-[10px] font-mono tracking-wider uppercase whitespace-nowrap";
 
-export function TopListTag({ row, topList }) {
+export function TopListTag({ row, listKey }) {
   const t = row.top_list;
-  if (!t) return null;
-  if (topList && t.status) {
-    return t.status === "kept"
+  const onList = listKey ? row[listKey] : null;
+  if (onList?.status) {
+    return onList.status === "kept"
       ? <span className={`${tagClass} border-gray-600 text-gray-300`} title={`Kept from the previous list (overall rank ${row.rank_overall ?? "—"})`}>Kept</span>
       : <span className={`${tagClass} border-green-500/60 text-green-500`} title="New on the list this snapshot">New</span>;
   }
-  if (!topList && t.eligible === false && t.not_eligible_reason) {
+  if (!listKey && t?.eligible === false && t.not_eligible_reason) {
     return <span className={`${tagClass} border-gray-700 text-gray-500`} title={`Not eligible for the Top list: ${t.not_eligible_reason}`}>Not eligible</span>;
   }
   return null;
 }
 
 // Ranked list: table on lg+, stacked cards on phones (one column) and tablets (two). `rankKey` picks which rank to show.
-export function RankingTable({ rows, rankKey = "rank_overall", sort, onSort, showSector = false, topList = false }) {
+export function RankingTable({ rows, rankKey = "rank_overall", sort, onSort, showSector = false, listKey = null }) {
   return (
     <>
       {/* Desktop / tablet: table scrolls inside its own container, never the page */}
@@ -173,8 +174,8 @@ export function RankingTable({ rows, rankKey = "rank_overall", sort, onSort, sho
                       <span className="block text-[15px] text-gray-200 group-hover:text-white transition-colors truncate">{r.name}</span>
                       <span className="flex items-center gap-2 font-mono text-[11px] text-gray-500 tracking-wide">
                         {r.symbol}
-                        <TopListTag row={r} topList={topList} />
-                        {topList && r.rank_overall != null && <span className="text-gray-600">overall #{r.rank_overall}</span>}
+                        <TopListTag row={r} listKey={listKey} />
+                        {listKey && r.rank_overall != null && <span className="text-gray-600">overall #{r.rank_overall}</span>}
                       </span>
                     </Link>
                   </td>
@@ -219,10 +220,10 @@ export function RankingTable({ rows, rankKey = "rank_overall", sort, onSort, sho
                   <p className="font-mono text-[11px] text-gray-500 tracking-wide truncate">
                     {r.symbol} · {showSector && r.sector ? `${r.sector} · ` : ""}{r.industry || "—"}
                   </p>
-                  {(topList || r.top_list?.eligible === false) && (
+                  {(listKey || r.top_list?.eligible === false) && (
                     <div className="mt-1.5 flex items-center gap-2">
-                      <TopListTag row={r} topList={topList} />
-                      {topList && r.rank_overall != null && <span className="font-mono text-[11px] text-gray-600">overall #{r.rank_overall}</span>}
+                      <TopListTag row={r} listKey={listKey} />
+                      {listKey && r.rank_overall != null && <span className="font-mono text-[11px] text-gray-600">overall #{r.rank_overall}</span>}
                     </div>
                   )}
                 </div>

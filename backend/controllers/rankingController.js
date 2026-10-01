@@ -1,4 +1,5 @@
 const db = require("../config/db");
+const { getTrackRecord } = require("../services/trackRecordService");
 const {
     toNum,
     cached,
@@ -60,7 +61,16 @@ const TOP_LIST_RULES = [
     "No new entries among the 5% most volatile stocks.",
     "A company already on the list stays while it ranks in the top 150 eligible names, so the list doesn't churn every 15 days.",
 ];
-const TOP_POSITION = "CAST(JSON_EXTRACT(r.key_metrics, '$.top_list.position') AS UNSIGNED)";
+// Steady list (investiq-v1, key_metrics.steady_list): breakout-from-a-base picks, steadier than the Top list
+const STEADY_LIST_RULES = [
+    "Up to 30 companies whose price is breaking out of a quiet base: within 5% of the 52-week high, up less than 30% in 6 months, above the 200-day average but not stretched.",
+    "Picked by InvestIQ score among those, with the same eligibility as the Top list (Rs 0.5 crore a day, listed a year) and no new entries among the 5% most volatile.",
+    "A company stays while it still qualifies or ranks in the top 150, so winners aren't sold just because they kept rising.",
+    "Backtest 2019-2026: about a third fewer blow-ups and smaller falls than the Top list in every year, but lower returns in fast rallies.",
+];
+// ?list= -> key_metrics key
+const LISTS = { top: "top_list", steady: "steady_list" };
+const listPosition = (key) => `CAST(JSON_EXTRACT(r.key_metrics, '$.${key}.position') AS UNSIGNED)`;
 
 const toInt = (value, fallback, min, max) => {
     const parsed = Number.parseInt(value, 10);
@@ -89,7 +99,7 @@ const getLatestSnapshot = async () => {
 const getRankings = async (req, res) => {
     try {
         const { sector, industry, search, label } = req.query;
-        const topList = req.query.list === "top";
+        const listKey = LISTS[req.query.list] || null;
         const sortKey = SORTS[req.query.sort] ? req.query.sort : "rank";
         const page = toInt(req.query.page, 1, 1, 100000);
         const limit = toInt(req.query.limit, DEFAULT_LIMIT, 1, MAX_LIMIT);
@@ -125,8 +135,8 @@ const getRankings = async (req, res) => {
             params.push(label);
         }
 
-        if (topList) {
-            where += " AND JSON_EXTRACT(r.key_metrics, '$.top_list.in_list') = true";
+        if (listKey) {
+            where += ` AND JSON_EXTRACT(r.key_metrics, '$.${listKey}.in_list') = true`;
         }
 
         if (search && search.trim()) {
@@ -145,8 +155,8 @@ const getRankings = async (req, res) => {
         const [[countRow], [rows]] = await Promise.all([
             db.query(`SELECT COUNT(*) AS total ${from}`, params),
             db.query(
-                // The Top list keeps its own order (kept holdings and new entries by position) unless a sort is asked for
-                `SELECT ${RANKING_FIELDS} ${from} ORDER BY ${topList && !req.query.sort ? `${TOP_POSITION} ASC` : SORTS[sortKey]} LIMIT ? OFFSET ?`,
+                // A list keeps its own order (kept holdings and new entries by position) unless a sort is asked for
+                `SELECT ${RANKING_FIELDS} ${from} ORDER BY ${listKey && !req.query.sort ? `${listPosition(listKey)} ASC` : SORTS[sortKey]} LIMIT ? OFFSET ?`,
                 [...params, limit, (page - 1) * limit]
             ),
         ]);
@@ -179,7 +189,8 @@ const getRankingsMeta = async (req, res) => {
                     MAX(model_version) AS model_version,
                     SUM(rank_overall IS NOT NULL) AS ranked,
                     SUM(rank_overall IS NULL) AS unranked,
-                    SUM(JSON_EXTRACT(key_metrics, '$.top_list.in_list') = true) AS top_list_count
+                    SUM(JSON_EXTRACT(key_metrics, '$.top_list.in_list') = true) AS top_list_count,
+                    SUM(JSON_EXTRACT(key_metrics, '$.steady_list.in_list') = true) AS steady_list_count
                 FROM company_rankings
                 GROUP BY snapshot_date
                 ORDER BY snapshot_date DESC
@@ -198,6 +209,10 @@ const getRankingsMeta = async (req, res) => {
                     count: latest ? toNum(latest.top_list_count) || 0 : 0,
                     rules: TOP_LIST_RULES,
                 },
+                steady_list: {
+                    count: latest ? toNum(latest.steady_list_count) || 0 : 0,
+                    rules: STEADY_LIST_RULES,
+                },
                 snapshots: rows.map((row) => row.snapshot_date),
             };
         }, (value) => value.snapshot_date !== null);
@@ -213,7 +228,18 @@ const getRankingsMeta = async (req, res) => {
     }
 };
 
+// GET /rankings/track-record: how each published Top / Steady list has done since its snapshot
+const getRankingsTrackRecord = async (req, res) => {
+    try {
+        res.json(await getTrackRecord());
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Failed to compute the track record" });
+    }
+};
+
 module.exports = {
     getRankings,
     getRankingsMeta,
+    getRankingsTrackRecord,
 };

@@ -1,6 +1,6 @@
 # InvestIQ model report: results, failures, fixes and next steps
 
-Last updated: 2026-10-02. Live model: `investiq-v1` with the Top list (rankings snapshot of 2026-10-01).
+Last updated: 2026-10-02. Live model: `investiq-v1` with the Top list and the Steady list (rankings snapshot of 2026-10-01).
 
 **Verdict in one line:** the model works as a *filter* (it reliably separates weak companies from strong
 ones and fell less than the market in normal crashes), but it is only *average* as a *stock picker*
@@ -132,18 +132,25 @@ Each idea must pass the same walk-forward and time-machine tests before it ships
    Rejected in the test: a sector cap, liquidity floors of 2-5 crore, trend divided by volatility,
    excluding stretched stocks, and a 30-name list.
 
-3. **"Early Movers" list (enter before the stretch).** Tested pattern: a stock near its 52-week high but
-   up less than 30% in 6 months (a base breakout) had the best typical outcome (median −0.6% vs −7.9%
-   for all stocks) and half the crash rate (9% vs 20% for stretched stocks). Adding accelerating growth,
-   widening margins and cash conversion cut the crash rate to ~4% (small sample since 2020). Ship as a
-   separate tab, not a replacement for the score.
+3. ~~"Early Movers" list~~ **Shipped 2026-10-02 as the "Steady list"** (`ml/rankings/early_movers.py`
+   E1, `reports/EARLY_MOVERS.md`). Base breakout + score, 30 names: CAGR +27.8% vs Top list +35.2%, max
+   drawdown −33.8% vs −38.1%, pick crash rate 7.6% vs 11.4%, smaller in-year drawdown in 8/8 years, but
+   it lags in fast rallies (post-COVID +67% vs +120%). Mostly a low-volatility effect; half its names
+   overlap the Top list. The fundamentals versions (E3/E4) did not pass.
 
 ### 5.2 Medium impact
 
-4. **Exit rules, tested.** Compare no exit vs "close below the 200-day average" vs "−20% from entry".
-   Aim: lower the 30%+ crash rate of the top list without giving up the winners.
-5. **Live track record.** Every published snapshot is stored, so run the time machine on each one as it
-   ages and show a public "how our picks did" page. Honest, and it catches decay early.
+4. ~~Exit rules~~ **Tested 2026-10-02, did not pass** (`ml/rankings/exits.py`, `exits_eval.py`,
+   `reports/EXITS.md`). Eight pre-declared rules (200-day average, trailing −20/−25%, fixed −15%,
+   combinations, no re-buy). They cut max drawdown only in the 2020 crash (−38% → −31/−33%); without
+   2020 the gain is ≤1.6 pts while every rule gives up 1-5 pts of CAGR, and 88-92% of sold names were
+   back above the exit price within a month. The 15-day rebalance already acts as an exit: only 4.3% of
+   Top-list holdings ever fell 30%+ while held. Possible UI-only follow-up: a muted "down 20% from its
+   high since it joined the list" badge (the only flag with a small edge: −1.8 pts over 3 months).
+
+5. ~~Live track record~~ **Shipped 2026-10-02**: public `/track-record` page (`GET /rankings/track-record`),
+   each published Top/Steady list measured from the first close after publication, plus the list as
+   followed; the backtest is shown separately and labelled as a simulation.
 6. **Valuation.** The model never asks whether a stock is cheap or expensive (P/E, P/B vs sector and its
    own history). Valuation helps most exactly where trend fails (after crashes).
 7. **Earnings surprise and estimate drift.** Result-day price reaction and the size of growth vs the
@@ -159,8 +166,9 @@ Each idea must pass the same walk-forward and time-machine tests before it ships
 
 ### 5.4 Operations
 
-12. Schedule the daily price collector (it is manual today).
-13. Move the Upstox token request to Vercel Cron (GitHub's schedule ran 6+ hours late).
+12. ~~Daily price collector~~ **Done 2026-10-02**: `.github/workflows/prices.yml`, 07:30 IST Tue-Sat.
+13. ~~Upstox token via Vercel Cron~~ **Done 2026-10-02**: `backend/vercel.json` → `GET /upstox/cron`
+    (needs the `CRON_SECRET` env var in Vercel); the GitHub workflow is manual-only now.
 
 ### 5.5 Later features (not started)
 

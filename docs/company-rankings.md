@@ -71,13 +71,23 @@ among the 5% most volatile stocks, holdings kept while ranked within the top 150
 (`status: "kept"`), vacancies filled from the top (`status: "new"`). Previous holdings are read from the
 previous investiq-v1 snapshot. Rows of older snapshots have no `top_list` (API returns `null`).
 
+### `key_metrics.steady_list` (investiq-v1, `ml/rankings/early_movers.py` E1)
+
+```json
+{ "in_list": true, "position": 3, "status": "new" }
+```
+Up to 30 base-breakout names (within 5% of the 52-week high, up < 30% in 6 months, above the 200-day
+average but < 60% above it), best scores first, same eligibility and volatility rule as the Top list,
+kept while still qualifying or ranked in the top 150 (backtest: `ml/rankings/reports/EARLY_MOVERS.md`).
+
 ## Backend API (Express, mounted without /api; the frontend calls /api/...)
 
 | Route | Returns |
 |---|---|
 | `GET /rankings?sector=<slug>&industry=<name>&search=<text>&label=<growth_label>&sort=rank\|score\|name\|return_1y&page=1&limit=50` | `{ snapshot_date, model_version, total, page, limit, data: [RankingRow] }`, latest snapshot only; unranked companies last |
-| `GET /rankings?list=top` | Same shape, only Top list rows, ordered by `top_list.position` unless `sort` is given (other filters still apply) |
-| `GET /rankings/meta` | `{ snapshot_date, model_version, next_update, ranked, unranked, method: "<one paragraph>", top_list: { count, rules: [str] }, snapshots: ["2026-09-28", ...] }` |
+| `GET /rankings?list=top` / `?list=steady` | Same shape, only that list's rows, ordered by its `position` unless `sort` is given (other filters still apply) |
+| `GET /rankings/track-record` | `{ as_of, benchmark, lists: { top, steady: { first_snapshot, since_start: {from, to, return, benchmark_return} \| null, chained: [{date, value, benchmark}], snapshots: [{snapshot_date, names, measured, entry_date, to, return, benchmark_return, beat_index_share, best, worst} \| {.., status: "waiting for prices"}] } } }` (cached 30 min; `backend/services/trackRecordService.js`) |
+| `GET /rankings/meta` | `{ snapshot_date, model_version, next_update, ranked, unranked, method: "<one paragraph>", top_list: { count, rules: [str] }, steady_list: { count, rules: [str] }, snapshots: ["2026-09-28", ...] }` |
 | `GET /sectors/:slug/industries` | `[{ industry, company_count, ranked_count, avg_score, top_symbol }]` |
 | `GET /companies/:symbol` | `{ profile, ranking: RankingDetail \| null, score_history: [{snapshot_date, growth_score, rank_overall}] }` |
 | `GET /companies/:symbol/financials` | `{ quarterly: [...], half_yearly: [...], latest_ratios: {...} }` (see below) |
@@ -87,7 +97,7 @@ previous investiq-v1 snapshot. Rows of older snapshots have no `top_list` (API r
 `RankingRow`: `company_id, symbol, name, sector, sector_slug, industry, growth_score, growth_label,
 rank_overall, rank_in_sector, rank_in_industry, coverage, score_growth, score_profitability,
 score_financial_health, score_cash_flow, score_momentum, score_news, key_metrics` (subset:
-last_price, return_1y, revenue_growth_yoy, roe, market_cap_est), `top_list` (object above or null).
+last_price, return_1y, revenue_growth_yoy, roe, market_cap_est), `top_list`, `steady_list` (objects above or null).
 
 `RankingDetail` = RankingRow + `reasons`, `risks`, full `key_metrics`, `model_version`, `snapshot_date`.
 

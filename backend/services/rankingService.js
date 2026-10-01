@@ -112,6 +112,8 @@ const formatRankingRow = (row, full = false) => {
     out.key_metrics = full ? metrics : pick(metrics, LIST_METRICS);
     // investiq-v1: { eligible, not_eligible_reason, in_list, position, status: "new"|"kept" } (null before)
     out.top_list = metrics.top_list || null;
+    // { in_list, position, status } (null before the Steady list existed)
+    out.steady_list = metrics.steady_list || null;
 
     return out;
 };
