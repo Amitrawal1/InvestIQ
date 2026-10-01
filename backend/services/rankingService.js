@@ -110,6 +110,8 @@ const formatRankingRow = (row, full = false) => {
 
     const metrics = parseJson(row.key_metrics, {}) || {};
     out.key_metrics = full ? metrics : pick(metrics, LIST_METRICS);
+    // investiq-v1: { eligible, not_eligible_reason, in_list, position, status: "new"|"kept" } (null before)
+    out.top_list = metrics.top_list || null;
 
     return out;
 };

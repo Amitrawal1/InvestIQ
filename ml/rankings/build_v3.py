@@ -433,11 +433,12 @@ def load_inputs(conn, snap):
     shares = v2.shares_outstanding(raw, snap)
     prices, idx = v2.load_prices(conn, companies["company_id"], snap)
     px, idx_ret = v2.price_signals(prices, idx, snap)
+    listing = listing_stats(prices)
     news = v2.news_signals(v2.load_news(conn, snap))
     fs, fin_scope, fs_raw = load_fin_sector(snap, companies["company_id"], conn)
     fs_shares = v2.shares_outstanding(fs_raw, snap) if fs_raw is not None else None
     return dict(companies=companies, fin=fin, shares=shares, px=px, idx_ret=idx_ret, news=news,
-                fs=fs, fin_scope=fin_scope, fs_shares=fs_shares)
+                fs=fs, fin_scope=fin_scope, fs_shares=fs_shares, listing=listing)
 
 
 def merge_inputs(inp, drop_fin_scope):
@@ -463,6 +464,82 @@ def merge_inputs(inp, drop_fin_scope):
     return df
 
 
+# ---------------------------------------------------------
+# Top list (rankings/portfolio.py, reports/PORTFOLIO.md)
+# ---------------------------------------------------------
+# The ranking scores everyone; the Top list is the 50 names an investor would actually hold. Rules
+# (portfolio.RECOMMENDED, backtested 2019-2026): only the universe the score was tested on (>= Rs 0.5
+# cr traded a day, >= 1 year of prices), no new entries among the 5% most volatile stocks, and a
+# holding stays while it ranks within the top 150 of eligible names (vacancies filled from the top).
+# Stored in key_metrics.top_list, so the table schema doesn't change.
+TOP_LIST_MIN_DAYS = 252
+
+
+def listing_stats(prices):
+    """Per company: trading days with a price in the loaded window (>= 252 means listed >= ~1 year;
+    build.py loads ~400 calendar days) and annualised volatility of the last 63 daily returns."""
+    p = prices.sort_values(["company_id", "price_date"])
+    rets = p.groupby("company_id")["close"].pct_change()
+    rets = rets.where(rets.between(-0.6, 1.0))                  # data breaks (growth_model/labels.py)
+    vol = rets.groupby(p["company_id"]).apply(lambda s: s.dropna().tail(63).std() * np.sqrt(252)
+                                              if s.notna().sum() >= 40 else np.nan)
+    days = p.groupby("company_id").size()
+    return pd.DataFrame({"days_listed": days, "volatility_3m": vol}).reset_index()
+
+
+def previous_top_list(conn, snap):
+    """Company ids on the Top list of the latest investiq-v1 snapshot before `snap` (empty if none)."""
+    cur = conn.cursor()
+    try:
+        cur.execute(
+            "SELECT company_id FROM company_rankings WHERE model_version = %s AND snapshot_date = "
+            "(SELECT MAX(snapshot_date) FROM company_rankings WHERE model_version = %s AND snapshot_date < %s) "
+            "AND JSON_EXTRACT(key_metrics, '$.top_list.in_list') = true",
+            (MODEL_VERSION, MODEL_VERSION, snap),
+        )
+        return [int(r[0]) for r in cur.fetchall()]
+    finally:
+        cur.close()
+
+
+def add_top_list(conn, snap, records, listing):
+    """Marks every record's key_metrics.top_list: eligibility (with the reason when not) and, for the
+    chosen names, their position and whether they are new or kept from the previous snapshot."""
+    from .portfolio import RECOMMENDED, select_top_list
+
+    stats = listing.set_index("company_id")
+    rows = []
+    for r in records:
+        cid = int(r["company_id"])
+        days = stats["days_listed"].get(cid, 0)
+        rows.append({"company_id": cid, "growth_score": r.get("growth_score"), "sector": r.get("sector"),
+                     "adv_cr": _num(r.get("avg_traded_value_3m_cr")), "days_listed": days,
+                     "volatility": stats["volatility_3m"].get(cid, np.nan)})
+    df = pd.DataFrame(rows)
+    df["growth_score"] = pd.to_numeric(df["growth_score"], errors="coerce")
+    df["adv_cr"] = pd.to_numeric(df["adv_cr"], errors="coerce").fillna(0.0)
+    prev = previous_top_list(conn, snap) if conn is not None else []
+    chosen = select_top_list(df, prev, RECOMMENDED)
+    pos = {int(c): (i + 1, bool(k)) for i, (c, k) in enumerate(zip(chosen["company_id"], chosen["kept"]))}
+    for r, row in zip(records, rows):
+        reasons = []
+        if pd.notna(r.get("growth_score")):
+            if not (row["adv_cr"] or 0) >= RECOMMENDED.min_adv_cr:
+                reasons.append("thinly traded (under Rs 0.5 cr a day)")
+            if not row["days_listed"] >= TOP_LIST_MIN_DAYS:
+                reasons.append("listed under a year")
+        cid = row["company_id"]
+        entry = {"eligible": pd.notna(r.get("growth_score")) and not reasons,
+                 "not_eligible_reason": "; ".join(reasons) or None,
+                 "in_list": cid in pos,
+                 "position": pos[cid][0] if cid in pos else None,
+                 "status": ("kept" if pos[cid][1] else "new") if cid in pos else None}
+        km = r["key_metrics"] if isinstance(r["key_metrics"], dict) else {}
+        km["top_list"] = entry
+        r["key_metrics"] = km
+    return chosen
+
+
 def build(conn, snap, inp=None):
     inp = inp or load_inputs(conn, snap)
     df = v2.score(merge_inputs(inp, drop_fin_scope=True))
@@ -473,6 +550,7 @@ def build(conn, snap, inp=None):
         fsrow = fs.loc[r["company_id"]].to_dict() if r["company_id"] in fs.index else None
         r["reasons"], r["risks"] = explain(r, fsrow)
         r["key_metrics"] = key_metrics(r, fsrow)
+    add_top_list(conn, snap, records, inp["listing"])
     return df, records, inp["idx_ret"]
 
 

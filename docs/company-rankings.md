@@ -60,12 +60,24 @@ CREATE TABLE IF NOT EXISTS company_rankings (
 }
 ```
 
+### `key_metrics.top_list` (investiq-v1, `ml/rankings/build_v3.py` + `ml/rankings/portfolio.py`)
+
+```json
+{ "eligible": true, "not_eligible_reason": null, "in_list": true, "position": 4, "status": "new" }
+```
+The Top list is the 50 names chosen by `portfolio.RECOMMENDED` (backtest: `ml/rankings/reports/PORTFOLIO.md`):
+>= Rs 0.5 cr traded a day and >= 1 year of prices (else `eligible: false` with the reason), no new entries
+among the 5% most volatile stocks, holdings kept while ranked within the top 150 eligible names
+(`status: "kept"`), vacancies filled from the top (`status: "new"`). Previous holdings are read from the
+previous investiq-v1 snapshot. Rows of older snapshots have no `top_list` (API returns `null`).
+
 ## Backend API (Express, mounted without /api; the frontend calls /api/...)
 
 | Route | Returns |
 |---|---|
 | `GET /rankings?sector=<slug>&industry=<name>&search=<text>&label=<growth_label>&sort=rank\|score\|name\|return_1y&page=1&limit=50` | `{ snapshot_date, model_version, total, page, limit, data: [RankingRow] }`, latest snapshot only; unranked companies last |
-| `GET /rankings/meta` | `{ snapshot_date, model_version, next_update, ranked, unranked, method: "<one paragraph>", snapshots: ["2026-09-28", ...] }` |
+| `GET /rankings?list=top` | Same shape, only Top list rows, ordered by `top_list.position` unless `sort` is given (other filters still apply) |
+| `GET /rankings/meta` | `{ snapshot_date, model_version, next_update, ranked, unranked, method: "<one paragraph>", top_list: { count, rules: [str] }, snapshots: ["2026-09-28", ...] }` |
 | `GET /sectors/:slug/industries` | `[{ industry, company_count, ranked_count, avg_score, top_symbol }]` |
 | `GET /companies/:symbol` | `{ profile, ranking: RankingDetail \| null, score_history: [{snapshot_date, growth_score, rank_overall}] }` |
 | `GET /companies/:symbol/financials` | `{ quarterly: [...], half_yearly: [...], latest_ratios: {...} }` (see below) |
@@ -75,7 +87,7 @@ CREATE TABLE IF NOT EXISTS company_rankings (
 `RankingRow`: `company_id, symbol, name, sector, sector_slug, industry, growth_score, growth_label,
 rank_overall, rank_in_sector, rank_in_industry, coverage, score_growth, score_profitability,
 score_financial_health, score_cash_flow, score_momentum, score_news, key_metrics` (subset:
-last_price, return_1y, revenue_growth_yoy, roe, market_cap_est).
+last_price, return_1y, revenue_growth_yoy, roe, market_cap_est), `top_list` (object above or null).
 
 `RankingDetail` = RankingRow + `reasons`, `risks`, full `key_metrics`, `model_version`, `snapshot_date`.
 

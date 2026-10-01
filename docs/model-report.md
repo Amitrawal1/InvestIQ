@@ -1,6 +1,6 @@
 # InvestIQ model report: results, failures, fixes and next steps
 
-Last updated: 2026-10-01. Live model: `investiq-v1` (rankings snapshot of 2026-09-30).
+Last updated: 2026-10-02. Live model: `investiq-v1` with the Top list (rankings snapshot of 2026-10-01).
 
 **Verdict in one line:** the model works as a *filter* (it reliably separates weak companies from strong
 ones and fell less than the market in normal crashes), but it is only *average* as a *stock picker*
@@ -97,23 +97,40 @@ Last year by label: Strong +8.4% average, Positive +8.0%, Neutral +0.9%, Weak �
 
 ---
 
-## 4. How to improve (best ideas, in priority order)
+## 4. Improvements tested on 2026-10-02
+
+### 4.1 Market-regime switch: tested, did not pass, not shipped
+`ml/rankings/regime.py`, `regime_eval.py`, report `ml/rankings/reports/REGIME.md`. Twelve pre-declared rules
+(e.g. Smallcap 250 25%+ below its high, breadth below 15-20%) lowering the trend weight in a "risk" regime.
+Walk-forward with the rule chosen on training years: 6m IC 0.0650 vs 0.0653 for investiq-v1, 12m 0.0966 vs
+0.0965, i.e. no gain. Decisive check: in the 2018-19 drawdown, trend ranking worked *better* than usual
+(IC +0.20 to +0.30), so these rules would cut trend exactly when it worked; only the COVID V-rebound
+reversed, and with one such episode there is nothing to validate a fix on (even trend weight 0 leaves
+2020 negative, because financials also failed). Kept at 70/30 always; re-test after the next crash.
+
+### 4.2 Top list: tested, passed, shipped
+`ml/rankings/portfolio.py`, `portfolio_eval.py`, report `ml/rankings/reports/PORTFOLIO.md`. Rebalanced
+backtest 2019-2026, 0.3% cost per side. Last year's top 50 trailed the index because 8 of the 50 were
+outside the universe the score was tested on (thinly traded or listed under a year): those 8 averaged
+-21%, the other 42 +8.9% (index +5.9%). Rules now live (`key_metrics.top_list`, Predictor "Top list"):
+>= Rs 0.5 cr a day and >= 1 year listed, no new entries among the 5% most volatile, keep holdings while
+ranked within the top 150, 50 names refreshed on the 1st/16th. Backtest: CAGR +35.2% vs Smallcap 250
++19.0% (plain top 50: +34.2%), max drawdown -38% vs -44%, turnover 361%/yr vs 770%; beat the index in
+6/6 time-machine windows and fell less in 5/6. The rule set was picked after a first run (post-hoc) and
+absolute returns carry survivorship bias; treat the comparison, not the level, as the result.
+
+## 5. How to improve (best ideas, in priority order)
 
 Each idea must pass the same walk-forward and time-machine tests before it ships.
 
-### 4.1 Highest impact
+### 5.1 Highest impact
 
-1. **Market-regime switch (fixes the turning-point failure).** After a deep market fall (e.g. Smallcap
-   250 down >25% from its high, or fewer than 30% of stocks above their 200-day average), trend
-   signals reverse for months ("momentum crash"). In that regime, cut the trend weight (e.g. 70% → 40%)
-   and lean on financial quality and cheapness until breadth recovers. Test: the Post-COVID window should
-   stop being negative without hurting the others.
+1. ~~Market-regime switch~~ **Tested 2026-10-02, did not pass** (section 4.1). Re-test after the next
+   crash, or once 2018-19 can enter the training folds.
 
-2. **Better portfolio rules for the top list (fixes "top 50 trailed the index" and the drawdowns).**
-   - Minimum liquidity: ~₹5 crore traded per day (tiny, jumpy stocks hurt the equal-weight top 50).
-   - Sector cap: at most ~20% of the list from one sector.
-   - Risk-adjusted trend: rank trend divided by volatility, so smooth risers beat wild ones.
-   - Turnover buffer: keep a holding until it drops below rank ~100, instead of swapping every 15 days.
+2. ~~Better portfolio rules for the top list~~ **Shipped 2026-10-02** as the Top list (section 4.2).
+   Rejected in the test: a sector cap, liquidity floors of 2-5 crore, trend divided by volatility,
+   excluding stretched stocks, and a 30-name list.
 
 3. **"Early Movers" list (enter before the stretch).** Tested pattern: a stock near its 52-week high but
    up less than 30% in 6 months (a base breakout) had the best typical outcome (median −0.6% vs −7.9%
@@ -121,7 +138,7 @@ Each idea must pass the same walk-forward and time-machine tests before it ships
    widening margins and cash conversion cut the crash rate to ~4% (small sample since 2020). Ship as a
    separate tab, not a replacement for the score.
 
-### 4.2 Medium impact
+### 5.2 Medium impact
 
 4. **Exit rules, tested.** Compare no exit vs "close below the 200-day average" vs "−20% from entry".
    Aim: lower the 30%+ crash rate of the top list without giving up the winners.
@@ -132,7 +149,7 @@ Each idea must pass the same walk-forward and time-machine tests before it ships
 7. **Earnings surprise and estimate drift.** Result-day price reaction and the size of growth vs the
    last few quarters are among the strongest known short-term signals, and the data already exists.
 
-### 4.3 Data fixes (make every model better)
+### 5.3 Data fixes (make every model better)
 
 8. **Balance sheets before 2022:** find why `financial_filings` has none before Sep 2022 (parser or
    source). Four more years of ROE/ROCE/debt history for training and testing.
@@ -140,19 +157,19 @@ Each idea must pass the same walk-forward and time-machine tests before it ships
 10. **Banks:** collect standalone filings (9 large banks report NPA only there) and INDUSINDBK.
 11. **Sector/industry cleanup:** a few companies are misclassified (e.g. Chennai Petroleum).
 
-### 4.4 Operations
+### 5.4 Operations
 
 12. Schedule the daily price collector (it is manual today).
 13. Move the Upstox token request to Vercel Cron (GitHub's schedule ran 6+ hours late).
 
-### 4.5 Later features (not started)
+### 5.5 Later features (not started)
 
 - Short-term (3-6 month) event analysis: wars, policies, budgets → which sectors benefit.
 - IPO analysis: is the valuation reasonable vs financials, peers and market conditions.
 
 ---
 
-## 5. How to reproduce
+## 6. How to reproduce
 
 ```bash
 cd ml
@@ -161,6 +178,8 @@ python3 -m financial_model.train              # financial model walk-forward (+ 
 python3 -m financials.fin_sector_eval         # banks / NBFCs / insurers evaluation
 python3 -m rankings.combiner_eval             # combiner weights walk-forward
 python3 -m rankings.time_machine --events     # time-machine and stress windows
+python3 -m rankings.regime_eval               # market-regime switch test (not shipped)
+python3 -m rankings.portfolio_eval            # Top list rules backtest
 python3 -m rankings.build_v3 --date YYYY-MM-DD [--publish]
 ```
 

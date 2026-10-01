@@ -53,6 +53,15 @@ const INVESTIQ_V1_METHOD = "InvestIQ score (investiq-v1): 70% market model, 30% 
 // Text shown on /rankings/meta, by the latest snapshot's model_version (prelim text as fallback)
 const methodFor = (modelVersion) => (modelVersion === "investiq-v1" ? INVESTIQ_V1_METHOD : METHOD);
 
+// Top list (investiq-v1, key_metrics.top_list): rules shown next to the list on the site
+const TOP_LIST_RULES = [
+    "50 companies, refreshed with each snapshot on the 1st and 16th.",
+    "Only companies trading at least Rs 0.5 crore a day and listed for at least a year: the universe the score was tested on.",
+    "No new entries among the 5% most volatile stocks.",
+    "A company already on the list stays while it ranks in the top 150 eligible names, so the list doesn't churn every 15 days.",
+];
+const TOP_POSITION = "CAST(JSON_EXTRACT(r.key_metrics, '$.top_list.position') AS UNSIGNED)";
+
 const toInt = (value, fallback, min, max) => {
     const parsed = Number.parseInt(value, 10);
 
@@ -80,6 +89,7 @@ const getLatestSnapshot = async () => {
 const getRankings = async (req, res) => {
     try {
         const { sector, industry, search, label } = req.query;
+        const topList = req.query.list === "top";
         const sortKey = SORTS[req.query.sort] ? req.query.sort : "rank";
         const page = toInt(req.query.page, 1, 1, 100000);
         const limit = toInt(req.query.limit, DEFAULT_LIMIT, 1, MAX_LIMIT);
@@ -115,6 +125,10 @@ const getRankings = async (req, res) => {
             params.push(label);
         }
 
+        if (topList) {
+            where += " AND JSON_EXTRACT(r.key_metrics, '$.top_list.in_list') = true";
+        }
+
         if (search && search.trim()) {
             where += " AND (c.name LIKE ? OR c.symbol LIKE ?)";
             params.push(`%${search.trim()}%`, `%${search.trim()}%`);
@@ -131,7 +145,8 @@ const getRankings = async (req, res) => {
         const [[countRow], [rows]] = await Promise.all([
             db.query(`SELECT COUNT(*) AS total ${from}`, params),
             db.query(
-                `SELECT ${RANKING_FIELDS} ${from} ORDER BY ${SORTS[sortKey]} LIMIT ? OFFSET ?`,
+                // The Top list keeps its own order (kept holdings and new entries by position) unless a sort is asked for
+                `SELECT ${RANKING_FIELDS} ${from} ORDER BY ${topList && !req.query.sort ? `${TOP_POSITION} ASC` : SORTS[sortKey]} LIMIT ? OFFSET ?`,
                 [...params, limit, (page - 1) * limit]
             ),
         ]);
@@ -163,7 +178,8 @@ const getRankingsMeta = async (req, res) => {
                     DATE_FORMAT(snapshot_date, '%Y-%m-%d') AS snapshot_date,
                     MAX(model_version) AS model_version,
                     SUM(rank_overall IS NOT NULL) AS ranked,
-                    SUM(rank_overall IS NULL) AS unranked
+                    SUM(rank_overall IS NULL) AS unranked,
+                    SUM(JSON_EXTRACT(key_metrics, '$.top_list.in_list') = true) AS top_list_count
                 FROM company_rankings
                 GROUP BY snapshot_date
                 ORDER BY snapshot_date DESC
@@ -178,6 +194,10 @@ const getRankingsMeta = async (req, res) => {
                 ranked: latest ? toNum(latest.ranked) : 0,
                 unranked: latest ? toNum(latest.unranked) : 0,
                 method: methodFor(latest ? latest.model_version : null),
+                top_list: {
+                    count: latest ? toNum(latest.top_list_count) || 0 : 0,
+                    rules: TOP_LIST_RULES,
+                },
                 snapshots: rows.map((row) => row.snapshot_date),
             };
         }, (value) => value.snapshot_date !== null);
