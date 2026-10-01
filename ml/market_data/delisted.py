@@ -15,9 +15,9 @@ Sources (all public, no login):
                           (so 90-day windows)
 Upstox v3 historical candles reject every delisted ISIN ("Invalid Instrument key"), so they are no use here.
 
-Prices from NSE are NOT adjusted for splits/bonuses (Upstox candles are). On an ex-date NSE sets
-PREVCLOSE to the adjusted base price, so prev_close_t / close_(t-1) gives the adjustment factor;
-`adjust_closes` back-adjusts with it, which makes the series comparable with `stock_prices`.
+Prices from NSE are NOT adjusted for splits/bonuses (Upstox candles are), and neither is PREVCLOSE
+on an ex-date. `adjust_closes` detects ex-dates from the overnight ratio and back-adjusts, which makes
+the series comparable with `stock_prices` (checked on RELIANCE against Upstox).
 
 Commands (from the ml/ folder):
     python3 -m market_data.delisted list
@@ -28,6 +28,9 @@ Commands (from the ml/ folder):
     python3 -m market_data.delisted backfill --from 2016-01-01 --to 2026-10-01 [--max-files N]
         every daily bhavcopy in the range (zips cached in ml/data/raw/bhavcopy/) -> rows of the
         delisted ISINs -> delisted_prices.csv.gz (resumable: cached zips are not downloaded again)
+    python3 -m market_data.delisted upload --yes [--prices FILE]
+        DB WRITE: creates delisted_companies / delisted_prices (never `companies` / `stock_prices`)
+        and upserts the list and prices; backtests then use load_delisted("db")
 """
 
 import argparse
@@ -75,8 +78,15 @@ MAX_RETRIES = 4
 START = date(2016, 1, 1)
 SERIES = ("EQ", "BE", "BZ")             # main board; BZ = trade-for-trade for non-compliant companies
 SERIES_RANK = {"EQ": 0, "BE": 1, "BZ": 2}
-ADJ_TOL = 0.02                          # prev_close / previous close off by > 2% = corporate action
-DISTRESS_TYPES = ("Liquidation", "Compulsory")
+EQUITY_ISIN = "INE"
+# open / previous close of a split or bonus: 1:1 bonus or 1:2 split 1/2, 2:1 bonus 1/3, 3:1 bonus 1/4,
+# 1:5 split 1/5, 1:10 split 1/10, 1:2 bonus 2/3, 3:2 bonus 2/5. Smaller ratios (e.g. 1:4 bonus = 0.8)
+# are inside the circuit band and can't be told from a real move; they stay unadjusted.
+SPLIT_RATIOS = (1 / 2, 1 / 3, 1 / 4, 1 / 5, 1 / 10, 2 / 3, 2 / 5)
+SPLIT_TOLERANCE = 0.06                  # MINDTREE 1:1 bonus 2016-03-09 opened at 0.479 x prev close
+MAX_GAP_DAYS = 7
+COLLAPSE = 0.2                          # last close <= 20% of its recent peak = distress exit
+COLLAPSE_WINDOW = 756                   # trading days (~3 years) for that peak
 
 # DDL for the database side (NOT executed by this module; see DELISTED.md). Separate tables so the
 # website, which reads `companies` / `stock_prices`, can never show these names.
@@ -198,7 +208,8 @@ def _parse_bhav(raw, day):
     df = df[["symbol", "series", "isin", "name", "open", "high", "low", "close", "prev_close", "volume", "value"]]
     for col in ("symbol", "series", "isin"):
         df[col] = df[col].str.strip()
-    df = df[df["series"].isin(SERIES)].copy()
+    # company shares only: INE... ISINs (ETFs / fund units trade in EQ too, with INF... ISINs)
+    df = df[df["series"].isin(SERIES) & df["isin"].str.startswith(EQUITY_ISIN, na=False)].copy()
     for col in ("open", "high", "low", "close", "prev_close", "volume", "value"):
         df[col] = pd.to_numeric(df[col], errors="coerce")
     df.insert(0, "price_date", pd.Timestamp(day))
@@ -235,23 +246,38 @@ def first_trading_day(nse, year, month):
 # ---------------------------------------------------------------------------
 
 def adjust_closes(prices):
-    """Add adj_close (split/bonus back-adjusted, latest price = raw) per isin.
+    """Add adj_close (split/bonus back-adjusted; the latest price stays raw) per isin.
 
-    prices: [isin, price_date, close, prev_close, ...], one row per isin and date.
-    factor on day t = prev_close_t / close_(t-1); |factor - 1| <= ADJ_TOL is noise and ignored.
+    prices: [isin, price_date, open, close, ...], one row per isin and date. Neither the bhavcopy
+    PREVCLOSE nor the history API's previous close is adjusted on an ex-date (checked: RELIANCE
+    2017-09-07, 1:1 bonus, PREVCLOSE 1645.4, close 818.1), so ex-dates are detected from the price:
+    open / previous close within SPLIT_TOLERANCE of a standard split/bonus ratio, on a day at most
+    MAX_GAP_DAYS after the previous trade (a resumption after a long suspension is a real move).
+    Every NSE circuit band is <= 20%, so a 33%+ overnight drop on a normal day is a corporate action.
     """
     out = []
     for _, g in prices.sort_values(["isin", "price_date"]).groupby("isin", sort=False):
         g = g.copy()
-        factor = (g["prev_close"] / g["close"].shift()).fillna(1.0)
-        factor = factor.where((factor - 1).abs() > ADJ_TOL, 1.0).where(factor > 0, 1.0)
-        # a close before day t is multiplied by every factor from t+1 onwards... i.e. reverse cumprod
-        cum = factor[::-1].cumprod()[::-1].shift(-1).fillna(1.0)
-        g["adj_factor"] = cum
-        g["adj_close"] = g["close"] * cum
+        prev = g["close"].shift()
+        ratio = (g["open"].where(g["open"] > 0, g["close"]) / prev).to_numpy()
+        gap = g["price_date"].diff().dt.days.to_numpy()
+        factor = np.ones(len(g))
+        for i in range(1, len(g)):
+            if gap[i] > MAX_GAP_DAYS or not np.isfinite(ratio[i]):
+                continue
+            for ideal in SPLIT_RATIOS:
+                if abs(ratio[i] - ideal) / ideal <= SPLIT_TOLERANCE:
+                    factor[i] = ideal
+                    break
+        factor = pd.Series(factor, index=g.index)
+        # a close before day t is multiplied by every factor after it (reverse cumulative product)
+        g["adj_factor"] = factor[::-1].cumprod()[::-1].shift(-1).fillna(1.0)
+        g["adj_close"] = g["close"] * g["adj_factor"]
         g["corp_action"] = factor != 1.0
         out.append(g)
-    return pd.concat(out, ignore_index=True) if out else prices.assign(adj_factor=[], adj_close=[], corp_action=[])
+    if not out:
+        return prices.assign(adj_factor=[], adj_close=[], corp_action=[])
+    return pd.concat(out, ignore_index=True)
 
 
 # ---------------------------------------------------------------------------
@@ -431,6 +457,67 @@ def backfill(nse, start, end, isins, max_files=None):
 
 
 # ---------------------------------------------------------------------------
+# upload: local files -> delisted_* tables (run by hand; NOT run during development)
+# ---------------------------------------------------------------------------
+
+COMPANY_UPSERT = """
+INSERT INTO delisted_companies (symbol, isin, name, first_seen, last_traded, last_series, last_close,
+    nse_delisted_date, nse_delisting_type, exit_kind, distress, source)
+VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+ON DUPLICATE KEY UPDATE symbol = VALUES(symbol), name = VALUES(name), first_seen = VALUES(first_seen),
+    last_traded = VALUES(last_traded), last_series = VALUES(last_series), last_close = VALUES(last_close),
+    nse_delisted_date = VALUES(nse_delisted_date), nse_delisting_type = VALUES(nse_delisting_type),
+    exit_kind = VALUES(exit_kind), distress = VALUES(distress), source = VALUES(source)
+"""
+
+PRICE_UPSERT = """
+INSERT INTO delisted_prices (delisted_id, price_date, series, open_price, high_price, low_price, close_price,
+    prev_close, adj_close, volume)
+VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+ON DUPLICATE KEY UPDATE series = VALUES(series), open_price = VALUES(open_price), high_price = VALUES(high_price),
+    low_price = VALUES(low_price), close_price = VALUES(close_price), prev_close = VALUES(prev_close),
+    adj_close = VALUES(adj_close), volume = VALUES(volume)
+"""
+UPLOAD_BATCH = 5000
+
+
+def upload(prices_file):
+    """Create the two tables (if missing) and upsert the list + prices. Touches nothing else."""
+    from news_pipeline.db import get_connection
+
+    def val(x):
+        return None if pd.isna(x) else (x.date() if isinstance(x, pd.Timestamp) else x)
+
+    comp = pd.read_csv(LIST_FILE, parse_dates=["first_seen", "nse_delisted_date"])
+    prices = pd.read_csv(prices_file, parse_dates=["price_date"])
+    prices = prices[prices["isin"].isin(comp["isin"])]
+    last = prices.groupby("isin")["price_date"].max()
+    conn = get_connection()
+    try:
+        cur = conn.cursor()
+        cur.execute(DELISTED_COMPANIES_SQL)
+        cur.execute(DELISTED_PRICES_SQL)
+        rows = [tuple(val(x) for x in (r.symbol, r.isin, r.name, r.first_seen, last.get(r.isin), r.last_series,
+                                       r.last_close, r.nse_delisted_date, r.nse_delisting_type, r.exit_kind,
+                                       int(r.distress), r.source))
+                for r in comp.itertuples()]
+        cur.executemany(COMPANY_UPSERT, rows)
+        conn.commit()
+        cur.execute("SELECT isin, id FROM delisted_companies")
+        ids = dict(cur.fetchall())
+        rows = [(ids[r.isin], r.price_date.date(), r.series, val(r.open), val(r.high), val(r.low), val(r.close),
+                 val(r.prev_close), val(r.adj_close), None if pd.isna(r.volume) else int(r.volume))
+                for r in prices.itertuples()]
+        for i in range(0, len(rows), UPLOAD_BATCH):
+            cur.executemany(PRICE_UPSERT, rows[i:i + UPLOAD_BATCH])
+            conn.commit()
+            log.info("delisted_prices: %d / %d rows", min(i + UPLOAD_BATCH, len(rows)), len(rows))
+    finally:
+        conn.close()
+    return len(comp), len(prices)
+
+
+# ---------------------------------------------------------------------------
 # Loaders for backtests (opt-in; see growth_model.prices.load_prices(include_delisted=True))
 # ---------------------------------------------------------------------------
 
@@ -474,21 +561,25 @@ def load_delisted(source="local", prices_file=None):
             comp[["company_id", "symbol", "isin", "last_traded", "distress", "exit_kind"]].reset_index(drop=True))
 
 
-def terminal_prices(stocks, companies, distress_value=0.0):
+def terminal_prices(stocks, companies, distress_value=0.0, collapse=COLLAPSE):
     """{company_id: (last_traded, terminal close)} for labels: what a holder had after the exit.
 
-    Non-distress exits (voluntary delisting, merger, unknown) keep the last adjusted close (the holder
-    was paid roughly that); distress exits (liquidation, compulsory delisting, BZ suspension) are
-    worth `distress_value` x last close (0 = equity wiped out, the usual IBC outcome).
+    Distress exits are worth `distress_value` x last close (0 = equity wiped out, the usual IBC
+    outcome): liquidation, compulsory delisting, BZ suspension, and (collapse) any other exit whose
+    last close is <= `collapse` x its peak over the last ~3 years (DHFL, Reliance Capital, SREI:
+    resolved under IBC after NSE stopped updating delisted.csv). Other exits (merger, voluntary
+    delisting) keep the last adjusted close (the holder was paid roughly that). collapse=None turns
+    the price rule off.
     """
-    last = stocks.sort_values("price_date").groupby("company_id").last()
     out = {}
-    for row in companies.itertuples():
-        if row.company_id not in last.index:
+    for cid, g in stocks.sort_values("price_date").groupby("company_id"):
+        row = companies[companies["company_id"] == cid]
+        if row.empty:
             continue
-        px = last.loc[row.company_id, "close"]
-        out[row.company_id] = (last.loc[row.company_id, "price_date"],
-                               px * distress_value if row.distress else px)
+        px = g["close"].iloc[-1]
+        peak = g["close"].iloc[-COLLAPSE_WINDOW:].max()
+        distress = bool(row["distress"].iloc[0]) or (collapse is not None and px <= collapse * peak)
+        out[cid] = (g["price_date"].iloc[-1], px * distress_value if distress else px)
     return out
 
 
@@ -512,6 +603,9 @@ def main(argv=None):
     bp.add_argument("--to", dest="end", type=parse_date, default=date.today())
     bp.add_argument("--max-files", type=int, help="stop after N weekday files (feasibility runs)")
     bp.add_argument("--out", help="output file (default delisted_prices.csv.gz)")
+    up = sub.add_parser("upload", help="create delisted_companies / delisted_prices and upsert (DB WRITE)")
+    up.add_argument("--prices", default=str(PRICES_FILE), help="prices file (default delisted_prices.csv.gz)")
+    up.add_argument("--yes", action="store_true", help="required: confirms the database write")
     args = ap.parse_args(argv)
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s", datefmt="%H:%M:%S")
@@ -531,6 +625,12 @@ def main(argv=None):
         prices = fetch_sample(nse, args.symbols + args.controls, comp, monthly)
         prices.to_csv(SAMPLE_FILE, index=False)
         log.info("%d rows for %d names -> %s", len(prices), prices["isin"].nunique(), SAMPLE_FILE)
+    elif args.cmd == "upload":
+        if not args.yes:
+            log.error("upload writes to the database; re-run with --yes")
+            return 1
+        n_comp, n_px = upload(args.prices)
+        log.info("upserted %d companies, %d price rows", n_comp, n_px)
     else:
         comp = pd.read_csv(LIST_FILE)
         prices, files = backfill(nse, args.start, args.end, set(comp["isin"]), args.max_files)

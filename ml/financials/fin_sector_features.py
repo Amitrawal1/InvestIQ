@@ -322,16 +322,20 @@ def raw_from_extract(table):
 # them from the same bank's standalone filing of the same period.
 BANK_STANDALONE_COLUMNS = ["fsq_gross_npa_pct", "fsq_net_npa_pct", "fsq_gross_npa", "fsq_net_npa",
                            "fsq_cet1_ratio", "fsq_roa_reported"]
+# A standalone filing published more than this after the consolidated one (a late revision) is not
+# used: waiting for it would hold back the whole quarter's row
+BANK_STANDALONE_MAX_LAG = pd.Timedelta(days=3)
 
 
 def fill_bank_ratios_from_standalone(df):
     """Fill a bank's missing consolidated NPA / CET1 / reported-ROA fields from its standalone filing.
 
     Only NaN fields of `bank`-format consolidated rows are filled, from the earliest-filed standalone
-    filing of the same company and period that has them; a value filed consolidated is never
-    replaced. Point in time: when that standalone filing was published after the consolidated one
-    (usually minutes apart, same board meeting), the consolidated row takes the later filing_date,
-    so its features never use a number before it was public. Rows of other formats, and banks
+    filing of the same company and period that has them, published at most BANK_STANDALONE_MAX_LAG
+    after the consolidated one; a value filed consolidated is never replaced. Point in time: when
+    that standalone filing was published after the consolidated one (usually minutes apart, same
+    board meeting), the consolidated row takes the later filing_date, so its features never use a
+    number before it was public. Rows of other formats, and banks
     without a standalone filing for the period, are returned unchanged.
     """
 
@@ -351,6 +355,8 @@ def fill_bank_ratios_from_standalone(df):
         if not missing or candidates is None:
             continue
         for _, source in candidates.iterrows():
+            if source["filing_date"] > row["filing_date"] + BANK_STANDALONE_MAX_LAG:
+                break
             values = {c: source[c] for c in missing if not pd.isna(source[c])}
             if values:
                 for col, value in values.items():

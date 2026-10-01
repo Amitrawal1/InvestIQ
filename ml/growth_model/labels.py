@@ -16,7 +16,8 @@ Timing (no look-ahead):
                     Opt-in (--include-delisted): for companies that left NSE (market_data/delisted.py)
                     the exit price after the last trade is a terminal value instead: the last close
                     (merger, voluntary delisting) or --distress-value x last close (liquidation,
-                    compulsory delisting, BZ suspension; default 0 = equity wiped out).
+                    compulsory delisting, BZ suspension, or a last close <= 20% of its 3y peak;
+                    default 0 = equity wiped out).
     series breaks   NSE circuit limits keep a normal day within about +-20%, so a close-to-close move
                     above +100% or below -60% is a data break (pre-listing placeholder candles, an
                     unadjusted corporate action, a relisting). A label whose window [E, X_h] contains a

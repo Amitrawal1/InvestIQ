@@ -110,7 +110,7 @@ Quarterly (Jun/Sep/Dec) filings before Sep 2022 stay without a balance sheet by 
 | company (Mar, consolidated unless noted) | FY19 | FY20 | FY21 | FY22 |
 |---|---|---|---|---|
 | RELIANCE assets / owners' equity | 10,02,406 / 3,87,112 | 11,65,915 / 4,53,331 | 13,39,390 / 7,00,172 | standalone only filed: 8,95,562 / 4,71,527 |
-| TCS owners' equity (no segment assets filed after FY19) | 1,14,943 assets / 89,254 | 84,749 | 87,108 | 89,846 |
+| TCS owners' equity (segment assets filed in FY19 only) | 1,14,943 / 89,254 | 84,749 | 87,108 (likely total equity incl. NCI, ~1% high) | 89,846 |
 | DIXON owners' equity | - | 541 | 737 | 997 |
 | SAFARI owners' equity | - | 231 | 279 | 301 |
 | CERA owners' equity | 700 (standalone) | 771 | 872 | 1,015 |
@@ -182,11 +182,114 @@ Quarterly (Jun/Sep/Dec) filings before Sep 2022 stay without a balance sheet by 
 
 ### Test on the 10 banks (download into the local cache only)
 
-BANK_TEST_RESULTS
+`python3 -m financials.collect --symbols HDFCBANK SBIN PNB BANKBARODA BANKINDIA UNIONBANK IDFCFIRSTB
+RBLBANK INDUSINDBK FINOPB --download-only` (7.3 minutes at the default 1 s pause; 333 filings
+downloaded, 46 links 404 on NSE's archive, 0 errors). `financial_filings` afterwards: still 66,933
+rows, last `updated_at` 2026-09-29 08:46 (nothing written).
+
+Then the fin_sector features for these banks, built in memory exactly as after a backfill: "before"
+= the filings stored today; "after" = plus every cached filing the new collector selects (333 more,
+INDUSINDBK's simulated from its listing). Rows with a filled value / feature rows:
+
+| bank | rows | gross NPA % | net NPA % | CET1 |
+|---|---|---|---|---|
+| HDFCBANK | 32 | 3 -> 31 | 3 -> 31 | 3 -> 31 |
+| SBIN | 31 | 14 -> 31 | 14 -> 31 | 15 -> 31 |
+| PNB | 32 | 4 -> 32 | 4 -> 32 | 32 -> 32 |
+| BANKBARODA | 29 | 5 -> 29 | 5 -> 29 | 29 -> 29 |
+| BANKINDIA | 30 | 13 -> 30 | 13 -> 30 | 30 -> 30 |
+| UNIONBANK | 32 -> 33 | 5 -> 31 | 5 -> 31 | 32 -> 33 |
+| IDFCFIRSTB | 30 | 3 -> 28 | 3 -> 29 | 3 -> 28 |
+| RBLBANK | 28 | 12 -> 28 | 12 -> 28 | 13 -> 28 |
+| FINOPB | 14 | 0 (none: payments bank, NPA not applicable) | 0 | 0 -> 12 |
+| INDUSINDBK | 0 -> 25 | 0 -> 25 | 0 -> 25 | 0 -> 25 |
+
+Latest values (Jun 2026 quarter): HDFCBANK GNPA 1.17% / NNPA 0.41% / CET1 19.6%; SBIN 1.47% / 0.38% /
+12.9%; PNB 2.78% / 0.28% / 14.5%; INDUSINDBK 3.25% / 0.95% / 16.1%; FINOPB CET1 73.5%.
+
+Besides the ratio family (NPA/CET1/ROA reported, their 1-year changes, provision coverage,
+capital flag), 7 of the 258 rows present before and after change in flow features (TTM growth, NIM,
+ROE, ...). That is new data, not the fill: for banks the collector now keeps every revision, e.g.
+IDFCFIRSTB's Sep-2025 consolidated filing at 17:41 was mis-tagged (6-month context only) and replaced
+at 18:19; only the first was stored before, which had broken the Sep-2025..Jun-2026 TTM (NII TTM
+growth -18% before, +8% after). One standalone filed ~99 days late (HDFCBANK Dec-2021 revision)
+is not used: fills wait at most 3 days (BANK_STANDALONE_MAX_LAG), otherwise the whole quarter's row
+would be held back.
 
 ## Backfill commands (run from `ml/`, in this order)
 
-BACKFILL
+All three steps write to the database; nothing else needs to change first. Run under
+`caffeinate -i`; each step is resumable / repeatable.
+
+**1. Banks: download and store the standalone filings (online, ~20 min).**
+
+```bash
+cd ml && caffeinate -i python3 -m financials.collect --symbols AUBANK AXISBANK BANDHANBNK BANKBARODA \
+  BANKINDIA CANBK CAPITALSFB CENTRALBK CSBBANK CUB DCBBANK DHANBANK EQUITASBNK ESAFSFB FEDERALBNK \
+  FINOPB HDFCBANK ICICIBANK IDBI IDFCFIRSTB INDIANB INDUSINDBK IOB 'J&KBANK' JSFB KARURVYSYA KOTAKBANK \
+  KTKBANK MAHABANK PNB PSB RBLBANK SBIN SOUTHBANK SURYODAY TMB UCOBANK UJJIVANSFB UNIONBANK UTKARSHBNK \
+  YESBANK RKDL INDTERRAIN INDIGOPNTS SEDEMAC
+```
+
+- The 41 banks (all with `bank='B'` in NSE's listing) plus the four non-banks lost to the
+  2026-09-28 DB outage. ~620 filings are not cached yet (~150 of them are known 404s that are retried
+  and fail fast); at ~1 request/s that is ~15-20 minutes including listings (10 test banks: 7.3 min).
+- Writes: `financial_filings` INSERTs only (existing seq numbers are skipped): roughly 650-800 new
+  bank rows (mostly `statement_type='standalone'`, plus consolidated revisions) and ~150 rows for
+  INDUSINDBK, RKDL, INDTERRAIN, INDIGOPNTS, SEDEMAC. Also writes the XBRL cache and listing JSONs.
+
+**2. Re-parse everything from the cache (offline, no NSE; est. 45-75 min, dominated by ~67,800
+row upserts to TiDB).**
+
+```bash
+cd ml && caffeinate -i python3 -m financials.collect --from-cache data/raw/xbrl --all-in-cache --reparse
+```
+
+- Writes: UPDATE (upsert) of every stored filing. Values change only on legacy annual rows
+  (expected ~9,400: `bs_total_assets`, `bs_equity_owners`, `bs_total_equity` filled); every other
+  column of every row is rewritten with an identical value (`updated_at` changes everywhere).
+
+**3. Refresh the fin_sector extract and its DB copy (offline, ~3-5 min).**
+
+```bash
+cd ml && caffeinate -i python3 -m financials.fin_sector_features --refresh-extract --check 300 \
+  --out data/processed/fin_sector_features.csv
+cd ml && python3 -m financials.fin_sector_features --push-db
+```
+
+- Writes `ml/data/processed/fin_sector_filings.pkl` / `fin_sector_features.csv` and replaces the
+  whole `fin_sector_extract` table (one JSON row per lender filing, ~7,000 rows) that CI reads.
+- Expect `point-in-time check: ... 0 mismatches`.
+
+Then (your call, not part of this fix): re-run the financial model / rankings so they pick up the
+new rows.
+
+### Verify after
+
+```sql
+-- A: legacy annual balance-sheet totals (expect ~70% of FY2019-FY2022 March rows, 0 before)
+SELECT YEAR(period_end) fy, COUNT(*) n,
+       ROUND(100*AVG(bs_equity_owners IS NOT NULL),1) pct_equity_owners,
+       ROUND(100*AVG(bs_total_assets IS NOT NULL),1) pct_assets
+FROM financial_filings
+WHERE format='non_financial' AND parse_status<>'failed' AND MONTH(period_end)=3
+GROUP BY 1 ORDER BY 1;
+-- spot checks: RELIANCE FY21 consolidated 13,39,390 / 7,00,172; INFY FY21 owners' equity 76,351
+SELECT symbol, period_end, statement_type, bs_total_assets, bs_equity_owners, bs_total_equity
+FROM financial_filings WHERE symbol IN ('RELIANCE','INFY') AND period_end='2021-03-31';
+-- nothing from Sep 2022 on may have changed: compare a checksum taken before step 2
+SELECT COUNT(*), SUM(COALESCE(bs_total_assets,0)), SUM(COALESCE(bs_equity_owners,0))
+FROM financial_filings WHERE period_end >= '2022-09-30';
+
+-- B: bank standalone rows and the outage companies
+SELECT symbol, statement_type, COUNT(*) FROM financial_filings
+WHERE symbol IN ('HDFCBANK','SBIN','PNB','BANKBARODA','BANKINDIA','UNIONBANK','IDFCFIRSTB','RBLBANK',
+                 'INDUSINDBK','FINOPB','RKDL','INDTERRAIN','INDIGOPNTS','SEDEMAC')
+GROUP BY 1,2 ORDER BY 1,2;   -- expect ~30-40 standalone rows per bank; INDUSINDBK ~55 rows
+```
+
+And in Python: `python3 -m financials.fin_sector_features --symbols HDFCBANK SBIN PNB INDUSINDBK`
+should show gross/net NPA % and CET1 non-null on ~95-100% of these banks' rows (table above).
 
 ## Files changed
 

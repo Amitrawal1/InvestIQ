@@ -23,5 +23,9 @@ dist/
 ml/data/raw/xbrl/
 ml/data/raw/xbrl_samples/
 
+# NSE bhavcopy cache for market_data/delisted.py (re-downloadable; ~260 MB after a full backfill)
+ml/data/raw/bhavcopy/
+ml/data/raw/delisted/delisted_prices.csv.gz
+
 # Private project notes
 PROJECT_HANDBOOK.md

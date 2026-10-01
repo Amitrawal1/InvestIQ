@@ -190,9 +190,10 @@ def sample_estimate(stocks, index):
     extra, comp_d = load_delisted("local", prices_file=SAMPLE_FILE)
     base = pd.read_pickle(LABELS_FILE)
     res = {"baseline": _stats(base["excess_12m"], base["ret_12m"])}
-    for name, dv in (("terminal_last", 1.0), ("terminal_zero_distress", 0.0)):
+    for name, dv, col in (("terminal_last", 1.0, None), ("terminal_zero_distress", 0.0, None),
+                          ("terminal_zero_distress_or_collapse", 0.0, COLLAPSE)):
         lab = build_labels(pd.concat([stocks, extra], ignore_index=True), index,
-                           terminal=terminal_prices(extra, comp_d, distress_value=dv))
+                           terminal=terminal_prices(extra, comp_d, distress_value=dv, collapse=col))
         res[name] = _stats(lab["excess_12m"], lab["ret_12m"])
         d = lab[lab["company_id"] < 0]
         res[name + "_sample_rows"] = _stats(d["excess_12m"], d["ret_12m"])

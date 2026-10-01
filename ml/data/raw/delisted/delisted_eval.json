@@ -2,157 +2,489 @@
   "monthly": {
     "snapshots": 130,
     "windows": 118,
-    "rows": 214996,
-    "departed_rows": 21421,
-    "rows_that_left_inside_window": 4036,
-    "departed_isins_with_a_row": 521,
+    "rows": 201238,
+    "departed_rows": 19947,
+    "rows_that_left_inside_window": 3653,
+    "departed_isins_with_a_row": 484,
     "all": {
       "survivors_only": {
-        "n": 188264,
-        "mean_excess": 0.04149207399943018,
-        "median_excess": -0.08870405558183164,
-        "beat_rate": 0.4060574512386861,
-        "share_ret_le_-90%": 0.001126078273063358,
-        "share_ret_le_-50%": 0.06043109675774445
+        "n": 176510,
+        "mean_excess": 0.04596930551184749,
+        "median_excess": -0.09761746950162803,
+        "beat_rate": 0.40098011444110815,
+        "share_ret_le_-90%": 0.0011953996940683247,
+        "share_ret_le_-50%": 0.06430797121976092
       },
       "with_departed_last": {
-        "n": 208798,
-        "mean_excess": 0.021961788628383324,
-        "median_excess": -0.10191486656636017,
-        "beat_rate": 0.39435243632601846,
-        "share_ret_le_-90%": 0.0023467657736185215,
-        "share_ret_le_-50%": 0.07562811904328585
+        "n": 195618,
+        "mean_excess": 0.025673273100817316,
+        "median_excess": -0.11163499600808152,
+        "beat_rate": 0.3886094326697952,
+        "share_ret_le_-90%": 0.002438425911725915,
+        "share_ret_le_-50%": 0.08038626302283021
       },
-      "effect_mean_last": 0.019530285371046858,
-      "effect_median_last": 0.013210810984528532,
+      "effect_mean_last": 0.020296032411030174,
+      "effect_median_last": 0.014017526506453493,
       "departed_only_last": {
-        "n": 20534,
-        "mean_excess": -0.1570997505308047,
-        "median_excess": -0.26081475343262905,
-        "beat_rate": 0.2870361351904159,
-        "share_ret_le_-90%": 0.013538521476575437,
-        "share_ret_le_-50%": 0.21496055322879126
+        "n": 19108,
+        "mean_excess": -0.1618111669698826,
+        "median_excess": -0.2726293288593952,
+        "beat_rate": 0.27433535691856814,
+        "share_ret_le_-90%": 0.013920870839438979,
+        "share_ret_le_-50%": 0.22890935733724094
       },
       "with_departed_distress": {
-        "n": 208798,
-        "mean_excess": 0.017009622706911087,
-        "median_excess": -0.10322178708956542,
-        "beat_rate": 0.393246103889884,
-        "share_ret_le_-90%": 0.008381306334351862,
-        "share_ret_le_-50%": 0.08018276037126792
+        "n": 195618,
+        "mean_excess": 0.020387448994285403,
+        "median_excess": -0.11322134010838558,
+        "beat_rate": 0.3874285597439908,
+        "share_ret_le_-90%": 0.008879550961567954,
+        "share_ret_le_-50%": 0.0852477788342586
       },
-      "effect_mean_distress": 0.024482451292519095,
-      "effect_median_distress": 0.014517731507733778,
+      "effect_mean_distress": 0.025581856517562087,
+      "effect_median_distress": 0.015603870606757553,
       "departed_only_distress": {
-        "n": 20534,
-        "mean_excess": -0.20745537242968265,
-        "median_excess": -0.2833519700295788,
-        "beat_rate": 0.27578650043829744,
-        "share_ret_le_-90%": 0.07490016557903964,
-        "share_ret_le_-50%": 0.26127398461088924
+        "n": 19108,
+        "mean_excess": -0.21592474976617523,
+        "median_excess": -0.3002482941905608,
+        "beat_rate": 0.2622461796106343,
+        "share_ret_le_-90%": 0.07986183797362362,
+        "share_ret_le_-50%": 0.2786790872932803
       },
       "with_departed_collapse": {
-        "n": 208798,
-        "mean_excess": 0.01585750334445561,
-        "median_excess": -0.10352856774490937,
-        "beat_rate": 0.393092845716913,
-        "share_ret_le_-90%": 0.009995306468452763,
-        "share_ret_le_-50%": 0.08129867144321305
+        "n": 195618,
+        "mean_excess": 0.019178792593274884,
+        "median_excess": -0.1134748180186455,
+        "beat_rate": 0.38726497561574086,
+        "share_ret_le_-90%": 0.010535840260098763,
+        "share_ret_le_-50%": 0.08642865176006298
       },
-      "effect_mean_collapse": 0.025634570654974573,
-      "effect_median_collapse": 0.01482451216307773,
+      "effect_mean_collapse": 0.026790512918572606,
+      "effect_median_collapse": 0.015857348517017478,
       "departed_only_collapse": {
-        "n": 20534,
-        "mean_excess": -0.21917058712930168,
-        "median_excess": -0.2898311636763138,
-        "beat_rate": 0.274228109476965,
-        "share_ret_le_-90%": 0.09131197039057173,
-        "share_ret_le_-50%": 0.272621018798091
+        "n": 19108,
+        "mean_excess": -0.22829836018342856,
+        "median_excess": -0.30919246388174343,
+        "beat_rate": 0.2605714883818296,
+        "share_ret_le_-90%": 0.09681808666527109,
+        "share_ret_le_-50%": 0.29076826460121413
       }
     },
     "liquid": {
       "survivors_only": {
-        "n": 118942,
-        "mean_excess": 0.003283819772951061,
-        "median_excess": -0.09238453943337321,
-        "beat_rate": 0.40152343158850534,
-        "share_ret_le_-90%": 0.0013788232920246843,
-        "share_ret_le_-50%": 0.05672512653225942
+        "n": 114447,
+        "mean_excess": 0.0028934835499596547,
+        "median_excess": -0.09917434747578024,
+        "beat_rate": 0.3967163840030757,
+        "share_ret_le_-90%": 0.001432977710206471,
+        "share_ret_le_-50%": 0.05890062649086477
       },
       "with_departed_last": {
-        "n": 126907,
-        "mean_excess": -0.006981228408059212,
-        "median_excess": -0.09839682105406278,
-        "beat_rate": 0.3955494968756649,
-        "share_ret_le_-90%": 0.0026633676629342746,
-        "share_ret_le_-50%": 0.06526826731385976
+        "n": 122046,
+        "mean_excess": -0.007220066203284959,
+        "median_excess": -0.10517385126810647,
+        "beat_rate": 0.3910001147108467,
+        "share_ret_le_-90%": 0.002687511266243875,
+        "share_ret_le_-50%": 0.0675892696196516
       },
-      "effect_mean_last": 0.010265048181010273,
-      "effect_median_last": 0.0060122816206895635,
+      "effect_mean_last": 0.010113549753244614,
+      "effect_median_last": 0.005999503792326222,
       "departed_only_last": {
-        "n": 7965,
-        "mean_excess": -0.16027003703903514,
-        "median_excess": -0.21587932197198745,
-        "beat_rate": 0.30634023854362835,
-        "share_ret_le_-90%": 0.021845574387947268,
-        "share_ret_le_-50%": 0.1928436911487759
+        "n": 7599,
+        "mean_excess": -0.15953819077356873,
+        "median_excess": -0.21516291188793546,
+        "beat_rate": 0.30490854059744704,
+        "share_ret_le_-90%": 0.021581787077247006,
+        "share_ret_le_-50%": 0.19844716410053956
       },
       "with_departed_distress": {
-        "n": 126907,
-        "mean_excess": -0.007125925244693364,
-        "median_excess": -0.09840818347297353,
-        "beat_rate": 0.3955494968756649,
-        "share_ret_le_-90%": 0.0029785591023347804,
-        "share_ret_le_-50%": 0.06540222367560497
+        "n": 122046,
+        "mean_excess": -0.007370526205634323,
+        "median_excess": -0.10518599077371205,
+        "beat_rate": 0.3910001147108467,
+        "share_ret_le_-90%": 0.0030152565426150796,
+        "share_ret_le_-50%": 0.06772856136210936
       },
-      "effect_mean_distress": 0.010409745017644426,
-      "effect_median_distress": 0.006023644039600318,
+      "effect_mean_distress": 0.010264009755593977,
+      "effect_median_distress": 0.006011643297931801,
       "departed_only_distress": {
-        "n": 7965,
-        "mean_excess": -0.16257550363623924,
-        "median_excess": -0.2163478228797575,
-        "beat_rate": 0.30634023854362835,
-        "share_ret_le_-90%": 0.026867545511613307,
-        "share_ret_le_-50%": 0.19497802887633395
+        "n": 7599,
+        "mean_excess": -0.16195469839914192,
+        "median_excess": -0.21562849449923926,
+        "beat_rate": 0.30490854059744704,
+        "share_ret_le_-90%": 0.026845637583892617,
+        "share_ret_le_-50%": 0.20068430056586392
       },
       "with_departed_collapse": {
-        "n": 126907,
-        "mean_excess": -0.007541271042905894,
-        "median_excess": -0.09846983230648065,
-        "beat_rate": 0.3955494968756649,
-        "share_ret_le_-90%": 0.003569543051210729,
-        "share_ret_le_-50%": 0.06581197254682562
+        "n": 122046,
+        "mean_excess": -0.007776347116678197,
+        "median_excess": -0.10522087552242992,
+        "beat_rate": 0.3910001147108467,
+        "share_ret_le_-90%": 0.003580617144355407,
+        "share_ret_le_-50%": 0.06813824295757337
       },
-      "effect_mean_collapse": 0.010825090815856954,
-      "effect_median_collapse": 0.00608529287310744,
+      "effect_mean_collapse": 0.01066983066663785,
+      "effect_median_collapse": 0.00604652804664968,
       "departed_only_collapse": {
-        "n": 7965,
-        "mean_excess": -0.16919324239502861,
-        "median_excess": -0.21887405139512028,
-        "beat_rate": 0.30634023854362835,
-        "share_ret_le_-90%": 0.03628374136848713,
-        "share_ret_le_-50%": 0.2015065913370998
+        "n": 7599,
+        "mean_excess": -0.16847250586186865,
+        "median_excess": -0.2180743436701118,
+        "beat_rate": 0.30490854059744704,
+        "share_ret_le_-90%": 0.0359257797078563,
+        "share_ret_le_-50%": 0.20726411369917094
       }
     },
     "trend_ranking": {
       "survivors_only": {
         "dates": 112,
-        "mean_ic": 0.07856001511598461,
-        "top_minus_bottom_decile": 0.15164156589253475
+        "mean_ic": 0.07325868123501603,
+        "top_minus_bottom_decile": 0.14982563433951654
       },
       "with_departed_distress": {
         "dates": 112,
-        "mean_ic": 0.10563492721513892,
-        "top_minus_bottom_decile": 0.20649392105390474
+        "mean_ic": 0.10053865659700624,
+        "top_minus_bottom_decile": 0.20828428446656652
       }
     }
   },
   "monthly_vs_labels": {
-    "matched_rows": 146972,
-    "corr": 0.9775845777096535,
-    "share_abs_diff_gt_10pp": 0.1928122363443377,
-    "share_abs_diff_gt_40pp": 0.02810059058868356,
-    "mean_ret_monthly_method": 0.2111417951037159,
-    "mean_ret_labels": 0.23694588828456933
+    "matched_rows": 146867,
+    "corr": 0.9775807369815906,
+    "share_abs_diff_gt_10pp": 0.19281390645958588,
+    "share_abs_diff_gt_40pp": 0.028113871734290207,
+    "mean_ret_monthly_method": 0.2112336640011358,
+    "mean_ret_labels": 0.23704842955870395
+  },
+  "sample": {
+    "names": {
+      "HDFC": {
+        "exit_kind": "unknown",
+        "first": "2016-01-01",
+        "last": "2023-07-12",
+        "days": 1864,
+        "last_series": "EQ",
+        "corp_actions": 0,
+        "first_close": 1258.45,
+        "last_close": 2724.3,
+        "ret_first_to_last": 1.164805912034646,
+        "drawdown_from_peak": -0.09215722212039912,
+        "worst_12m": -0.23589269195189644
+      },
+      "RELCAPITAL": {
+        "exit_kind": "unknown",
+        "first": "2016-01-01",
+        "last": "2024-02-12",
+        "days": 1824,
+        "last_series": "BE",
+        "corp_actions": 0,
+        "first_close": 463.25,
+        "last_close": 11.85,
+        "ret_first_to_last": -0.9744198596869941,
+        "drawdown_from_peak": -0.9861694677871149,
+        "worst_12m": -0.9784287616511318
+      },
+      "MINDTREE": {
+        "exit_kind": "unknown",
+        "first": "2016-01-01",
+        "last": "2022-11-22",
+        "days": 1706,
+        "last_series": "EQ",
+        "corp_actions": 1,
+        "first_close": 720.775,
+        "last_close": 3433.85,
+        "ret_first_to_last": 3.7641080781103673,
+        "drawdown_from_peak": -0.31170887661732427,
+        "worst_12m": -0.41310774262532235
+      },
+      "IDFC": {
+        "exit_kind": "unknown",
+        "first": "2016-01-01",
+        "last": "2024-10-09",
+        "days": 2173,
+        "last_series": "EQ",
+        "corp_actions": 0,
+        "first_close": 48.4,
+        "last_close": 107.97,
+        "ret_first_to_last": 1.230785123966942,
+        "drawdown_from_peak": -0.17390971690895174,
+        "worst_12m": -0.6951351351351351
+      },
+      "ABGSHIP": {
+        "exit_kind": "liquidation",
+        "first": "2016-01-01",
+        "last": "2019-05-15",
+        "days": 832,
+        "last_series": "BZ",
+        "corp_actions": 0,
+        "first_close": 72.0,
+        "last_close": 1.2,
+        "ret_first_to_last": -0.9833333333333333,
+        "drawdown_from_peak": -0.9836289222373806,
+        "worst_12m": -0.8841201716738197
+      },
+      "HEXAWARE": {
+        "exit_kind": "voluntary_delisting",
+        "first": "2016-01-01",
+        "last": "2020-10-30",
+        "days": 1196,
+        "last_series": "EQ",
+        "corp_actions": 0,
+        "first_close": 242.5,
+        "last_close": 470.8,
+        "ret_first_to_last": 0.9414432989690722,
+        "drawdown_from_peak": -0.08100722233066548,
+        "worst_12m": -0.390343818580834
+      },
+      "JPINFRATEC": {
+        "exit_kind": "unknown",
+        "first": "2016-01-01",
+        "last": "2023-03-06",
+        "days": 1702,
+        "last_series": "BE",
+        "corp_actions": 0,
+        "first_close": 13.0,
+        "last_close": 1.25,
+        "ret_first_to_last": -0.9038461538461539,
+        "drawdown_from_peak": -0.9493927125506073,
+        "worst_12m": -0.8636363636363636
+      },
+      "AMTEKAUTO": {
+        "exit_kind": "suspended_bz",
+        "first": "2016-01-01",
+        "last": "2019-04-01",
+        "days": 694,
+        "last_series": "BZ",
+        "corp_actions": 0,
+        "first_close": 50.65,
+        "last_close": 2.75,
+        "ret_first_to_last": -0.945705824284304,
+        "drawdown_from_peak": -0.9467054263565892,
+        "worst_12m": -0.8801742919389979
+      },
+      "DHFL": {
+        "exit_kind": "unknown",
+        "first": "2016-01-01",
+        "last": "2021-06-11",
+        "days": 1347,
+        "last_series": "EQ",
+        "corp_actions": 0,
+        "first_close": 236.05,
+        "last_close": 16.7,
+        "ret_first_to_last": -0.929252277059945,
+        "drawdown_from_peak": -0.9754140596245859,
+        "worst_12m": -0.9492261076078945
+      },
+      "ALOKTEXT": {
+        "exit_kind": "unknown",
+        "first": "2016-01-01",
+        "last": "2020-01-30",
+        "days": 1008,
+        "last_series": "BE",
+        "corp_actions": 0,
+        "first_close": 6.3,
+        "last_close": 3.3,
+        "ret_first_to_last": -0.47619047619047616,
+        "drawdown_from_peak": -0.5037593984962406,
+        "worst_12m": -0.6233766233766234
+      },
+      "GITANJALI": {
+        "exit_kind": "suspended_bz",
+        "first": "2016-01-01",
+        "last": "2019-04-01",
+        "days": 694,
+        "last_series": "BZ",
+        "corp_actions": 0,
+        "first_close": 42.1,
+        "last_close": 1.05,
+        "ret_first_to_last": -0.9750593824228029,
+        "drawdown_from_peak": -0.9889006342494715,
+        "worst_12m": -0.9855172413793103
+      },
+      "SINTEX": {
+        "exit_kind": "unknown",
+        "first": "2016-01-01",
+        "last": "2023-02-10",
+        "days": 1583,
+        "last_series": "BE",
+        "corp_actions": 0,
+        "first_close": 101.75,
+        "last_close": 2.3,
+        "ret_first_to_last": -0.9773955773955774,
+        "drawdown_from_peak": -0.980688497061293,
+        "worst_12m": -0.9473684210526316
+      },
+      "ORBITCORP": {
+        "exit_kind": "compulsory_delisting",
+        "first": "2016-01-01",
+        "last": "2018-02-05",
+        "days": 406,
+        "last_series": "BZ",
+        "corp_actions": 0,
+        "first_close": 7.8,
+        "last_close": 1.8,
+        "ret_first_to_last": -0.7692307692307692,
+        "drawdown_from_peak": -0.8032786885245902,
+        "worst_12m": -0.8141025641025641
+      },
+      "LAKSHVILAS": {
+        "exit_kind": "unknown",
+        "first": "2016-01-01",
+        "last": "2020-11-25",
+        "days": 1214,
+        "last_series": "EQ",
+        "corp_actions": 0,
+        "first_close": 99.95,
+        "last_close": 7.65,
+        "ret_first_to_last": -0.9234617308654327,
+        "drawdown_from_peak": -0.9631414117080221,
+        "worst_12m": -0.8596594245449207
+      },
+      "UBHOLDINGS": {
+        "exit_kind": "liquidation",
+        "first": "2016-01-01",
+        "last": "2018-02-12",
+        "days": 438,
+        "last_series": "BZ",
+        "corp_actions": 0,
+        "first_close": 29.1,
+        "last_close": 10.2,
+        "ret_first_to_last": -0.6494845360824743,
+        "drawdown_from_peak": -0.825491873396065,
+        "worst_12m": -0.7859495060373216
+      },
+      "VIDEOIND": {
+        "exit_kind": "suspended_bz",
+        "first": "2016-01-01",
+        "last": "2021-06-15",
+        "days": 1349,
+        "last_series": "BZ",
+        "corp_actions": 0,
+        "first_close": 122.95,
+        "last_close": 7.35,
+        "ret_first_to_last": -0.9402196014640097,
+        "drawdown_from_peak": -0.9402196014640097,
+        "worst_12m": -0.9010934393638171
+      },
+      "POLARIS": {
+        "exit_kind": "voluntary_delisting",
+        "first": "2016-01-01",
+        "last": "2018-07-24",
+        "days": 636,
+        "last_series": "EQ",
+        "corp_actions": 0,
+        "first_close": 212.1,
+        "last_close": 474.6,
+        "ret_first_to_last": 1.2376237623762378,
+        "drawdown_from_peak": -0.0007369196757552876,
+        "worst_12m": -0.2649253731343284
+      },
+      "JETAIRWAYS": {
+        "exit_kind": "suspended_bz",
+        "first": "2016-01-01",
+        "last": "2024-11-07",
+        "days": 2194,
+        "last_series": "BZ",
+        "corp_actions": 0,
+        "first_close": 760.75,
+        "last_close": 34.16,
+        "ret_first_to_last": -0.9550969438054552,
+        "drawdown_from_peak": -0.9607626923960487,
+        "worst_12m": -0.9446290143964563
+      },
+      "SREINFRA": {
+        "exit_kind": "unknown",
+        "first": "2016-01-01",
+        "last": "2023-08-11",
+        "days": 1783,
+        "last_series": "BE",
+        "corp_actions": 0,
+        "first_close": 66.65,
+        "last_close": 2.1,
+        "ret_first_to_last": -0.9684921230307577,
+        "drawdown_from_peak": -0.9846827133479212,
+        "worst_12m": -0.8756476683937824
+      },
+      "GTOFFSHORE": {
+        "exit_kind": "liquidation",
+        "first": "2016-01-01",
+        "last": "2017-07-18",
+        "days": 382,
+        "last_series": "BE",
+        "corp_actions": 0,
+        "first_close": 52.15,
+        "last_close": 10.05,
+        "ret_first_to_last": -0.8072866730584851,
+        "drawdown_from_peak": -0.8112676056338028,
+        "worst_12m": -0.771850170261067
+      }
+    },
+    "control_RELIANCE": {
+      "days": 2660,
+      "median_abs_diff_adj": 0.04908063675333452,
+      "p99_abs_diff_adj": 0.04922257997994064,
+      "median_abs_diff_unadjusted": 1.0981800766283527,
+      "corp_actions": [
+        "2017-09-07",
+        "2024-10-28"
+      ]
+    },
+    "labels": {
+      "baseline": {
+        "n": 332129,
+        "mean_excess": 0.08775510188460921,
+        "median_excess": -0.07938228976137329,
+        "beat_rate": 0.4198940773012896,
+        "share_ret_le_-90%": 0.0005961539040553519,
+        "share_ret_le_-50%": 0.05737830782617597
+      },
+      "terminal_last": {
+        "n": 334124,
+        "mean_excess": 0.08618555142342235,
+        "median_excess": -0.08019274439181023,
+        "beat_rate": 0.41915276963043663,
+        "share_ret_le_-90%": 0.0008260406316217931,
+        "share_ret_le_-50%": 0.05878356538291173
+      },
+      "terminal_last_sample_rows": {
+        "n": 1995,
+        "mean_excess": -0.17511431079389528,
+        "median_excess": -0.2936425485409542,
+        "beat_rate": 0.2957393483709273,
+        "share_ret_le_-90%": 0.039097744360902256,
+        "share_ret_le_-50%": 0.29273182957393484
+      },
+      "terminal_zero_distress": {
+        "n": 334124,
+        "mean_excess": 0.0857231123633227,
+        "median_excess": -0.08035389836318824,
+        "beat_rate": 0.4190180890926722,
+        "share_ret_le_-90%": 0.0013797272868755312,
+        "share_ret_le_-50%": 0.059160670888652116
+      },
+      "terminal_zero_distress_sample_rows": {
+        "n": 1995,
+        "mean_excess": -0.2525639290980232,
+        "median_excess": -0.36707426532671683,
+        "beat_rate": 0.2731829573934837,
+        "share_ret_le_-90%": 0.1318295739348371,
+        "share_ret_le_-50%": 0.3558897243107769
+      },
+      "terminal_zero_distress_or_collapse": {
+        "n": 334124,
+        "mean_excess": 0.08554180200898241,
+        "median_excess": -0.08037319082216238,
+        "beat_rate": 0.41901509619183297,
+        "share_ret_le_-90%": 0.001628138056529911,
+        "share_ret_le_-50%": 0.05933126623648705
+      },
+      "terminal_zero_distress_or_collapse_sample_rows": {
+        "n": 1995,
+        "mean_excess": -0.2829299144782696,
+        "median_excess": -0.3696383578602872,
+        "beat_rate": 0.27268170426065164,
+        "share_ret_le_-90%": 0.17343358395989975,
+        "share_ret_le_-50%": 0.3844611528822055
+      }
+    }
   }
 }
