@@ -41,7 +41,7 @@ export default function NotFound() {
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="self-start flex items-center gap-2 touch:min-h-11 px-5 py-3 rounded-full border border-gray-600 text-[11px] font-medium uppercase tracking-wider text-gray-300 hover:bg-white hover:text-black hover:border-white transition-colors cursor-pointer"
+            className="self-start flex items-center gap-2 touch:min-h-11 px-5 py-3 rounded-full border border-gray-500 text-[12px] font-medium uppercase tracking-wider text-gray-100 hover:bg-white hover:text-black hover:border-white transition-colors cursor-pointer"
           >
             <ArrowLeft size={14} strokeWidth={1.5} /> Go back
           </button>

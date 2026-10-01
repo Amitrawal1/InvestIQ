@@ -127,7 +127,7 @@ function ProfileForm() {
             type="button"
             onClick={onCancel}
             disabled={!dirty || saving}
-            className="touch:min-h-11 px-5 py-3 rounded-full border border-gray-600 text-[11px] font-medium uppercase tracking-wider text-gray-300 hover:bg-white hover:text-black hover:border-white disabled:opacity-40 disabled:pointer-events-none transition-colors cursor-pointer"
+            className="touch:min-h-11 px-5 py-3 rounded-full border border-gray-500 text-[12px] font-medium uppercase tracking-wider text-gray-100 hover:bg-white hover:text-black hover:border-white disabled:opacity-40 disabled:pointer-events-none transition-colors cursor-pointer"
           >
             Cancel
           </button>
@@ -238,7 +238,7 @@ function Account() {
         <button
           type="button"
           onClick={logout}
-          className="self-start sm:self-auto flex items-center gap-2 touch:min-h-11 px-5 py-2.5 rounded-full border border-gray-600 text-[11px] font-medium uppercase tracking-wider text-gray-300 hover:bg-white hover:text-black hover:border-white transition-colors cursor-pointer"
+          className="self-start sm:self-auto flex items-center gap-2 touch:min-h-11 px-5 py-2.5 rounded-full border border-gray-500 text-[12px] font-medium uppercase tracking-wider text-gray-100 hover:bg-white hover:text-black hover:border-white transition-colors cursor-pointer"
         >
           <LogOut size={14} strokeWidth={1.5} /> Sign out
         </button>

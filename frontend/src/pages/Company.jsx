@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { motion } from "motion/react";
-import { ArrowLeft, Check, TriangleAlert, ExternalLink } from "lucide-react";
+import { Check, TriangleAlert, ExternalLink } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import NewsItem from "../components/NewsItem";
-import { SectionLabel, MonoLabel, TouchPill, HScroll, Panel, fadeUp, stagger } from "../components/ui";
+import { SectionLabel, MonoLabel, TouchPill, HScroll, Panel, BackLink, fadeUp, stagger } from "../components/ui";
 import {
   GrowthBadge, ScoreBar, Disclaimer, StatusLine, SignedPct,
   fmtPct, fmtCr, fmtPrice, fmtRatio, fmtScore, fmtDate,
@@ -139,12 +139,9 @@ export default function Company() {
       <Navbar />
 
       <section className="px-6 md:px-16 pt-10 pb-12">
-        <Link
-          to={profile?.sector_slug ? `/sectors/${profile.sector_slug}` : "/predictor"}
-          className="inline-flex items-center gap-2 touch:min-h-11 text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400 hover:text-white transition-colors"
-        >
-          <ArrowLeft size={14} strokeWidth={1} /> {profile?.sector || "Rankings"}
-        </Link>
+        <BackLink to={profile?.sector_slug ? `/sectors/${profile.sector_slug}` : "/predictor"}>
+          {profile?.sector || "Rankings"}
+        </BackLink>
 
         {status === "loading" && <StatusLine>Loading {symbol}…</StatusLine>}
         {status === "notfound" && (

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import NewsItem from "./NewsItem";
-import { MonoLabel, SectionLabel } from "./ui";
+import { MonoLabel, SectionLabel, navButtonClass } from "./ui";
 import { getNews } from "../services/api";
 
 const LIMIT = 6;
@@ -46,9 +46,9 @@ export default function SectorNews({ sector }) {
         </div>
         <Link
           to="/news"
-          className="inline-flex items-center gap-2 touch:min-h-11 text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400 hover:text-white transition-colors"
+          className={navButtonClass}
         >
-          All news <ArrowRight size={14} strokeWidth={1} />
+          All news <ArrowRight size={15} strokeWidth={1.75} className="transition-transform duration-300 group-hover:translate-x-0.5" />
         </Link>
       </div>
 

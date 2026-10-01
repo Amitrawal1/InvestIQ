@@ -13,8 +13,9 @@ const TIMEOUT_MS = 15000;
 const name = "zerodha";
 const label = "Zerodha";
 
-const apiKey = () => env("ZERODHA_API_KEY");
-const apiSecret = () => env("ZERODHA_API_SECRET");
+// ZERODHA_* names, with the older KITE_* names (ml/kite_*.py era) as a fallback
+const apiKey = () => env("ZERODHA_API_KEY") || env("KITE_API_KEY");
+const apiSecret = () => env("ZERODHA_API_SECRET") || env("KITE_API_SECRET");
 
 const isConfigured = () => Boolean(apiKey() && apiSecret());
 

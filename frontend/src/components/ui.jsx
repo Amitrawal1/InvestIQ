@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
-import { ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ArrowLeft, ChevronRight } from "lucide-react";
 
 // Shared building blocks that mirror the Intro page's visual language:
 // deep page canvas (--page), surface panels (--surface), gray-800 hairlines, mono micro-labels.
@@ -103,6 +104,25 @@ export function HScroll({ children, className = "", innerClassName = "", fade = 
       </div>
     </div>
   );
+}
+
+// Outlined pill for navigation actions (back, "all news", "explore first"): readable 12px text,
+// near-white label and a visible border, so it reads as a button rather than a caption.
+export const navButtonClass =
+  "group inline-flex items-center gap-2 touch:min-h-11 px-4 py-2 rounded-full border border-gray-600 text-[12px] font-medium uppercase tracking-wider text-gray-100 hover:bg-white hover:text-black hover:border-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-300 transition-colors cursor-pointer";
+
+// Back link: arrow nudges left on hover
+export function BackLink({ to, onClick, children, className = "" }) {
+  const Icon = ArrowLeft;
+  const content = (
+    <>
+      <Icon size={15} strokeWidth={1.75} aria-hidden="true" className="transition-transform duration-300 group-hover:-translate-x-0.5" />
+      {children}
+    </>
+  );
+  return to
+    ? <Link to={to} className={`${navButtonClass} ${className}`}>{content}</Link>
+    : <button type="button" onClick={onClick} className={`${navButtonClass} ${className}`}>{content}</button>;
 }
 
 // Same look as Pill, for non-interactive tags

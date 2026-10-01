@@ -7,7 +7,7 @@ import Category from "../components/Category"
 import MarketTicker from "../components/MarketTicker"
 import Footer from "../components/Footer"
 import LiveClock from "../components/LiveClock"
-import { fadeUp, stagger, SectionLabel, Pill, PrimaryButton } from "../components/ui"
+import { fadeUp, stagger, SectionLabel, PrimaryButton } from "../components/ui"
 import usePageTitle from "../hooks/usePageTitle"
 
 const highlights = [
@@ -67,9 +67,15 @@ export default function Home() {
                                 <PrimaryButton onClick={() => navigate("/portfolio")}>
                                     Open Portfolio
                                 </PrimaryButton>
-                                <Pill icon={Cpu} onClick={() => navigate("/predictor")} className="py-3.5">
-                                    AI Predictor
-                                </Pill>
+                                {/* Secondary CTA: same height as the primary, readable 14px label (Intro's Pill stays as is) */}
+                                <button
+                                    type="button"
+                                    onClick={() => navigate("/predictor")}
+                                    className="group inline-flex items-center gap-2 px-5 py-3.5 rounded-md border border-gray-500 text-[14px] font-medium text-gray-100 hover:bg-white hover:text-black hover:border-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-300 transition-colors cursor-pointer"
+                                >
+                                    <Cpu size={16} strokeWidth={1.75} className="transition-transform duration-300 group-hover:-rotate-12" />
+                                    Company Rankings
+                                </button>
                             </div>
                         </div>
                     </motion.div>

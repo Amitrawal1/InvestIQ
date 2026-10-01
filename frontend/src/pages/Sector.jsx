@@ -1,25 +1,17 @@
 import React, { useEffect, useMemo } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "motion/react";
-import { ArrowLeft } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import SectorRankings from "../components/SectorRankings";
 import SectorNews from "../components/SectorNews";
 import SourcePill from "../components/SourcePill";
-import { PageHeading, MonoLabel, TouchPill, HScroll } from "../components/ui";
+import { PageHeading, MonoLabel, TouchPill, HScroll, BackLink } from "../components/ui";
 import { useSectors, useSectorCompanies } from "../hooks/useSectorData";
 import { getSectorMeta, pad, fmt } from "../data/sectorMeta";
 import usePageTitle from "../hooks/usePageTitle";
 
-const BackLink = () => (
-  <Link
-    to="/home#sectors"
-    className="inline-flex items-center gap-2 touch:min-h-11 text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400 hover:text-white transition-colors"
-  >
-    <ArrowLeft size={14} strokeWidth={1} /> All sectors
-  </Link>
-);
+const SectorsBack = () => <BackLink to="/home#sectors">All sectors</BackLink>;
 
 export default function Sector() {
   const { slug } = useParams();
@@ -63,7 +55,7 @@ export default function Sector() {
         <div className="absolute inset-0 bg-gradient-to-b from-page/60 via-page/80 to-page pointer-events-none" />
 
         <div className="relative z-10 px-6 md:px-16 pt-10 pb-14 md:pb-20">
-          <BackLink />
+          <SectorsBack />
 
           <div className="mt-8 md:mt-16" key={slug}>
             {sector ? (

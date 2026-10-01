@@ -56,7 +56,7 @@ export default function ProfileMenu() {
       {!user && (
         <NavLink
           to="/login"
-          className="hidden sm:inline-flex items-center touch:min-h-11 px-4 py-2 rounded-full border border-gray-600 text-[11px] font-medium uppercase tracking-wider text-gray-300 hover:bg-white hover:text-black hover:border-white transition-colors"
+          className="hidden sm:inline-flex items-center touch:min-h-11 px-4 py-2 rounded-full border border-gray-500 text-[12px] font-medium uppercase tracking-wider text-gray-100 hover:bg-white hover:text-black hover:border-white transition-colors"
         >
           Sign in
         </NavLink>

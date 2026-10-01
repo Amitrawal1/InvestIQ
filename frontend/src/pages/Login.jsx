@@ -5,7 +5,7 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Logo from '../components/Logo';
 import GoogleSignIn from '../components/GoogleSignIn';
-import { fadeUp, stagger, SectionLabel, PrimaryButton, Panel } from '../components/ui';
+import { fadeUp, stagger, SectionLabel, PrimaryButton, Panel, navButtonClass } from '../components/ui';
 import usePageTitle from '../hooks/usePageTitle';
 
 const Field = ({ label, type = 'text', value, onChange, placeholder, autoComplete }) => (
@@ -109,9 +109,9 @@ const Login = () => {
           <Logo className="text-xl" />
           <button
             onClick={() => navigate('/home')}
-            className="flex items-center gap-2 touch:min-h-11 touch:-my-2 text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400 hover:text-white transition-colors cursor-pointer"
+            className={navButtonClass}
           >
-            Explore first <ArrowUpRight size={14} strokeWidth={1} />
+            Explore first <ArrowUpRight size={15} strokeWidth={1.75} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </button>
         </div>
 
