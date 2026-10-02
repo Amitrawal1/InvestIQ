@@ -36,7 +36,7 @@ const METHOD = "Preliminary growth score (to be replaced by InvestIQ's machine-l
     + "The group percentiles are averaged into a 0-100 score, companies with too little data are shown "
     + "as unranked, and the score is a screening aid, not investment advice.";
 
-const INVESTIQ_V1_METHOD = "InvestIQ score (investiq-v1): 70% market model, 30% financial model, plus a small news weight. "
+const INVESTIQ_V1_METHOD = "InvestIQ score (investiq-v1): 70% market model and 30% financial model, adjusted by how each company's latest results surprised (20%), plus a small news weight. "
     + "The market model measures how strongly the price trend confirms the business - distance from "
     + "the 52-week high, position versus the 200-day and 50-day averages, 3- and 6-month returns "
     + "relative to the NIFTY Smallcap 250 and how few down days the stock has had. The financial model "

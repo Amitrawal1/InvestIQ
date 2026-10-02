@@ -50,6 +50,8 @@ from growth_model.prices import CACHE_DIR
 
 RAW_CACHE = CACHE_DIR / "financial_raw.pkl"
 FEATURES_CACHE = CACHE_DIR / "financial_features.pkl"
+# opt-in ROE fallback to owners' equity (financials.features roe_owners_fallback; not live)
+FEATURES_CACHE_ROE_OWNERS = CACHE_DIR / "financial_features_roe_owners.pkl"
 
 STALE_FINANCIALS_DAYS = 275      # rankings/build.py
 MIN_ADV_CR = 0.5                 # growth_model/market_model.py
@@ -85,8 +87,21 @@ FEATURE_NAMES = list(MODEL_FEATURES)
 # Loading (cached)
 # ---------------------------------------------------------
 
-def load_feature_table(refresh=False):
-    """-> (feature table from features.py, raw filings). One DB SELECT when not cached."""
+def load_feature_table(refresh=False, roe_owners_fallback=False):
+    """-> (feature table from features.py, raw filings). One DB SELECT when not cached.
+
+    roe_owners_fallback=True (opt-in) builds the table with features.py's ROE fallback to owners'
+    equity from the cached raw filings, in its own cache file; the default path is unchanged.
+    """
+    if roe_owners_fallback:
+        if refresh or not RAW_CACHE.exists():
+            load_feature_table(refresh=True)
+        raw = pd.read_pickle(RAW_CACHE)
+        if refresh or not FEATURES_CACHE_ROE_OWNERS.exists() or \
+                FEATURES_CACHE_ROE_OWNERS.stat().st_mtime < RAW_CACHE.stat().st_mtime:
+            from financials.features import build_feature_table
+            build_feature_table(None, raw=raw, roe_owners_fallback=True).to_pickle(FEATURES_CACHE_ROE_OWNERS)
+        return pd.read_pickle(FEATURES_CACHE_ROE_OWNERS), raw
     if not refresh and RAW_CACHE.exists() and FEATURES_CACHE.exists():
         return pd.read_pickle(FEATURES_CACHE), pd.read_pickle(RAW_CACHE)
 
@@ -180,12 +195,16 @@ def rank_features(panel, columns=FEATURE_NAMES):
     return ranked
 
 
-def build_panel(refresh=False, labels=None):
+def build_panel(refresh=False, labels=None, roe_owners_fallback=False, features=None):
     """Label rows in the universe with fresh, point-in-time financial features (raw + ranked).
+
+    `features` (optional) is a feature table to use instead of the cached one (tests);
+    `roe_owners_fallback` selects the opt-in ROE fallback table (default: the live table).
 
     Returns (panel, raw_panel_before_universe_stats dict).
     """
-    features, _ = load_feature_table(refresh=refresh)
+    if features is None:
+        features, _ = load_feature_table(refresh=refresh, roe_owners_fallback=roe_owners_fallback)
     if labels is None:
         labels = pd.read_pickle(LABELS_FILE)
     liquid = (labels["adv_60d_cr"] >= MIN_ADV_CR) & (labels["days_listed"] >= MIN_DAYS_LISTED)

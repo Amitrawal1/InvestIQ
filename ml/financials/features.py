@@ -103,7 +103,7 @@ def _load_raw(conn, symbols=None):
         "nse_seq_number", "company_id", "symbol", "statement_type", "format", "period_end",
         "months", "filing_date", "parse_status", "ytd_months", "cf_months",
         *[f"inc_{f}" for f in PL_FIELDS], *[f"ytd_{f}" for f in PL_FIELDS],
-        *[f"bs_{f}" for f in BS_FIELDS], *[f"cf_{f}" for f in CF_FIELDS],
+        *[f"bs_{f}" for f in BS_FIELDS], "bs_equity_owners", *[f"cf_{f}" for f in CF_FIELDS],
     ]
     sql = (f"SELECT {', '.join(columns)} FROM {TABLE} "
            "WHERE format = 'non_financial' AND parse_status <> 'failed' AND filing_date IS NOT NULL")
@@ -311,6 +311,8 @@ class _Company:
 
 
 def _record(row):
+    eq_owners = row.get("bs_equity_owners", NAN)       # only read by the opt-in ROE fallback
+    eq_owners = NAN if eq_owners is None or pd.isna(eq_owners) else float(eq_owners)
     has_bs = not (np.isnan(row["bs_total_assets"]) and np.isnan(row["bs_total_equity"]))
     has_cf = not np.isnan(row["cf_operating_cf"]) and row["cf_months"] in (6, 12)
     ytd_months = row["ytd_months"]
@@ -322,6 +324,7 @@ def _record(row):
         "bs": np.array([row[f"bs_{f}"] for f in BS_FIELDS], dtype=float) if has_bs else None,
         "cf": np.array([row[f"cf_{f}"] for f in CF_FIELDS], dtype=float) if has_cf else None,
         "cf_months": int(row["cf_months"]) if has_cf else None,
+        "eq_owners": eq_owners,
     }
 
 
@@ -334,7 +337,7 @@ def _qo_to_date(qo):
 # Features
 # ---------------------------------------------------------
 
-def _features(st, r, filing_date, period_end):
+def _features(st, r, filing_date, period_end, roe_owners_fallback=False):
     out = {}
     qr, qr4 = st.q(r), st.q(r - 4)
     qr1, qr5 = st.q(r - 1), st.q(r - 5)
@@ -399,6 +402,9 @@ def _features(st, r, filing_date, period_end):
             if not np.isnan(out["receivables_minus_revenue_growth"]):
                 out["flag_receivables_outpacing_revenue"] = bool(out["receivables_minus_revenue_growth"] > RECEIVABLES_GAP)
 
+    if roe_owners_fallback and (b is None or np.isnan(st.bs(b)[B["total_equity"]])):
+        out["roe"] = _roe_owners(st, r, b, t)
+
     # Cash-flow quality (latest visible cash-flow statement at or before this period)
     for key in ("ocf_ttm", "capex_ttm", "fcf_ttm", "cash_conversion", "accruals_ratio", "days_since_cf"):
         out[key] = NAN
@@ -427,7 +433,32 @@ def _features(st, r, filing_date, period_end):
     return out
 
 
-def _company_features(rows):
+def _roe_owners(st, r, b, t):
+    """Opt-in ROE fallback for a balance sheet without total equity (default code never calls it).
+
+    Legacy consolidated annual rows (period end < Sep 2022) carry owners' equity but no total
+    equity (NCI unknown). ROE = TTM profit attributable to owners (net profit when not filed) /
+    owners' equity of the latest visible statement within MAX_STATEMENT_AGE_Q quarters that has it
+    (never older than the latest balance sheet `b`), averaged with the owners' equity 4 (else 2)
+    quarters earlier when filed. Only rows whose total-equity ROE is NaN are touched.
+    """
+
+    has = [qo for qo, rec in st.visible.items()
+           if qo <= r and not np.isnan(rec["eq_owners"]) and qo >= r - MAX_STATEMENT_AGE_Q]
+    if not has:
+        return NAN
+    bo = max(has)
+    if b is not None and bo < b:
+        return NAN
+    eq = st.visible[bo]["eq_owners"]
+    prior = next((st.visible[bo - lag]["eq_owners"] for lag in (4, 2)
+                  if bo - lag in st.visible and not np.isnan(st.visible[bo - lag]["eq_owners"])), NAN)
+    eq_avg = eq if np.isnan(prior) else (eq + prior) / 2
+    num = t[P["net_profit_owners"]]
+    return _div(t[P["net_profit"]] if np.isnan(num) else num, eq_avg)
+
+
+def _company_features(rows, roe_owners_fallback=False):
     """Features for every filing of one company on one basis (rows sorted by filing_date)."""
 
     st = _Company(_fy_end_month(rows))
@@ -448,24 +479,29 @@ def _company_features(rows):
             qo = _quarter_ordinal(row["period_end"])
             if qo is None:
                 continue
-            feats = _features(st, qo, row["filing_date"], row["period_end"])
+            feats = _features(st, qo, row["filing_date"], row["period_end"], roe_owners_fallback)
             feats["nse_seq_number"] = row["nse_seq_number"]
             results.append(feats)
         i = j
     return results
 
 
-def compute_features(raw):
-    """Features at every raw filing (per company and basis); keyed by nse_seq_number."""
+def compute_features(raw, roe_owners_fallback=False):
+    """Features at every raw filing (per company and basis); keyed by nse_seq_number.
+
+    roe_owners_fallback (opt-in, default False = unchanged output): when a balance sheet has no
+    total equity, ROE uses owners' equity (`bs_equity_owners`) and owners' TTM profit instead of
+    staying NaN. Tested in financial_model/RETRAIN_2026-10.md.
+    """
 
     results = []
     raw = raw.sort_values(["company_key", "statement_type", "filing_date", "nse_seq_number"])
     for _, rows in raw.groupby(["company_key", "statement_type"], sort=False):
-        results.extend(_company_features(rows))
+        results.extend(_company_features(rows, roe_owners_fallback))
     return pd.DataFrame(results, columns=["nse_seq_number", *FEATURES])
 
 
-def build_feature_table(conn, symbols=None, raw=None):
+def build_feature_table(conn, symbols=None, raw=None, roe_owners_fallback=False):
     """Point-in-time feature table keyed by (company_id, symbol, filing_date, period_end).
 
     `raw` (the output of `_load_raw`) can be passed instead of a connection, e.g. for tests.
@@ -473,7 +509,7 @@ def build_feature_table(conn, symbols=None, raw=None):
 
     if raw is None:
         raw = _load_raw(conn, symbols)
-    feats = compute_features(raw)
+    feats = compute_features(raw, roe_owners_fallback)
     picked = _pick_one(raw)[["nse_seq_number", *KEY_COLUMNS, "statement_type"]]
     table = picked.merge(feats, on="nse_seq_number", how="inner")
     for col in FLAG_FEATURES:

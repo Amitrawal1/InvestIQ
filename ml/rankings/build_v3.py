@@ -95,6 +95,11 @@ from .build import _num, _ok, _true, crore, pct, pct_rank
 from .combiner_eval import FIN_PENALTY, FIN_SUBFEATURES, fin_asof, fin_scores
 
 MODEL_VERSION = "investiq-v1"
+# Earnings surprise (ml/earnings_signal, REPORT): 20% of the non-financial core, results <= 90 days old.
+# Walk-forward 2020-26: 3m IC 0.049 -> 0.051, 6m 0.065 -> 0.067, 12m 0.064 -> 0.066 (passed the
+# pre-declared rule; small gain, mostly from the growth surprise, which is new information vs trend).
+EARNINGS_WEIGHT = 0.20
+EARNINGS_FRESH_DAYS = 90
 MARKET_WEIGHT = 0.7          # user choice: 70% trend + 30% financial (6m IC .065, 12m .097; see docstring)
 FIN_MARKET_WEIGHT = 1.0      # financial sector: recipe not adopted -> price trend led
 ADOPT_FIN_RECIPE = False     # combiner_eval.adopt_fin_recipe result
@@ -108,7 +113,8 @@ COMPONENTS = ["growth", "profitability", "financial_health", "cash_flow", "momen
 FIN_V1_WEIGHTS = {c: v2.WEIGHTS[c] for c in v2.FINANCIAL_COMPONENTS}
 
 METHOD_TEXT = (
-    "InvestIQ score (investiq-v1): 70% market model, 30% financial model, plus a small news weight. The "
+    "InvestIQ score (investiq-v1): 70% market model and 30% financial model, adjusted by how each company's "
+    "latest results surprised (20%), plus a small news weight. The "
     "market model measures how strongly the price trend confirms the business - distance from the 52-week "
     "high, position versus the 200-day and 50-day averages, 3- and 6-month returns relative to the NIFTY "
     "Smallcap 250 and how few down days the stock has had. The financial model scores revenue and profit "
@@ -167,7 +173,51 @@ def fin_v1_score(df):
     return pct_rank(blend) * 100
 
 
-def score_v3(df, fs, fin_scope):
+def earnings_signals(snap, company_ids, raw, features, prices, idx):
+    """Point-in-time S1 (result-day excess return) and S2 (growth surprise) of the latest result known
+    before `snap` (earnings_signal/features.py), from the inputs build already loaded. -> DataFrame
+    company_id, s1, s1_age, s2, s2_age, s1_period_end, s2_period_end, rev_sue, np_sue."""
+    from earnings_signal.features import attach, build_events
+    from growth_model.prices import BENCHMARK as BENCH_KEY
+
+    stocks = prices[["company_id", "price_date", "close"]].copy()
+    index = idx.assign(index_key=BENCH_KEY)[["index_key", "price_date", "close"]]
+    events = build_events(raw, features, stocks, index)
+    keys = pd.DataFrame({"company_id": pd.Series(company_ids).astype(int).values, "signal_date": pd.Timestamp(snap)})
+    return attach(keys, events)
+
+
+def blend_earnings(df, core, earnings, mask):
+    """Non-financial core -> (1 - w) x pct(core) + w x S12 (as tested), mapped back onto the core's own
+    distribution so the 0-100 scale and label shares stay as before; only the order changes.
+    S12 = mean of the fresh (<= EARNINGS_FRESH_DAYS) S1 / S2 percentiles, neutral 0.5 otherwise."""
+    df["earnings_s12"] = np.nan
+    if earnings is None or not EARNINGS_WEIGHT:
+        return core
+    e = df[["company_id"]].merge(earnings, on="company_id", how="left")
+    e.index = df.index
+    ok = mask & core.notna()
+    if ok.sum() < 50:
+        return core
+    pcts = []
+    for sig in ("s1", "s2"):
+        fresh = ok & e[sig].notna() & (e[f"{sig}_age"] <= EARNINGS_FRESH_DAYS)
+        pcts.append(e[sig].where(fresh).rank(pct=True))
+    s12 = pd.concat(pcts, axis=1).mean(axis=1).where(ok)
+    for col in ("s1", "s2", "s1_age", "s2_age", "rev_sue", "np_sue", "s1_period_end", "s2_period_end"):
+        df[f"earnings_{col}"] = e[col]
+    df["earnings_s12"] = s12
+    combo = (1 - EARNINGS_WEIGHT) * core.where(ok).rank(pct=True) + EARNINGS_WEIGHT * s12.fillna(0.5)
+    r = combo.where(ok).rank(pct=True, method="first")
+    lo, hi = r[ok].min(), r[ok].max()
+    mapped = pd.Series(np.quantile(np.sort(core[ok].values), (r[ok].values - lo) / max(hi - lo, 1e-9)),
+                       index=r[ok].index)
+    out = core.copy()
+    out[ok] = mapped
+    return out
+
+
+def score_v3(df, fs, fin_scope, earnings=None):
     """df: build.score output (all companies). fs: scored fin_sector rows by company_id;
     fin_scope: ids of every in-scope lender / insurer (fresh or not)."""
     df = df.copy()
@@ -209,7 +259,9 @@ def score_v3(df, fs, fin_scope):
         if FIN_MARKET_WEIGHT < 1:
             raise SystemExit("FIN_MARKET_WEIGHT < 1 needs a tested financial-sector blend")
     fin_part = df["financial_score"] if MARKET_WEIGHT < 1 else 0.0
-    nonfin_base = (1 - NEWS_WEIGHT) * (MARKET_WEIGHT * mom + (1 - MARKET_WEIGHT) * fin_part) + NEWS_WEIGHT * news
+    core = MARKET_WEIGHT * mom + (1 - MARKET_WEIGHT) * fin_part
+    core = blend_earnings(df, core, earnings, ~is_fin)
+    nonfin_base = (1 - NEWS_WEIGHT) * core + NEWS_WEIGHT * news
     base = np.where(is_fin, fin_base, nonfin_base)
 
     has_growth = df["score_growth"].notna()
@@ -386,6 +438,17 @@ def explain(row, fsrow):
     tv = _num(row.get("avg_traded_value_3m_cr"))
     if _ok(tv) and tv < THIN_TRADING_CR and not bool(row.get("price_stale", True)):
         risks = risks[:3] + [f"Thinly traded: about Rs {tv * 100:.0f} lakh a day over 3 months"] + risks[3:]
+    # Earnings surprise (20% of the non-financial score): say so when the latest result was clearly
+    # strong or weak against other recent results
+    s12, s1, s2 = _num(row.get("earnings_s12")), _num(row.get("earnings_s1")), _num(row.get("earnings_s2"))
+    if _ok(s12) and not row["is_fin_sector"]:
+        react = f", stock {s1 * 100:+.0f}% vs the index around the result" if _ok(s1) else ""
+        if s12 >= 0.8:
+            what = "growth beat its own recent trend" if _ok(s2) and s2 > 0 else "a strong market reaction"
+            reasons = [f"Latest results: {what}{react}"] + reasons
+        elif s12 <= 0.2:
+            what = "growth fell short of its own recent trend" if _ok(s2) and s2 < 0 else "a weak market reaction"
+            risks = [f"Latest results: {what}{react}"] + risks
     # Cautions come right after red flags: a high score shouldn't read as risk-free
     risks = _caution_risks(row) + risks
     # build.explain prints "within -0%" for a stock exactly at its 52-week high (left as is for prelim-v2)
@@ -406,6 +469,14 @@ def _n_flag_lines(row):
 
 def key_metrics(row, fsrow):
     km = v2.key_metrics(row)
+    # Earnings surprise inputs (display; only when the result is recent enough to count)
+    s1, s2, s1_age = _num(row.get("earnings_s1")), _num(row.get("earnings_s2")), _num(row.get("earnings_s1_age"))
+    if _ok(row.get("earnings_s12")):
+        pe = row.get("earnings_s1_period_end") if _ok(s1) else row.get("earnings_s2_period_end")
+        km["last_result_period"] = f"{pd.Timestamp(pe):%Y-%m-%d}" if pe is not None and not pd.isna(pe) else None
+        km["result_reaction_vs_index"] = round(float(s1), 4) if _ok(s1) else None
+        km["growth_surprise"] = round(float(s2), 2) if _ok(s2) else None
+        km["days_since_result"] = int(s1_age) if _ok(s1_age) else None
     if not row["is_fin_sector"] or fsrow is None:
         return km
     km["as_of_period"] = f"{pd.Timestamp(fsrow['period_end']):%Y-%m-%d}"
@@ -442,11 +513,12 @@ def load_inputs(conn, snap):
     prices, idx = v2.load_prices(conn, companies["company_id"], snap)
     px, idx_ret = v2.price_signals(prices, idx, snap)
     listing = listing_stats(prices)
+    earnings = earnings_signals(snap, companies["company_id"], raw, features, prices, idx)
     news = v2.news_signals(v2.load_news(conn, snap))
     fs, fin_scope, fs_raw = load_fin_sector(snap, companies["company_id"], conn)
     fs_shares = v2.shares_outstanding(fs_raw, snap) if fs_raw is not None else None
     return dict(companies=companies, fin=fin, shares=shares, px=px, idx_ret=idx_ret, news=news,
-                fs=fs, fin_scope=fin_scope, fs_shares=fs_shares, listing=listing)
+                fs=fs, fin_scope=fin_scope, fs_shares=fs_shares, listing=listing, earnings=earnings)
 
 
 def merge_inputs(inp, drop_fin_scope):
@@ -585,7 +657,7 @@ def add_steady_list(conn, snap, records, base):
 def build(conn, snap, inp=None):
     inp = inp or load_inputs(conn, snap)
     df = v2.score(merge_inputs(inp, drop_fin_scope=True))
-    df = score_v3(df, inp["fs"], inp["fin_scope"])
+    df = score_v3(df, inp["fs"], inp["fin_scope"], inp.get("earnings"))
     fs = inp["fs"]
     records = df.to_dict("records")
     for r in records:

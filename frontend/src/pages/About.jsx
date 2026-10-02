@@ -60,6 +60,7 @@ const sections = [
           rows={[
             ["Market model", "Is the market confirming the business? Distance from the 52-week high, position versus the 200- and 50-day averages, 3- and 6-month returns versus the NIFTY Smallcap 250, and how few down days the stock has had.", "70%"],
             ["Financial model", "Is the business healthy and improving? Revenue and profit growth, margins, ROE and ROCE, debt and liquidity, and how much profit turns into cash. It uses only results that were public on the scoring date.", "30%"],
+            ["Earnings surprise", "Did the latest results surprise? Whether quarterly growth beat the company's own recent trend, and how the stock reacted in the days after the result. Counts for 90 days after each result.", "20% of the above"],
             ["News model", "What is happening now? NSE announcements every 15 minutes, with sentiment scored by FinBERT, a finance-tuned language model.", "Small"],
           ]}
         />

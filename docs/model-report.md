@@ -119,6 +119,24 @@ ranked within the top 150, 50 names refreshed on the 1st/16th. Backtest: CAGR +3
 6/6 time-machine windows and fell less in 5/6. The rule set was picked after a first run (post-hoc) and
 absolute returns carry survivorship bias; treat the comparison, not the level, as the result.
 
+### 4.3 Retrain, valuation and earnings surprise (tested 2026-10-02)
+
+- **Financial model retrained on the backfilled data** (2018-22 equity, complete bank NPA/CET1):
+  no change. fin-v1 6m IC 0.0395 (was 0.0394); the ROE-from-owners'-equity fallback and the longer-history
+  blend both did worse; the combiner still prefers trend (0.7 kept). Banks: still trend-led, but the
+  year-on-year change in net NPA is now the best bank signal (12m IC +0.17, 5/6 years) - a lead for a
+  future pre-declared test. `ml/financial_model/RETRAIN_2026-10.md`.
+- **Valuation** (earnings yield, book-to-price, sales-to-price; `ml/valuation/`): passed the walk-forward
+  rule (12m IC 0.097 -> 0.111) but **not shipped**: all the gain is 2021-23, it lost to investiq-v1 in
+  each of 2024, 2025 and 2026, and in the Top list it deepened the COVID-crash loss (-40.8% vs -29.7%).
+  Next: a pre-declared size-neutral sales-to-price with a crash-drawdown condition.
+- **Earnings surprise** (`ml/earnings_signal/`): **shipped** as 20% of the non-financial score.
+  Result-day excess return (S1) + growth vs the company's own trend (S2), counting for 90 days.
+  Walk-forward 3m/6m/12m IC 0.049/0.065/0.064 -> 0.051/0.067/0.066, beat or tied investiq-v1 in 6/6
+  time-machine windows; small gain, mostly from S2 (new information beyond trend). Live values match
+  the backtest exactly (2026-09-16: 1,258 S1 and 1,177 S2 values, 0 differences). Shows as a
+  "Latest results: ..." reason/risk and in key_metrics (result_reaction_vs_index, growth_surprise).
+
 ## 5. How to improve (best ideas, in priority order)
 
 Each idea must pass the same walk-forward and time-machine tests before it ships.
