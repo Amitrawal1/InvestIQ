@@ -208,7 +208,7 @@ export default function Intro() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2 }}
-          className="absolute top-0 left-0 w-full h-full z-0 scale-[1.28] origin-top"
+          className="absolute top-0 left-0 w-full h-full z-0 scale-[1.15] translate-y-[8%] origin-center"
         >
           <IntroGlobe />
         </motion.div>
@@ -218,7 +218,7 @@ export default function Intro() {
           initial="initial"
           animate="animate"
           variants={{ animate: { transition: { staggerChildren: 0.15, delayChildren: 0.6 } } }}
-          className="px-10 md:px-16 mt-[clamp(2rem,9vh,8rem)] w-[320px] z-10 pointer-events-none"
+          className="px-10 md:px-16 mt-[clamp(0.75rem,min(9vh,calc(80svh-11.8vw-330px)),8rem)] w-[320px] z-10 pointer-events-none"
         >
           <motion.div variants={fadeUp} className="flex items-center gap-4 mb-4 text-xs font-mono pointer-events-auto w-fit">
             <span className="text-white mix-blend-difference">01</span>
@@ -230,7 +230,7 @@ export default function Intro() {
           </motion.h2>
 
           <motion.p variants={fadeUp} className="text-[13px] md:text-[14px] text-gray-300 w-[240px] leading-[1.6] mb-[clamp(1.5rem,4vh,2.5rem)] mix-blend-difference pointer-events-auto">
-            Find Indian companies worth<br/>researching. Every NSE stock<br/>is scored on trend, financials<br/>and news.
+            Find Indian stocks worth a closer<br/>look. Every NSE company scored<br/>on trend, financials and news.
           </motion.p>
 
           <motion.div variants={fadeUp} className="pointer-events-auto w-fit">

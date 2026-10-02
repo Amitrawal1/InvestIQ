@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getAuthConfig } from '../services/api';
-import { useTheme } from '../context/ThemeContext';
 
 // "Continue with Google" via Google Identity Services. The button itself is drawn by Google (an
 // iframe, so only its theme/shape/width can be set). Renders nothing when the server has no
@@ -35,7 +34,6 @@ const loadScript = () => {
 };
 
 export default function GoogleSignIn({ onCredential, text = 'continue_with', disabled = false }) {
-  const { theme } = useTheme();
   const slot = useRef(null);
   const handler = useRef(onCredential);
   const [clientId, setClientId] = useState(null);
@@ -66,14 +64,14 @@ export default function GoogleSignIn({ onCredential, text = 'continue_with', dis
     slot.current.innerHTML = '';
     gsi.renderButton(slot.current, {
       type: 'standard',
-      theme: theme === 'light' ? 'outline' : 'filled_black',
+      theme: 'outline',          // Google's standard white button, in both site themes
       size: 'large',
       shape: 'pill',
       text,
       logo_alignment: 'center',
       width: Math.min(400, Math.max(200, slot.current.offsetWidth || 320)),
     });
-  }, [ready, clientId, theme, text]);
+  }, [ready, clientId, text]);
 
   if (!clientId) return null;
 
