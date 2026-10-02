@@ -25,10 +25,10 @@ export default function Predictor() {
   // "top" (default): the backtested Top list; "steady": the steadier breakout list; "all": every ranked company
   const view = ["all", "steady"].includes(params.get("view")) ? params.get("view") : "top";
   const listKey = view === "top" ? "top_list" : view === "steady" ? "steady_list" : null;
-  const listMeta = listKey ? meta?.[listKey] : null;
 
   const [query, setQuery] = useState(q);
   const [meta, setMeta] = useState(null);
+  const listMeta = listKey ? meta?.[listKey] : null;
   const [metaError, setMetaError] = useState(false);
   const [showMethod, setShowMethod] = useState(false);
   const [sectors, setSectors] = useState([]);
