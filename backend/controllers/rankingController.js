@@ -60,6 +60,7 @@ const TOP_LIST_RULES = [
     "Only companies trading at least Rs 0.5 crore a day and listed for at least a year: the universe the score was tested on.",
     "No new entries among the 5% most volatile stocks.",
     "A company already on the list stays while it ranks in the top 150 eligible names, so the list doesn't churn every 15 days.",
+    "Stocks whose price is already stretched (up more than 100% in 6 months, or 60%+ above the 200-day average) are listed last and tagged: they can keep rising, but about 1 in 5 fell 30% or more within a year.",
 ];
 // Steady list (investiq-v1, key_metrics.steady_list): breakout-from-a-base picks, steadier than the Top list
 const STEADY_LIST_RULES = [

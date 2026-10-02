@@ -134,9 +134,18 @@ export function TopListTag({ row, listKey }) {
   const t = row.top_list;
   const onList = listKey ? row[listKey] : null;
   if (onList?.status) {
-    return onList.status === "kept"
+    const status = onList.status === "kept"
       ? <span className={`${tagClass} border-gray-600 text-gray-300`} title={`Kept from the previous list (overall rank ${row.rank_overall ?? "—"})`}>Kept</span>
       : <span className={`${tagClass} border-green-500/60 text-green-500`} title="New on the list this snapshot">New</span>;
+    if (!onList.stretched) return status;
+    return (
+      <>
+        {status}
+        <span className={`${tagClass} border-amber-500/60 text-amber-400`} title="Price already stretched: up more than 100% in 6 months or 60%+ above its 200-day average. About 1 in 5 such stocks fell 30%+ within a year, so these are listed last.">
+          Stretched
+        </span>
+      </>
+    );
   }
   if (!listKey && t?.eligible === false && t.not_eligible_reason) {
     return <span className={`${tagClass} border-gray-700 text-gray-500`} title={`Not eligible for the Top list: ${t.not_eligible_reason}`}>Not eligible</span>;

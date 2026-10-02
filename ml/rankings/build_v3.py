@@ -339,6 +339,14 @@ EXTENDED_MA200_GAP = 0.6
 LOW_BASE_GROWTH = 3.0
 
 
+def is_stretched(row):
+    """The "price already stretched" condition of _caution_risks (up > 100% in 6 months or >= 60%
+    above the 200-day average), on a fresh price."""
+    r6, gap = _num(row.get("return_6m")), _num(row.get("ma200_gap"))
+    return (not bool(row.get("price_stale", True))
+            and ((_ok(r6) and r6 > EXTENDED_RET_6M) or (_ok(gap) and gap >= EXTENDED_MA200_GAP)))
+
+
 def _caution_risks(row):
     """Extended-price and low-base-profit cautions (text only; they don't change the score)."""
     out = []
@@ -521,7 +529,14 @@ def add_top_list(conn, snap, records, listing):
     df["adv_cr"] = pd.to_numeric(df["adv_cr"], errors="coerce").fillna(0.0)
     prev = previous_top_list(conn, snap) if conn is not None else []
     chosen = select_top_list(df, prev, RECOMMENDED)
+    # Display order: "price already stretched" names (see _caution_risks) go to the end of the list.
+    # The list is equal-weight, so this changes what an investor sees first, not the list's results;
+    # dropping them instead cost ~5 pts of CAGR in the backtest with no drawdown gain (PORTFOLIO.md, f).
+    by_id = {int(r["company_id"]): r for r in records}
+    chosen["stretched"] = [is_stretched(by_id.get(int(c), {})) for c in chosen["company_id"]]
+    chosen = chosen.sort_values("stretched", kind="stable").reset_index(drop=True)
     pos = {int(c): (i + 1, bool(k)) for i, (c, k) in enumerate(zip(chosen["company_id"], chosen["kept"]))}
+    stretched_ids = {int(c) for c, st in zip(chosen["company_id"], chosen["stretched"]) if st}
     for r, row in zip(records, rows):
         reasons = []
         if pd.notna(r.get("growth_score")):
@@ -534,7 +549,8 @@ def add_top_list(conn, snap, records, listing):
                  "not_eligible_reason": "; ".join(reasons) or None,
                  "in_list": cid in pos,
                  "position": pos[cid][0] if cid in pos else None,
-                 "status": ("kept" if pos[cid][1] else "new") if cid in pos else None}
+                 "status": ("kept" if pos[cid][1] else "new") if cid in pos else None,
+                 "stretched": cid in stretched_ids}
         km = r["key_metrics"] if isinstance(r["key_metrics"], dict) else {}
         km["top_list"] = entry
         r["key_metrics"] = km

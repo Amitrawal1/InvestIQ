@@ -63,13 +63,14 @@ CREATE TABLE IF NOT EXISTS company_rankings (
 ### `key_metrics.top_list` (investiq-v1, `ml/rankings/build_v3.py` + `ml/rankings/portfolio.py`)
 
 ```json
-{ "eligible": true, "not_eligible_reason": null, "in_list": true, "position": 4, "status": "new" }
+{ "eligible": true, "not_eligible_reason": null, "in_list": true, "position": 4, "status": "new", "stretched": false }
 ```
 The Top list is the 50 names chosen by `portfolio.RECOMMENDED` (backtest: `ml/rankings/reports/PORTFOLIO.md`):
 >= Rs 0.5 cr traded a day and >= 1 year of prices (else `eligible: false` with the reason), no new entries
 among the 5% most volatile stocks, holdings kept while ranked within the top 150 eligible names
 (`status: "kept"`), vacancies filled from the top (`status: "new"`). Previous holdings are read from the
-previous investiq-v1 snapshot. Rows of older snapshots have no `top_list` (API returns `null`).
+previous investiq-v1 snapshot. Display order puts `stretched` names (up > 100% in 6 months or >= 60% above
+the 200-day average) after the others; the list is equal-weight, so the order doesn't change its results. Rows of older snapshots have no `top_list` (API returns `null`).
 
 ### `key_metrics.steady_list` (investiq-v1, `ml/rankings/early_movers.py` E1)
 
