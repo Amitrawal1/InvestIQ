@@ -102,4 +102,45 @@ const styles = {
   }
 };
 
-export default IntroGlobe;
+// Without WebGL (hardware acceleration off, some older devices) three.js throws while creating its
+// renderer, and the uncaught error blanked the whole Intro page. Render nothing in that case so the
+// hero's background and text still show. With WebGL the globe renders exactly as before.
+const hasWebGL = () => {
+  try {
+    const canvas = document.createElement('canvas');
+    return Boolean(window.WebGLRenderingContext && (canvas.getContext('webgl2') || canvas.getContext('webgl')));
+  } catch {
+    return false;
+  }
+};
+
+class GlobeBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { failed: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  componentDidCatch(error) {
+    console.warn('Intro globe disabled:', error?.message || error);
+  }
+
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
+
+const SafeIntroGlobe = () => {
+  const [supported] = useState(hasWebGL);
+  if (!supported) return null;
+  return (
+    <GlobeBoundary>
+      <IntroGlobe />
+    </GlobeBoundary>
+  );
+};
+
+export default SafeIntroGlobe;

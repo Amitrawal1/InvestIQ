@@ -5,6 +5,11 @@ const getStockPrices = async (req, res) => {
     try {
         const { companyId } = req.params;
 
+        // Company ids are positive integers; anything else is a bad request, not an empty result
+        if (!/^\d+$/.test(companyId)) {
+            return res.status(400).json({ success: false, message: "companyId must be a positive integer" });
+        }
+
         const prices = await getStockPricesByCompany(companyId);
 
         res.json(prices);

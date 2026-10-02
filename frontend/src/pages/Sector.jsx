@@ -15,12 +15,13 @@ const SectorsBack = () => <BackLink to="/home#sectors">All sectors</BackLink>;
 
 export default function Sector() {
   const { slug } = useParams();
-  usePageTitle(slug ? slug.split("-").filter(Boolean).map((w) => w[0].toUpperCase() + w.slice(1)).join(" ") : "Sector");
   const navigate = useNavigate();
 
   const { sectors, source, loading, error } = useSectors();
   const index = sectors.findIndex((s) => s.slug === slug);
   const sector = index >= 0 ? sectors[index] : null;
+  // Tab title: the sector's real name ("Consumer & FMCG"), or "Sector not found" once sectors have loaded
+  usePageTitle(sector?.name || (loading ? "Sector" : "Sector not found"));
   const meta = getSectorMeta(slug);
 
   const { companies, error: companiesError } = useSectorCompanies(sector, source?.live);

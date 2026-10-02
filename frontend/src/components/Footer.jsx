@@ -46,7 +46,7 @@ export default function Footer() {
         <div className="col-span-2 space-y-6">
           <span className="font-black text-2xl tracking-tight">INVEST IQ</span>
           <p className="text-[10px] font-mono tracking-widest uppercase leading-relaxed text-gray-400 max-w-[320px]">
-            AI powered analysis of daily finance news<br />to quantify market impact and predict trends.
+            AI rankings for 3,100+ NSE-listed companies,<br />built from prices, results filings and daily news.
           </p>
         </div>
 

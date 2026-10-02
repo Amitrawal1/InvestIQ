@@ -230,7 +230,7 @@ export default function Intro() {
           </motion.h2>
 
           <motion.p variants={fadeUp} className="text-[13px] md:text-[14px] text-gray-300 w-[240px] leading-[1.6] mb-[clamp(1.5rem,4vh,2.5rem)] mix-blend-difference pointer-events-auto">
-            Find Indian companies worth<br/>researching. Every NSE stock, scored<br/>on trend, financials and news.
+            Find Indian companies worth<br/>researching. Every NSE stock<br/>is scored on trend, financials<br/>and news.
           </motion.p>
 
           <motion.div variants={fadeUp} className="pointer-events-auto w-fit">
