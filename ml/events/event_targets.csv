@@ -1,0 +1,86 @@
+event_id,level,group,expected_sign,rationale
+S01,theme,PSU banks,1,Capital infusion into PSU banks
+S03,theme,Automakers,1,EV purchase subsidy
+S04,theme,Pharma majors,1,API/bulk-drug PLI
+S05,theme,Defence,1,Defence FDI + import embargo plan
+S06,theme,Defence,1,Import embargo list
+S07,theme,Automakers,1,Auto PLI
+S07,theme,Pharma majors,1,Pharma PLI
+S08,theme,Defence,1,Import embargo list
+S09,theme,Telecom operators,1,AGR relief and moratorium
+S09,theme,Automakers,1,Auto PLI
+S10,theme,Renewables,1,500 GW non-fossil target
+S11,theme,Defence,1,Import embargo list
+S12,theme,Renewables,1,Green hydrogen incentives
+S14,theme,Renewables,1,Rooftop solar subsidy
+S16,theme,Rice exporters,-1,Export ban
+S17,theme,Sugar & ethanol,-1,Ethanol feedstock ban
+S18,theme,Steel & iron ore,-1,Export duty
+S19,theme,Steel & iron ore,1,Export duty removed
+S20,theme,Upstream oil & gas,-1,Windfall tax
+S20,theme,Oil marketing (OMCs),-1,Fuel export levy
+S21,theme,Infra & rail EPC,1,Infrastructure pipeline
+R01,theme,PSU banks,-1,Stricter stressed-asset recognition
+R02,theme,Telecom operators,-1,AGR dues
+R04,theme,Gaming,-1,28% GST on face value
+R05,theme,Retail NBFCs & HFCs,-1,Higher risk weights
+R06,theme,Capital-market intermediaries,-1,F&O curbs
+R07,theme,Capital-market intermediaries,-1,Largest F&O trader barred
+R08,theme,Gaming,-1,Online money gaming ban
+F11,theme,Capital-market intermediaries,-1,STT on F&O raised
+F13,theme,Capital-market intermediaries,-1,STT on futures raised
+F19,theme,Automakers,1,GST cut promised
+F19,theme,Cement,1,GST cut promised
+F20,theme,Automakers,1,GST 28%->18% on small cars/2W
+F20,theme,Cement,1,GST 28%->18% on cement
+M01,theme,Real estate developers,1,Rate cut (rate-sensitive)
+M02,theme,Real estate developers,1,Rate cut (rate-sensitive)
+M03,theme,Real estate developers,-1,Rate hike (rate-sensitive)
+M04,theme,Real estate developers,-1,Rate hike (rate-sensitive)
+M05,theme,Real estate developers,1,Rate cut (rate-sensitive)
+M06,theme,Real estate developers,1,Rate cut (rate-sensitive)
+M07,theme,Real estate developers,1,Rate cut (rate-sensitive)
+M08,theme,Real estate developers,1,Rate cut (rate-sensitive)
+M09,theme,Real estate developers,1,Rate cut (rate-sensitive)
+M10,theme,Real estate developers,1,Rate cut (rate-sensitive)
+M11,theme,Real estate developers,1,Rate cut (rate-sensitive)
+M12,theme,Real estate developers,-1,Rate hike (rate-sensitive)
+M13,theme,Real estate developers,-1,Rate hike (rate-sensitive)
+M14,theme,Real estate developers,-1,Rate hike (rate-sensitive)
+M15,theme,Real estate developers,-1,Rate hike (rate-sensitive)
+M16,theme,Real estate developers,-1,Rate hike (rate-sensitive)
+M17,theme,Real estate developers,-1,Rate hike (rate-sensitive)
+M19,theme,Real estate developers,1,Liquidity easing (rate-sensitive)
+M20,theme,Real estate developers,1,Rate cut (rate-sensitive)
+M21,theme,Real estate developers,1,Rate cut (rate-sensitive)
+M22,theme,Real estate developers,1,Rate cut (rate-sensitive)
+M23,theme,Real estate developers,1,Rate cut (rate-sensitive)
+W01,theme,Defence,1,India-Pakistan escalation
+W03,theme,Defence,1,India-Pakistan escalation
+W05,theme,Defence,1,India-China escalation
+W10,theme,Defence,1,India-Pakistan escalation
+W11,theme,Defence,1,India-Pakistan escalation
+W12,theme,Defence,-1,De-escalation
+W06,theme,Oil marketing (OMCs),-1,Oil price spike hurts marketing margins
+W09,theme,Oil marketing (OMCs),-1,Oil price spike hurts marketing margins
+W13,theme,Oil marketing (OMCs),-1,Oil price spike hurts marketing margins
+W16,theme,Oil marketing (OMCs),-1,Oil price spike hurts marketing margins
+W06,theme,Upstream oil & gas,1,Higher crude realisations
+W13,theme,Upstream oil & gas,1,Higher crude realisations
+W16,theme,Upstream oil & gas,1,Higher crude realisations
+C01,theme,Oil marketing (OMCs),-1,Oil up
+C02,theme,Oil marketing (OMCs),-1,Oil up
+C03,theme,Oil marketing (OMCs),-1,Oil up
+C06,theme,Oil marketing (OMCs),-1,Oil up
+C01,theme,Upstream oil & gas,1,Oil up
+C02,theme,Upstream oil & gas,1,Oil up
+C03,theme,Upstream oil & gas,1,Oil up
+C06,theme,Upstream oil & gas,1,Oil up
+C04,theme,Oil marketing (OMCs),1,Oil down
+C05,theme,Oil marketing (OMCs),1,Oil down
+C04,theme,Upstream oil & gas,-1,Oil down
+C05,theme,Upstream oil & gas,-1,Oil down
+G20,sector,Technology,-1,US tariffs/US demand risk for IT exporters
+G22,theme,Pharma majors,-1,US tariff threat on India
+G24,theme,Pharma majors,-1,US pharma tariff
+P04,theme,Pharma majors,1,Pandemic demand for healthcare

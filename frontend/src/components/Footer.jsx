@@ -18,6 +18,7 @@ const columns = [
       { label: 'Company Rankings', to: '/predictor' },
       { label: 'Sector Trends', to: '/home#sectors' },
       { label: 'Track Record', to: '/track-record' },
+      { label: 'Market Events', to: '/events' },
     ],
   },
   {

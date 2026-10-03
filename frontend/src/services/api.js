@@ -162,3 +162,12 @@ export const getPortfolio = () => api.get('/api/portfolio', { timeout: 20000 }).
 // -> { as_of, benchmark, lists: { top|steady: { first_snapshot, since_start, chained: [{date, value, benchmark}], snapshots: [...] } } }
 export const getTrackRecord = () =>
   api.get('/api/rankings/track-record', { timeout: 20000 }).then((res) => res.data);
+
+// --- Market events study (history, not a forecast; backend/data/events.json) ---
+export const getEvents = (params = {}) => api.get('/api/events', { params, timeout: 10000 }).then((res) => res.data);
+export const getEventTypes = () => api.get('/api/events/types', { timeout: 10000 }).then((res) => res.data);
+export const getEvent = (id) => api.get(`/api/events/${encodeURIComponent(id)}`, { timeout: 10000 }).then((res) => res.data);
+// params: type, stance, horizon (21d|63d|126d), level (sector|theme)
+export const getEventPlaybook = (params) => api.get('/api/events/playbook', { params, timeout: 10000 }).then((res) => res.data);
+export const classifyEvent = (text, horizon = '63d') =>
+  api.post('/api/events/classify', { text, horizon }, { timeout: 10000 }).then((res) => res.data);

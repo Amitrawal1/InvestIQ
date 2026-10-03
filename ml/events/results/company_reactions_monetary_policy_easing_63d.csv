@@ -1,0 +1,1279 @@
+company_id,mean_within_sector,n_events,hit_rate,symbol,name,sector
+1740,0.3211078027810316,5,1.0,POWERINDIA,Hitachi Energy India Limited,Industrials & Infrastructure
+534,0.26513749298343164,8,0.875,CUPID,Cupid Limited,Consumer & FMCG
+170,0.26474921587908323,5,0.8,APOLLO,Apollo Micro Systems Limited,Technology
+752,0.26225226458775985,7,0.7142857142857143,FORCEMOT,FORCE MOTORS LTD,Automobile & Mobility
+1174,0.23486273735816932,6,0.5,KAMATHOTEL,Kamat Hotels (I) Limited,Services & Others
+56,0.2302055498019195,12,0.6666666666666666,ADANIGREEN,Adani Green Energy Limited,Energy
+870,0.22532212965739593,9,0.7777777777777778,GRSE,Garden Reach Shipbuilders & Engineers Limited,Industrials & Infrastructure
+22,0.22522168608806747,11,0.6363636363636364,AARTIDRUGS,Aarti Drugs Limited,Healthcare & Pharmaceuticals
+765,0.22477424811580105,5,1.0,GALLANTT,Gallantt Ispat Limited,"Metals, Mining & Chemicals"
+2227,0.2238572530116539,5,1.0,SYRMA,Syrma SGS Technology Limited,Technology
+1667,0.21165306829867547,5,0.8,PARAS,Paras Defence and Space Technologies Limited,Technology
+548,0.2101610973450323,5,0.6,DATAPATTNS,Data Patterns (India) Limited,Technology
+254,0.2073532504073279,14,0.6428571428571429,AVANTIFEED,Avanti Feeds Limited,Consumer & FMCG
+416,0.20572823057116407,14,0.6428571428571429,CAMLINFINE,Camlin Fine Sciences Limited,"Metals, Mining & Chemicals"
+163,0.20470653049889118,5,1.0,ANURAS,Anupam Rasayan India Limited,"Metals, Mining & Chemicals"
+390,0.1978127952441244,12,0.5833333333333334,BORORENEW,BOROSIL RENEWABLES LIMITED,Energy
+1929,0.19441385240512052,5,1.0,SAKAR,Sakar Healthcare Limited,Healthcare & Pharmaceuticals
+575,0.19315142278905303,5,0.8,DELHIVERY,Delhivery Limited,Services & Others
+1727,0.19242326714560834,5,0.6,POCL,Pondy Oxides & Chemicals Limited,"Metals, Mining & Chemicals"
+2068,0.19083247643282988,5,0.6,SIGMAADV,SIGMA ADVANCED SYSTEMS LIMITED,Technology
+449,0.189899094940376,5,0.8,CENTUM,Centum Electronics Limited,Technology
+568,0.18693285989034056,6,0.6666666666666666,DECCANCE,Deccan Cements Limited,Real Estate & Construction
+866,0.1842760853327147,5,1.0,GRMOVER,GRM Overseas Limited,Consumer & FMCG
+1330,0.18251605053751635,13,0.46153846153846156,LTFOODS,LT Foods Limited,Consumer & FMCG
+543,0.1816871298364389,14,0.5,DALMIASUG,Dalmia Bharat Sugar and Industries Limited,Consumer & FMCG
+319,0.1756016068963704,11,0.8181818181818182,BDL,Bharat Dynamics Limited,Industrials & Infrastructure
+186,0.1725234249420486,5,0.8,ARIES,Aries Agro Limited,"Metals, Mining & Chemicals"
+1967,0.17093394663964495,5,0.8,SBC,SBC Exports Limited,Industrials & Infrastructure
+2236,0.17024598068139607,12,0.6666666666666666,TANLA,Tanla Platforms Limited,Technology
+609,0.16961433299238413,12,0.8333333333333334,DIXON,Dixon Technologies (India) Limited,Technology
+2223,0.16865533964019125,7,0.42857142857142855,SWSOLAR,Sterling and Wilson Renewable Energy Limited,Energy
+516,0.16716293154051237,5,1.0,CRAFTSMAN,Craftsman Automation Limited,Automobile & Mobility
+1111,0.16696473519393257,5,0.8,JAYNECOIND,Jayaswal Neco Industries Limited,"Metals, Mining & Chemicals"
+591,0.16475143598864966,5,0.6,DHARMAJ,Dharmaj Crop Guard Limited,"Metals, Mining & Chemicals"
+1381,0.16461340378876876,5,1.0,MANORAMA,Manorama Industries Limited,Industrials & Infrastructure
+99,0.1642909693703906,5,0.8,AIIL,Authum Investment & Infrastructure Limited,Financial Services
+1599,0.16188980423777638,5,1.0,NYKAA,FSN E-Commerce Ventures Limited,Consumer & FMCG
+1062,0.16042076085938511,14,0.5714285714285714,INTELLECT,Intellect Design Arena Limited,Technology
+2208,0.15607662102645245,13,0.6923076923076923,SUVEN,Suven Life Sciences Limited,Healthcare & Pharmaceuticals
+596,0.15534814665693614,5,0.6,DIACABS,Diamond Power Infrastructure Limited,Energy
+2131,0.15489951815423553,5,0.8,SPORTKING,Sportking India Limited,Industrials & Infrastructure
+1333,0.1540500567045499,7,0.8571428571428571,LUMAXIND,Lumax Industries Limited,Automobile & Mobility
+1121,0.15364522424491883,14,0.6428571428571429,JINDALSTEL,JINDAL STEEL LIMITED,"Metals, Mining & Chemicals"
+2344,0.15362877645333411,5,0.8,TSFINV,TSF INVESTMENTS LIMITED,Financial Services
+2267,0.15345418807427352,5,0.8,TECHNOE,Techno Electric & Engineering Company Limited,Industrials & Infrastructure
+24,0.15320596307021125,5,0.8,AARTIPHARM,Aarti Pharmalabs Limited,Healthcare & Pharmaceuticals
+1144,0.15280042177666914,5,0.6,JSLL,Jeena Sikho Lifecare Limited,Healthcare & Pharmaceuticals
+1252,0.15245834900868538,5,0.8,KRISHNADEF,Krishna Defence And Allied Industries Limited,Industrials & Infrastructure
+1874,0.15016895750249898,5,0.6,ROHLTD,Royal Orchid Hotels Limited,Services & Others
+469,0.14978279163553135,5,0.8,CHOICEIN,Choice International Limited,Services & Others
+53,0.14951411291486702,5,0.6,ACUTAAS,Acutaas Chemicals Limited,Healthcare & Pharmaceuticals
+894,0.1482020194167251,11,0.8181818181818182,HAL,Hindustan Aeronautics Limited,Services & Others
+2016,0.14746565205007617,12,0.75,SHANKARA,Shankara Building Products Limited,"Metals, Mining & Chemicals"
+264,0.14692237463805768,10,0.7,AXISCADES,AXISCADES Technologies Limited,Technology
+547,0.14650857024349742,8,0.625,DATAMATICS,Datamatics Global Services Limited,Technology
+1545,0.146425926281654,5,0.8,NETWEB,Netweb Technologies India Limited,Technology
+1204,0.14610284525629666,5,0.4,KHAICHEM,Khaitan Chemicals & Fertilizers Limited,"Metals, Mining & Chemicals"
+652,0.14563876115236513,14,0.5714285714285714,EIDPARRY,EID Parry India Limited,Consumer & FMCG
+1396,0.14544904508770734,14,0.5714285714285714,MASTEK,Mastek Limited,Technology
+847,0.14208849495248405,13,0.6153846153846154,GPIL,Godawari Power And Ispat limited,Energy
+1210,0.14075706051833292,5,0.8,KINGFA,Kingfa Science & Technology (India) Limited,Industrials & Infrastructure
+2150,0.14067614914925905,5,0.8,STEELCAS,Steelcast Limited,Automobile & Mobility
+1755,0.1397984741286257,5,0.6,PRECWIRE,Precision Wires India Limited,Real Estate & Construction
+1090,0.13901493910313345,14,0.6428571428571429,ITI,ITI Limited,Services & Others
+1513,0.13873241240270096,12,0.8333333333333334,NAM-INDIA,Nippon Life India Asset Management Limited,Financial Services
+1595,0.13844407469985792,7,0.7142857142857143,NUCLEUS,Nucleus Software Exports Limited,Technology
+336,0.13792660895835465,9,0.5555555555555556,BGRENERGY,BGR Energy Systems Limited,Industrials & Infrastructure
+146,0.13749066270248994,5,0.8,ANANDRATHI,Anand Rathi Wealth Limited,Financial Services
+2012,0.13721756907498578,5,0.6,SHAILY,Shaily Engineering Plastics Limited,Industrials & Infrastructure
+1413,0.13719101730997538,14,0.7857142857142857,MCX,Multi Commodity Exchange of India Limited,Services & Others
+288,0.1362658186373204,14,0.6428571428571429,BALAMINES,Balaji Amines Limited,"Metals, Mining & Chemicals"
+1290,0.13610958436671544,13,0.6923076923076923,LAURUSLABS,Laurus Labs Limited,Healthcare & Pharmaceuticals
+2053,0.1359540687688576,5,1.0,SHRIPISTON,SPR Auto Technologies Limited,Technology
+993,0.13542959315011482,5,0.6,IDEAFORGE,Ideaforge Technology Limited,Industrials & Infrastructure
+1070,0.13475511118164774,13,0.5384615384615384,IOLCP,IOL Chemicals and Pharmaceuticals Limited,Healthcare & Pharmaceuticals
+167,0.1347341601870178,12,0.5833333333333334,APEX,Apex Frozen Foods Limited,Consumer & FMCG
+2534,0.1340272763952335,5,0.8,YATHARTH,Yatharth Hospital & Trauma Care Services Limited,Healthcare & Pharmaceuticals
+2082,0.13393485033973773,5,0.8,SINDHUTRAD,Sindhu Trade Links Limited,Services & Others
+2077,0.13378957259663773,5,0.6,SILVERTUC,Silver Touch Technologies Limited,Technology
+744,0.13377221956818122,5,1.0,FLAIR,Flair Writing Industries Limited,Industrials & Infrastructure
+1526,0.13369022276144998,5,0.8,NAZARA,Nazara Technologies Limited,Technology
+636,0.13313489807169543,13,0.6153846153846154,DWARKESH,Dwarikesh Sugar Industries Limited,Consumer & FMCG
+760,0.1322210471579712,14,0.6428571428571429,GABRIEL,Gabriel India Limited,Automobile & Mobility
+1405,0.13053899790300943,5,0.8,MAZDOCK,Mazagon Dock Shipbuilders Limited,Industrials & Infrastructure
+2094,0.12947951762089777,5,0.4,SKMEGGPROD,SKM Egg Products Export (India) Limited,Consumer & FMCG
+1861,0.1290782766876291,14,0.42857142857142855,RIIL,Reliance Industrial Infrastructure Limited,Industrials & Infrastructure
+1143,0.12804632552874076,14,0.9285714285714286,JSL,Jindal Stainless Limited,"Metals, Mining & Chemicals"
+370,0.12777022104934424,6,0.8333333333333334,BLKASHYAP,B. L. Kashyap and Sons Limited,Industrials & Infrastructure
+54,0.12770050491259394,14,0.7142857142857143,ADANIENSOL,Adani Energy Solutions Limited,Energy
+1247,0.12683579667912023,14,0.6428571428571429,KRBL,KRBL Limited,Consumer & FMCG
+228,0.12676612580769797,14,0.6428571428571429,ASTRAMICRO,Astra Microwave Products Limited,Industrials & Infrastructure
+2044,0.12657460409204316,7,0.42857142857142855,SHREDIGCEM,Shree Digvijay Cement Co.Ltd,Real Estate & Construction
+1189,0.12618926015919454,5,0.8,KAYNES,Kaynes Technology India Limited,Technology
+2020,0.12588301479610392,7,0.7142857142857143,SHARDACROP,Sharda Cropchem Limited,"Metals, Mining & Chemicals"
+1700,0.12507822343003935,5,0.6,PGIL,Pearl Global Industries Limited,Industrials & Infrastructure
+520,0.12463974942651244,11,0.8181818181818182,CREDITACC,CREDITACCESS GRAMEEN LIMITED,Financial Services
+2127,0.12388228358498948,6,0.6666666666666666,SPIC,Southern Petrochemicals Industries Corporation  Limited,"Metals, Mining & Chemicals"
+920,0.12175452589021284,12,0.8333333333333334,HDFCAMC,HDFC Asset Management Company Limited,Financial Services
+1863,0.12166018486632621,5,0.6,RISHABH,Rishabh Instruments Limited,Industrials & Infrastructure
+324,0.12157405466264201,14,0.7142857142857143,BEL,Bharat Electronics Limited,Industrials & Infrastructure
+1298,0.12157216060557534,5,0.6,LEMERITE,Le Merite Exports Limited,Industrials & Infrastructure
+1979,0.12086724982160753,14,0.7142857142857143,SCI,Shipping Corporation Of India Limited,Services & Others
+138,0.11747348649727642,11,0.8181818181818182,AMBER,Amber Enterprises India Limited,Consumer & FMCG
+1357,0.11705631365507065,13,0.7692307692307693,MAHSCOOTER,Maharashtra Scooters Limited,Financial Services
+1116,0.11690998739707752,5,0.8,JGCHEM,J.G.Chemicals Limited,"Metals, Mining & Chemicals"
+125,0.11593217219960363,6,0.8333333333333334,ALLDIGI,Alldigi Tech Limited,Technology
+991,0.11577715982198056,14,0.7142857142857143,IDBI,IDBI Bank Limited,Financial Services
+968,0.1154752586976584,5,0.8,HONASA,Honasa Consumer Limited,Consumer & FMCG
+1940,0.11509701101426413,5,0.8,SAMHI,Samhi Hotels Limited,Services & Others
+1260,0.11418630686279088,5,0.8,KRYSTAL,Krystal Integrated Services Limited,Services & Others
+166,0.11406346319410672,6,0.8333333333333334,APCOTEXIND,Apcotex Industries Limited,Industrials & Infrastructure
+871,0.1125636340380003,5,0.8,GRWRHITECH,Garware Hi-Tech Films Limited,Industrials & Infrastructure
+1539,0.11211347495116837,6,0.8333333333333334,NELCAST,Nelcast Limited,Automobile & Mobility
+2341,0.11180102255192413,14,0.7142857142857143,TRIVENI,Triveni Engineering & Industries Limited,Consumer & FMCG
+13,0.111743093721228,12,0.75,63MOONS,63 moons technologies limited,Technology
+2461,0.11106368957982131,12,0.4166666666666667,VISAKAIND,Visaka Industries Limited,Real Estate & Construction
+843,0.1108744445483397,5,0.6,GOODLUCK,Goodluck India Limited,"Metals, Mining & Chemicals"
+1391,0.11082662238848226,14,0.42857142857142855,MARKSANS,Marksans Pharma Limited,Healthcare & Pharmaceuticals
+241,0.11077890516702892,12,0.8333333333333334,AUBANK,AU Small Finance Bank Limited,Financial Services
+1625,0.11040957454470382,5,1.0,ONWARDTEC,Onward Technologies Limited,Technology
+55,0.10471535310835713,14,0.5714285714285714,ADANIENT,Adani Enterprises Limited,Services & Others
+821,0.10392602119283158,9,0.7777777777777778,GMMPFAUDLR,GMM Pfaudler Limited,Industrials & Infrastructure
+1058,0.1038049333332612,5,0.8,INOXINDIA,INOX India Limited,Industrials & Infrastructure
+556,0.10372165052874001,12,0.5,DCAL,Dishman Carbogen Amcis Limited,Healthcare & Pharmaceuticals
+657,0.1028998608282965,5,0.6,EIMCOELECO,Eimco Elecon (India) Limited,Industrials & Infrastructure
+251,0.1026753755455275,5,0.8,AVALON,Avalon Technologies Limited,Technology
+1973,0.1024679399791953,12,0.9166666666666666,SBILIFE,SBI Life Insurance Company Limited,Financial Services
+1118,0.1021256496804345,5,0.4,JINDALPHOT,Jindal Photo Limited,Financial Services
+2085,0.10114651854782056,5,0.4,SIRCA,Sirca Paints India Limited,"Metals, Mining & Chemicals"
+1403,0.10047900397435633,9,0.7777777777777778,MAYURUNIQ,Mayur Uniquoters Ltd,Industrials & Infrastructure
+2246,0.10046670237062312,14,0.5,TATACOMM,Tata Communications Limited,Services & Others
+294,0.10007908892522512,14,0.7142857142857143,BALRAMCHIN,Balrampur Chini Mills Limited,Consumer & FMCG
+33,0.09962508399040663,12,0.75,ABCAPITAL,Aditya Birla Capital Limited,Financial Services
+2130,0.09861934112451604,6,0.5,SPMLINFRA,SPML Infra Limited,Industrials & Infrastructure
+2279,0.09836419451926134,13,0.6153846153846154,TFCILTD,Tourism Finance Corporation of India Limited,Financial Services
+1984,0.0979159115690713,8,0.75,SEAMECLTD,Seamec Limited,Services & Others
+2105,0.09787751954488443,12,0.6666666666666666,SOLARA,Solara Active Pharma Sciences Limited,Energy
+431,0.09763884083325627,5,0.6,CARTRADE,Cartrade Tech Limited,Automobile & Mobility
+1128,0.09752160454039985,14,0.7857142857142857,JKCEMENT,JK Cement Limited,Real Estate & Construction
+2294,0.0973640631628476,5,0.6,TI,Tilaknagar Industries Limited,Consumer & FMCG
+1969,0.09649637980229323,5,0.6,SBFC,SBFC Finance Limited,Financial Services
+1802,0.09621871308051558,14,0.5,RAIN,Rain Industries Limited,Energy
+2314,0.09596420820966774,6,0.8333333333333334,TNPETRO,Tamilnadu PetroProducts Limited,Energy
+1665,0.09490684923342993,5,0.8,PARADEEP,Paradeep Phosphates Limited,"Metals, Mining & Chemicals"
+1109,0.09434486144433063,10,0.5,JAYBARMARU,Jay Bharat Maruti Limited,Automobile & Mobility
+1196,0.0940642838056814,14,0.7142857142857143,KEI,KEI Industries Limited,Real Estate & Construction
+168,0.09364067959203282,14,0.7142857142857143,APLAPOLLO,APL Apollo Tubes Limited,"Metals, Mining & Chemicals"
+1370,0.09281120468775668,14,0.7142857142857143,MANAPPURAM,Manappuram Finance Limited,Financial Services
+1033,0.09100307657044171,5,0.8,INDOBORAX,Indo Borax & Chemicals Limited,"Metals, Mining & Chemicals"
+695,0.09094362257061796,14,0.8571428571428571,EPL,EPL Limited,Industrials & Infrastructure
+816,0.0909234182697485,12,0.5833333333333334,GLOBUSSPR,Globus Spirits Limited,Consumer & FMCG
+951,0.09071561799038644,14,0.6428571428571429,HINDOILEXP,Hindustan Oil Exploration Company Limited,Energy
+1946,0.0901408548617307,5,0.6,SANDUMA,Sandur Manganese & Iron Ores Limited,"Metals, Mining & Chemicals"
+1140,0.08923415850854774,5,0.6,JPOLYINVST,Jindal Poly Investment and Finance Company Limited,Financial Services
+2211,0.08859135757681443,14,0.5,SUZLON,Suzlon Energy Limited,Industrials & Infrastructure
+637,0.08803587320589734,5,0.4,DYCL,Dynamic Cables Limited,Real Estate & Construction
+1696,0.08789456611845742,12,0.5,PFS,PTC India Financial Services Limited,Financial Services
+280,0.08770552824250784,14,0.35714285714285715,BAJAJHIND,Bajaj Hindusthan Sugar Limited,Consumer & FMCG
+1534,0.08714866333098263,5,0.6,NDRAUTO,Ndr Auto Components Limited,Automobile & Mobility
+1769,0.08671497935658243,5,0.6,PRIVISCL,Privi Speciality Chemicals Limited,"Metals, Mining & Chemicals"
+912,0.08663004199651489,7,0.5714285714285714,HBLENGINE,HBL Engineering Limited,Automobile & Mobility
+2099,0.08570656053586964,10,0.4,SMLMAH,SML Mahindra Limited,Automobile & Mobility
+892,0.08494969436468948,11,0.45454545454545453,GVT&D,GE Vernova T&D India Limited,Industrials & Infrastructure
+1737,0.08463098292900627,14,0.6428571428571429,POONAWALLA,Poonawalla Fincorp Limited,Financial Services
+226,0.08436479145842975,10,0.8,ASTERDM,Aster DM Quality Care Limited,Healthcare & Pharmaceuticals
+807,0.08433515935796554,5,1.0,GLAND,Gland Pharma Limited,Healthcare & Pharmaceuticals
+1836,0.08315556650812135,14,0.6428571428571429,REDINGTON,Redington Limited,Technology
+2421,0.0826655012267423,14,0.42857142857142855,VEDL,Vedanta Limited,"Metals, Mining & Chemicals"
+1065,0.08220342825249409,5,0.8,INTLCONV,International Conveyors Limited,Industrials & Infrastructure
+1983,0.08217286658813451,5,0.6,SDBL,Som Distilleries & Breweries Limited,Consumer & FMCG
+2247,0.08211958744388868,14,0.6428571428571429,TATACONSUM,TATA CONSUMER PRODUCTS LIMITED,Consumer & FMCG
+1845,0.08196696121275811,7,0.5714285714285714,RELIGARE,Religare Enterprises Limited,Financial Services
+1475,0.08164992121033372,14,0.6428571428571429,MOTILALOFS,Motilal Oswal Financial Services Limited,Financial Services
+2098,0.0815751629342131,5,0.6,SMCGLOBAL,SMC Global Securities Limited,Services & Others
+348,0.08134222536821947,5,0.8,BHARTIHEXA,Bharti Hexacom Limited,Services & Others
+250,0.08070877876734196,11,0.7272727272727273,AVADHSUGAR,Avadh Sugar & Energy Limited,Consumer & FMCG
+1500,0.08030891459903917,14,0.7857142857142857,MUTHOOTFIN,Muthoot Finance Limited,Financial Services
+1136,0.08011367243327672,14,0.42857142857142855,JMFINANCIL,JM Financial Limited,Financial Services
+905,0.07936832911200196,11,0.5454545454545454,HATHWAY,Hathway Cable & Datacom Limited,Services & Others
+1487,0.07936513572812653,5,0.4,MTARTECH,Mtar Technologies Limited,Technology
+1156,0.0789722128994433,14,0.5,JUBLPHARMA,Jubilant Pharmova Limited,Healthcare & Pharmaceuticals
+386,0.07866163760652,14,0.5,BOMDYEING,Bombay Dyeing & Mfg Company Limited,Industrials & Infrastructure
+1022,0.07863285836147253,14,0.35714285714285715,INDIAGLYCO,India Glycols Limited,Consumer & FMCG
+1102,0.07850044822750986,14,0.5714285714285714,JAICORPLTD,Jai Corp Limited,Technology
+42,0.07771239526454914,5,0.6,ABSLAMC,Aditya Birla Sun Life AMC Limited,Financial Services
+2431,0.07748864462952647,5,0.8,VESUVIUS,Vesuvius India Limited,Industrials & Infrastructure
+640,0.07745916320169315,5,0.8,E2E,E2E Networks Limited,Technology
+1631,0.07725634677808611,7,0.5714285714285714,ORICONENT,Oricon Enterprises Limited,Industrials & Infrastructure
+1246,0.07704246698171015,11,0.6363636363636364,KPRMILL,K.P.R. Mill Limited,Industrials & Infrastructure
+510,0.07703203516173417,9,0.4444444444444444,COSMOFIRST,COSMO FIRST LIMITED,Industrials & Infrastructure
+1657,0.07668739635801491,7,0.42857142857142855,PANACEABIO,Panacea Biotec Limited,Healthcare & Pharmaceuticals
+1724,0.07665828944153268,14,0.6428571428571429,PNCINFRA,PNC Infratech Limited,Industrials & Infrastructure
+2303,0.0765431610756585,14,0.7142857142857143,TIMKEN,Timken India Limited,Automobile & Mobility
+2270,0.07654197085096166,5,0.6,TEGA,Tega Industries Limited,Industrials & Infrastructure
+285,0.07575127113947093,14,0.6428571428571429,BAJFINANCE,Bajaj Finance Limited,Financial Services
+967,0.07562576788567274,5,0.8,HOMEFIRST,Home First Finance Company India Limited,Financial Services
+2505,0.07562326858790193,14,0.6428571428571429,WELCORP,Welspun Corp Limited,"Metals, Mining & Chemicals"
+1027,0.0755525887207213,5,0.6,INDIASHLTR,India Shelter Finance Corporation Limited,Financial Services
+1734,0.07552267651633368,13,0.6923076923076923,POLYPLEX,Polyplex Corporation Limited,Industrials & Infrastructure
+1957,0.07548821178637496,10,0.6,SARDAEN,Sarda Energy & Minerals Limited,"Metals, Mining & Chemicals"
+1849,0.07525830809150415,11,0.36363636363636365,RENUKA,Shree Renuka Sugars Limited,Consumer & FMCG
+2129,0.07497299398938248,5,0.8,SPLPETRO,Supreme Petrochem Limited,"Metals, Mining & Chemicals"
+1522,0.07476575111737448,14,0.6428571428571429,NAVINFLUOR,Navin Fluorine International Limited,"Metals, Mining & Chemicals"
+1215,0.0739671917422797,10,0.6,KIRLOSBROS,Kirloskar Brothers Limited,Industrials & Infrastructure
+1216,0.07387516794318871,5,0.8,KIRLOSENG,Kirloskar Oil Engines Limited,Energy
+950,0.07385419350084657,14,0.5714285714285714,HINDCOPPER,Hindustan Copper Limited,"Metals, Mining & Chemicals"
+2218,0.0733942089703994,7,0.7142857142857143,SWARAJENG,Swaraj Engines Limited,Industrials & Infrastructure
+229,0.07331872416672913,14,0.7857142857142857,ASTRAZEN,AstraZeneca Pharma India Limited,Healthcare & Pharmaceuticals
+764,0.07331369698850619,11,0.6363636363636364,GALAXYSURF,Galaxy Surfactants Limited,Consumer & FMCG
+2509,0.07288090567495123,14,0.6428571428571429,WELSPUNLIV,Welspun Living Limited,Industrials & Infrastructure
+1881,0.07270691141087673,5,1.0,ROTO,Roto Pumps Limited,Industrials & Infrastructure
+335,0.07254783309524951,14,0.42857142857142855,BFUTILITIE,BF Utilities Limited,Energy
+1763,0.07209637859326916,5,1.0,PRIMESECU,Prime Securities Limited,Services & Others
+1414,0.07172875966808075,5,0.8,MEDANTA,Global Health Limited,Healthcare & Pharmaceuticals
+377,0.07170798691388723,5,0.6,BLUEJET,Blue Jet Healthcare Limited,Healthcare & Pharmaceuticals
+552,0.07168715708197815,13,0.46153846153846156,DBL,Dilip Buildcon Limited,Industrials & Infrastructure
+1821,0.07128011734643189,5,1.0,RAMRAT,Ram Ratna Wires Limited,"Metals, Mining & Chemicals"
+218,0.07071865772757405,14,0.5714285714285714,ASIANTILES,Asian Granito India Limited,Real Estate & Construction
+2298,0.07069137072579836,12,0.75,TIINDIA,Tube Investments of India Limited,Automobile & Mobility
+1921,0.07017202555918302,6,0.6666666666666666,SAGCEM,Sagar Cements Limited,Real Estate & Construction
+2260,0.06923034488295846,5,0.4,TCPLPACK,TCPL Packaging Limited,Industrials & Infrastructure
+2428,0.06907698209812778,6,0.6666666666666666,VENUSREM,Venus Remedies Limited,Healthcare & Pharmaceuticals
+2089,0.06867779392943402,5,0.8,SJS,S.J.S. Enterprises Limited,Automobile & Mobility
+359,0.06824383111053653,14,0.7857142857142857,BIRLACORPN,Birla Corporation Limited,Real Estate & Construction
+961,0.06818245481525893,5,0.4,HLEGLAS,HLE Glascoat Limited,Industrials & Infrastructure
+313,0.06786113673597682,14,0.2857142857142857,BBTC,The Bombay Burmah Trading Corporation Limited,Consumer & FMCG
+1006,0.06777324451444856,7,0.7142857142857143,IIFLCAPS,IIFL Capital Services Limited,Financial Services
+2182,0.06757404070553422,11,0.45454545454545453,SUNFLAG,Sunflag Iron And Steel Company Limited,"Metals, Mining & Chemicals"
+649,0.06743069909418277,14,0.5714285714285714,EDELWEISS,Edelweiss Financial Services Limited,Financial Services
+946,0.0672693794254538,14,0.6428571428571429,HINDALCO,Hindalco Industries Limited,"Metals, Mining & Chemicals"
+123,0.06718300210350328,7,0.7142857142857143,ALKYLAMINE,Alkyl Amines Chemicals Limited,"Metals, Mining & Chemicals"
+444,0.066340416815716,13,0.6153846153846154,CEMPRO,Cemindia Projects Limited,Industrials & Infrastructure
+587,0.06516550789626316,14,0.7142857142857143,DHAMPURSUG,Dhampur Sugar Mills Limited,Consumer & FMCG
+566,0.06508199882094912,5,0.6,DCXINDIA,DCX Systems Limited,Technology
+269,0.0649064998184488,5,0.8,AZAD,Azad Engineering Limited,Industrials & Infrastructure
+261,0.06487804534614969,5,0.8,AWHCL,Antony Waste Handling Cell Limited,Industrials & Infrastructure
+831,0.06479813471993076,14,0.5714285714285714,GODFRYPHLP,Godfrey Phillips India Limited,Consumer & FMCG
+2047,0.06456541039018229,7,0.7142857142857143,SHREEPUSHK,Shree Pushkar Chemicals & Fertilisers Limited,"Metals, Mining & Chemicals"
+489,0.06426305862735796,12,0.75,COCHINSHIP,Cochin Shipyard Limited,Industrials & Infrastructure
+1192,0.06425247084144547,5,0.6,KDDL,KDDL Limited,Consumer & FMCG
+1468,0.06316885672615802,11,0.7272727272727273,MOLDTKPAC,Mold-Tek Packaging Limited,Industrials & Infrastructure
+1761,0.0627949354763134,14,0.5714285714285714,PRESTIGE,Prestige Estates Projects Limited,Industrials & Infrastructure
+1113,0.06250271043577138,8,0.5,JBMA,JBM Auto Limited,Automobile & Mobility
+663,0.06193164713063142,7,0.42857142857142855,ELECON,Elecon Engineering Company Limited,Industrials & Infrastructure
+2488,0.061339715223082326,10,0.4,VSTTILLERS,V.S.T Tillers Tractors Limited,Automobile & Mobility
+1543,0.06102796825164235,13,0.6923076923076923,NESCO,Nesco Limited,Industrials & Infrastructure
+1432,0.06098430687114114,14,0.7857142857142857,MFSL,Max Financial Services Limited,Financial Services
+434,0.060690584156065645,14,0.6428571428571429,CCAVENUE,AvenuesAI Limited,Technology
+1148,0.060651360318799453,7,0.5714285714285714,JSWHL,JSW Holdings Limited,Financial Services
+937,0.0602775299659122,14,0.42857142857142855,HFCL,HFCL Limited,Services & Others
+956,0.060266306190415064,6,0.6666666666666666,HIRECT,Hirect Limited,Industrials & Infrastructure
+2351,0.06004518506519491,11,0.36363636363636365,TVSELECT,TVS Electronics Limited,Technology
+562,0.059973231884916364,14,0.5714285714285714,DCMSHRIRAM,DCM Shriram Limited,"Metals, Mining & Chemicals"
+2285,0.05955920676813823,5,0.8,THANGAMAYL,Thangamayil Jewellery Limited,Consumer & FMCG
+361,0.05943559509034431,13,0.46153846153846156,BIRLANU,BirlaNu Limited,Real Estate & Construction
+822,0.05875296553561309,14,0.6428571428571429,GMRAIRPORT,GMR AIRPORTS LIMITED,Industrials & Infrastructure
+2545,0.05858064929855814,12,0.5833333333333334,ZENSARTECH,Zensar Technologies Limited,Technology
+1959,0.05857288360522757,5,0.8,SARLAPOLY,Sarla Performance Fibers Limited,Industrials & Infrastructure
+984,0.058485585818133755,5,0.6,ICEMAKE,Ice Make Refrigeration Limited,Technology
+1844,0.05818257781088927,14,0.7142857142857143,RELIANCE,Reliance Industries Limited,Energy
+527,0.05813738673479375,5,0.8,CSBBANK,CSB Bank Limited,Financial Services
+334,0.05812662489581484,13,0.46153846153846156,BFINVEST,BF Investment Limited,Financial Services
+1474,0.057849785814504014,14,0.7142857142857143,MOTHERSON,Samvardhana Motherson International Limited,Automobile & Mobility
+2401,0.05740073758436181,13,0.38461538461538464,UTTAMSUGAR,Uttam Sugar Mills Limited,Consumer & FMCG
+638,0.057334723901833,6,0.5,DYNAMATECH,Dynamatic Technologies Limited,Technology
+60,0.057110991699991745,13,0.6153846153846154,ADFFOODS,ADF Foods Limited,Consumer & FMCG
+1931,0.05694570399864638,5,0.4,SAKSOFT,Saksoft Limited,Technology
+2382,0.05692996733809623,5,0.8,UNIPARTS,Uniparts India Limited,Industrials & Infrastructure
+116,0.05652317371595955,12,0.5,ALEMBICLTD,Alembic Limited,Healthcare & Pharmaceuticals
+1073,0.05639219472017478,5,0.4,IPL,India Pesticides Limited,"Metals, Mining & Chemicals"
+2406,0.05631364149467923,10,0.5,VAIBHAVGBL,Vaibhav Global Limited,Consumer & FMCG
+1334,0.056126751294939325,10,0.6,LUMAXTECH,Lumax Auto Technologies Limited,Technology
+214,0.055973505185241294,14,0.7857142857142857,ASHOKLEY,Ashok Leyland Limited,Automobile & Mobility
+1317,0.05589090861001174,5,0.8,LLOYDSME,Lloyds Metals And Energy Limited,"Metals, Mining & Chemicals"
+977,0.055782430216547406,6,0.3333333333333333,HUBTOWN,Hubtown Limited,Industrials & Infrastructure
+2365,0.05555453148441163,14,0.5,UFLEX,UFLEX Limited,Industrials & Infrastructure
+705,0.05538595567213136,5,0.6,ETERNAL,ETERNAL LIMITED,Consumer & FMCG
+1463,0.055103328747026344,14,0.5714285714285714,MOIL,MOIL Limited,Energy
+675,0.05498580723433426,14,0.42857142857142855,EMBDL,Embassy Developments Limited,Industrials & Infrastructure
+1262,0.05466804758196058,14,0.6428571428571429,KSCL,Kaveri Seed Company Limited,Services & Others
+2240,0.05440601676767472,5,0.8,TARIL,Transformers And Rectifiers (India) Limited,Industrials & Infrastructure
+2101,0.05437930974917251,6,0.5,SMSPHARMA,SMS Pharmaceuticals Limited,Healthcare & Pharmaceuticals
+2463,0.05429464067407728,5,0.6,VISHNU,Vishnu Chemicals Limited,"Metals, Mining & Chemicals"
+1209,0.05409508776410488,5,1.0,KIMS,Krishna Institute of Medical Sciences Limited,Healthcare & Pharmaceuticals
+2070,0.0539048490220829,5,0.4,SIGNPOST,Signpost India Limited,Services & Others
+1031,0.0538683521677323,5,0.8,INDNIPPON,India Nippon Electricals Limited,Automobile & Mobility
+2337,0.053836348610771634,7,0.5714285714285714,TRIDENT,Trident Limited,Industrials & Infrastructure
+1885,0.053767978859931564,14,0.5,RPOWER,Reliance Power Limited,Energy
+1689,0.053393606259664474,5,0.4,PENINLAND,Peninsula Land Limited,Industrials & Infrastructure
+2352,0.05285028224485514,5,0.6,TVSHLTD,TVS Holdings Limited,Automobile & Mobility
+164,0.05258113179446432,9,0.5555555555555556,APARINDS,Apar Industries Limited,Industrials & Infrastructure
+277,0.052554267372671055,14,0.6428571428571429,BAJAJFINSV,Bajaj Finserv Limited,Financial Services
+2145,0.05245837707275216,7,0.7142857142857143,STARCEMENT,Star Cement Limited,Real Estate & Construction
+1898,0.0524495849492435,5,0.4,RTNINDIA,RattanIndia Enterprises Limited,Services & Others
+437,0.05240486066618077,13,0.5384615384615384,CCL,CCL Products (India) Limited,Consumer & FMCG
+1884,0.05225026656067098,9,0.7777777777777778,RPGLIFE,RPG Life Sciences Limited,Healthcare & Pharmaceuticals
+1438,0.05223372490211332,12,0.5,MIDHANI,Mishra Dhatu Nigam Limited,"Metals, Mining & Chemicals"
+2253,0.05217417887469119,5,0.6,TATVA,Tatva Chintan Pharma Chem Limited,Healthcare & Pharmaceuticals
+459,0.0521134705461856,7,0.7142857142857143,CHALET,Chalet Hotels Limited,Services & Others
+1597,0.051798653979833076,5,0.6,NUVAMA,Nuvama Wealth Management Limited,Services & Others
+584,0.051076939937282836,5,0.8,DEVYANI,Devyani International Limited,Consumer & FMCG
+58,0.05103849163952979,14,0.5714285714285714,ADANIPOWER,Adani Power Limited,Energy
+1081,0.05101235920214291,5,0.8,IRISDOREME,Iris Clothings Limited,Industrials & Infrastructure
+1947,0.05093549083581894,5,0.6,SANGAMIND,Sangam (India) Limited,Industrials & Infrastructure
+728,0.050787277954377194,5,0.4,FEDFINA,Fedbank Financial Services Limited,Financial Services
+853,0.05074315762752572,14,0.42857142857142855,GRANULES,Granules India Limited,Healthcare & Pharmaceuticals
+1218,0.050549520808299594,5,0.6,KIRLPNU,Kirloskar Pneumatic Company Limited,Industrials & Infrastructure
+929,0.050234977743843244,5,0.4,HEMIPROP,Hemisphere Properties India Limited,Industrials & Infrastructure
+2496,0.05002944977464597,13,0.46153846153846156,WALCHANNAG,Walchandnagar Industries Limited,Industrials & Infrastructure
+432,0.04972197252520401,5,0.6,CARYSIL,CARYSIL LIMITED,Consumer & FMCG
+2546,0.04898643177546008,6,0.6666666666666666,ZENTEC,Zen Technologies Limited,Technology
+1313,0.0486812817133141,13,0.6923076923076923,LINDEINDIA,Linde India Limited,Energy
+1394,0.04857712059249891,9,0.7777777777777778,MASFIN,MAS Financial Services Limited,Financial Services
+1831,0.0478886992618448,13,0.6923076923076923,RBLBANK,RBL Bank Limited,Financial Services
+2030,0.047886152512812384,11,0.5454545454545454,SHILPAMED,Shilpa Medicare Limited,Healthcare & Pharmaceuticals
+685,0.04756483471930916,13,0.5384615384615384,ENDURANCE,Endurance Technologies Limited,Technology
+299,0.04749931579318481,12,0.5833333333333334,BANDHANBNK,Bandhan Bank Limited,Financial Services
+1059,0.047362963068738995,8,0.375,INOXWIND,Inox Wind Limited,Industrials & Infrastructure
+2165,0.04708085037374264,13,0.46153846153846156,SUBROS,Subros Limited,Automobile & Mobility
+841,0.04706826421303042,8,0.625,GOLDIAM,Goldiam International Limited,Consumer & FMCG
+1359,0.04671655041575438,14,0.5714285714285714,MAITHANALL,Maithan Alloys Limited,"Metals, Mining & Chemicals"
+1892,0.04664388453164335,5,0.6,RRKABEL,R R Kabel Limited,Real Estate & Construction
+215,0.04663349947354302,5,0.6,ASIANENE,Asian Energy Services Limited,Energy
+504,0.04640028504101579,5,0.8,CONTROLPR,Control Print Limited,Technology
+2243,0.04631899262905465,7,0.7142857142857143,TASTYBITE,Tasty Bite Eatables Limited,Consumer & FMCG
+616,0.04598902606789346,5,0.8,DODLA,Dodla Dairy Limited,Consumer & FMCG
+1472,0.045861229489834364,14,0.5,MOREPENLAB,Morepen Laboratories Limited,Healthcare & Pharmaceuticals
+748,0.045688740189530265,7,0.7142857142857143,FMGOETZE,Federal-Mogul Goetze (India) Limited.,Automobile & Mobility
+1681,0.04524474659214638,5,0.4,PAYTM,One 97 Communications Limited,Technology
+733,0.044169591857114526,9,0.6666666666666666,FIEMIND,Fiem Industries Limited,Automobile & Mobility
+140,0.04403583075939073,5,0.6,AMBIKCO,Ambika Cotton Mills Limited,Industrials & Infrastructure
+2251,0.043914048390774695,14,0.6428571428571429,TATASTEEL,Tata Steel Limited,"Metals, Mining & Chemicals"
+149,0.04381342727304999,14,0.6428571428571429,ANDHRSUGAR,The Andhra Sugars Limited,"Metals, Mining & Chemicals"
+342,0.043785089740896295,14,0.7142857142857143,BHARATFORG,Bharat Forge Limited,Automobile & Mobility
+922,0.043647050897785124,12,0.5833333333333334,HDFCLIFE,HDFC Life Insurance Company Limited,Financial Services
+16,0.04360845024662753,5,0.8,AADHARHFC,Aadhar Housing Finance Limited,Financial Services
+394,0.04332833075757782,14,0.6428571428571429,BPCL,Bharat Petroleum Corporation Limited,Energy
+1554,0.04322234721072031,10,0.7,NH,Narayana Hrudayalaya Ltd.,Healthcare & Pharmaceuticals
+1200,0.04277620264268274,10,0.5,KESORAMIND,Kesoram Industries Limited,Real Estate & Construction
+2388,0.042769201883000804,9,0.4444444444444444,UNIVCABLES,Universal Cables Limited,Real Estate & Construction
+1453,0.04263198094394358,14,0.5,MMTC,MMTC Limited,Services & Others
+542,0.04177466321502582,9,0.5555555555555556,DALBHARAT,Dalmia Bharat Limited,Real Estate & Construction
+2480,0.04150143848719835,10,0.5,VOLTAMP,Voltamp Transformers Limited,Industrials & Infrastructure
+204,0.041360121226907236,8,0.75,ASAHIINDIA,Asahi India Glass Limited,Real Estate & Construction
+916,0.04133205600550689,8,0.5,HCG,Healthcare Global Enterprises Limited,Healthcare & Pharmaceuticals
+369,0.041016072778423944,14,0.5714285714285714,BLISSGVS,Bliss GVS Pharma Limited,Healthcare & Pharmaceuticals
+2414,0.04084607944621754,12,0.4166666666666667,VARROC,Varroc Engineering Limited,Automobile & Mobility
+2497,0.04083351293415029,5,0.4,WANBURY,Wanbury Limited,Healthcare & Pharmaceuticals
+1149,0.04064606252561065,5,0.8,JSWINFRA,JSW Infrastructure Limited,Services & Others
+2147,0.04019355777594525,7,0.42857142857142855,STARPAPER,Star Paper Mills Limited,Industrials & Infrastructure
+720,0.03993824145687044,6,0.3333333333333333,FACT,Fertilizers and Chemicals Travancore Limited,"Metals, Mining & Chemicals"
+1926,0.03989908221209452,14,0.6428571428571429,SAIL,Steel Authority of India Limited,"Metals, Mining & Chemicals"
+46,0.03969095409202945,14,0.7142857142857143,ACE,Action Construction Equipment Limited,Industrials & Infrastructure
+2369,0.03967756977600165,5,0.6,UJJIVANSFB,Ujjivan Small Finance Bank Limited,Financial Services
+347,0.039538419624193175,14,0.6428571428571429,BHARTIARTL,Bharti Airtel Limited,Services & Others
+1781,0.03919323006250294,5,0.4,PUNJABCHEM,Punjab Chemicals & Crop Protection Limited,"Metals, Mining & Chemicals"
+761,0.03909444562838637,12,0.5,GAEL,Gujarat Ambuja Exports Limited,Industrials & Infrastructure
+62,0.03901551844805977,5,1.0,ADOR,Ador Welding Limited,Industrials & Infrastructure
+927,0.03899069542179116,13,0.38461538461538464,HEG,HEG Limited,Industrials & Infrastructure
+1492,0.03877091154794594,7,0.7142857142857143,MUKANDLTD,Mukand Limited,"Metals, Mining & Chemicals"
+1213,0.0383542381395479,14,0.5,KIRIINDUS,Kiri Industries Limited,"Metals, Mining & Chemicals"
+292,0.038349090944642,11,0.6363636363636364,BALMLAWRIE,Balmer Lawrie & Company Limited,Services & Others
+284,0.038237741679676994,5,0.2,BAJEL,Bajel Projects Limited,Industrials & Infrastructure
+998,0.03819218727347979,14,0.42857142857142855,IFCI,IFCI Limited,Services & Others
+628,0.03794855595062988,14,0.6428571428571429,DREDGECORP,Dredging Corporation of India Limited,Services & Others
+1379,0.03785013174084344,5,0.8,MANKIND,Mankind Pharma Limited,Healthcare & Pharmaceuticals
+1244,0.03776524331710973,7,0.42857142857142855,KPITTECH,KPIT Technologies Limited,Technology
+1817,0.03771611214420704,14,0.7142857142857143,RAMCOCEM,The Ramco Cements Limited,Real Estate & Construction
+1777,0.03755190154129342,12,0.5833333333333334,PSPPROJECT,PSP Projects Limited,Industrials & Infrastructure
+883,0.037130280998151036,14,0.42857142857142855,GUJENERGY,GUJARAT ENERGY LIMITED,Energy
+2364,0.0370835508630335,5,0.4,UFBL,United Foodbrands Limited,Services & Others
+470,0.036664135244918516,14,0.5,CHOLAFIN,Cholamandalam Investment and Finance Company Limited,Financial Services
+1952,0.03649212944641881,5,0.4,SANSERA,Sansera Engineering Limited,Automobile & Mobility
+1211,0.03647622688900988,5,0.6,KIOCL,KIOCL Limited,"Metals, Mining & Chemicals"
+759,0.036444086214957844,5,0.6,FUSION,Fusion Finance Limited,Financial Services
+287,0.03641495603680335,5,0.4,BALAJITELE,Balaji Telefilms Limited,Services & Others
+281,0.036299806726264795,14,0.7142857142857143,BAJAJHLDNG,Bajaj Holdings & Investment Limited,Financial Services
+1480,0.036279451459548674,6,0.3333333333333333,MPSLTD,MPS Limited,Services & Others
+1399,0.036175398998804634,8,0.625,MAWANASUG,Mawana Sugars Limited,Consumer & FMCG
+2215,0.03577395431887469,14,0.5,SWANCORP,SWAN CORP LIMITED,Industrials & Infrastructure
+736,0.035533920561468965,14,0.6428571428571429,FINCABLES,Finolex Cables Limited,Real Estate & Construction
+828,0.0353670153942295,5,0.4,GOCLCORP,GOCL Corporation Limited,"Metals, Mining & Chemicals"
+1243,0.034921606008641685,14,0.5714285714285714,KPIL,Kalpataru Projects International Limited,Industrials & Infrastructure
+2455,0.03468498842389508,14,0.42857142857142855,VIPIND,VIP Industries Limited,Consumer & FMCG
+1897,0.034684034230283906,5,0.4,RSYSTEMS,R Systems International Limited,Technology
+2239,0.03447230662486363,5,0.6,TARC,TARC Limited,Industrials & Infrastructure
+1706,0.03444461877347404,14,0.42857142857142855,PIIND,PI Industries Limited,"Metals, Mining & Chemicals"
+2307,0.033918083807000246,14,0.5714285714285714,TIRUMALCHM,Thirumalai Chemicals Limited,Technology
+809,0.03374595283639959,14,0.42857142857142855,GLENMARK,Glenmark Pharmaceuticals Limited,Healthcare & Pharmaceuticals
+1329,0.03318570111348138,14,0.5714285714285714,LTF,L&T Finance Limited,Financial Services
+508,0.03311313903759442,14,0.42857142857142855,COROMANDEL,Coromandel International Limited,"Metals, Mining & Chemicals"
+2059,0.03285648927438016,5,0.8,SHYAMMETL,Shyam Metalics and Energy Limited,"Metals, Mining & Chemicals"
+1812,0.032755116394003435,14,0.5714285714285714,RALLIS,Rallis India Limited,"Metals, Mining & Chemicals"
+1732,0.03270079106455003,7,0.7142857142857143,POLYCAB,Polycab India Limited,Real Estate & Construction
+1598,0.032630213392700724,5,0.6,NUVOCO,Nuvoco Vistas Corporation Limited,Real Estate & Construction
+522,0.03233624826861221,14,0.5,CRISIL,Crisil Limited,Services & Others
+49,0.03217220574965773,5,0.6,ACI,Archean Chemical Industries Limited,"Metals, Mining & Chemicals"
+687,0.031615790703737275,14,0.6428571428571429,ENGINERSIN,Engineers India Limited,Industrials & Infrastructure
+668,0.030847864346499297,5,0.6,ELIN,Elin Electronics Limited,Consumer & FMCG
+1865,0.0306997653850833,12,0.5833333333333334,RITES,RITES Limited,Industrials & Infrastructure
+990,0.030087190495316912,6,0.6666666666666666,ICRA,ICRA Limited,Services & Others
+992,0.02999731835704202,14,0.5,IDEA,Vodafone Idea Limited,Services & Others
+57,0.029985180913553306,14,0.5714285714285714,ADANIPORTS,Adani Ports and Special Economic Zone Limited,Services & Others
+225,0.029966869299013706,8,0.5,ASTEC,Astec LifeSciences Limited,"Metals, Mining & Chemicals"
+2157,0.029619325553297465,14,0.42857142857142855,STLTECH,Sterlite Technologies Limited,Technology
+833,0.029608570854011362,12,0.5833333333333334,GODREJAGRO,Godrej Agrovet Limited,Consumer & FMCG
+2335,0.02960734952204445,14,0.6428571428571429,TRENT,Trent Limited,Consumer & FMCG
+1525,0.029517244158855618,7,0.5714285714285714,NAVNETEDUL,Navneet Education Limited,Services & Others
+1941,0.029388395377349896,14,0.42857142857142855,SAMMAANCAP,Sammaan Capital Limited,Financial Services
+791,0.029185258279948313,8,0.25,GEOJITFSL,Geojit Financial Services Limited,Financial Services
+1818,0.028998333226623287,11,0.45454545454545453,RAMCOIND,Ramco Industries Limited,Real Estate & Construction
+2398,0.028961629227622125,5,0.6,UTIAMC,UTI Asset Management Company Limited,Financial Services
+2354,0.028615104562298144,5,0.8,TVSSCS,TVS Supply Chain Solutions Limited,Services & Others
+2447,0.028457130196817053,9,0.4444444444444444,VIMTALABS,Vimta Labs Limited,Healthcare & Pharmaceuticals
+1072,0.028096913104572793,14,0.5714285714285714,IPCALAB,IPCA Laboratories Limited,Healthcare & Pharmaceuticals
+1089,0.027898708188777502,9,0.4444444444444444,ITDC,India Tourism Development Corporation Limited,Services & Others
+978,0.027570485885997757,12,0.5,HUDCO,Housing & Urban Development Corporation Limited,Financial Services
+1193,0.027533024333924943,14,0.5714285714285714,KEC,KEC International Limited,Industrials & Infrastructure
+1872,0.02726585008354382,5,0.6,RML,Rane (Madras) Limited,Automobile & Mobility
+2404,0.02717755796635569,12,0.4166666666666667,VADILALIND,Vadilal Industries Limited,Consumer & FMCG
+1546,0.027044203010385754,12,0.3333333333333333,NETWORK18,Network18 Media & Investments Limited,Services & Others
+2134,0.026985399584665164,14,0.5,SRF,SRF Limited,"Metals, Mining & Chemicals"
+1299,0.02684413423749335,12,0.5833333333333334,LEMONTREE,Lemon Tree Hotels Limited,Services & Others
+589,0.0266767614836396,11,0.45454545454545453,DHANUKA,Dhanuka Agritech Limited,"Metals, Mining & Chemicals"
+208,0.02659229093921496,6,0.3333333333333333,ASHAPURMIN,Ashapura Minechem Limited,"Metals, Mining & Chemicals"
+158,0.026470193938601772,10,0.4,ANTELOPUS,Antelopus Selan Energy Limited,Energy
+2309,0.026375671607375157,14,0.5714285714285714,TITAGARH,TITAGARH RAIL SYSTEMS LIMITED,Industrials & Infrastructure
+1150,0.026234534452663612,14,0.6428571428571429,JSWSTEEL,JSW Steel Limited,"Metals, Mining & Chemicals"
+330,0.026206243404631974,13,0.3076923076923077,BEPL,Bhansali Engineering Polymers Limited,"Metals, Mining & Chemicals"
+172,0.02611141082549298,6,0.16666666666666666,APOLLOPIPE,Apollo Pipes Limited,Industrials & Infrastructure
+1978,0.025932946427720392,10,0.6,SCHNEIDER,Schneider Electric Infrastructure Limited,Industrials & Infrastructure
+691,0.02589905937326036,5,0.6,ENTERO,Entero Healthcare Solutions Limited,Healthcare & Pharmaceuticals
+2515,0.025806194650162463,5,0.6,WHEELS,Wheels India Limited,Automobile & Mobility
+349,0.025719905675408113,14,0.42857142857142855,BHEL,Bharat Heavy Electricals Limited,Industrials & Infrastructure
+1356,0.025574615478853955,12,0.5,MAHLOG,Mahindra Logistics Limited,Services & Others
+2293,0.02556832801010835,13,0.46153846153846156,THYROCARE,Thyrocare Technologies Limited,Technology
+327,0.02545763980735257,14,0.5714285714285714,BEML,BEML Limited,Industrials & Infrastructure
+1013,0.025309656357402458,6,0.6666666666666666,IMFA,Indian Metals & Ferro Alloys Limited,"Metals, Mining & Chemicals"
+1977,0.025186557023147028,5,0.4,SCHAND,S Chand And Company Limited,Services & Others
+275,0.02483481731121091,14,0.35714285714285715,BAJAJCON,Bajaj Consumer Care Limited,Consumer & FMCG
+1232,0.024809171907148923,14,0.5,KOLTEPATIL,Kolte - Patil Developers Limited,Industrials & Infrastructure
+471,0.024745084066600722,12,0.5833333333333334,CHOLAHLDNG,Cholamandalam Financial Holdings Limited,Financial Services
+2485,0.024699430892832223,6,0.5,VSSL,Vardhman Special Steels Limited,"Metals, Mining & Chemicals"
+1105,0.024661692156340453,14,0.5,JAMNAAUTO,Jamna Auto Industries Limited,Automobile & Mobility
+1518,0.02459420862373334,14,0.42857142857142855,NATIONALUM,National Aluminium Company Limited,"Metals, Mining & Chemicals"
+986,0.02433179606123011,14,0.6428571428571429,ICICIBANK,ICICI Bank Limited,Financial Services
+81,0.02430545051584879,7,0.8571428571428571,AFFLE,Affle 3i Limited,Technology
+808,0.024200332096339573,14,0.6428571428571429,GLAXO,GlaxoSmithKline Pharmaceuticals Limited,Healthcare & Pharmaceuticals
+1486,0.024131152543679472,5,0.6,MSUMI,Motherson Sumi Wiring India Limited,"Metals, Mining & Chemicals"
+2516,0.02381964544450641,14,0.5714285714285714,WHIRLPOOL,Whirlpool of India Limited,Consumer & FMCG
+651,0.023654054057632396,14,0.6428571428571429,EICHERMOT,Eicher Motors Limited,Automobile & Mobility
+2353,0.023624109864702068,14,0.7142857142857143,TVSMOTOR,TVS Motor Company Limited,Automobile & Mobility
+1958,0.023574706876758326,9,0.4444444444444444,SAREGAMA,Saregama India Limited,Services & Others
+2396,0.023540772411509273,13,0.5384615384615384,USHAMART,Usha Martin Limited,"Metals, Mining & Chemicals"
+28,0.022738625939341905,11,0.45454545454545453,AAVAS,Aavas Financiers Limited,Financial Services
+988,0.022646895890494213,13,0.46153846153846156,ICICIPRULI,ICICI Prudential Life Insurance Company Limited,Financial Services
+1157,0.022602268653134215,5,0.4,JUNIPER,Juniper Hotels Limited,Services & Others
+711,0.022324654929121134,14,0.6428571428571429,EVEREADY,Eveready Industries India Limited,Automobile & Mobility
+2257,0.021777332919182022,9,0.6666666666666666,TCI,Transport Corporation of India Limited,Services & Others
+1968,0.02151915399146482,5,0.6,SBCL,Shivalik Bimetal Controls Limited,"Metals, Mining & Chemicals"
+858,0.02151901569050123,8,0.375,GRAVITA,Gravita India Limited,"Metals, Mining & Chemicals"
+2103,0.021442692873130685,14,0.42857142857142855,SOBHA,Sobha Limited,Industrials & Infrastructure
+954,0.021339433469299996,5,0.4,HINDWAREAP,Hindware Home Innovation Limited,Consumer & FMCG
+1350,0.021330428694164762,9,0.5555555555555556,MAHABANK,Bank of Maharashtra,Financial Services
+32,0.02130504127011201,14,0.6428571428571429,ABBOTINDIA,Abbott India Limited,Healthcare & Pharmaceuticals
+1485,0.021199518906821462,7,0.5714285714285714,MSTCLTD,Mstc Limited,Services & Others
+1185,0.02090228048576406,14,0.5,KARURVYSYA,Karur Vysya Bank Limited,Financial Services
+854,0.02071327217244005,13,0.38461538461538464,GRAPHITE,Graphite India Limited,Industrials & Infrastructure
+1141,0.02064368632014766,8,0.25,JPPOWER,Jaiprakash Power Ventures Limited,Energy
+1387,0.02024129322304393,5,0.4,MARATHON,Marathon Nextgen Realty Limited,Industrials & Infrastructure
+2088,0.02021387164213685,6,0.5,SIYSIL,Siyaram Silk Mills Limited,Industrials & Infrastructure
+1303,0.019915177927936577,7,0.5714285714285714,LGBBROSLTD,LG Balakrishnan & Bros Limited,Automobile & Mobility
+401,0.019890116352513802,14,0.6428571428571429,BRITANNIA,Britannia Industries Limited,Consumer & FMCG
+2429,0.01988024544677105,5,0.4,VERANDA,Veranda Learning Solutions Limited,Services & Others
+404,0.01946475351766391,13,0.6923076923076923,BSE,BSE Limited,Services & Others
+1266,0.01905604948812564,12,0.75,KSL,Kalyani Steels Limited,"Metals, Mining & Chemicals"
+1548,0.01887783078426758,11,0.36363636363636365,NEULANDLAB,Neuland Laboratories Limited,Healthcare & Pharmaceuticals
+1003,0.01846193093122647,14,0.7857142857142857,IGL,Indraprastha Gas Limited,Energy
+5,0.018368256634263024,5,0.2,20MICRONS,20 Microns Limited,"Metals, Mining & Chemicals"
+2297,0.01835239767153525,6,0.6666666666666666,TIIL,Technocraft Industries (India) Limited,"Metals, Mining & Chemicals"
+445,0.01806379741664431,9,0.6666666666666666,CENTENKA,Century Enka Limited,Industrials & Infrastructure
+2187,0.018041774000426804,14,0.5714285714285714,SUNTECK,Sunteck Realty Limited,Industrials & Infrastructure
+1376,0.017781309778676587,8,0.375,MANINDS,Man Industries (India) Limited,"Metals, Mining & Chemicals"
+398,0.017778470634565245,13,0.46153846153846156,BRIGADE,Brigade Enterprises Limited,Industrials & Infrastructure
+233,0.01759730186999045,10,0.5,ATGL,Adani Total Gas Limited,Energy
+120,0.017268942981460023,5,0.4,ALIVUS,Alivus Life Sciences Limited,Healthcare & Pharmaceuticals
+2106,0.017125239416700334,12,0.5833333333333334,SOLARINDS,Solar Industries India Limited,Energy
+188,0.01712390840433916,5,0.4,ARIHANTCAP,Arihant Capital Markets Limited,Services & Others
+2313,0.01659644711976199,14,0.5,TMPV,Tata Motors Passenger Vehicles Limited,Automobile & Mobility
+2194,0.01655675796691711,14,0.42857142857142855,SUPREMEIND,Supreme Industries Limited,Industrials & Infrastructure
+1541,0.016340945750305213,6,0.5,NEOGEN,Neogen Chemicals Limited,"Metals, Mining & Chemicals"
+352,0.016002691131701646,5,0.6,BIKAJI,Bikaji Foods International Limited,Consumer & FMCG
+1222,0.015794617622024252,5,0.8,KKCL,Kewal Kiran Clothing Limited,Industrials & Infrastructure
+1401,0.01566288223794334,5,0.6,MAXHEALTH,Max Healthcare Institute Limited,Healthcare & Pharmaceuticals
+2471,0.015625865297763095,13,0.46153846153846156,VIYASH,Viyash Scientific Limited,Healthcare & Pharmaceuticals
+823,0.015612266173166207,5,0.8,GMRP&UI,GMR Power and Urban Infra Limited,Energy
+577,0.015538493870905168,14,0.42857142857142855,DELTACORP,Delta Corp Limited,Consumer & FMCG
+391,0.015512806147650934,5,0.4,BOROSCI,Borosil Scientific Limited,Industrials & Infrastructure
+1132,0.015483973780559237,14,0.5714285714285714,JKPAPER,JK Paper Limited,Industrials & Infrastructure
+598,0.015252173900087287,5,0.6,DIAMONDYD,Prataap Snacks Limited,Consumer & FMCG
+820,0.014747973046618828,14,0.5,GMDCLTD,Gujarat Mineral Development Corporation Limited,"Metals, Mining & Chemicals"
+1084,0.014453908490940814,5,0.4,ISGEC,Isgec Heavy Engineering Limited,Industrials & Infrastructure
+1691,0.01433004514896856,14,0.5,PERSISTENT,Persistent Systems Limited,Technology
+1279,0.014286027918100483,14,0.5,LALPATHLAB,Dr. Lal Path Labs Ltd.,Healthcare & Pharmaceuticals
+2141,0.014148364788372173,8,0.625,SSWL,Steel Strips Wheels Limited,Automobile & Mobility
+1124,0.014122437134772015,5,0.6,JIOFIN,Jio Financial Services Limited,Financial Services
+832,0.013904049265677471,5,0.8,GODIGIT,Go Digit General Insurance Limited,Financial Services
+176,0.013701960732296039,14,0.5,APTECHT,Aptech Limited,Services & Others
+792,0.013624982846294573,14,0.5714285714285714,GESHIP,The Great Eastern Shipping Company Limited,Services & Others
+128,0.01347225572745991,5,0.6,ALOKINDS,Alok Industries Limited,Industrials & Infrastructure
+2045,0.013117304852504194,14,0.5714285714285714,SHREECEM,SHREE CEMENT LIMITED,Real Estate & Construction
+291,0.013074858402407324,14,0.5,BALKRISIND,Balkrishna Industries Limited,Automobile & Mobility
+492,0.013038994311150198,14,0.5714285714285714,COFORGE,Coforge Limited,Technology
+839,0.012911711565776035,5,0.4,GOKULAGRO,Gokul Agro Resources Limited,Consumer & FMCG
+987,0.012866096028540224,12,0.5833333333333334,ICICIGI,ICICI Lombard General Insurance Company Limited,Financial Services
+2356,0.012346773162943515,11,0.2727272727272727,TVTODAY,TV Today Network Limited,Services & Others
+612,0.01225171747788847,9,0.5555555555555556,DLINKINDIA,D-Link (India) Limited,Technology
+1028,0.012229437360690364,14,0.42857142857142855,INDIGO,InterGlobe Aviation Limited,Services & Others
+1827,0.011851230483590278,12,0.5,RAYMOND,Raymond Limited,Industrials & Infrastructure
+1428,0.011763965952389727,5,0.6,METROBRAND,Metro Brands Limited,Consumer & FMCG
+1497,0.011726923202439865,5,0.4,MUNJALSHOW,Munjal Showa Limited,Automobile & Mobility
+2481,0.011527369226603459,14,0.5714285714285714,VOLTAS,Voltas Limited,Consumer & FMCG
+1699,0.011449177447559506,14,0.42857142857142855,PGHL,Procter & Gamble Health Limited,Healthcare & Pharmaceuticals
+438,0.011260994652547129,12,0.5,CDSL,Central Depository Services (India) Limited,Financial Services
+448,0.011247055574779258,5,0.4,CENTRUM,Centrum Capital Limited,Financial Services
+1023,0.01040504419902999,7,0.7142857142857143,INDIAMART,Indiamart Intermesh Limited,Consumer & FMCG
+2055,0.010261359448187046,5,0.2,SHRIRAMPPS,Shriram Properties Limited,Industrials & Infrastructure
+407,0.010228416574397372,14,0.35714285714285715,BSOFT,BIRLASOFT LIMITED,Technology
+1231,0.010130363668529138,6,0.8333333333333334,KOKUYOCMLN,Kokuyo Camlin Limited,Industrials & Infrastructure
+1489,0.009799452393194156,13,0.46153846153846156,MTNL,Mahanagar Telephone Nigam Limited,Services & Others
+1527,0.009654053724616446,14,0.5,NBCC,NBCC (India) Limited,Industrials & Infrastructure
+227,0.009436875256650809,14,0.42857142857142855,ASTRAL,Astral Limited,Industrials & Infrastructure
+1799,0.009352245759020763,14,0.5,RADICO,Radico Khaitan Limited,Consumer & FMCG
+737,0.009335620152844191,12,0.6666666666666666,FINEORG,Fine Organic Industries Limited,"Metals, Mining & Chemicals"
+1107,0.009283651248288857,6,0.5,JASH,Jash Engineering Limited,Industrials & Infrastructure
+220,0.009155592149685143,5,0.8,ASKAUTOLTD,ASK Automotive Limited,Automobile & Mobility
+774,0.009124062908363243,12,0.5833333333333334,GARFIBRES,Garware Technical Fibres Limited,Industrials & Infrastructure
+795,0.008802549507340805,5,0.6,GHCLTEXTIL,GHCL Textiles Limited,Industrials & Infrastructure
+1529,0.008695246068400147,14,0.5,NCC,NCC Limited,Industrials & Infrastructure
+1801,0.008569447708389391,5,0.4,RAILTEL,Railtel Corporation Of India Limited,Services & Others
+2231,0.008276325570682816,8,0.375,TAJGVK,Taj GVK Hotels & Resorts Limited,Services & Others
+969,0.008121614363782052,13,0.6153846153846154,HONAUT,Honeywell Automation India Limited,Consumer & FMCG
+244,0.007946017837533329,13,0.5384615384615384,AURUM,Aurum PropTech Limited,Technology
+1778,0.0077878291189148975,14,0.42857142857142855,PTC,PTC India Limited,Energy
+1523,0.007632755868861001,12,0.4166666666666667,NAVKARCORP,Navkar Corporation Limited,Services & Others
+1757,0.007594514090276068,6,0.5,PREMEXPLN,Premier Explosives Limited,"Metals, Mining & Chemicals"
+608,0.00688849817422357,14,0.5714285714285714,DIVISLAB,Divi's Laboratories Limited,Healthcare & Pharmaceuticals
+734,0.006759450044198516,13,0.5384615384615384,FILATEX,Filatex India Limited,Industrials & Infrastructure
+928,0.006130493786000475,14,0.5,HEIDELBERG,HeidelbergCement India Limited,Real Estate & Construction
+1436,0.006055302437732959,12,0.5833333333333334,MHRIL,Mahindra Holidays & Resorts India Limited,Services & Others
+655,0.005967066566093403,5,0.4,EIHAHOTELS,EIH Associated Hotels Limited,Services & Others
+862,0.005817203288206687,13,0.5384615384615384,GREENPLY,Greenply Industries Limited,Industrials & Infrastructure
+1512,0.005365662479594973,5,0.4,NAHARSPING,Nahar Spinning Mills Limited,Industrials & Infrastructure
+2258,0.00524280476342344,12,0.5833333333333334,TCIEXP,TCI Express Limited,Services & Others
+1852,0.005199812927803402,5,0.4,REPRO,Repro India Limited,Services & Others
+1858,0.004895175575853966,10,0.5,RHIM,RHI MAGNESITA INDIA LIMITED,Industrials & Infrastructure
+2370,0.004713738349276961,14,0.5714285714285714,ULTRACEMCO,UltraTech Cement Limited,Real Estate & Construction
+1974,0.004626488905860563,14,0.6428571428571429,SBIN,State Bank of India,Financial Services
+1945,0.004567409996839866,5,0.6,SANDHAR,Sandhar Technologies Limited,Technology
+1307,0.004565165951708384,13,0.5384615384615384,LIBERTSHOE,Liberty Shoes Limited,Consumer & FMCG
+1830,0.004535580141042,5,0.6,RBA,Restaurant Brands Asia Limited,Financial Services
+1784,0.004416034856168041,14,0.6428571428571429,PVRINOX,PVR INOX Limited,Services & Others
+2311,0.004035642882390417,5,0.4,TMB,Tamilnad Mercantile Bank Limited,Financial Services
+740,0.003674403959034515,14,0.5,FINPIPE,Finolex Industries Limited,Industrials & Infrastructure
+429,0.0032972120858256082,14,0.42857142857142855,CARERATING,CARE Ratings Limited,Services & Others
+1642,0.002427355799376092,12,0.4166666666666667,ORISSAMINE,The Orissa Minerals Development Company Limited,"Metals, Mining & Chemicals"
+1315,0.002322806334683225,5,0.4,LLOYDSENGG,LLOYDS ENGINEERING WORKS LIMITED,Industrials & Infrastructure
+1636,0.002231112243851948,12,0.6666666666666666,ORIENTELEC,Orient Electric Limited,Consumer & FMCG
+658,0.0018167609791228509,7,0.42857142857142855,EKC,Everest Kanto Cylinder Limited,Industrials & Infrastructure
+836,0.0018154231926825342,14,0.42857142857142855,GODREJPROP,Godrej Properties Limited,Industrials & Infrastructure
+1765,0.0017401788830591735,5,0.6,PRINCEPIPE,Prince Pipes And Fittings Limited,Industrials & Infrastructure
+303,0.0016412448602512175,14,0.5714285714285714,BANKINDIA,Bank of India,Financial Services
+850,0.0015222004753114374,6,0.5,GPTINFRA,GPT Infraprojects Limited,Industrials & Infrastructure
+417,0.0013929515202615705,5,0.6,CAMPUS,Campus Activewear Limited,Consumer & FMCG
+2108,0.0013823655492138265,5,0.4,SOLEX,Solex Energy Limited,Industrials & Infrastructure
+1319,0.0013278384164318673,5,0.6,LODHA,Lodha Developers Limited,Industrials & Infrastructure
+1339,0.0013072034655218848,14,0.35714285714285715,M&M,Mahindra & Mahindra Limited,Automobile & Mobility
+1199,0.0008734959764140849,5,0.4,KERNEX,Kernex Microsystems (India) Limited,Technology
+613,0.0006965851557497437,12,0.5833333333333334,DMART,Avenue Supermarts Limited,Consumer & FMCG
+2152,0.0005306938424572277,5,0.6,STEELXIND,STEEL EXCHANGE INDIA LIMITED,"Metals, Mining & Chemicals"
+76,0.0004843528405849451,5,0.4,AEROFLEX,Aeroflex Industries Limited,"Metals, Mining & Chemicals"
+79,0.0003181282270926733,5,0.4,AETHER,Aether Industries Limited,"Metals, Mining & Chemicals"
+921,0.00018839253756471448,14,0.5,HDFCBANK,HDFC Bank Limited,Financial Services
+1060,0.00018783602780547587,13,0.46153846153846156,INSECTICID,Insecticides (India) Limited,"Metals, Mining & Chemicals"
+824,0.0001843906812023425,13,0.38461538461538464,GNA,GNA Axles Limited,Automobile & Mobility
+2254,-5.8284846278172654e-05,5,0.6,TBOTEK,TBO Tek Limited,Consumer & FMCG
+1749,-0.00015832899382521085,14,0.5,PRAKASH,Prakash Industries Limited,"Metals, Mining & Chemicals"
+2178,-0.0003081060706142391,14,0.5,SUNDARMFIN,Sundaram Finance Limited,Financial Services
+666,-0.0003973448712351335,6,0.3333333333333333,ELGIEQUIP,Elgi Equipments Limited,Industrials & Infrastructure
+298,-0.00048336555248062226,7,0.2857142857142857,BANCOINDIA,Banco Products (I) Limited,Automobile & Mobility
+1971,-0.0005044994910403611,5,0.4,SBICARD,SBI Cards and Payment Services Limited,Financial Services
+1579,-0.0008757629023006709,14,0.5,NMDC,NMDC Limited,"Metals, Mining & Chemicals"
+274,-0.0009121679300834383,14,0.5714285714285714,BAJAJ-AUTO,Bajaj Auto Limited,Automobile & Mobility
+2149,-0.0010155555176588442,12,0.5,STCINDIA,The State Trading Corporation of India Limited,Services & Others
+2310,-0.0013954251641821597,14,0.5,TITAN,Titan Company Limited,Consumer & FMCG
+1572,-0.0016008569342150364,7,0.5714285714285714,NITCO,Nitco Limited,Real Estate & Construction
+1692,-0.0016236091098246186,14,0.6428571428571429,PETRONET,Petronet LNG Limited,Energy
+31,-0.0016703965702647586,14,0.5,ABB,ABB India Limited,Industrials & Infrastructure
+2390,-0.0017954481623064522,14,0.5,UNOMINDA,UNO Minda Limited,Automobile & Mobility
+1501,-0.0022296394229925688,5,0.4,MUTHOOTMF,Muthoot Microfin Limited,Financial Services
+966,-0.002337807988441237,5,0.4,HNDFDS,Hindustan Foods Limited,Consumer & FMCG
+753,-0.0024237029169432464,14,0.5714285714285714,FORTIS,Fortis Healthcare Limited,Healthcare & Pharmaceuticals
+2301,-0.0026183213305995237,14,0.5,TIMETECHNO,Time Technoplast Limited,Industrials & Infrastructure
+2144,-0.002919528489484861,14,0.5714285714285714,STAR,Strides Pharma Science Limited,Healthcare & Pharmaceuticals
+1155,-0.0030086438400162728,5,0.4,JUBLINGREA,Jubilant Ingrevia Limited,"Metals, Mining & Chemicals"
+573,-0.0032674006794807817,14,0.5,DEEPAKNTR,Deepak Nitrite Limited,"Metals, Mining & Chemicals"
+1154,-0.0034103664110829743,14,0.35714285714285715,JUBLFOOD,Jubilant Foodworks Limited,Consumer & FMCG
+699,-0.003448134968513652,6,0.6666666666666666,ESABINDIA,Esab India Limited,Industrials & Infrastructure
+1159,-0.0034748592295432033,5,0.4,JWL,Jupiter Wagons Limited,Industrials & Infrastructure
+1434,-0.0035062359063042924,13,0.46153846153846156,MGL,Mahanagar Gas Limited,Energy
+2320,-0.0035528968660650806,14,0.5,TORNTPOWER,Torrent Power Limited,Energy
+365,-0.003580211819682935,5,0.4,BLAL,BEML Land Assets Limited,Industrials & Infrastructure
+1860,-0.003861681291973884,14,0.5,RICOAUTO,Rico Auto Industries Limited,Automobile & Mobility
+96,-0.0038884363539693173,7,0.42857142857142855,AHLUCONT,Ahluwalia Contracts (India) Limited,Industrials & Infrastructure
+378,-0.004145295174205227,14,0.5,BLUESTARCO,Blue Star Limited,Consumer & FMCG
+620,-0.004222752729420812,5,0.6,DOMS,DOMS Industries Limited,Industrials & Infrastructure
+1165,-0.004342983329570103,14,0.42857142857142855,KAJARIACER,Kajaria Ceramics Limited,Real Estate & Construction
+758,-0.004421473894336304,14,0.5,FSL,Firstsource Solutions Limited,Technology
+1909,-0.004479775812973277,5,0.6,RUSTOMJEE,Keystone Realtors Limited,Industrials & Infrastructure
+1841,-0.004672526490310595,12,0.5833333333333334,RELAXO,Relaxo Footwears Limited,Consumer & FMCG
+1045,-0.0047332908604896026,8,0.5,INDRAMEDCO,Indraprastha Medical Corporation Limited,Healthcare & Pharmaceuticals
+2054,-0.00495061013784695,14,0.42857142857142855,SHRIRAMFIN,Shriram Finance Limited,Financial Services
+1846,-0.005142450545037579,14,0.2857142857142857,RELINFRA,Reliance Infrastructure Limited,Energy
+1562,-0.00521265426969727,5,0.2,NILAINFRA,Nila Infrastructures Limited,Industrials & Infrastructure
+692,-0.005266251164430183,5,0.6,EPACK,EPACK Durable Limited,Consumer & FMCG
+611,-0.005710465429972275,14,0.35714285714285715,DLF,DLF Limited,Industrials & Infrastructure
+1142,-0.005717136330135958,5,0.6,JSFB,Jana Small Finance Bank Limited,Financial Services
+1607,-0.005834875594144223,14,0.5,OIL,Oil India Limited,Energy
+1388,-0.005885663308502305,14,0.5,MARICO,Marico Limited,Consumer & FMCG
+481,-0.005971006473214658,5,0.6,CLSEL,Chaman Lal Setia Exports Limited,Consumer & FMCG
+2250,-0.00606360961218905,14,0.42857142857142855,TATAPOWER,Tata Power Company Limited,Energy
+727,-0.0061095507277931565,14,0.42857142857142855,FEDERALBNK,The Federal Bank  Limited,Financial Services
+485,-0.006170266159913318,5,0.6,CMSINFO,CMS Info Systems Limited,Technology
+888,-0.0061805114639943756,5,0.6,GULPOLY,Gulshan Polyols Limited,Consumer & FMCG
+422,-0.006587352681128145,8,0.375,CANTABIL,Cantabil Retail India Limited,Industrials & Infrastructure
+994,-0.006674798257942572,14,0.5,IDFCFIRSTB,IDFC First Bank Limited,Financial Services
+834,-0.0067306463731610965,14,0.5,GODREJCP,Godrej Consumer Products Limited,Consumer & FMCG
+177,-0.006740887509952637,5,0.4,APTUS,Aptus Value Housing Finance India Limited,Financial Services
+1782,-0.00679259406720203,12,0.3333333333333333,PURVA,Puravankara Limited,Industrials & Infrastructure
+1393,-0.00697055584169016,14,0.35714285714285715,MARUTI,Maruti Suzuki India Limited,Automobile & Mobility
+1675,-0.006994459672287942,5,0.6,PATANJALI,Patanjali Foods Limited,Consumer & FMCG
+572,-0.007118270197999871,14,0.5,DEEPAKFERT,Deepak Fertilizers and Petrochemicals Corporation Limited,"Metals, Mining & Chemicals"
+412,-0.007188986899417045,7,0.42857142857142855,BUTTERFLY,Butterfly Gandhimathi Appliances Limited,Consumer & FMCG
+886,-0.007696010215548071,12,0.4166666666666667,GULFOILLUB,Gulf Oil Lubricants India Limited,Energy
+1602,-0.007706785727759344,14,0.5,OBEROIRLTY,Oberoi Realty Limited,Industrials & Infrastructure
+476,-0.007757086328456053,14,0.5714285714285714,CIPLA,Cipla Limited,Healthcare & Pharmaceuticals
+456,-0.007923694628753974,12,0.3333333333333333,CGCL,Capri Global Capital Limited,Financial Services
+420,-0.00799440725120584,14,0.35714285714285715,CANFINHOME,Can Fin Homes Limited,Financial Services
+1955,-0.00816418186399662,5,0.4,SAPPHIRE,Sapphire Foods India Limited,Consumer & FMCG
+1701,-0.008348202044034154,14,0.5,PHOENIXLTD,The Phoenix Mills Limited,Industrials & Infrastructure
+1520,-0.008369359454292149,14,0.5714285714285714,NAUKRI,Info Edge (India) Limited,Technology
+1075,-0.009355278374470255,14,0.35714285714285715,IRB,IRB Infrastructure Developers Limited,Industrials & Infrastructure
+2440,-0.00953444760410849,5,0.6,VIJAYA,Vijaya Diagnostic Centre Limited,Healthcare & Pharmaceuticals
+1820,-0.009563101218383337,11,0.2727272727272727,RAMKY,Ramky Infrastructure Limited,Industrials & Infrastructure
+2180,-0.00997546168215777,14,0.35714285714285715,SUNDRMFAST,Sundram Fasteners Limited,Automobile & Mobility
+798,-0.010052831830260239,12,0.3333333333333333,GICRE,General Insurance Corporation of India,Financial Services
+1385,-0.010144968852105534,5,0.4,MAPMYINDIA,C.E. Info Systems Limited,Technology
+554,-0.010275358234462907,7,0.2857142857142857,DBREALTY,Valor Estate Limited,Industrials & Infrastructure
+677,-0.01030918102963439,5,0.4,EMIL,Electronics Mart India Limited,Consumer & FMCG
+819,-0.010315246821817605,14,0.35714285714285715,GMBREW,GM Breweries Limited,Consumer & FMCG
+989,-0.01044884900101946,11,0.45454545454545453,ICIL,Indo Count Industries Limited,Industrials & Infrastructure
+1694,-0.010488298124669048,14,0.5714285714285714,PFIZER,Pfizer Limited,Healthcare & Pharmaceuticals
+1544,-0.0104910883977529,14,0.42857142857142855,NESTLEIND,Nestle India Limited,Consumer & FMCG
+1886,-0.010512516344236493,8,0.5,RPPINFRA,R.P.P. Infra Projects Limited,Industrials & Infrastructure
+848,-0.010525201377787943,14,0.42857142857142855,GPPL,Gujarat Pipavav Port Limited,Services & Others
+425,-0.010671297604837923,5,0.6,CAPITALSFB,Capital Small Finance Bank Limited,Financial Services
+2166,-0.01068830041478074,8,0.375,SUDARCOLOR,Sudarshan Colorants India Limited,"Metals, Mining & Chemicals"
+1419,-0.010902794784122944,9,0.2222222222222222,MEDPLUS,Medplus Health Services Limited,Healthcare & Pharmaceuticals
+672,-0.010919414440783133,14,0.35714285714285715,EMAMILTD,Emami Limited,Consumer & FMCG
+2018,-0.011079430688837858,6,0.5,SHANTIGEAR,Shanthi Gears Limited,Automobile & Mobility
+1688,-0.011342483167980883,8,0.375,PENIND,Pennar Industries Limited,"Metals, Mining & Chemicals"
+1835,-0.01146886815487103,14,0.42857142857142855,RECLTD,REC Limited,Services & Others
+865,-0.011482690802014698,5,0.4,GRINFRA,G R Infraprojects Limited,Industrials & Infrastructure
+2205,-0.011584581372156356,13,0.5384615384615384,SURYAROSNI,Surya Roshni Limited,"Metals, Mining & Chemicals"
+1126,-0.011731889664436905,14,0.21428571428571427,JISLJALEQS,Jain Irrigation Systems Limited,Industrials & Infrastructure
+1335,-0.011851842248924204,14,0.5,LUPIN,Lupin Limited,Healthcare & Pharmaceuticals
+2117,-0.012071709829519087,14,0.42857142857142855,SOUTHBANK,The South Indian Bank Limited,Financial Services
+1129,-0.012207632596638587,14,0.5,JKIL,J.Kumar Infraprojects Limited,Industrials & Infrastructure
+1490,-0.012425596768546243,5,0.6,MUFIN,Mufin Green Finance Limited,Financial Services
+1791,-0.01252342035522656,13,0.5384615384615384,QUESS,Quess Corp Limited,Services & Others
+855,-0.013056366673640659,14,0.5714285714285714,GRASIM,Grasim Industries Limited,"Metals, Mining & Chemicals"
+500,-0.01310232573283364,14,0.5,CONCOR,Container Corporation of India Limited,Services & Others
+239,-0.013179707382202244,14,0.5,ATUL,Atul Limited,"Metals, Mining & Chemicals"
+725,-0.013197192143499936,10,0.4,FDC,FDC Limited,Healthcare & Pharmaceuticals
+540,-0.013252102391155233,14,0.42857142857142855,DABUR,Dabur India Limited,Consumer & FMCG
+1131,-0.013287725525063613,14,0.5,JKLAKSHMI,JK Lakshmi Cement Limited,Real Estate & Construction
+802,-0.013442289918035782,8,0.625,GIPCL,Gujarat Industries Power Company Limited,Energy
+2315,-0.01358125864646529,13,0.46153846153846156,TNPL,Tamil Nadu Newsprint & Papers Limited,Industrials & Infrastructure
+472,-0.013861414664708555,14,0.42857142857142855,CIEINDIA,CIE Automotive India Limited,Automobile & Mobility
+308,-0.013986405696088366,14,0.5,BATAINDIA,Bata India Limited,Consumer & FMCG
+970,-0.014017006077060834,6,0.3333333333333333,HONDAPOWER,Honda India Power Products Limited,Energy
+147,-0.014220499617588957,13,0.38461538461538464,ANANTRAJ,Anant Raj Limited,Industrials & Infrastructure
+1530,-0.014465508204137603,8,0.5,NCLIND,NCL Industries Limited,Real Estate & Construction
+880,-0.014574636333715092,6,0.16666666666666666,GUFICBIO,Gufic Biosciences Limited,Healthcare & Pharmaceuticals
+2181,-0.01498179706047229,6,0.5,SUNDROP,Sundrop Brands Limited,Consumer & FMCG
+312,-0.01507216292286818,5,0.4,BBOX,Black Box Limited,Services & Others
+1659,-0.015130836672434065,5,0.6,PANAMAPET,Panama Petrochem Limited,Energy
+629,-0.015145099738531417,14,0.6428571428571429,DRREDDY,Dr. Reddy's Laboratories Limited,Healthcare & Pharmaceuticals
+263,-0.01528547888513652,14,0.35714285714285715,AXISBANK,Axis Bank Limited,Financial Services
+453,-0.015298873350235026,14,0.35714285714285715,CESC,CESC Limited,Energy
+1911,-0.015661040448135523,7,0.42857142857142855,RVNL,Rail Vikas Nigam Limited,Industrials & Infrastructure
+1521,-0.015709431411356254,13,0.5384615384615384,NAVA,NAVA LIMITED,Energy
+10,-0.015718351335901527,14,0.7142857142857143,3MINDIA,3M India Limited,Industrials & Infrastructure
+1328,-0.015719333091456542,14,0.5,LT,Larsen & Toubro Limited,Industrials & Infrastructure
+2489,-0.01584915790939328,14,0.42857142857142855,VTL,Vardhman Textiles Limited,Industrials & Infrastructure
+2146,-0.016077631160689037,5,0.2,STARHEALTH,Star Health and Allied Insurance Company Limited,Financial Services
+997,-0.01621280935225228,12,0.5,IFBIND,IFB Industries Limited,Consumer & FMCG
+310,-0.016276560424145613,14,0.5,BAYERCROP,Bayer Cropscience Limited,"Metals, Mining & Chemicals"
+800,-0.016427623614132764,14,0.5,GILLETTE,Gillette India Limited,Consumer & FMCG
+1573,-0.016493903294089587,7,0.5714285714285714,NITINSPIN,Nitin Spinners Limited,Industrials & Infrastructure
+952,-0.01649780038784652,14,0.42857142857142855,HINDPETRO,Hindustan Petroleum Corporation Limited,Energy
+1217,-0.0166007596761508,5,0.4,KIRLOSIND,Kirloskar Industries Limited,Industrials & Infrastructure
+2265,-0.01665469700875309,14,0.6428571428571429,TECHM,Tech Mahindra Limited,Technology
+1960,-0.016755803367814646,5,0.4,SARVESHWAR,Sarveshwar Foods Limited,Consumer & FMCG
+1026,-0.017062324377829487,10,0.4,INDIANHUME,Indian Hume Pipe Company Limited,Industrials & Infrastructure
+533,-0.01745419856137662,14,0.42857142857142855,CUMMINSIND,Cummins India Limited,Industrials & Infrastructure
+1369,-0.017640463901704387,9,0.4444444444444444,MANALIPETC,Manali Petrochemicals Limited,"Metals, Mining & Chemicals"
+423,-0.017832553962898293,11,0.45454545454545453,CAPACITE,Capacit'e Infraprojects Limited,Industrials & Infrastructure
+69,-0.017872560066206494,13,0.46153846153846156,ADVENZYMES,Advanced Enzyme Technologies Limited,Technology
+1336,-0.017906419487816457,13,0.38461538461538464,LUXIND,Lux Industries Limited,Industrials & Infrastructure
+1158,-0.01811506324957423,14,0.5,JUSTDIAL,Just Dial Limited,Consumer & FMCG
+1234,-0.018157346636615453,14,0.5,KOTAKBANK,Kotak Mahindra Bank Limited,Financial Services
+837,-0.01816267845158854,9,0.4444444444444444,GOKEX,Gokaldas Exports Limited,Industrials & Infrastructure
+393,-0.018347071068568838,14,0.35714285714285715,BOSCHLTD,Bosch Limited,Automobile & Mobility
+1964,-0.01850364959646108,5,0.2,SAURASHCEM,Saurashtra Cement Limited,Real Estate & Construction
+932,-0.018546751997302734,14,0.35714285714285715,HEROMOTOCO,Hero MotoCorp Limited,Automobile & Mobility
+7,-0.018900745913033333,7,0.2857142857142857,360ONE,360 ONE WAM LIMITED,Financial Services
+1666,-0.018946220649496446,13,0.46153846153846156,PARAGMILK,Parag Milk Foods Limited,Consumer & FMCG
+1591,-0.018961615455786365,5,0.4,NSLNISP,NMDC Steel Limited,"Metals, Mining & Chemicals"
+1823,-0.018966159293935202,6,0.3333333333333333,RANEHOLDIN,Rane Holdings Limited,Financial Services
+2226,-0.01900255893991596,14,0.42857142857142855,SYNGENE,Syngene International Limited,Healthcare & Pharmaceuticals
+311,-0.01913229785151689,8,0.5,BBL,Bharat Bijlee Limited,Industrials & Infrastructure
+344,-0.019256471334873668,9,0.4444444444444444,BHARATRAS,Bharat Rasayan Limited,"Metals, Mining & Chemicals"
+2119,-0.019296403694856388,6,0.3333333333333333,SPAL,S. P. Apparels Limited,Industrials & Infrastructure
+1481,-0.019411555058339833,14,0.5,MRF,MRF Limited,Automobile & Mobility
+2093,-0.01978838450123024,7,0.14285714285714285,SKIPPER,Skipper Limited,Industrials & Infrastructure
+2484,-0.019855946197912516,14,0.6428571428571429,VRLLOG,VRL Logistics Limited,Services & Others
+141,-0.019899839047748235,14,0.42857142857142855,AMBUJACEM,Ambuja Cements Limited,Real Estate & Construction
+646,-0.020132237814006495,14,0.42857142857142855,ECLERX,eClerx Services Limited,Technology
+1445,-0.020614766599380777,12,0.3333333333333333,MIRZAINT,Mirza International Limited,Consumer & FMCG
+2418,-0.02066433448471524,13,0.46153846153846156,VBL,Varun Beverages Limited,Consumer & FMCG
+2427,-0.02091983517159744,5,0.4,VENUSPIPES,Venus Pipes & Tubes Limited,"Metals, Mining & Chemicals"
+1057,-0.021222307509344902,5,0.4,INOXGREEN,Inox Green Energy Services Limited,Energy
+881,-0.021357078967525995,14,0.35714285714285715,GUJALKALI,Gujarat Alkalies and Chemicals Limited,"Metals, Mining & Chemicals"
+2518,-0.02138461210200953,5,0.4,WINDLAS,Windlas Biotech Limited,Healthcare & Pharmaceuticals
+209,-0.021636266414735077,7,0.2857142857142857,ASHIANA,Ashiana Housing Limited,Industrials & Infrastructure
+1496,-0.02169458851517755,7,0.2857142857142857,MUNJALAU,Munjal Auto Industries Limited,Automobile & Mobility
+845,-0.021783627203285867,5,0.6,GOPAL,Gopal Snacks Limited,Consumer & FMCG
+1309,-0.021802536431943235,5,0.4,LICI,Life Insurance Corporation Of India,Financial Services
+825,-0.02182113050902709,14,0.2857142857142857,GNFC,Gujarat Narmada Valley Fertilizers and Chemicals Limited,"Metals, Mining & Chemicals"
+171,-0.02196419690872862,14,0.5,APOLLOHOSP,Apollo Hospitals Enterprise Limited,Healthcare & Pharmaceuticals
+2040,-0.022193964401409333,12,0.5,SHK,S H Kelkar and Company Limited,"Metals, Mining & Chemicals"
+872,-0.02236642358835251,14,0.21428571428571427,GSFC,Gujarat State Fertilizers & Chemicals Limited,"Metals, Mining & Chemicals"
+1400,-0.022533129816539967,5,0.4,MAXESTATES,Max Estates Limited,Industrials & Infrastructure
+2340,-0.02286318919430335,7,0.2857142857142857,TRITURBINE,Triveni Turbine Limited,Industrials & Infrastructure
+557,-0.022991553777181702,14,0.5,DCBBANK,DCB Bank Limited,Financial Services
+1465,-0.023112776483633017,5,0.2,MOL,Meghmani Organics Limited,"Metals, Mining & Chemicals"
+2348,-0.02324769249700555,7,0.2857142857142857,TTML,Tata Teleservices (Maharashtra) Limited,Services & Others
+1024,-0.023285091356827322,14,0.6428571428571429,INDIANB,Indian Bank,Financial Services
+1652,-0.02340602975903997,14,0.5,PAGEIND,Page Industries Limited,Industrials & Infrastructure
+1779,-0.023655209922685404,5,0.4,PTCIL,PTC Industries Limited,Automobile & Mobility
+1229,-0.02382569837506276,14,0.35714285714285715,KNRCON,KNR Constructions Limited,Industrials & Infrastructure
+2191,-0.023921780225229197,11,0.2727272727272727,SUPRAJIT,Suprajit Engineering Limited,Automobile & Mobility
+859,-0.023957478919745923,14,0.42857142857142855,GREAVESCOT,Greaves Cotton Limited,Industrials & Infrastructure
+71,-0.0239991209774739,14,0.5,AEGISLOG,Aegis Logistics Limited,Services & Others
+2319,-0.024158054177007674,14,0.42857142857142855,TORNTPHARM,Torrent Pharmaceuticals Limited,Healthcare & Pharmaceuticals
+904,-0.02427876617959488,5,0.4,HARSHA,Harsha Engineers International Limited,Industrials & Infrastructure
+1693,-0.024298589675105554,14,0.42857142857142855,PFC,Power Finance Corporation Limited,Energy
+2415,-0.024655807783622957,7,0.42857142857142855,VASCONEQ,Vascon Engineers Limited,Industrials & Infrastructure
+242,-0.02484263510591216,5,0.2,AURIONPRO,Aurionpro Solutions Limited,Technology
+2504,-0.024909709226747727,5,0.2,WEL,Wonder Electricals Limited,Consumer & FMCG
+1048,-0.024942319610443905,14,0.5,INDUSINDBK,IndusInd Bank Limited,Financial Services
+835,-0.02495617769846496,14,0.5,GODREJIND,Godrej Industries Limited,"Metals, Mining & Chemicals"
+1551,-0.024974976582279287,14,0.35714285714285715,NFL,National Fertilizers Limited,"Metals, Mining & Chemicals"
+192,-0.025108558999852305,7,0.42857142857142855,ARMANFIN,Arman Financial Services Limited,Financial Services
+1207,-0.025276981263328807,6,0.6666666666666666,KICL,Kalyani Investment Company Limited,Financial Services
+902,-0.025464424600600104,5,0.4,HARIOMPIPE,Hariom Pipe Industries Limited,"Metals, Mining & Chemicals"
+2506,-0.02548755596843779,14,0.35714285714285715,WELENT,Welspun Enterprises Limited,Industrials & Infrastructure
+1119,-0.02549671996647605,7,0.2857142857142857,JINDALPOLY,Jindal Poly Films Limited,Industrials & Infrastructure
+1288,-0.025587939160875782,5,0.4,LATENTVIEW,Latent View Analytics Limited,Technology
+1610,-0.02571793467400595,11,0.36363636363636365,OLECTRA,Olectra Greentech Limited,Technology
+2392,-0.02594506906107272,14,0.35714285714285715,UPL,UPL Limited,"Metals, Mining & Chemicals"
+2121,-0.025960413244086412,14,0.42857142857142855,SPARC,Sun Pharma Advanced Research Company Limited,Healthcare & Pharmaceuticals
+1340,-0.026119507205762837,14,0.42857142857142855,M&MFIN,Mahindra & Mahindra Financial Services Limited,Financial Services
+1803,-0.026356609791444052,5,0.4,RAINBOW,Rainbow Childrens Medicare Limited,Healthcare & Pharmaceuticals
+356,-0.026531593142854776,14,0.5714285714285714,BIOCON,Biocon Limited,Healthcare & Pharmaceuticals
+1068,-0.026639688891967096,14,0.2857142857142857,IOB,Indian Overseas Bank,Financial Services
+890,-0.02682662929333531,13,0.3076923076923077,GVPIL,GE Power India Limited,Energy
+1355,-0.026920808052045,13,0.38461538461538464,MAHLIFE,Mahindra Lifespace Developers Limited,Industrials & Infrastructure
+419,-0.02695007440487353,14,0.42857142857142855,CANBK,Canara Bank,Financial Services
+1683,-0.026970917298876296,14,0.35714285714285715,PCBL,PCBL Chemical Limited,"Metals, Mining & Chemicals"
+2115,-0.027027608488182253,14,0.35714285714285715,SONATSOFTW,Sonata Software Limited,Technology
+207,-0.02704027798870212,5,0.2,ASALCBR,Associated Alcohols & Breweries Ltd.,Consumer & FMCG
+248,-0.027085369786399693,12,0.3333333333333333,AUTOAXLES,Automotive Axles Limited,Automobile & Mobility
+1053,-0.027149007332156094,12,0.6666666666666666,INGERRAND,Ingersoll Rand (India) Limited,Industrials & Infrastructure
+1948,-0.027166466874030824,7,0.2857142857142857,SANGHVIMOV,Sanghvi Movers Limited,Industrials & Infrastructure
+1004,-0.027299674304953444,9,0.2222222222222222,IGPL,IG Petrochemicals Limited,"Metals, Mining & Chemicals"
+701,-0.02742094027859605,14,0.42857142857142855,ESCORTS,Escorts Kubota Limited,Automobile & Mobility
+467,-0.027470872414518257,14,0.5714285714285714,CHENNPETRO,Chennai Petroleum Corporation Limited,Technology
+953,-0.027614149424992112,14,0.5,HINDUNILVR,Hindustan Unilever Limited,Consumer & FMCG
+1041,-0.027682282173807665,5,0.2,INDOTHAI,Indo Thai Securities Limited,Technology
+1283,-0.02799481912100791,5,0.4,LANDMARK,Landmark Cars Limited,Automobile & Mobility
+1588,-0.02911992688306571,10,0.3,NRBBEARING,NRB Bearing Limited,Automobile & Mobility
+579,-0.029189941391232797,9,0.2222222222222222,DEN,Den Networks Limited,Services & Others
+1134,-0.02929242805458545,5,0.2,JLHL,Jupiter Life Line Hospitals Limited,Healthcare & Pharmaceuticals
+787,-0.029379991888506873,6,0.3333333333333333,GENESYS,Genesys International Corporation Limited,Technology
+1919,-0.02946290045424587,5,0.2,SAFARI,Safari Industries (India) Limited,Consumer & FMCG
+2486,-0.02980291077596994,11,0.5454545454545454,VSTIND,VST Industries Limited,Consumer & FMCG
+1190,-0.029807858703762097,8,0.375,KCP,KCP Limited,Real Estate & Construction
+2249,-0.030007732878019017,14,0.42857142857142855,TATAINVEST,Tata Investment Corporation Limited,Financial Services
+2450,-0.030047716111562178,12,0.25,VINDHYATEL,Vindhya Telelinks Limited,Services & Others
+1476,-0.030104432238694023,5,0.4,MOTISONS,Motisons Jewellers Limited,Consumer & FMCG
+2124,-0.03028730966565072,5,0.4,SPECTRUM,Spectrum Electrical Industries Limited,Industrials & Infrastructure
+778,-0.03029784544002374,5,0.4,GATEWAY,Gateway Distriparks Limited,Services & Others
+1621,-0.030344373140313886,14,0.35714285714285715,ONGC,Oil & Natural Gas Corporation Limited,Energy
+2248,-0.030526112084611066,14,0.2857142857142857,TATAELXSI,Tata Elxsi Limited,Technology
+1242,-0.03062605689102555,5,0.2,KPIGREEN,KPI Green Energy Limited,Energy
+2272,-0.030797866007786823,5,0.2,TEMBO,Tembo Global Industries Limited,Industrials & Infrastructure
+1122,-0.030802796949051782,5,0.4,JINDRILL,Jindal Drilling And Industries Limited,Energy
+860,-0.030819614067320623,5,0.4,GREENLAM,Greenlam Industries Limited,Real Estate & Construction
+1670,-0.03103488633387048,5,0.4,PARKHOTELS,Apeejay Surrendra Park Hotels Limited,Services & Others
+1565,-0.031178567355540712,11,0.45454545454545453,NILKAMAL,Nilkamal Limited,Industrials & Infrastructure
+1071,-0.0312635614585808,5,0.4,IONEXCHANG,ION Exchange (India) Limited,Industrials & Infrastructure
+494,-0.031697107670248366,14,0.42857142857142855,COLPAL,Colgate Palmolive (India) Limited,Consumer & FMCG
+2173,-0.031717606441624205,5,0.6,SUMICHEM,Sumitomo Chemical India Limited,"Metals, Mining & Chemicals"
+1005,-0.0317779617527617,14,0.42857142857142855,IIFL,IIFL Finance Limited,Financial Services
+1346,-0.031824517986796225,5,0.2,MADRASFERT,Madras Fertilizers Limited,"Metals, Mining & Chemicals"
+426,-0.0318690828057091,14,0.42857142857142855,CAPLIPOINT,Caplin Point Laboratories Limited,Healthcare & Pharmaceuticals
+684,-0.03188172020564039,5,0.4,EMUDHRA,eMudhra Limited,Technology
+1634,-0.03188247170205966,12,0.3333333333333333,ORIENTCEM,Orient Cement Limited,Real Estate & Construction
+200,-0.032149747287894694,14,0.5,ARVIND,Arvind Limited,Industrials & Infrastructure
+2358,-0.03248493292390497,14,0.42857142857142855,UBL,United Breweries Limited,Consumer & FMCG
+1889,-0.03256827324598305,5,0.2,RPTECH,Rashi Peripherals Limited,Technology
+1549,-0.032598264988419064,8,0.5,NEWGEN,Newgen Software Technologies Limited,Technology
+1741,-0.03273487830200391,9,0.3333333333333333,POWERMECH,Power Mech Projects Limited,Energy
+1147,-0.03284378118527574,14,0.5714285714285714,JSWENERGY,JSW Energy Limited,Energy
+930,-0.03299735184204817,5,0.4,HERANBA,Heranba Industries Limited,"Metals, Mining & Chemicals"
+2403,-0.03303076530381552,12,0.16666666666666666,V2RETAIL,V2 Retail Limited,Consumer & FMCG
+1950,-0.033074104387452403,14,0.5714285714285714,SANOFI,Sanofi India Limited,Healthcare & Pharmaceuticals
+331,-0.033085429700540396,14,0.42857142857142855,BERGEPAINT,Berger Paints (I) Limited,"Metals, Mining & Chemicals"
+864,-0.03311646671300784,13,0.46153846153846156,GRINDWELL,Grindwell Norton Limited,Industrials & Infrastructure
+524,-0.033281729836658516,13,0.38461538461538464,CROMPTON,Crompton Greaves Consumer Electricals Limited,Consumer & FMCG
+918,-0.03333652743893527,14,0.35714285714285715,HCLTECH,HCL Technologies Limited,Technology
+2091,-0.03341880138033084,14,0.35714285714285715,SKFINDIA,SKF India Limited,Automobile & Mobility
+2242,-0.03351341557283496,5,0.2,TARSONS,Tarsons Products Limited,Industrials & Infrastructure
+931,-0.033532542202892056,14,0.5,HERITGFOOD,Heritage Foods Limited,Consumer & FMCG
+1479,-0.033857426508944355,14,0.42857142857142855,MPHASIS,MphasiS Limited,Technology
+900,-0.033926331990755024,5,0.2,HAPPYFORGE,Happy Forgings Limited,Automobile & Mobility
+122,-0.03407659923883731,14,0.6428571428571429,ALKEM,Alkem Laboratories Limited,Healthcare & Pharmaceuticals
+12,-0.034320718581984,5,0.4,5PAISA,5Paisa Capital Limited,Services & Others
+460,-0.03433598505145146,14,0.5714285714285714,CHAMBLFERT,Chambal Fertilizers & Chemicals Limited,"Metals, Mining & Chemicals"
+1331,-0.03433837821875439,13,0.3076923076923077,LTM,LTM Limited,Technology
+1482,-0.03479796739045716,14,0.2857142857142857,MRPL,Mangalore Refinery and Petrochemicals Limited,Energy
+1069,-0.03520558836104749,14,0.5,IOC,Indian Oil Corporation Limited,Energy
+1593,-0.035311720229163505,14,0.5714285714285714,NTPC,NTPC Limited,Energy
+1054,-0.035757661890788814,5,0.6,INNOVACAP,Innova Captab Limited,Healthcare & Pharmaceuticals
+2158,-0.035955889596477116,5,0.4,STOVEKRAFT,Stove Kraft Limited,Consumer & FMCG
+574,-0.03613072207596839,5,0.4,DEEPINDS,Deep Industries Limited,Energy
+1535,-0.03619546760274683,6,0.3333333333333333,NDTV,New Delhi Television Limited,Services & Others
+1540,-0.0362669975671011,13,0.3076923076923077,NELCO,NELCO Limited,Technology
+145,-0.03629030464075046,10,0.4,AMRUTANJAN,Amrutanjan Health Care Limited,Healthcare & Pharmaceuticals
+2116,-0.03644293253543436,5,0.2,SOTL,Savita Oil Technologies Limited,Technology
+973,-0.036608632037917185,6,0.16666666666666666,HPL,HPL Electric & Power Limited,Energy
+2206,-0.03689414633390041,5,0.4,SURYODAY,Suryoday Small Finance Bank Limited,Financial Services
+713,-0.036913141457719116,12,0.4166666666666667,EXCELINDUS,Excel Industries Limited,"Metals, Mining & Chemicals"
+1236,-0.03705708253084863,5,0.4,KOTHARIPET,Kothari Petrochemicals Limited,Energy
+2021,-0.03723591672662419,7,0.2857142857142857,SHARDAMOTR,Sharda Motor Industries Limited,Automobile & Mobility
+790,-0.03754240483818509,7,0.42857142857142855,GENUSPOWER,Genus Power Infrastructures Limited,Energy
+75,-0.03756028322565119,5,0.4,AEROENTER,Aeroflex Enterprises Limited,Industrials & Infrastructure
+1133,-0.0377016076075309,14,0.2857142857142857,JKTYRE,JK Tyre & Industries Limited,Automobile & Mobility
+2167,-0.03776028960349931,14,0.5714285714285714,SUDARSCHEM,Sudarshan Chemical Industries Limited,"Metals, Mining & Chemicals"
+2423,-0.03776475523621728,9,0.4444444444444444,VEEDOL,Veedol Corporation Limited,Energy
+632,-0.03790346371427476,5,0.2,DSSL,Dynacons Systems & Solutions Limited,Technology
+975,-0.03795462059898329,14,0.21428571428571427,HSCL,Himadri Speciality Chemical Limited,"Metals, Mining & Chemicals"
+706,-0.03810270750027385,5,0.4,ETHOSLTD,Ethos Limited,Consumer & FMCG
+796,-0.03856477368172798,14,0.35714285714285715,GICHSGFIN,GIC Housing Finance Limited,Financial Services
+87,-0.038577718278250094,12,0.4166666666666667,AGI,AGI Greenpac Limited,Industrials & Infrastructure
+915,-0.038717662935653055,14,0.21428571428571427,HCC,Hindustan Construction Company Limited,Industrials & Infrastructure
+2109,-0.0388876733443076,14,0.2857142857142857,SOMANYCERA,Somany Ceramics Limited,Real Estate & Construction
+2522,-0.03899476259358814,14,0.35714285714285715,WOCKPHARMA,Wockhardt Limited,Healthcare & Pharmaceuticals
+899,-0.0390544649342494,5,0.2,HAPPSTMNDS,Happiest Minds Technologies Limited,Technology
+1560,-0.039372308560396155,14,0.35714285714285715,NIITLTD,NIIT Limited,Services & Others
+1167,-0.039475378821208766,5,0.2,KALAMANDIR,Sai Silks (Kalamandir) Limited,Technology
+235,-0.03966444167931606,5,0.4,ATL,Allcargo Terminals Limited,Services & Others
+1833,-0.039702194909851204,14,0.35714285714285715,RCF,Rashtriya Chemicals and Fertilizers Limited,"Metals, Mining & Chemicals"
+794,-0.03972294867846118,14,0.2857142857142857,GHCL,GHCL Limited,"Metals, Mining & Chemicals"
+201,-0.039781091841619674,8,0.375,ARVINDFASN,Arvind Fashions Limited,Consumer & FMCG
+1491,-0.039813784034316554,5,0.4,MUFTI,Credo Brands Marketing Limited,Consumer & FMCG
+2494,-0.03995605739178377,14,0.2857142857142857,WABAG,VA Tech Wabag Limited,Industrials & Infrastructure
+169,-0.04009081285092957,14,0.35714285714285715,APLLTD,Alembic Pharmaceuticals Limited,Healthcare & Pharmaceuticals
+1261,-0.04019043924142259,7,0.5714285714285714,KSB,Ksb Limited,Industrials & Infrastructure
+2188,-0.04031687631500181,14,0.5,SUNTV,Sun TV Network Limited,Services & Others
+1986,-0.040414352419965535,5,0.2,SECURKLOUD,SECUREKLOUD TECHNOLOGIES LIMITED,Technology
+762,-0.040716301178665516,14,0.2857142857142857,GAIL,GAIL (India) Limited,Energy
+1731,-0.040868671179308265,5,0.4,POLICYBZR,PB Fintech Limited,Consumer & FMCG
+1637,-0.04098902498195196,5,0.2,ORIENTHOT,Oriental Hotels Limited,Services & Others
+906,-0.041023069836808465,8,0.375,HATSUN,Hatsun Agro Product Limited,Consumer & FMCG
+428,-0.041038760840538514,14,0.35714285714285715,CARBORUNIV,Carborundum Universal Limited,Industrials & Infrastructure
+1049,-0.041233737082948876,14,0.35714285714285715,INDUSTOWER,Indus Towers Limited,Services & Others
+2014,-0.041340743227945995,7,0.2857142857142857,SHALBY,Shalby Limited,Healthcare & Pharmaceuticals
+955,-0.041428310518369295,14,0.21428571428571427,HINDZINC,Hindustan Zinc Limited,"Metals, Mining & Chemicals"
+2448,-0.04167394678269452,14,0.42857142857142855,VINATIORGA,Vinati Organics Limited,"Metals, Mining & Chemicals"
+1963,-0.04172955945744129,14,0.42857142857142855,SATIN,Satin Creditcare Network Limited,Financial Services
+1120,-0.04176108645999393,14,0.35714285714285715,JINDALSAW,Jindal Saw Limited,"Metals, Mining & Chemicals"
+2069,-0.041950210529191415,5,0.2,SIGNATURE,Signatureglobal (India) Limited,Industrials & Infrastructure
+944,-0.042095558985836154,14,0.35714285714285715,HIMATSEIDE,Himatsingka Seide Limited,Industrials & Infrastructure
+98,-0.04210293313512052,14,0.42857142857142855,AIAENG,AIA Engineering Limited,Industrials & Infrastructure
+1182,-0.0423150205190443,14,0.35714285714285715,KANSAINER,Kansai Nerolac Paints Limited,Technology
+2375,-0.04256839120711932,13,0.23076923076923078,UNICHEMLAB,Unichem Laboratories Limited,Healthcare & Pharmaceuticals
+717,-0.04269045376796671,6,0.16666666666666666,EXPLEOSOL,Expleo Solutions Limited,Technology
+1824,-0.04276958694651005,5,0.2,RATEGAIN,Rategain Travel Technologies Limited,Technology
+1556,-0.04282778883110656,12,0.25,NIACL,The New India Assurance Company Limited,Financial Services
+1976,-0.04291414930344679,13,0.46153846153846156,SCHAEFFLER,Schaeffler India Limited,Automobile & Mobility
+2381,-0.04298342426052599,14,0.35714285714285715,UNIONBANK,Union Bank of India,Financial Services
+2435,-0.04302171904791454,14,0.5,VGUARD,V-Guard Industries Limited,Industrials & Infrastructure
+907,-0.04326670664409552,14,0.35714285714285715,HAVELLS,Havells India Limited,Industrials & Infrastructure
+2232,-0.04333129189699641,9,0.4444444444444444,TAKE,TAKE Limited,Technology
+1034,-0.043442652164004086,10,0.3,INDOCO,Indoco Remedies Limited,Healthcare & Pharmaceuticals
+148,-0.04357859199317349,12,0.4166666666666667,ANDHRAPAP,ANDHRA PAPER LIMITED,Industrials & Infrastructure
+1707,-0.04357908995004414,8,0.375,PILANIINVS,Pilani Investment and Industries Corporation Limited,Financial Services
+2064,-0.0437775494570619,14,0.35714285714285715,SIEMENS,Siemens Limited,Industrials & Infrastructure
+531,-0.04384043370564001,14,0.5714285714285714,CUB,City Union Bank Limited,Financial Services
+189,-0.04398905065144001,5,0.4,ARIHANTSUP,Arihant Superstructures Limited,Industrials & Infrastructure
+995,-0.044018981991895086,12,0.3333333333333333,IEX,Indian Energy Exchange Limited,Energy
+439,-0.04411593566053978,14,0.35714285714285715,CEATLTD,CEAT Limited,Automobile & Mobility
+104,-0.04412026537213926,11,0.36363636363636365,AJMERA,Ajmera Realty & Infra India Limited,Real Estate & Construction
+549,-0.044394517504425024,5,0.4,DAVANGERE,Davangere Sugar Company Limited,Consumer & FMCG
+656,-0.04444268612432787,14,0.5,EIHOTEL,EIH Limited,Services & Others
+1720,-0.04450073724252029,14,0.2857142857142857,PNB,Punjab National Bank,Financial Services
+1980,-0.04473145844427669,5,0.2,SCILAL,Shipping Corporation of India Land and Assets Limited,Services & Others
+2290,-0.04480445909160027,14,0.2857142857142857,THERMAX,Thermax Limited,Industrials & Infrastructure
+1774,-0.04496595898056498,5,0.2,PRUDENT,Prudent Corporate Advisory Services Limited,Financial Services
+2278,-0.045054733888378926,13,0.46153846153846156,TEXRAIL,Texmaco Rail & Engineering Limited,Industrials & Infrastructure
+1021,-0.045290108912517876,14,0.42857142857142855,INDIACEM,The India Cements Limited,Real Estate & Construction
+1961,-0.04532036545370975,9,0.2222222222222222,SASKEN,Sasken Technologies Limited,Technology
+384,-0.04549921900269494,14,0.35714285714285715,BODALCHEM,Bodal Chemicals Limited,"Metals, Mining & Chemicals"
+1590,-0.04568148792454812,5,0.4,NSIL,Nalwa Sons Investments Limited,Financial Services
+863,-0.04583408453495127,5,0.4,GREENPOWER,Orient Green Power Company Limited,Energy
+1773,-0.04680653030196797,14,0.5,PRSMJOHNSN,Prism Johnson Limited,"Metals, Mining & Chemicals"
+1257,-0.04705932233345263,5,0.2,KRONOX,Kronox Lab Sciences Limited,"Metals, Mining & Chemicals"
+450,-0.047061112442297555,14,0.21428571428571427,CENTURYPLY,Century Plyboards (India) Limited,Industrials & Infrastructure
+704,-0.047089774339778435,5,0.4,ESTER,Ester Industries Limited,Industrials & Infrastructure
+2184,-0.0471120148761364,14,0.42857142857142855,SUNPHARMA,Sun Pharmaceutical Industries Limited,Healthcare & Pharmaceuticals
+1123,-0.047162831665136816,12,0.5,JINDWORLD,Jindal Worldwide Limited,Industrials & Infrastructure
+1000,-0.04724584053794819,12,0.4166666666666667,IGARASHI,Igarashi Motors India Limited,Industrials & Infrastructure
+2512,-0.0472965757412148,6,0.16666666666666666,WEWIN,WE WIN LIMITED,Technology
+151,-0.047337241699839896,5,0.4,ANGELONE,Angel One Limited,Services & Others
+1032,-0.047413163825954716,5,0.2,INDOAMIN,Indo Amines Limited,"Metals, Mining & Chemicals"
+1019,-0.04745347731811798,5,0.4,INDGN,Indegene Limited,Healthcare & Pharmaceuticals
+2252,-0.04754289470716289,5,0.4,TATATECH,Tata Technologies Limited,Technology
+2330,-0.04758368124494811,6,0.3333333333333333,TRANSWORLD,TRANSWORLD SHIPPING LINES LIMITED,Services & Others
+43,-0.047608000731610055,14,0.35714285714285715,ACC,ACC Limited,Real Estate & Construction
+1578,-0.048044656555535324,14,0.42857142857142855,NLCINDIA,NLC India Limited,Energy
+2041,-0.048173662695866155,13,0.3076923076923077,SHOPERSTOP,Shoppers Stop Limited,Consumer & FMCG
+1896,-0.04828455283853733,6,0.5,RSWM,RSWM Limited,Industrials & Infrastructure
+23,-0.04834551479974904,14,0.5,AARTIIND,Aarti Industries Limited,"Metals, Mining & Chemicals"
+2102,-0.048347144950759,11,0.2727272727272727,SNOWMAN,Snowman Logistics Limited,Services & Others
+2325,-0.04874364605322913,5,0.2,TPLPLASTEH,TPL Plastech Limited,Industrials & Infrastructure
+2095,-0.0488316008947882,5,0.4,SKYGOLD,SKY GOLD AND DIAMONDS LIMITED,Consumer & FMCG
+1020,-0.04889297879469121,14,0.5714285714285714,INDHOTEL,The Indian Hotels Company Limited,Services & Others
+1685,-0.04899287543566884,5,0.4,PDMJEPAPER,Pudumjee Paper Products Limited,Industrials & Infrastructure
+2163,-0.04909751571999127,6,0.5,STYRENIX,Styrenix Performance Materials Limited,"Metals, Mining & Chemicals"
+124,-0.04916927817846249,14,0.42857142857142855,ALLCARGO,Allcargo Logistics Limited,Services & Others
+1499,-0.049457119533388924,10,0.3,MUTHOOTCAP,Muthoot Capital Services Limited,Financial Services
+1100,-0.049657079504174376,5,0.4,JAGSNPHARM,Jagsonpal Pharmaceuticals Limited,Healthcare & Pharmaceuticals
+747,-0.04976843371077398,5,0.6,FLUOROCHEM,Gujarat Fluorochemicals Limited,"Metals, Mining & Chemicals"
+1197,-0.04980899881786822,7,0.5714285714285714,KELLTONTEC,Kellton Tech Solutions Limited,Technology
+781,-0.05018007448807368,5,0.4,GAYAPROJ,Gayatri Projects Limited,Industrials & Infrastructure
+1639,-0.05045045020546076,14,0.35714285714285715,ORIENTPPR,Orient Paper & Industries Limited,Industrials & Infrastructure
+346,-0.05115547887228992,6,0.5,BHARATWIRE,Bharat Wire Ropes Limited,"Metals, Mining & Chemicals"
+2245,-0.05132128514455395,14,0.35714285714285715,TATACHEM,Tata Chemicals Limited,"Metals, Mining & Chemicals"
+1469,-0.051362266163061165,5,0.4,MONARCH,Monarch Networth Capital Limited,Services & Others
+1098,-0.051583576308030996,14,0.2857142857142857,J&KBANK,The Jammu & Kashmir Bank Limited,Financial Services
+1259,-0.0518315474931081,5,0.2,KRSNAA,Krsnaa Diagnostics Limited,Healthcare & Pharmaceuticals
+1808,-0.051963007612119784,5,0.2,RAJRATAN,Rajratan Global Wire Limited,"Metals, Mining & Chemicals"
+2425,-0.05203464058828855,14,0.35714285714285715,VENKEYS,Venky's (India) Limited,Consumer & FMCG
+1202,-0.05276454937418962,5,0.4,KFINTECH,Kfin Technologies Limited,Technology
+337,-0.052936887517194234,5,0.4,BHAGCHEM,Bhagiradha Chemicals & Industries Limited,"Metals, Mining & Chemicals"
+478,-0.05296419991571755,5,0.2,CLEAN,Clean Science and Technology Limited,"Metals, Mining & Chemicals"
+2383,-0.053034356534345864,14,0.35714285714285715,UNITDSPR,United Spirits Limited,Consumer & FMCG
+2432,-0.05308456361876614,5,0.0,VETO,Veto Switchgears And Cables Limited,Industrials & Infrastructure
+2090,-0.05329389594979468,14,0.35714285714285715,SJVN,SJVN Limited,Energy
+2521,-0.053404055893020705,14,0.21428571428571427,WIPRO,Wipro Limited,Technology
+1516,-0.05340855263861989,14,0.35714285714285715,NATCOPHARM,Natco Pharma Limited,Healthcare & Pharmaceuticals
+451,-0.05354827196859659,14,0.2857142857142857,CERA,Cera Sanitaryware Limited,Real Estate & Construction
+9,-0.05354870576062205,5,0.2,3IINFOLTD,3i Infotech Limited,Technology
+1430,-0.054236019901652145,7,0.42857142857142855,METROPOLIS,Metropolis Healthcare Limited,Healthcare & Pharmaceuticals
+1285,-0.054711203477747494,11,0.2727272727272727,LAOPALA,La Opala RG Limited,Real Estate & Construction
+316,-0.054727061219354264,5,0.0,BCLIND,Bcl Industries Limited,Consumer & FMCG
+766,-0.05476094286593197,5,0.4,GANDHAR,Gandhar Oil Refinery (India) Limited,Energy
+1443,-0.05476582557600791,14,0.21428571428571427,MINDACORP,Minda Corporation Limited,Automobile & Mobility
+664,-0.05478291909546627,7,0.2857142857142857,ELECTCAST,Electrosteel Castings Limited,Automobile & Mobility
+617,-0.055208685170560545,5,0.2,DOLATALGO,Dolat Algotech Limited,Services & Others
+102,-0.055216257678276155,14,0.42857142857142855,AJANTPHARM,Ajanta Pharma Limited,Healthcare & Pharmaceuticals
+372,-0.05536442208227821,5,0.4,BLSE,BLS E-Services Limited,Services & Others
+1698,-0.055514319972778337,14,0.42857142857142855,PGHH,Procter & Gamble Hygiene and Health Care Limited,Consumer & FMCG
+243,-0.05565833450442149,14,0.42857142857142855,AUROPHARMA,Aurobindo Pharma Limited,Healthcare & Pharmaceuticals
+1555,-0.05571249934356309,14,0.42857142857142855,NHPC,NHPC Limited,Energy
+878,-0.05585818508795846,6,0.16666666666666666,GTLINFRA,GTL Infrastructure Limited,Services & Others
+1713,-0.05601624810121593,5,0.2,PITTIENG,Pitti Engineering Limited,Industrials & Infrastructure
+869,-0.05606934286935559,5,0.6,GRPLTD,GRP Limited,Industrials & Infrastructure
+1484,-0.05621639193488813,5,0.2,MSPL,MSP Steel & Power Limited,Energy
+940,-0.05625799587652865,7,0.14285714285714285,HGS,Hinduja Global Solutions Limited,Technology
+262,-0.056499778991868574,5,0.4,AWL,AWL Agri Business Limited,Consumer & FMCG
+1684,-0.05650579999367465,13,0.38461538461538464,PCJEWELLER,PC Jeweller Limited,Consumer & FMCG
+2161,-0.05653464932015214,5,0.2,STYLAMIND,Stylam Industries Limited,Real Estate & Construction
+1672,-0.056650357107506204,6,0.3333333333333333,PARSVNATH,Parsvnath Developers Limited,Industrials & Infrastructure
+861,-0.05680533740435893,5,0.4,GREENPANEL,Greenpanel Industries Limited,Industrials & Infrastructure
+1837,-0.057167739554418805,5,0.4,REDTAPE,Redtape Limited,Consumer & FMCG
+202,-0.05722253755380721,6,0.16666666666666666,ARVSMART,Arvind SmartSpaces Limited,Industrials & Infrastructure
+2408,-0.057289067642099296,14,0.42857142857142855,VAKRANGEE,Vakrangee Limited,Technology
+849,-0.05729895804084175,5,0.4,GPTHEALTH,GPT Healthcare Limited,Healthcare & Pharmaceuticals
+1738,-0.057418360929628424,14,0.42857142857142855,POWERGRID,Power Grid Corporation of India Limited,Energy
+463,-0.05754309602703345,5,0.2,CHEMCON,Chemcon Speciality Chemicals Limited,"Metals, Mining & Chemicals"
+1899,-0.058073449943904544,8,0.25,RTNPOWER,RattanIndia Power Limited,Energy
+1171,-0.05813622348319568,5,0.4,KALYANKJIL,Kalyan Jewellers India Limited,Consumer & FMCG
+622,-0.058202297479541865,5,0.4,DPABHUSHAN,D. P. Abhushan Limited,Consumer & FMCG
+276,-0.05824009269534779,14,0.21428571428571427,BAJAJELEC,Bajaj Electricals Limited,Consumer & FMCG
+982,-0.05837230921862196,9,0.3333333333333333,IBULLSLTD,Indiabulls Limited,Consumer & FMCG
+112,-0.05840395908308169,6,0.3333333333333333,AKSHOPTFBR,Aksh Optifibre Limited,Real Estate & Construction
+1868,-0.05847905646527584,11,0.45454545454545453,RKFORGE,Ramkrishna Forgings Limited,Automobile & Mobility
+2360,-0.05851683856140469,13,0.3076923076923077,UCOBANK,UCO Bank,Financial Services
+1312,-0.05868083694506788,11,0.2727272727272727,LINCOLN,Lincoln Pharmaceuticals Limited,Healthcare & Pharmaceuticals
+371,-0.05885282176165141,9,0.3333333333333333,BLS,BLS International Services Limited,Services & Others
+466,-0.058853789927414725,5,0.4,CHEMPLASTS,Chemplast Sanmar Limited,"Metals, Mining & Chemicals"
+212,-0.0595505597280842,14,0.2857142857142857,ASHOKA,Ashoka Buildcon Limited,Industrials & Infrastructure
+941,-0.059611211545063485,14,0.5,HIKAL,Hikal Limited,Healthcare & Pharmaceuticals
+1875,-0.05990333016199462,5,0.2,ROLEXRINGS,Rolex Rings Limited,Automobile & Mobility
+321,-0.05997606507265474,5,0.4,BECTORFOOD,Mrs. Bectors Food Specialities Limited,Consumer & FMCG
+1730,-0.060000388606956924,6,0.5,POKARNA,Pokarna Limited,Real Estate & Construction
+1467,-0.06008220661741777,5,0.2,MOLDTECH,Mold-Tek Technologies Limited,Technology
+721,-0.06015762649914034,5,0.2,FAIRCHEMOR,Fairchem Organics Limited,"Metals, Mining & Chemicals"
+1220,-0.06017957188778541,10,0.2,KITEX,Kitex Garments Limited,Industrials & Infrastructure
+2346,-0.060320212431456924,14,0.2857142857142857,TTKPRESTIG,TTK Prestige Limited,Consumer & FMCG
+1012,-0.06043507931480017,7,0.2857142857142857,IMAGICAA,Imagicaaworld Entertainment Limited,Consumer & FMCG
+1451,-0.06068867377615548,5,0.2,MMFL,MM Forgings Limited,Automobile & Mobility
+1151,-0.060793802376130884,9,0.2222222222222222,JTEKTINDIA,Jtekt India Limited,Automobile & Mobility
+2306,-0.06101339179239109,5,0.2,TIPSMUSIC,Tips Music Limited,Services & Others
+1318,-0.06124729706254723,14,0.21428571428571427,LMW,LMW Limited,Industrials & Infrastructure
+550,-0.061384242625075504,14,0.35714285714285715,DBCORP,D.B.Corp Limited,Services & Others
+2112,-0.061395201308710644,5,0.4,SONACOMS,Sona BLW Precision Forgings Limited,Automobile & Mobility
+938,-0.061510147503549537,9,0.2222222222222222,HGINFRA,H.G. Infra Engineering Limited,Industrials & Infrastructure
+487,-0.061627781261692265,14,0.35714285714285715,COALINDIA,Coal India Limited,"Metals, Mining & Chemicals"
+1152,-0.06216147319523244,5,0.2,JTLIND,JTL INDUSTRIES LIMITED,"Metals, Mining & Chemicals"
+265,-0.06221847556354494,5,0.6,AXITA,Axita Cotton Limited,Industrials & Infrastructure
+1619,-0.06267957499573777,5,0.6,ONEPOINT,One Point One Solutions Limited,Technology
+1743,-0.06275457021386108,5,0.2,PPL,Prakash Pipes Limited,Industrials & Infrastructure
+183,-0.06279946159594034,14,0.2857142857142857,ARE&M,Amara Raja Energy & Mobility Limited,Automobile & Mobility
+1832,-0.06286388643098392,5,0.2,RBZJEWEL,RBZ Jewellers Limited,Consumer & FMCG
+2264,-0.06303210587912929,14,0.35714285714285715,TEAMLEASE,Teamlease Services Limited,Services & Others
+700,-0.06327889920635135,5,0.4,ESAFSFB,ESAF Small Finance Bank Limited,Financial Services
+1664,-0.06337023761883159,5,0.4,PARACABLES,Paramount Communications Limited,Real Estate & Construction
+1332,-0.06362749411349594,13,0.38461538461538464,LTTS,L&T Technology Services Limited,Technology
+697,-0.06365486361831005,5,0.4,EQUITASBNK,Equitas Small Finance Bank Limited,Financial Services
+1853,-0.06380834853989045,12,0.3333333333333333,RESPONIND,Responsive Industries Limited,Industrials & Infrastructure
+1653,-0.06387080919562094,8,0.375,PAISALO,Paisalo Digital Limited,Financial Services
+173,-0.06402564705726678,14,0.14285714285714285,APOLLOTYRE,Apollo Tyres Limited,Automobile & Mobility
+1233,-0.06416022168714505,7,0.2857142857142857,KOPRAN,Kopran Limited,Healthcare & Pharmaceuticals
+2366,-0.0644993749500993,9,0.4444444444444444,UFO,UFO Moviez India Limited,Services & Others
+712,-0.06459334685298607,12,0.25,EVERESTIND,Everest Industries Limited,Real Estate & Construction
+2454,-0.0647324340921791,5,0.4,VIPCLOTHNG,VIP Clothing Limited,Industrials & Infrastructure
+302,-0.06511689595067385,14,0.21428571428571427,BANKBARODA,Bank of Baroda,Financial Services
+618,-0.0651272645141002,5,0.2,DOLLAR,Dollar Industries Limited,Industrials & Infrastructure
+1733,-0.06538787601167127,7,0.2857142857142857,POLYMED,Poly Medicure Limited,Healthcare & Pharmaceuticals
+443,-0.06545221326156724,5,0.2,CELLO,Cello World Limited,Consumer & FMCG
+206,-0.0655972509217197,5,0.2,ASAL,Automotive Stampings and Assemblies Limited,Automobile & Mobility
+36,-0.06635139225290607,13,0.46153846153846156,ABFRL,Aditya Birla Fashion and Retail Limited,Consumer & FMCG
+2255,-0.0676789397722192,8,0.125,TBZ,Tribhovandas Bhimji Zaveri Limited,Consumer & FMCG
+1358,-0.06785268887551758,12,0.4166666666666667,MAHSEAMLES,Maharashtra Seamless Limited,"Metals, Mining & Chemicals"
+1308,-0.0680852285724042,14,0.35714285714285715,LICHSGFIN,LIC Housing Finance Limited,Financial Services
+565,-0.06831911617027613,7,0.14285714285714285,DCW,DCW Limited,"Metals, Mining & Chemicals"
+723,-0.06843306976496868,9,0.2222222222222222,FCL,Fineotex Chemical Limited,"Metals, Mining & Chemicals"
+979,-0.0687670173395878,7,0.14285714285714285,HUHTAMAKI,Huhtamaki India Limited,Industrials & Infrastructure
+1415,-0.06888855168597037,5,0.4,MEDIASSIST,Medi Assist Healthcare Services Limited,Healthcare & Pharmaceuticals
+433,-0.06898227798840055,14,0.21428571428571427,CASTROLIND,Castrol India Limited,Energy
+1087,-0.06945448243251066,14,0.42857142857142855,ITC,ITC Limited,Consumer & FMCG
+1160,-0.06951303611011474,14,0.14285714285714285,JYOTHYLAB,Jyothy Labs Limited,Consumer & FMCG
+278,-0.06970315012461543,5,0.2,BAJAJHCARE,Bajaj Healthcare Limited,Healthcare & Pharmaceuticals
+2013,-0.07005260496937166,12,0.25,SHAKTIPUMP,Shakti Pumps (India) Limited,Industrials & Infrastructure
+1848,-0.07056964853570283,5,0.2,REMSONSIND,Remsons Industries Limited,Automobile & Mobility
+588,-0.0708457297158436,9,0.4444444444444444,DHANBANK,Dhanlaxmi Bank Limited,Financial Services
+1825,-0.07111953846709693,10,0.3,RATNAMANI,Ratnamani Metals & Tubes Limited,"Metals, Mining & Chemicals"
+1389,-0.07119178678827398,5,0.4,MARINE,Marine Electricals (India) Limited,Industrials & Infrastructure
+635,-0.07163411782409106,5,0.2,DVL,Dhunseri Ventures Limited,"Metals, Mining & Chemicals"
+538,-0.07179837684965229,14,0.14285714285714285,CYIENT,Cyient Limited,Technology
+665,-0.07324267234534763,6,0.16666666666666666,ELECTHERM,Electrotherm (India) Limited,"Metals, Mining & Chemicals"
+698,-0.07346405732924204,12,0.4166666666666667,ERIS,Eris Lifesciences Limited,Healthcare & Pharmaceuticals
+1907,-0.07390505880530636,8,0.0,RUPA,Rupa & Company Limited,Industrials & Infrastructure
+1606,-0.07402490781141145,14,0.14285714285714285,OFSS,Oracle Financial Services Software Limited,Technology
+119,-0.07440045000305578,5,0.2,ALICON,Alicon Castalloy Limited,Automobile & Mobility
+360,-0.07447321621740599,6,0.3333333333333333,BIRLAMONEY,Aditya Birla Money Limited,Services & Others
+1580,-0.07481332377551422,14,0.21428571428571427,NOCIL,NOCIL Limited,"Metals, Mining & Chemicals"
+606,-0.07484501462537194,14,0.2857142857142857,DISHTV,Dish TV India Limited,Services & Others
+2336,-0.0749496781754156,7,0.2857142857142857,TRF,TRF Limited,Industrials & Infrastructure
+162,-0.07526943958780834,6,0.3333333333333333,ANUP,The Anup Engineering Limited,Industrials & Infrastructure
+1052,-0.07535721328610448,14,0.21428571428571427,INFY,Infosys Limited,Technology
+1175,-0.07564234514158064,6,0.16666666666666666,KAMDHENU,Kamdhenu Limited,"Metals, Mining & Chemicals"
+2224,-0.07571472523761476,14,0.42857142857142855,SYMPHONY,Symphony Limited,Consumer & FMCG
+1697,-0.07615101610911043,10,0.3,PGEL,PG Electroplast Limited,Consumer & FMCG
+333,-0.07624585365309036,5,0.4,BETA,Beta Drugs Limited,Healthcare & Pharmaceuticals
+1503,-0.0766173231341463,5,0.2,MVGJL,Manoj Vaibhav Gems N Jewellers Limited,Consumer & FMCG
+793,-0.07663604029950527,9,0.4444444444444444,GFLLIMITED,GFL Limited,Financial Services
+1076,-0.07682799609695741,7,0.42857142857142855,IRCON,Ircon International Limited,Industrials & Infrastructure
+1079,-0.07690987093426062,5,0.0,IRFC,Indian Railway Finance Corporation Limited,Financial Services
+2261,-0.07723795204807762,14,0.21428571428571427,TCS,Tata Consultancy Services Limited,Technology
+2233,-0.07762203661554984,6,0.0,TALBROAUTO,Talbros Automotive Components Limited,Automobile & Mobility
+1375,-0.07782966181761891,8,0.25,MANGLMCEM,Mangalam Cement Limited,Real Estate & Construction
+539,-0.07838219142771966,5,0.2,CYIENTDLM,Cyient DLM Limited,Industrials & Infrastructure
+418,-0.07945441115751012,5,0.2,CAMS,Computer Age Management Services Limited,Financial Services
+1040,-0.0796759095849267,5,0.2,INDOTECH,Indo Tech Transformers Limited,Industrials & Infrastructure
+1908,-0.08022136693420213,10,0.3,RUSHIL,Rushil Decor Limited,Real Estate & Construction
+392,-0.08043916955744586,12,0.3333333333333333,BOSCH-HCIL,BOSCH HOME COMFORT INDIA LIMITED,Consumer & FMCG
+29,-0.08086799997830985,5,0.2,ABAN,Aban Offshore Limited,Energy
+1624,-0.08091990741978354,9,0.2222222222222222,ONMOBILE,OnMobile Global Limited,Technology
+1797,-0.08109217998502838,5,0.2,RADHIKAJWE,Radhika Jeweltech Limited,Consumer & FMCG
+2355,-0.08179108636479676,9,0.1111111111111111,TVSSRICHAK,TVS Srichakra Limited,Automobile & Mobility
+1161,-0.0818069184692449,5,0.2,JYOTICNC,Jyoti CNC Automation Limited,Industrials & Infrastructure
+1077,-0.08342956643276334,6,0.3333333333333333,IRCTC,Indian Railway Catering And Tourism Corporation Limited,Consumer & FMCG
+1815,-0.08350839516199421,8,0.25,RAMASTEEL,Rama Steel Tubes Limited,"Metals, Mining & Chemicals"
+1722,-0.08366707950303098,13,0.3076923076923077,PNBHOUSING,PNB Housing Finance Limited,Financial Services
+1916,-0.08384364523527184,12,0.25,SADBHAV,Sadbhav Engineering Limited,Industrials & Infrastructure
+1748,-0.0839721448806989,14,0.14285714285714285,PRAJIND,Praj Industries Limited,Industrials & Infrastructure
+1612,-0.0840546487901872,14,0.2857142857142857,OMAXE,Omaxe Limited,Industrials & Infrastructure
+2176,-0.08419698398472719,5,0.4,SUNCLAY,Sundaram Clayton Limited,Automobile & Mobility
+395,-0.08434720561027571,6,0.3333333333333333,BPL,BPL Limited,Technology
+1850,-0.08460292222083235,14,0.21428571428571427,REPCOHOME,Repco Home Finance Limited,Financial Services
+829,-0.08490181295474988,5,0.2,GOCOLORS,Go Fashion (India) Limited,Consumer & FMCG
+2196,-0.08520081674860888,5,0.0,SUPRIYA,Supriya Lifescience Limited,Healthcare & Pharmaceuticals
+1099,-0.08528745390252589,13,0.38461538461538464,JAGRAN,Jagran Prakashan Limited,Services & Others
+1377,-0.08536261867645571,7,0.2857142857142857,MANINFRA,Man Infraconstruction Limited,Industrials & Infrastructure
+1532,-0.08540756449269447,6,0.16666666666666666,NDL,Nandan Denim Limited,Industrials & Infrastructure
+2326,-0.08547979458657737,5,0.0,TRACXN,Tracxn Technologies Limited,Technology
+1269,-0.08568417466806698,14,0.35714285714285715,KTKBANK,The Karnataka Bank Limited,Financial Services
+768,-0.08643657777470169,8,0.125,GANECOS,Ganesha Ecosphere Limited,Industrials & Infrastructure
+716,-0.08664796491420342,14,0.35714285714285715,EXIDEIND,Exide Industries Limited,Automobile & Mobility
+1762,-0.08689525836942652,6,0.3333333333333333,PRICOLLTD,Pricol Limited,Automobile & Mobility
+1826,-0.08696958482055735,5,0.0,RATNAVEER,Ratnaveer Precision Engineering Limited,"Metals, Mining & Chemicals"
+1704,-0.08726137256543123,14,0.35714285714285715,PIDILITIND,Pidilite Industries Limited,"Metals, Mining & Chemicals"
+2511,-0.08749624914272605,7,0.2857142857142857,WESTLIFE,WESTLIFE FOODWORLD LIMITED,Financial Services
+1614,-0.08759476466007905,5,0.0,OMINFRAL,OM INFRA LIMITED,Industrials & Infrastructure
+1686,-0.0877387488929394,5,0.2,PDSL,PDS Limited,Industrials & Infrastructure
+1112,-0.08806826555409694,7,0.2857142857142857,JAYSREETEA,Jayshree Tea & Industries Limited,Consumer & FMCG
+889,-0.08829086221813333,11,0.2727272727272727,GVKPIL,GVK Power & Infrastructure Limited,Energy
+217,-0.08941294818601749,14,0.35714285714285715,ASIANPAINT,Asian Paints Limited,"Metals, Mining & Chemicals"
+2225,-0.0895360079947091,5,0.0,SYNCOMF,Syncom Formulations (India) Limited,Healthcare & Pharmaceuticals
+1561,-0.08983559446820452,5,0.4,NIITMTS,NIIT Learning Systems Limited,Technology
+295,-0.0903887475297894,5,0.2,BALUFORGE,Balu Forge Industries Limited,Industrials & Infrastructure
+1888,-0.09044613395699574,8,0.125,RPSGVENT,RPSG VENTURES LIMITED,Technology
+1494,-0.09060875779399238,5,0.2,MUKKA,Mukka Proteins Limited,Consumer & FMCG
+2362,-0.09082151328925951,5,0.0,UDS,Updater Services Limited,Services & Others
+2276,-0.09123851674239214,5,0.0,TEXINFRA,Texmaco Infrastructure & Holdings Limited,Industrials & Infrastructure
+1744,-0.09143048838628073,5,0.0,PPLPHARMA,Piramal Pharma Limited,Healthcare & Pharmaceuticals
+1191,-0.09160386689031143,6,0.0,KCPSUGIND,KCP Sugar and Industries Corporation Limited,Consumer & FMCG
+306,-0.09206454720211817,14,0.21428571428571427,BASF,BASF India Limited,"Metals, Mining & Chemicals"
+933,-0.09244004440332035,9,0.2222222222222222,HESTERBIO,Hester Biosciences Limited,Healthcare & Pharmaceuticals
+1626,-0.09246291135342034,7,0.2857142857142857,OPTIEMUS,Optiemus Infracom Limited,Services & Others
+1647,-0.0932855850557858,5,0.2,OSWALGREEN,Oswal Greentech Limited,Financial Services
+389,-0.09334355735251154,5,0.0,BOROLTD,Borosil Limited,Consumer & FMCG
+1029,-0.093420487174855,5,0.2,INDIGOPNTS,Indigo Paints Limited,"Metals, Mining & Chemicals"
+827,-0.09499554726394961,11,0.09090909090909091,GOACARBON,Goa Carbon Limited,"Metals, Mining & Chemicals"
+2002,-0.09548510211515876,8,0.375,SFL,Sheela Foam Limited,Consumer & FMCG
+769,-0.09619804072850194,5,0.6,GANESHBE,Ganesh Benzoplast Limited,"Metals, Mining & Chemicals"
+1402,-0.09642219364697918,5,0.2,MAXIND,Max India Limited,Financial Services
+1101,-0.09673857833184647,5,0.2,JAIBALAJI,Jai Balaji Industries Limited,Technology
+2291,-0.09707126415982924,14,0.35714285714285715,THOMASCOOK,Thomas Cook  (India)  Limited,Consumer & FMCG
+1008,-0.0970927845024129,5,0.2,IKIO,IKIO Technologies Limited,Technology
+1310,-0.09760194727950715,5,0.0,LIKHITHA,Likhitha Infrastructure Limited,Industrials & Infrastructure
+1993,-0.0977453442572182,5,0.4,SENCO,Senco Gold Limited,Consumer & FMCG
+1878,-0.09782496908428044,5,0.2,ROSSARI,Rossari Biotech Limited,"Metals, Mining & Chemicals"
+1471,-0.09849642523681,9,0.1111111111111111,MONTECARLO,Monte Carlo Fashions Limited,Industrials & Infrastructure
+2123,-0.09866006987154699,7,0.14285714285714285,SPECIALITY,Speciality Restaurants Limited,Financial Services
+447,-0.09887379142645156,14,0.21428571428571427,CENTRALBK,Central Bank of India,Financial Services
+1714,-0.09901061707988797,5,0.2,PIXTRANS,Pix Transmissions Limited,Industrials & Infrastructure
+1785,-0.10114828481585572,5,0.2,PVSL,Popular Vehicles and Services Limited,Automobile & Mobility
+1163,-0.10211501640053354,6,0.3333333333333333,JYOTISTRUC,Jyoti Structures Limited,Industrials & Infrastructure
+743,-0.10305044725888975,5,0.2,FIVESTAR,Five-Star Business Finance Limited,Financial Services
+1776,-0.10364265712730474,7,0.14285714285714285,PSB,Punjab & Sind Bank,Financial Services
+1676,-0.10369503107822595,8,0.125,PATELENG,Patel Engineering Limited,Industrials & Infrastructure
+1337,-0.10425977052469167,5,0.2,LXCHEM,Laxmi Organic Industries Limited,"Metals, Mining & Chemicals"
+887,-0.1045769928873625,6,0.16666666666666666,GULFPETRO,GP Petroleums Limited,Energy
+2164,-0.10527272010085159,9,0.2222222222222222,SUBEXLTD,Subex Limited,Technology
+41,-0.10596096696454309,14,0.42857142857142855,ABREL,Aditya Birla Real Estate Limited,Real Estate & Construction
+376,-0.10690013194310267,13,0.3076923076923077,BLUEDART,Blue Dart Express Limited,Services & Others
+2175,-0.1075832395583762,5,0.4,SUMMITSEC,Summit Securities Limited,Financial Services
+1078,-0.10782863376781164,5,0.0,IREDA,Indian Renewable Energy Development Agency Limited,Energy
+2474,-0.10784740407108548,13,0.15384615384615385,VMART,V-Mart Retail Limited,Consumer & FMCG
+1146,-0.10805662955384318,13,0.3076923076923077,JSWDULUX,JSW Dulux Limited,"Metals, Mining & Chemicals"
+240,-0.10836694129336572,8,0.25,ATULAUTO,Atul Auto Limited,Automobile & Mobility
+1864,-0.10878282851182278,5,0.2,RITCO,Ritco Logistics Limited,Services & Others
+457,-0.10900838122207107,12,0.5,CGPOWER,CG Power and Industrial Solutions Limited,Energy
+491,-0.10902047486811703,9,0.1111111111111111,COFFEEDAY,Coffee Day Enterprises Limited,Services & Others
+739,-0.11039064922548943,5,0.4,FINOPB,Fino Payments Bank Limited,Financial Services
+1819,-0.11045264028388847,8,0.125,RAMCOSYS,Ramco Systems Limited,Technology
+114,-0.1106481076901226,11,0.2727272727272727,ALANKIT,Alankit Limited,Services & Others
+1721,-0.11110104257358544,8,0.0,PNBGILTS,PNB Gilts Limited,Financial Services
+2519,-0.11181481065443344,8,0.375,WINDMACHIN,Windsor Machines Limited,Industrials & Infrastructure
+1654,-0.11215880290266986,5,0.2,PAKKA,PAKKA LIMITED,Industrials & Infrastructure
+2502,-0.11260803105725307,6,0.16666666666666666,WEBELSOLAR,Websol Energy System Limited,Industrials & Infrastructure
+641,-0.11335137018043091,5,0.2,EASEMYTRIP,Easy Trip Planners Limited,Consumer & FMCG
+1996,-0.11338042268407948,5,0.0,SERVOTECH,Servotech Renewable Power System Limited,Energy
+694,-0.11367880335554359,5,0.2,EPIGRAL,Epigral Limited,"Metals, Mining & Chemicals"
+1792,-0.11407615772086983,14,0.2857142857142857,QUICKHEAL,Quick Heal Technologies Limited,Technology
+1855,-0.11414857696985584,5,0.0,RGL,Renaissance Global Limited,Consumer & FMCG
+2120,-0.1148951414826266,7,0.14285714285714285,SPANDANA,Spandana Sphoorty Financial Limited,Financial Services
+2023,-0.11592097721995416,5,0.0,SHAREINDIA,Share India Securities Limited,Services & Others
+2170,-0.11615009157614153,5,0.0,SULA,Sula Vineyards Limited,Consumer & FMCG
+1082,-0.11785669426697627,5,0.0,IRMENERGY,IRM Energy Limited,Energy
+1936,-0.118103684793285,7,0.0,SALZERELEC,Salzer Electronics Limited,Industrials & Infrastructure
+486,-0.11953836639854395,5,0.2,CNL,Creative Newtech Limited,Technology
+962,-0.12028415344744285,5,0.0,HLVLTD,HLV LIMITED,Services & Others
+1798,-0.12138076836737041,5,0.2,RADIANTCMS,Radiant Cash Management Services Limited,Financial Services
+1418,-0.12228886113176211,5,0.2,MEDICO,Medico Remedies Limited,Healthcare & Pharmaceuticals
+44,-0.12272754988648918,7,0.42857142857142855,ACCELYA,Accelya Solutions India Limited,Technology
+917,-0.12339479421076527,6,0.16666666666666666,HCL-INSYS,HCL Infosystems Limited,Technology
+2368,-0.12343490048048152,5,0.2,UGROCAP,Ugro Capital Limited,Financial Services
+715,-0.12438601514419263,5,0.0,EXICOM,Exicom Tele-Systems Limited,Industrials & Infrastructure
+155,-0.12482789878510495,5,0.0,ANNAPURNA,Annapurna Swadisht Limited,Consumer & FMCG
+2086,-0.12517680066732845,7,0.2857142857142857,SIS,SIS LIMITED,Services & Others
+502,-0.12519242832877203,5,0.0,CONFIPET,Confidence Petroleum India Limited,Energy
+194,-0.12575567150979275,6,0.0,ARROWGREEN,Arrow Greentech Limited,Industrials & Infrastructure
+501,-0.12584052365602932,5,0.0,CONCORDBIO,Concord Biotech Limited,Healthcare & Pharmaceuticals
+1267,-0.12605671991260736,5,0.4,KSOLVES,Ksolves India Limited,Technology
+1437,-0.12647641206229004,5,0.2,MICEL,MIC Electronics Limited,Industrials & Infrastructure
+2271,-0.12742134960092147,10,0.3,TEJASNET,Tejas Networks Limited,Technology
+1717,-0.13035178028182956,5,0.0,PLATIND,Platinum Industries Limited,"Metals, Mining & Chemicals"
+1194,-0.13182435464539377,7,0.0,KECL,Kirloskar Electric Company Limited,Industrials & Infrastructure
+2473,-0.13247799209305713,6,0.0,VLSFINANCE,VLS Finance Limited,Financial Services
+1039,-0.13353906854339817,11,0.2727272727272727,INDOSTAR,IndoStar Capital Finance Limited,Financial Services
+493,-0.13431883348925688,5,0.2,COHANCE,Cohance Lifesciences Limited,Healthcare & Pharmaceuticals
+1203,-0.1345035902270469,5,0.2,KHADIM,Khadim India Limited,Consumer & FMCG
+683,-0.13505266875607072,5,0.2,EMSLIMITED,EMS Limited,Industrials & Infrastructure
+85,-0.13534361373969425,5,0.2,AGARIND,Agarwal Industrial Corporation Limited,Energy
+1838,-0.13663829344914025,5,0.0,REFEX,Refex Industries Limited,Energy
+1338,-0.1377045675600521,5,0.0,LYKALABS,Lyka Labs Limited,Healthcare & Pharmaceuticals
+2126,-0.13922853795099577,8,0.0,SPENCERS,Spencer's Retail Limited,Consumer & FMCG
+2367,-0.14122247139807645,6,0.3333333333333333,UGARSUGAR,The Ugar Sugar Works Limited,Consumer & FMCG
+2015,-0.14186669542348412,10,0.3,SHALPAINTS,Shalimar Paints Limited,"Metals, Mining & Chemicals"
+1137,-0.14334985354728502,5,0.2,JNKINDIA,JNK India Limited,Industrials & Infrastructure
+1882,-0.14392156925255334,5,0.0,ROUTE,ROUTE MOBILE LIMITED,Technology
+260,-0.14484662748219818,5,0.2,AWFIS,Awfis Space Solutions Limited,Real Estate & Construction
+197,-0.14690713444072817,5,0.0,ARTEMISMED,Artemis Medicare Services Limited,Healthcare & Pharmaceuticals
+1586,-0.14931147018005736,5,0.0,NPST,Network People Services Technologies Limited,Technology
+2065,-0.15346394232947252,5,0.2,SIGACHI,Sigachi Industries Limited,"Metals, Mining & Chemicals"
+2384,-0.1545486930113599,7,0.14285714285714285,UNITECH,Unitech Limited,Industrials & Infrastructure
+771,-0.15708546263130588,6,0.16666666666666666,GANESHHOU,GANESH HOUSING LIMITED,Industrials & Infrastructure
+1995,-0.15762364785851787,5,0.0,SEPC,SEPC Limited,Industrials & Infrastructure
+1538,-0.15772159835893299,6,0.3333333333333333,NECLIFE,Nectar Lifesciences Limited,Healthcare & Pharmaceuticals
+1645,-0.1578586922838818,5,0.2,OSIAHYPER,Osia Hyper Retail Limited,Consumer & FMCG
+1416,-0.1584916842284962,5,0.0,MEDICAMEQ,Medicamen Biotech Limited,Healthcare & Pharmaceuticals
+2079,-0.15897004483733906,8,0.375,SIMPLEXINF,Simplex Infrastructures Limited,Industrials & Infrastructure
+64,-0.16312297389023597,5,0.0,ADSL,Allied Digital Services Limited,Technology
+1408,-0.16900904907938202,5,0.0,MBLINFRA,MBL Infrastructure Limited,Industrials & Infrastructure
+1384,-0.1716691132965393,5,0.0,MANYAVAR,Vedant Fashions Limited,Industrials & Infrastructure
+2035,-0.1746697248664198,5,0.2,SHIVALIK,Shivalik Rasayan Limited,"Metals, Mining & Chemicals"
+2122,-0.17700606368928595,5,0.0,SPCENET,Spacenet Enterprises India Limited,Technology
+958,-0.1781928595102452,5,0.0,HITECH,Hi-Tech Pipes Limited,"Metals, Mining & Chemicals"
+2220,-0.17911565522550796,5,0.0,SWELECTES,Swelect Energy Systems Limited,Technology
+2536,-0.17913093014193984,14,0.14285714285714285,YESBANK,Yes Bank Limited,Financial Services
+2198,-0.1849362651740905,5,0.0,SURAJEST,Suraj Estate Developers Limited,Industrials & Infrastructure
+1933,-0.18493890201717703,6,0.0,SALASAR,Salasar Techno Engineering Limited,Industrials & Infrastructure
+2399,-0.185065287946945,5,0.0,UTKARSHBNK,Utkarsh Small Finance Bank Limited,Financial Services
+2444,-0.18548597041081877,5,0.0,VIKASLIFE,Vikas Lifecare Limited,Energy
+1753,-0.18849240095289024,6,0.16666666666666666,PRECAM,Precision Camshafts Limited,Automobile & Mobility
+2443,-0.1888907634554338,11,0.09090909090909091,VIKASECO,Vikas EcoTech Limited,"Metals, Mining & Chemicals"
+2154,-0.1892914688398932,5,0.0,STERTOOLS,Sterling Tools Limited,Automobile & Mobility
+115,-0.1898190328296825,5,0.0,ALBERTDAVD,Albert David Limited,Healthcare & Pharmaceuticals
+873,-0.19114340532884305,5,0.0,GSLSU,Global Surfaces Limited,Real Estate & Construction
+2472,-0.20575871968094894,5,0.2,VLEGOV,VL E-Governance & IT Solutions Limited,Services & Others
+2482,-0.2137312690012026,5,0.0,VPRPL,Vishnu Prakash R Punglia Limited,Industrials & Infrastructure
+358,-0.21885268290543256,7,0.0,BIRLACABLE,Birla Cable Limited,Real Estate & Construction
+875,-0.22816435730734783,5,0.2,GSS,GSS Infotech Limited,Technology
+2289,-0.22909220971577576,5,0.0,THEMISMED,Themis Medicare Limited,Healthcare & Pharmaceuticals
+1630,-0.23312857287359368,5,0.0,ORCHPHARMA,Orchid Pharma Limited,Healthcare & Pharmaceuticals
+627,-0.2513211926512625,5,0.0,DREAMFOLKS,Dreamfolks Services Limited,Industrials & Infrastructure
+1411,-0.2513528055849438,11,0.09090909090909091,MCLEODRUSS,Mcleod Russel India Limited,Consumer & FMCG
+512,-0.2539421469260752,5,0.2,CPCAP,CP Capital Limited,Services & Others
+1932,-0.27066458346902583,6,0.0,SAKUMA,Sakuma Exports Limited,Consumer & FMCG
+1834,-0.3586772217436634,6,0.0,RCOM,Reliance Communications Limited,Services & Others

@@ -15,6 +15,7 @@ const rankingRoutes = require("./routes/rankingRoutes");
 const authRoutes = require("./routes/authRoutes");
 const brokerRoutes = require("./routes/brokerRoutes");
 const portfolioRoutes = require("./routes/portfolioRoutes");
+const eventsRoutes = require("./routes/eventsRoutes");
 
 db.query("SELECT 1")
     .then(() => {
@@ -44,6 +45,7 @@ app.use("/rankings", rankingRoutes);
 app.use("/auth", authRoutes);
 app.use("/brokers", brokerRoutes);
 app.use("/portfolio", portfolioRoutes);
+app.use("/events", eventsRoutes);
 
 
 app.get("/", (req, res) => {
