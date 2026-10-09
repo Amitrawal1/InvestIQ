@@ -4,6 +4,7 @@ import { motion } from "motion/react"
 import { ArrowRight, Cpu, LineChart, Newspaper, TrendingUp } from "lucide-react"
 import Navbar from "../components/Navbar"
 import Category from "../components/Category"
+import IpoSection from "../components/IpoSection"
 import MarketTicker from "../components/MarketTicker"
 import Footer from "../components/Footer"
 import LiveClock from "../components/LiveClock"
@@ -112,6 +113,8 @@ export default function Home() {
             </section>
 
             <Category />
+
+            <IpoSection />
 
             <Footer />
         </div>
