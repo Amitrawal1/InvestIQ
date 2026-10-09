@@ -16,6 +16,7 @@ const authRoutes = require("./routes/authRoutes");
 const brokerRoutes = require("./routes/brokerRoutes");
 const portfolioRoutes = require("./routes/portfolioRoutes");
 const eventsRoutes = require("./routes/eventsRoutes");
+const ipoRoutes = require("./routes/ipoRoutes");
 
 db.query("SELECT 1")
     .then(() => {
@@ -46,6 +47,7 @@ app.use("/auth", authRoutes);
 app.use("/brokers", brokerRoutes);
 app.use("/portfolio", portfolioRoutes);
 app.use("/events", eventsRoutes);
+app.use("/ipos", ipoRoutes);
 
 
 app.get("/", (req, res) => {

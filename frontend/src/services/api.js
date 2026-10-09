@@ -171,3 +171,7 @@ export const getEvent = (id) => api.get(`/api/events/${encodeURIComponent(id)}`,
 export const getEventPlaybook = (params) => api.get('/api/events/playbook', { params, timeout: 10000 }).then((res) => res.data);
 export const classifyEvent = (text, horizon = '63d') =>
   api.post('/api/events/classify', { text, horizon }, { timeout: 10000 }).then((res) => res.data);
+
+// --- IPO check (descriptive valuation vs listed peers + base rates; backend/data/ipos.json) ---
+export const getIpos = (params = {}) => api.get('/api/ipos', { params, timeout: 10000 }).then((res) => res.data);
+export const getIpoBaseRates = () => api.get('/api/ipos/base-rates', { timeout: 10000 }).then((res) => res.data);

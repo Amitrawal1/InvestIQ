@@ -29,3 +29,6 @@ ml/data/raw/delisted/delisted_prices.csv.gz
 
 # Private project notes
 PROJECT_HANDBOOK.md
+
+# events study working file (10 MB); the site reads backend/data/events.json
+ml/events/results/event_returns.csv

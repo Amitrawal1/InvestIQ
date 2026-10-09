@@ -14,6 +14,7 @@ const links = [
   { to: '/home', label: 'Home' },
   { to: '/news', label: 'News' },
   { to: '/events', label: 'Events' },
+  { to: '/ipo', label: 'IPOs' },
   { to: '/predictor', label: 'Predictor' },
 ];
 

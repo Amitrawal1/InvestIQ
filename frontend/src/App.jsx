@@ -20,6 +20,7 @@ import Disclaimer from './pages/Disclaimer';
 import NotFound from './pages/NotFound';
 import TrackRecord from './pages/TrackRecord';
 import Events from './pages/Events';
+import Ipos from './pages/Ipos';
 
 
 // New page -> start at the top (links like /home#sectors scroll to their section instead)
@@ -77,6 +78,7 @@ const App = () => {
             {/* Company, support and legal pages (public) */}
             <Route path="track-record" element={<TrackRecord />} />
             <Route path="events" element={<Events />} />
+            <Route path="ipo" element={<Ipos />} />
             <Route path="about" element={<About />} />
             <Route path="help" element={<Help />} />
             <Route path="contact" element={<Navigate to="/help#contact" replace />} />

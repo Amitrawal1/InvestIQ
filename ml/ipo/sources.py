@@ -161,7 +161,7 @@ def _subscription(rows, times_key):
     for r in rows or []:
         cat = " ".join(str(r.get("category") or "").lower().split())
         times = _num(r.get(times_key))
-        if times is None:
+        if times is None or times <= 0:     # SME pages often carry a placeholder "Total 0.00"
             continue
         for key, label in SUB_KEYS:
             # the NII line itself (not its >10 lakh / 2-10 lakh sub-lines, whose labels add "(bid ...")

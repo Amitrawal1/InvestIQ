@@ -396,7 +396,10 @@ def build(refresh_peers=False):
     issues["list_gain_open"] = issues["list_open"] / issues["issue_price"] - 1
     # sanity: bhavcopy PREVCLOSE on listing day is the issue price (catches symbol mix-ups)
     issues["issue_price_check"] = (issues["list_prev_close"] / issues["issue_price"]).round(3)
-    issues["issue_size_cr"] = np.nan
+    # listing-day previous close far from the issue price: an already-traded share (BSE-first listing,
+    # demerger, partly-paid rights) whose "issue" is not an IPO price discovery -> treated like an FPO
+    issues["is_fpo"] = issues["is_fpo"] | ((issues["issue_price_check"] - 1).abs() > 0.02)
+    issues = issues.drop_duplicates(["symbol", "listing_date"], keep="last").reset_index(drop=True)
     stocks, index = load_prices()
     from valuation import features as vf
 

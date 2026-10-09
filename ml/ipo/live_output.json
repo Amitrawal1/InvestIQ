@@ -1,0 +1,409 @@
+[
+ {
+  "symbol": "VNL",
+  "company": "Vishal Nirmiti Limited",
+  "status": "open 2026-09-30 to 2026-10-05",
+  "price_band": [
+   208,
+   220
+  ],
+  "fiscal": "FY2026 (restated, standalone)",
+  "industry": "Engineering",
+  "peer_level": "industry",
+  "peer_date": "2026-09-25",
+  "ipo_inputs": {
+   "issue_price": 220.0,
+   "shares_post": 2.639090909090909,
+   "revenue_ann": 338.6773,
+   "net_profit_ann": 24.975,
+   "equity": 231.344,
+   "industry": "Engineering",
+   "issue_size_cr": 178.0,
+   "ofs_share": 0.1853932584269663
+  },
+  "valuation": {
+   "date": "2026-10-03",
+   "mcap_cr": 580.6,
+   "loss_making": false,
+   "n_peers": 129,
+   "ipo_pe": 23.24724724724725,
+   "peer_median_pe": 27.234614881364905,
+   "peer_n_pe": 106,
+   "rel_pe": -0.15830204310199378,
+   "pct_in_peers_pe": 0.4528301886792453,
+   "ipo_pb": 2.5096825506604885,
+   "peer_median_pb": 2.6741775326248725,
+   "peer_n_pb": 119,
+   "rel_pb": -0.06348559732702909,
+   "pct_in_peers_pb": 0.46218487394957986,
+   "ipo_ps": 1.7143162532593712,
+   "peer_median_ps": 1.8545658615807796,
+   "peer_n_ps": 121,
+   "rel_ps": -0.07863631680950424,
+   "pct_in_peers_ps": 0.4628099173553719,
+   "table": [
+    {
+     "metric": "P/E",
+     "ipo": 23.24724724724725,
+     "peer_median": 27.234614881364905,
+     "peers": 106,
+     "premium_pct": -14.640807852384885
+    },
+    {
+     "metric": "P/B",
+     "ipo": 2.5096825506604885,
+     "peer_median": 2.6741775326248725,
+     "peers": 119,
+     "premium_pct": -6.151236406616645
+    },
+    {
+     "metric": "P/S",
+     "ipo": 1.7143162532593712,
+     "peer_median": 1.8545658615807796,
+     "peers": 121,
+     "premium_pct": -7.562395665035249
+    }
+   ],
+   "rel_median": -0.07863631680950424,
+   "verdict": "in_line",
+   "wording": "Priced in line with its listed Engineering peers (vs peer median: P/E -15%, P/B -6%, P/S -8%). This is a description of the price, not a recommendation to apply or not."
+  },
+  "rhp_peers": {
+   "GPTINFRA": {
+    "rhp_pe": 14.83,
+    "investiq_pe": 15.05416279474631
+   },
+   "INDIANHUME": {
+    "rhp_pe": 13.86,
+    "investiq_pe": 13.202333402081731
+   }
+  },
+  "rhp_peer_avg_pe": 14.35,
+  "rhp_style_pe_pre_issue_eps": 17.44647105471848,
+  "peer_symbols_largest": [
+   "LT",
+   "BEL",
+   "BHEL",
+   "RVNL",
+   "THERMAX",
+   "AIAENG",
+   "JYOTICNC",
+   "KPIL",
+   "IRB",
+   "CEMPRO"
+  ],
+  "history": {
+   "verdict": "in_line",
+   "n": 48,
+   "list_gain_close": {
+    "n": 48,
+    "median": 0.10799324324324319,
+    "mean": 0.14980032348097602,
+    "share_positive": 0.6875
+   },
+   "exc_6m": {
+    "n": 39,
+    "median": -0.0530558804032961,
+    "mean": 0.004466998015195779,
+    "share_positive": 0.41025641025641024
+   },
+   "exc_12m": {
+    "n": 31,
+    "median": -0.2154557073203726,
+    "mean": -0.14434330600225798,
+    "share_positive": 0.25806451612903225
+   },
+   "all_ipos": {
+    "list_gain_close": {
+     "n": 280,
+     "median": 0.1308702273961035
+    },
+    "exc_6m": {
+     "n": 248,
+     "median": -0.07809580631635935
+    },
+    "exc_12m": {
+     "n": 200,
+     "median": -0.1606302098260366
+    }
+   }
+  },
+  "market": {
+   "sc250_date": "2026-09-25",
+   "sc250_drawdown": -0.01987888078069,
+   "sc250_ret_3m": 0.030607959318032396,
+   "ipos_prior_90d": 60,
+   "prior_90d_median_list_gain": 0.163764705882353
+  },
+  "sources": {
+   "financials": "RHP p.137-139 Basis for Offer Price; restated P&L p.~60 (PAT 2,497.50 lakh)",
+   "shares": "RHP Capital Structure: 1,98,00,000 shares before the offer",
+   "issue": "NSE ipo-detail: fresh issue up to Rs 14,500 lakh + OFS up to 15,00,000 shares"
+  },
+  "risks": [
+   "Earnings rose 7.2x in two years (EPS 1.74 -> 12.61): the P/E rests on a short record; check how repeatable the latest year is.",
+   "Small issue (about Rs 178 crore): small IPOs are more volatile after listing and can be thinly traded."
+  ]
+ },
+ {
+  "symbol": "NITYAS",
+  "company": "Nityas Gems and Jewellery Limited",
+  "status": "open 2026-09-30 to 2026-10-05",
+  "price_band": [
+   70,
+   75
+  ],
+  "fiscal": "FY2026 (restated, consolidated)",
+  "industry": "Consumer Services",
+  "peer_level": "industry",
+  "peer_date": "2026-09-25",
+  "ipo_inputs": {
+   "issue_price": 75.0,
+   "shares_post": 5.7593248,
+   "revenue_ann": 202.894,
+   "net_profit_ann": 22.315,
+   "equity": 170.172,
+   "industry": "Consumer Services",
+   "issue_size_cr": 108.42,
+   "ofs_share": 0.0
+  },
+  "valuation": {
+   "date": "2026-10-03",
+   "mcap_cr": 431.94936,
+   "loss_making": false,
+   "n_peers": 44,
+   "ipo_pe": 19.356906116961685,
+   "peer_median_pe": 26.8686116320529,
+   "peer_n_pe": 37,
+   "rel_pe": -0.3279094904072041,
+   "pct_in_peers_pe": 0.3783783783783784,
+   "ipo_pb": 2.5383104153444753,
+   "peer_median_pb": 3.23072952862355,
+   "peer_n_pb": 43,
+   "rel_pb": -0.24120930310332955,
+   "pct_in_peers_pb": 0.4418604651162791,
+   "ipo_ps": 2.1289410233915245,
+   "peer_median_ps": 1.9242576477427646,
+   "peer_n_ps": 40,
+   "rel_ps": 0.10108442814739847,
+   "pct_in_peers_ps": 0.5,
+   "table": [
+    {
+     "metric": "P/E",
+     "ipo": 19.356906116961685,
+     "peer_median": 26.8686116320529,
+     "peers": 37,
+     "premium_pct": -27.957177758042885
+    },
+    {
+     "metric": "P/B",
+     "ipo": 2.5383104153444753,
+     "peer_median": 3.23072952862355,
+     "peers": 43,
+     "premium_pct": -21.432283549099186
+    },
+    {
+     "metric": "P/S",
+     "ipo": 2.1289410233915245,
+     "peer_median": 1.9242576477427646,
+     "peers": 40,
+     "premium_pct": 10.637004659374071
+    }
+   ],
+   "rel_median": -0.24120930310332955,
+   "verdict": "below",
+   "wording": "Priced below its listed Consumer Services peers (vs peer median: P/E -28%, P/B -21%, P/S +11%). This is a description of the price, not a recommendation to apply or not."
+  },
+  "rhp_peers": {
+   "GOLDIAM": {
+    "rhp_pe": 21.69,
+    "investiq_pe": 17.40232568052091
+   },
+   "RGL": {
+    "rhp_pe": 18.63,
+    "investiq_pe": 16.415802702430238
+   }
+  },
+  "rhp_peer_avg_pe": 20.16,
+  "rhp_style_pe_pre_issue_eps": 13.58695652173913,
+  "peer_symbols_largest": [
+   "TITAN",
+   "KALYANKJIL",
+   "IRCTC",
+   "TBOTEK",
+   "TRAVELFOOD",
+   "THANGAMAYL",
+   "PCJEWELLER",
+   "SKYGOLD",
+   "BLUESTONE",
+   "ABLBL"
+  ],
+  "history": {
+   "verdict": "below",
+   "n": 94,
+   "list_gain_close": {
+    "n": 94,
+    "median": 0.1331652661064425,
+    "mean": 0.2019603700961281,
+    "share_positive": 0.776595744680851
+   },
+   "exc_6m": {
+    "n": 85,
+    "median": -0.1105700112462877,
+    "mean": -0.04944045877401333,
+    "share_positive": 0.32941176470588235
+   },
+   "exc_12m": {
+    "n": 73,
+    "median": -0.1084898029165619,
+    "mean": -0.04365558980394777,
+    "share_positive": 0.4246575342465753
+   },
+   "all_ipos": {
+    "list_gain_close": {
+     "n": 280,
+     "median": 0.1308702273961035
+    },
+    "exc_6m": {
+     "n": 248,
+     "median": -0.07809580631635935
+    },
+    "exc_12m": {
+     "n": 200,
+     "median": -0.1606302098260366
+    }
+   }
+  },
+  "market": {
+   "sc250_date": "2026-09-25",
+   "sc250_drawdown": -0.01987888078069,
+   "sc250_ret_3m": 0.030607959318032396,
+   "ipos_prior_90d": 60,
+   "prior_90d_median_list_gain": 0.163764705882353
+  },
+  "sources": {
+   "financials": "RHP p.150-153 Basis for Issue Price (revenue Rs 2,028.94 mn, PAT Rs 223.15 mn, EPS 5.52, NAV 15.13); net worth Rs 617.52 mn",
+   "shares": "RHP Capital Structure: 43,137,248 shares before the issue",
+   "issue": "NSE ipo-detail: fresh issue of up to 1,44,56,000 shares (no OFS)"
+  },
+  "risks": [
+   "Earnings rose 3.0x in two years (EPS 1.83 -> 5.52): the P/E rests on a short record; check how repeatable the latest year is.",
+   "Small issue (about Rs 108 crore): small IPOs are more volatile after listing and can be thinly traded."
+  ]
+ },
+ {
+  "symbol": "SHIPROCKET",
+  "company": "Shiprocket Limited",
+  "status": "listed 2026-08-19 (issue price Rs 97; listing-day close +48%); financials = XBRL proxy (pre_listing, 3.0m to 2026-06-30, filed 2026-09-07)",
+  "price_band": [
+   97.0,
+   97.0
+  ],
+  "fiscal": "annualised XBRL proxy",
+  "industry": "Retail",
+  "peer_level": "industry",
+  "peer_date": "2026-08-12",
+  "ipo_inputs": {
+   "issue_price": 97.0,
+   "shares_post": 72.7577587,
+   "revenue_ann": 2368.348,
+   "net_profit_ann": -54.856,
+   "equity": NaN,
+   "industry": "Retail"
+  },
+  "valuation": {
+   "date": "2026-08-12",
+   "mcap_cr": 7057.5025939,
+   "loss_making": true,
+   "n_peers": 40,
+   "ipo_pe": null,
+   "peer_median_pe": 40.741856317853546,
+   "peer_n_pe": 26,
+   "rel_pe": null,
+   "pct_in_peers_pe": null,
+   "ipo_pb": null,
+   "peer_median_pb": 4.3623769901673395,
+   "peer_n_pb": 34,
+   "rel_pb": null,
+   "pct_in_peers_pb": null,
+   "ipo_ps": 2.9799263427080818,
+   "peer_median_ps": 1.5628823730308623,
+   "peer_n_ps": 36,
+   "rel_ps": 0.6453667915703598,
+   "pct_in_peers_ps": 0.6666666666666666,
+   "table": [
+    {
+     "metric": "P/E",
+     "ipo": null,
+     "peer_median": 40.741856317853546,
+     "peers": 26,
+     "premium_pct": null
+    },
+    {
+     "metric": "P/B",
+     "ipo": null,
+     "peer_median": 4.3623769901673395,
+     "peers": 34,
+     "premium_pct": null
+    },
+    {
+     "metric": "P/S",
+     "ipo": 2.9799263427080818,
+     "peer_median": 1.5628823730308623,
+     "peers": 36,
+     "premium_pct": 90.66862574751408
+    }
+   ],
+   "rel_median": 0.6453667915703598,
+   "verdict": "well_above",
+   "wording": "Priced well above its listed Retail peers and it is loss-making (vs peer median: P/S +91%). This is a description of the price, not a recommendation to apply or not."
+  },
+  "rhp_peers": {},
+  "history": {
+   "verdict": "well_above",
+   "n": 81,
+   "list_gain_close": {
+    "n": 81,
+    "median": 0.1656249999999999,
+    "mean": 0.23720883726835,
+    "share_positive": 0.7283950617283951
+   },
+   "exc_6m": {
+    "n": 74,
+    "median": -0.0436851792371865,
+    "mean": 0.07436191775121961,
+    "share_positive": 0.43243243243243246
+   },
+   "exc_12m": {
+    "n": 58,
+    "median": -0.1700746951886301,
+    "mean": 0.1036870282124636,
+    "share_positive": 0.43103448275862066
+   },
+   "all_ipos": {
+    "list_gain_close": {
+     "n": 280,
+     "median": 0.1308702273961035
+    },
+    "exc_6m": {
+     "n": 248,
+     "median": -0.07809580631635935
+    },
+    "exc_12m": {
+     "n": 200,
+     "median": -0.1606302098260366
+    }
+   }
+  },
+  "market": {
+   "sc250_date": "2026-09-25",
+   "sc250_drawdown": -0.01987888078069,
+   "sc250_ret_3m": 0.030607959318032396,
+   "ipos_prior_90d": 60,
+   "prior_90d_median_list_gain": 0.163764705882353
+  },
+  "risks": [
+   "Loss-making at the latest fiscal year: no P/E; the price rests on future profits."
+  ]
+ }
+]

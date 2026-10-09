@@ -19,6 +19,7 @@ const columns = [
       { label: 'Sector Trends', to: '/home#sectors' },
       { label: 'Track Record', to: '/track-record' },
       { label: 'Market Events', to: '/events' },
+      { label: 'IPO Check', to: '/ipo' },
     ],
   },
   {
